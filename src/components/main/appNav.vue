@@ -13,7 +13,7 @@
           </li>
         </ul>
         <div class="btnBox">
-          <span class="btn logIn">{{ logIn }}</span>
+          <span class="btn logIn" @click="showLogIn()">{{ logIn }}</span>
           <span class="btn register">{{ register }}</span>
         </div>
         <div class="zh_enBox" @click="isActive = !isActive">
@@ -28,6 +28,7 @@
 
 <script>
 export default {
+
   name: "appNav",
   data() {
     return {
@@ -41,6 +42,11 @@ export default {
       isActive: true, // 当前语言是否为中文
       currentIndex: 0, // 当前选中的菜单索引
     };
+  },
+  methods: {
+    showLogIn(){
+      this.$parent.isShowLogIn=!this.$parent.isShowLogIn
+    }
   },
 };
 </script>
@@ -63,7 +69,7 @@ export default {
   box-shadow: 0px 0px 40px 0px rgba(0, 78, 162, 0.15);
   /* 内部阴影 */
 }
-.h{
+.h {
   display: flex;
   justify-content: flex-end;
   width: 72%;
@@ -100,7 +106,7 @@ export default {
 }
 .btnBox .btn:hover {
   background-color: #fec79a;
-  color: #e3f5ff;
+  color: #004ea2;
 }
 .zh_enBox {
   width: 50px;
