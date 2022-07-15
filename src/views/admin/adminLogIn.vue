@@ -49,7 +49,9 @@ export default {
   align-items: center;
   width: 100vw;
   height: 100vh;
-  background: #666;
+  background: url("../../assets/adminBg.png");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 .contentBox {
   display: flex;

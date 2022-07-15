@@ -1,7 +1,7 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 // 路由懒加载
 const main = () => import("../views/appMain.vue");
-const adminLogIn = () => import("../views/adminLogIn.vue");
+const adminLogIn = () => import("../views/admin/adminLogIn.vue");
 const register = () => import("../components/register/register.vue");
 
 
