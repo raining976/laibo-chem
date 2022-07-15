@@ -33,18 +33,17 @@ export default {
       inputVerification: "请输入验证码",
     };
   },
-  created() {
+
+  mounted() {
+    // 监听鼠标点击  点击位置为登录之外,则关闭登录页
     document.addEventListener("mousedown", (e) => {
       let logIn = this.$refs.logInContent;
       if (!e.path.includes(logIn)) {
         this.$parent.isShowLogIn = false;
-      }
+      } else this.$parent.isShowLogIn = true;
     });
   },
-  methods: {
-    // 点击登录盒子以外的地方关闭登录盒子
-    triggerTurnOff() {},
-  },
+  methods: {},
 };
 </script>
 

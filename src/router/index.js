@@ -1,14 +1,27 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 // 路由懒加载
 const main = () => import("../views/appMain.vue");
+const adminLogIn = () => import("../views/adminLogIn.vue");
+const register = () => import("../components/register/register.vue");
+
 
 const routes = [
   {
     path: "/",
-    name: "main",
-    // redirect:"/main",
-    component: main
-  }
+    component: main,
+    children: [
+      {
+        path: "/register",
+        component:register,
+      }
+
+    ]
+  },
+  {
+    path: "/adminLogIn",
+    name: "adminLogIn",
+    component: adminLogIn
+  },
 ];
 
 const router = createRouter({

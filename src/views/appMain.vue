@@ -1,6 +1,7 @@
 <template>
   <appNav />
   <search />
+  <router-view></router-view>
   <appFooter />
   <copyright />
   <!-- 登录模态框 -->
