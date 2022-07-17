@@ -10,8 +10,8 @@
       </div>
     </div>
     <div class="aboutIt">
-      <div class="aboutMore">了解更多</div>
-      <div class="aboutArrow"><img src="" alt="" /></div>
+      <div class="aboutMore">了解更多&nbsp;&nbsp;<div class="aboutArrow">></div></div>
+      
     </div>
   </div>
 </template>
@@ -110,6 +110,7 @@ width: 49.9vw;
   width: 24.9vw;
   height: 15.73vw;
   overflow: hidden;
+  cursor: pointer;
   /* ?? */
 }
 .hotProductPic > img {
@@ -146,7 +147,42 @@ font-size: 1.2vw;
   margin: 3.13vw 0 0 0;
   width: 11.56vw;
   height: 3.13vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border: 0.1vw solid #004ea2;
   border-radius: 0.26vw;
+  cursor: pointer;
 }
+.aboutIt:hover {
+  border: 0.2vw solid #004ea2;
+}
+.aboutMore {
+  position: relative;
+  width: 6.77vw;
+height: 1.15vw;
+font-size: 1.15vw;
+font-family: Source Han Sans SC VF;
+font-weight: bold;
+color: #004EA2;
+line-height: 1.15vw;
+}
+.aboutArrow {
+  position: absolute;
+  font-size: 0.73vw;
+  top: 0px;
+  animation: moveArrow 1s ease-out 0.5s infinite alternate;
+}
+@keyframes moveArrow {
+  0% {
+    right: 0vw;
+  }
+  50% {
+    right: 0.42vw;
+  }
+  100% {
+    right: 0.52vw;
+  }
+}
+
 </style>

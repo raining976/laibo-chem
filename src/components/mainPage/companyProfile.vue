@@ -85,7 +85,6 @@ export default {
   font-weight: bold;
   color: #323333;
   line-height: 1.88vw;
-  text-align: center;
 }
 .companyMessage {
     width: 27.55vw;
