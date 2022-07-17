@@ -11,7 +11,7 @@
             placeholder="请输入产品编码，CAS编码，关键字或结构式查询"
           />
         </div>
-        <div class="searchBtn" @click="toSearchResult()">
+        <div class="searchBtn">
           <img src="../../assets/sousuo.png" alt="" />
         </div>
       </div>
@@ -30,13 +30,6 @@ export default {
       toILabPlus: "进入iLabplus平台",
     };
   },
-  methods:{
-    toSearchResult() {
-      this.$router.push({
-        path: "/searchResult",
-      });
-    },
-  }
 };
 </script>
 

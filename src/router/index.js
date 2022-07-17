@@ -3,7 +3,8 @@ import { createRouter, createWebHashHistory } from "vue-router";
 const main = () => import("../views/appMain.vue");
 const adminLogIn = () => import("../views/admin/adminLogIn.vue");
 const register = () => import("../components/register/register.vue");
-
+const searchResult = () => import("../components/searchProduct/searchResult.vue");
+// const productInfo = () => import("../components/searchProduct/productInfo.vue");
 
 const routes = [
   {
@@ -13,8 +14,27 @@ const routes = [
       {
         path: "/register",
         component:register,
-      }
-
+      },
+      {
+        path: "/",
+        components:{
+          table: () => import("../views/mainPage.vue"),
+         }
+      },
+ {
+    path: "searchResult",
+    name: "searchResult",
+    components:{
+      table: () => import("../components/searchProduct/searchResult.vue"),
+     }
+  },
+  {
+    path: "productInfo",
+    name: "productInfo",
+    components:{
+     table: () => import("../components/searchProduct/productInfo.vue"),
+    }
+  }
     ]
   },
   {
@@ -22,6 +42,8 @@ const routes = [
     name: "adminLogIn",
     component: adminLogIn
   },
+  
+
 ];
 
 const router = createRouter({

@@ -1,9 +1,9 @@
 <template>
   <appNav />
   <search />
-  <router-view></router-view>
+  <router-view name="table"></router-view>
   <appFooter />
-  <copyright />
+  <copyRight />
   <!-- 登录模态框 -->
   <log-in v-show="isShowLogIn"   />
 </template>
@@ -12,7 +12,7 @@
 import appNav from "../components/main/appNav.vue";
 import appFooter from "../components/main/appFooter.vue";
 import search from "../components/main/search.vue";
-import copyright from "../components/main/copyright.vue";
+import copyRight from "../components/main/copyRight.vue";
 import logIn from "../components/logIn/logIn.vue";
 
 export default {
@@ -21,8 +21,9 @@ export default {
     appNav,
     appFooter,
     search,
-    copyright,
+    copyRight,
     logIn,
+  
   },
   data() {
     return {
