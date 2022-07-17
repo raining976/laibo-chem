@@ -1,17 +1,27 @@
 // 热门产品
 <template>
-<router-view></router-view>
+  <router-view></router-view>
   <div class="hotProducts">
     <div class="title">热门<span style="color: #004ea2">产品</span></div>
     <div class="hotProductBox">
-      <div class="hotProduct" v-for="(item, index) in productList" :key="index" @click="toProductInfo()">
-        <div class="hotProductPic"><img :src="item.img" alt="" /><div class="shadow"></div></div>
+      <div
+        class="hotProduct"
+        v-for="(item, index) in productList"
+        :key="index"
+        @click="toProductInfo()"
+      >
+        <div class="hotProductPic">
+          <img :src="item.img" alt="" />
+          <div class="shadow"></div>
+        </div>
         <div class="hotProductName">{{ item.name }}</div>
       </div>
     </div>
     <div class="aboutIt">
-      <div class="aboutMore">了解更多&nbsp;&nbsp;<div class="aboutArrow">></div></div>
-      
+      <div class="aboutMore">
+        了解更多&nbsp;&nbsp;
+        <div class="aboutArrow">></div>
+      </div>
     </div>
   </div>
 </template>
@@ -29,16 +39,15 @@ export default {
         { img: require("../../assets/p3.png"), name: "染料" },
       ],
     };
-   
-  }, 
+  },
   methods: {
-      toProductInfo() {
+    toProductInfo() {
       this.$router.push({
         path: "/productInfo",
       });
     },
-},
-}
+  },
+};
 </script>
 <style scoped>
 .hotProducts {
@@ -76,19 +85,18 @@ export default {
 /* 大图片 */
 .hotProduct:nth-of-type(1) {
   width: 49.9vw;
-height: 36.6vw;
-
+  height: 36.6vw;
 }
 .hotProduct:nth-of-type(1) .hotProductPic {
   width: 49.9vw;
   height: 31.46vw;
 }
 .hotProduct:nth-of-type(1) .hotProductPic > img {
-    width: 49.9vw;
+  width: 49.9vw;
   height: 31.46vw;
 }
 .hotProduct:nth-of-type(1) .hotProductName {
-width: 49.9vw;
+  width: 49.9vw;
   height: 5vw;
   line-height: 5vw;
   font-size: 2.4vw;
@@ -126,18 +134,17 @@ width: 49.9vw;
   height: 100%;
   background-color: #000;
   opacity: 0;
- pointer-events: none;
-   transition: all 0.6s;
+  pointer-events: none;
+  transition: all 0.6s;
 }
 /*遮罩 */
-.hotProductPic > img:hover + .shadow{
+.hotProductPic > img:hover + .shadow {
   opacity: 0.4;
-
 }
 .hotProductName {
   width: 100%;
   height: 2.5vw;
-font-size: 1.2vw;
+  font-size: 1.2vw;
   line-height: 2.5vw;
   background-color: #2867b4;
   color: #fff;
@@ -160,12 +167,12 @@ font-size: 1.2vw;
 .aboutMore {
   position: relative;
   width: 6.77vw;
-height: 1.15vw;
-font-size: 1.15vw;
-font-family: Source Han Sans SC VF;
-font-weight: bold;
-color: #004EA2;
-line-height: 1.15vw;
+  height: 1.15vw;
+  font-size: 1.15vw;
+  font-family: Source Han Sans SC VF;
+  font-weight: bold;
+  color: #004ea2;
+  line-height: 1.15vw;
 }
 .aboutArrow {
   position: absolute;
@@ -184,5 +191,4 @@ line-height: 1.15vw;
     right: 0.52vw;
   }
 }
-
 </style>

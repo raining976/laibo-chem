@@ -1,6 +1,9 @@
 <template>
   <div class="register">
     <div class="content">
+     <div class="titleBox">
+       <h3>用户注册</h3>
+     </div>
       <el-form
         :model="ruleForm"
         status-icon
@@ -132,7 +135,7 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-            this.bouncedMsg();
+          this.bouncedMsg();
         } else {
           console.log("error submit!!");
           return false;
@@ -147,7 +150,7 @@ export default {
         confirmButtonText: "确定",
         // 进入主页路由
         // callback: (action) => {
-          
+
         // },
       });
     },
@@ -220,6 +223,12 @@ export default {
 .el-icon-circle-check {
   color: #a0c792;
 }
+/* 按钮盒子 */
+.el-form-item__content{
+  display: flex;
+  justify-content: flex-end;
+}
+
 </style>
 <style scoped>
 .register {
@@ -230,7 +239,25 @@ export default {
   height: 900px;
 }
 .content {
-  height: 750px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 700px;
   width: 700px;
 }
+.titleBox{
+  display: flex;
+  justify-content: flex-end;
+  width: 670px;
+}
+h3 {
+  width: 530px;
+  text-align: center;
+  font-size: 48px;
+  font-family: Microsoft YaHei UI;
+  font-weight: bold;
+  color: var(--color);
+  margin-bottom: 50px;
+}
+
 </style>
