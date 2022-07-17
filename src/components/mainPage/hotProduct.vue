@@ -43,7 +43,7 @@ export default {
 <style scoped>
 .hotProducts {
   width: 100%;
-  height: 57.4vw;
+  height: 1102.08px;
   background: #ffffff;
   display: flex;
   flex-direction: column;
@@ -52,19 +52,19 @@ export default {
 }
 .title {
   width: 100%;
-  height: 3.13vw;
-  font-size: 3.13vw;
-  padding: 4.17vw 0 2.6vw;
+  height: 60.1px;
+  font-size: 60.1px;
+  padding: 80.06px 0 49.92px;
   font-family: Microsoft YaHei UI;
   font-weight: bold;
   color: #000;
   background-color: #fff;
-  line-height: 3.13vw;
+  line-height: 60.1px;
   text-align: center;
 }
 .hotProductBox {
-  width: 100%;
-  height: 36.61vw;
+  width: 1920px;
+  height: 702.91px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -75,47 +75,47 @@ export default {
 }
 /* 大图片 */
 .hotProduct:nth-of-type(1) {
-  width: 49.9vw;
-height: 36.6vw;
+  width: 958.08px;
+height: 702.72px;
 
 }
 .hotProduct:nth-of-type(1) .hotProductPic {
-  width: 49.9vw;
-  height: 31.46vw;
+  width: 958.08px;
+  height: 604.03px;
 }
 .hotProduct:nth-of-type(1) .hotProductPic > img {
-    width: 49.9vw;
-  height: 31.46vw;
+    width: 958.08px;
+  height: 604.03px;
 }
 .hotProduct:nth-of-type(1) .hotProductName {
-width: 49.9vw;
-  height: 5vw;
-  line-height: 5vw;
-  font-size: 2.4vw;
+width: 958.08px;
+  height: 96px;
+  line-height: 96px;
+  font-size: 46.08px;
   background-color: #2867b4;
   color: #fff;
   text-align: center;
 }
 .hotProduct {
-  width: 24.9vw;
-  height: 18.23vw;
+  width: 478.08px;
+  height: 350.02px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 0.05vw 0.1vw 0 0;
+  margin: 0.96px 1.92px 0 0;
   overflow: hidden;
 }
 .hotProductPic {
   position: relative;
-  width: 24.9vw;
-  height: 15.73vw;
+  width: 478.08px;
+  height: 302.02px;
   overflow: hidden;
   cursor: pointer;
   /* ?? */
 }
 .hotProductPic > img {
-  width: 24.9vw;
-  height: 15.73vw;
+  width: 478.08px;
+  height: 302.02px;
   object-fit: contain;
 }
 .shadow {
@@ -136,52 +136,57 @@ width: 49.9vw;
 }
 .hotProductName {
   width: 100%;
-  height: 2.5vw;
-font-size: 1.2vw;
-  line-height: 2.5vw;
+  height: 48px;
+font-size: 23.04px;
+  line-height: 48px;
   background-color: #2867b4;
   color: #fff;
   text-align: center;
 }
 .aboutIt {
-  margin: 3.13vw 0 0 0;
-  width: 11.56vw;
-  height: 3.13vw;
+  margin: 60.1px 0 0 0;
+  width: 221.95px;
+  height: 60.1px;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 0.1vw solid #004ea2;
-  border-radius: 0.26vw;
+  border: 1.92px solid #004ea2;
+  border-radius: 4.99px;
   cursor: pointer;
+  transition: all 0.8s;
 }
 .aboutIt:hover {
-  border: 0.2vw solid #004ea2;
+
+  background-color: #004EA2;
+}
+.aboutIt:hover .aboutMore {
+    color: #fff;
 }
 .aboutMore {
   position: relative;
-  width: 6.77vw;
-height: 1.15vw;
-font-size: 1.15vw;
+  width: 129.98px;
+height: 22.08px;
+font-size: 22.08px;
 font-family: Source Han Sans SC VF;
 font-weight: bold;
 color: #004EA2;
-line-height: 1.15vw;
+line-height: 22.08px;
 }
 .aboutArrow {
   position: absolute;
-  font-size: 0.73vw;
+  font-size: 22px;
   top: 0px;
   animation: moveArrow 1s ease-out 0.5s infinite alternate;
 }
 @keyframes moveArrow {
   0% {
-    right: 0vw;
+    right: 0px;
   }
   50% {
-    right: 0.42vw;
+    right: 8.06px;
   }
   100% {
-    right: 0.52vw;
+    right: 9.98px;
   }
 }
 

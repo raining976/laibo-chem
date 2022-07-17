@@ -1,7 +1,7 @@
 // 公司简介
 <template>
   <div class="profileBox">
-    <div class="title"><sapn style="color: #004ea2">公司</sapn>简介</div>
+    <div class="title"><span style="color: #004ea2">公司</span>简介</div>
     <div class="profile">
       <div class="companyPic"><img :src="companyPic" alt="" /></div>
       <div class="companyInfo">

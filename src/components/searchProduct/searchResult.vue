@@ -53,23 +53,23 @@ export default {
   align-items: center;
 }
 .solidLine {
-  width: 73.44vw;
-  height: 0.05vw;
-  border-bottom: 0.05vw solid #999999;
+  width: 1410.05px;
+  height: 0.96px;
+  border-bottom: 0.96px solid #999999;
   margin: 0 auto;
 }
 .tip {
-  width: 73.44vw;
-  height: 1.25vw;
-  font-size: 1.25vw;
-  margin: 1.56vw 0 1.3vw;
+  width: 1410.05px;
+  height: 24px;
+  font-size: 24px;
+  margin: 29.95px 0 24.96px;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #333333;
-  line-height: 1.25vw;
+  line-height: 24px;
 }
 .resultBox {
-  width: 73.44vw;
+  width: 1410.05px;
   overflow: hidden;
 }
 .result {
@@ -77,41 +77,41 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 73.44vw;
-  height: 15.63vw;
-  margin: 0 0 1.04vw 0;
-  border-radius: 0.26vw;
+  width: 1410.05px;
+  height: 300.1px;
+  margin: 0 0 19.97px 0;
+  border-radius: 4.99px;
   overflow: hidden;
   background-color: #f7f7f7;
 }
 .resultPic {
-  width: 15.42vw;
-  height: 12.81vw;
-  margin: 0 2.4vw 0 0;
+  width: 296.06px;
+  height: 245.95px;
+  margin: 0 46.08px 0 0;
   background: #ffffff;
-  border-radius: 0.26vw;
+  border-radius: 4.99px;
   overflow: hidden;
 }
 .resultPic > img {
-  width: 15.42vw;
-  height: 12.81vw;
+  width: 296.06px;
+  height: 245.95px;
   object-fit: contain;
 }
 .resultInfo {
-  width: 53.54vw;
-  height: 12.81vw;
+  width: 1027.97px;
+  height: 245.95px;
   display: flex;
   flex-direction: column;
 }
 .resultName_zh {
   /* width: 100%; */
-  height: 1.61vw;
-  margin: 0 0 1.35vw 0;
-  font-size: 1.56vw;
+  height: 30.91px;
+  margin: 0 0 25.92px 0;
+  font-size: 29.95px;
   font-family: Microsoft YaHei UI;
   font-weight: 600;
   color: #004ea2;
-  line-height: 1.61vw;
+  line-height: 30.91px;
   cursor: pointer;
 }
 .resultName_zh>span:hover {
@@ -119,13 +119,13 @@ export default {
 }
 .resultName_en {
   width: 100%;
-  height: 1.41vw;
-  margin: 0 0 1.15vw 0;
-  font-size: 1.25vw;
+  height: 27.07px;
+  margin: 0 0 22.08px 0;
+  font-size: 24px;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #333333;
-  line-height: 1.41vw;
+  line-height: 27.07px;
 }
 .resultDetail {
   width: 100%;
@@ -134,34 +134,34 @@ export default {
   overflow: hidden;
 }
 ._data {
-  width: 20.63vw;
-  height: 0.94vw;
-  margin: 0.83vw 0.21vw 0.83vw 0;
-  font-size: 0.94vw;
+  width: 396.1px;
+  height: 18.05px;
+  margin: 15.94px 4.03px 15.94px 0;
+  font-size: 18.05px;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #333333;
-  line-height: 0.94vw;
+  line-height: 18.05px;
 }
 .addCart {
   position: absolute;
-  width: 9.69vw;
-  height: 2.6vw;
+  width: 186.05px;
+  height: 49.92px;
   display: flex;
   justify-content: center;
   align-items: center;
   color: #004ea2;
-  font-size: 1.04vw;
+  font-size: 19.97px;
   background: #ffffff;
-  border-radius: 0.26vw;
-  bottom: 1.56vw;
-  right: 4.9vw;
+  border-radius: 4.99px;
+  bottom: 29.95px;
+  right: 94.08px;
   cursor: pointer;
 }
 .addCart > img {
-  margin: 0 0 0 0.42vw;
-  width: 1.72vw;
-  height: 1.56vw;
+  margin: 0 0 0 8.06px;
+  width: 33.02px;
+  height: 29.95px;
 }
 .addCart:hover {
   text-decoration: underline;
