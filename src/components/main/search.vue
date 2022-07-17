@@ -3,7 +3,9 @@
   <div class="search">
     <div class="h">
       <div class="logoBox">
-        <router-link to="/mainPage"><img  src="../../assets/logo1.png" alt=""  /></router-link>
+        <router-link to="/mainPage"
+          ><img src="../../assets/logo1.png" alt=""
+        /></router-link>
       </div>
       <div class="searchBox">
         <div class="inputBox">
@@ -31,13 +33,13 @@ export default {
       toILabPlus: "进入iLabplus平台",
     };
   },
-  methods:{
+  methods: {
     toSearchResult() {
       this.$router.push({
         path: "/searchResult",
       });
     },
-  }
+  },
 };
 </script>
 
@@ -53,19 +55,26 @@ export default {
   height: 187px;
   margin: 0 auto;
 }
+.logoBox {
+  flex: 1;
+}
 .searchBox {
+  flex: 7;
   display: flex;
   width: 870px;
   height: 80px;
   border: 2px solid #666666;
   border-radius: 1px;
+  margin: 0 50px;
 }
 .inputBox {
+  flex: 6;
   height: 80px;
 }
 input {
-  padding: 0 80px;
-  width: 570px;
+  padding: 0 50px;
+  /* width: 570px; */
+  width: calc(100% - 100px);
   height: 100%;
   font-size: 22px;
 }
@@ -77,6 +86,7 @@ input::-webkit-input-placeholder {
   line-height: 80px;
 }
 .searchBtn {
+  flex: 2;
   display: flex;
   justify-content: center;
   align-items: center;

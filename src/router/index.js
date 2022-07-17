@@ -2,11 +2,20 @@ import { createRouter, createWebHashHistory } from "vue-router";
 // 路由懒加载
 const main = () => import("../views/appMain.vue");
 const adminLogIn = () => import("../views/admin/adminLogIn.vue");
+const searchHead = () => import("../components/main/search.vue");
 const register = () => import("../components/register/register.vue");
 const searchResult = () => import("../components/searchProduct/searchResult.vue");
 const mainPage = () => import("../views/mainPage.vue")
 const productInfo = () => import("../components/searchProduct/productInfo.vue");
+// 用户信息页
 const userInfo = () => import("../views/userInfo.vue");
+const cart = () => import("../components/userInfo/shopCart.vue");
+const order = () => import("../components/userInfo/myOrder.vue");
+const team = () => import("../components/userInfo/team.vue");
+const address = () => import("../components/userInfo/receiveAddress.vue");
+const info = () => import("../components/userInfo/userInfoChange.vue");
+
+
 
 
 const routes = [
@@ -17,14 +26,22 @@ const routes = [
     children: [
       {
         path: "/register",
-        components:{
-          table:register,
+        components: {
+          table: register,
         }
       },
       {
+        path: "/searchHead",
+        components: {
+          search: searchHead,
+        }
+      },
+      {
+        name:'mainPage',
         path: "/mainPage",
         components: {
           table: mainPage,
+          search: searchHead,
         }
       },
       {
@@ -32,6 +49,7 @@ const routes = [
         name: "searchResult",
         components: {
           table: searchResult,
+          search: searchHead,
         }
       },
       {
@@ -39,21 +57,49 @@ const routes = [
         name: "productInfo",
         components: {
           table: productInfo,
+          search: searchHead,
         }
       },
-
-
       {
         path: "/userInfo",
-        component: userInfo,
+        components: {
+          table: userInfo,
+        },
+        redirect: "/cart",
+        children: [
+          {
+            path: '/cart',
+            name: 'cart',
+            component: cart,
+          },
+          {
+            path: '/order',
+            name: 'order',
+            component: order,
+          },
+          {
+            path: '/team',
+            name: 'team',
+            component: team,
+          },
+          {
+            path: '/address',
+            name: 'address',
+            component: address,
+          },
+          {
+            path: '/info',
+            name: 'info',
+            component: info,
+          },
+        ],
       }
-
     ]
   },
   {
     path: "/adminLogIn",
     name: "adminLogIn",
-    component: adminLogIn
+    component: adminLogIn,
   },
 
 

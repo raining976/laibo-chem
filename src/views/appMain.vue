@@ -1,7 +1,7 @@
 
 <template>
   <appNav />
-  <search />
+  <router-view name="search"></router-view>
   <router-view name="table"></router-view>
   <appFooter />
   <copyRight />
@@ -12,7 +12,6 @@
 <script>
 import appNav from "../components/main/appNav.vue";
 import appFooter from "../components/main/appFooter.vue";
-import search from "../components/main/search.vue";
 import copyRight from "../components/main/copyRight.vue";
 import logIn from "../components/logIn/logIn.vue";
 
@@ -21,7 +20,6 @@ export default {
   components: {
     appNav,
     appFooter,
-    search,
     copyRight,
     logIn,
   
