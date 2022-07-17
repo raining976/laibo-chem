@@ -198,8 +198,8 @@ export default {
 .line {
   width: 33px;
   height: 1px;
-  background: #004ea2;
-  border: 1.5px solid #004ea2;
+  background: var(--color);
+  border: 1.5px solid var(--color);
 }
 .iconUl {
   display: flex;

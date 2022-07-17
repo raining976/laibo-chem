@@ -1,8 +1,9 @@
+
 <template>
   <div class="search">
     <div class="h">
       <div class="logoBox">
-        <img src="../../assets/logo1.png" alt="" />
+        <router-link to="/mainPage"><img  src="../../assets/logo1.png" alt=""  /></router-link>
       </div>
       <div class="searchBox">
         <div class="inputBox">

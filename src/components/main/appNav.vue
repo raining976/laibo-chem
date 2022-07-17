@@ -14,7 +14,7 @@
         </ul>
         <div class="btnBox">
           <span class="btn logIn" @click="showLogIn()">{{ logIn }}</span>
-          <span class="btn register">{{ register }}</span>
+          <span class="btn register" @click="toRegister()">{{ register }}</span>
         </div>
         <div class="zh_enBox" @click="isActive = !isActive">
           <span class="zh language" :class="{ choose: isActive }">中</span>
@@ -46,7 +46,11 @@ export default {
   methods: {
     showLogIn(){
       this.$parent.isShowLogIn=!this.$parent.isShowLogIn
+    },
+    toRegister(){
+      this.$router.push("/register")
     }
+
   },
 };
 </script>
@@ -106,7 +110,7 @@ export default {
 }
 .btnBox .btn:hover {
   background-color: #fec79a;
-  color: #004ea2;
+  color: var(--color);
 }
 .zh_enBox {
   width: 50px;

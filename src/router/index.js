@@ -4,37 +4,50 @@ const main = () => import("../views/appMain.vue");
 const adminLogIn = () => import("../views/admin/adminLogIn.vue");
 const register = () => import("../components/register/register.vue");
 const searchResult = () => import("../components/searchProduct/searchResult.vue");
-// const productInfo = () => import("../components/searchProduct/productInfo.vue");
+const mainPage = () => import("../views/mainPage.vue")
+const productInfo = () => import("../components/searchProduct/productInfo.vue");
+const userInfo = () => import("../views/userInfo.vue");
+
 
 const routes = [
   {
     path: "/",
     component: main,
+    redirect: "/mainPage",
     children: [
       {
         path: "/register",
-        component:register,
+        components:{
+          table:register,
+        }
       },
       {
-        path: "/",
-        components:{
-          table: () => import("../views/mainPage.vue"),
-         }
+        path: "/mainPage",
+        components: {
+          table: mainPage,
+        }
       },
- {
-    path: "searchResult",
-    name: "searchResult",
-    components:{
-      table: () => import("../components/searchProduct/searchResult.vue"),
-     }
-  },
-  {
-    path: "productInfo",
-    name: "productInfo",
-    components:{
-     table: () => import("../components/searchProduct/productInfo.vue"),
-    }
-  }
+      {
+        path: "searchResult",
+        name: "searchResult",
+        components: {
+          table: searchResult,
+        }
+      },
+      {
+        path: "productInfo",
+        name: "productInfo",
+        components: {
+          table: productInfo,
+        }
+      },
+
+
+      {
+        path: "/userInfo",
+        component: userInfo,
+      }
+
     ]
   },
   {
@@ -42,7 +55,7 @@ const routes = [
     name: "adminLogIn",
     component: adminLogIn
   },
-  
+
 
 ];
 

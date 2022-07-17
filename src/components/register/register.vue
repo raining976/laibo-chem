@@ -166,7 +166,7 @@ export default {
   transition: 0.2s;
 }
 .el-button--primary {
-  background: #004ea2;
+  background: var(--color);
 }
 .el-button--primary:hover,
 .el-button--primary:focus {
@@ -207,7 +207,7 @@ export default {
   border-color: #78b3f3;
 }
 .el-input__inner:focus {
-  border-color: #004ea2;
+  border-color: var(--color);
 }
 /* 后置判断标识 */
 .el-input__suffix {

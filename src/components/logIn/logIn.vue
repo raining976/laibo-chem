@@ -78,7 +78,7 @@ export default {
   font-size: 48px;
   font-family: Microsoft YaHei UI;
   font-weight: bold;
-  color: #004ea2;
+  color: var(--color);
 }
 .inputBox {
   width: 395px;
@@ -117,7 +117,7 @@ input::-webkit-input-placeholder {
   font-size: 18px;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
-  color: #004ea2;
+  color: var(--color);
   border-left: 1px solid #999999;
   padding-left: 12px;
   cursor: pointer;
@@ -131,7 +131,7 @@ input::-webkit-input-placeholder {
   font-weight: 400;
 }
 .psdLogIn {
-  color: #004ea2;
+  color: var(--color);
   cursor: pointer;
 }
 
@@ -142,7 +142,7 @@ input::-webkit-input-placeholder {
 .logInBtn {
   width: 394px;
   height: 61px;
-  background: #004ea2;
+  background: var(--color);
   border-radius: 5px;
   font-size: 24px;
   font-family: Microsoft YaHei UI;
@@ -154,15 +154,15 @@ input::-webkit-input-placeholder {
   transition: all 0.3s;
 }
 .logInBtn:hover {
-  box-shadow: 0px 4px 16px -6px #004ea2;
-  --webkit-box-shadow: 0px 4px 16px -6px #004ea2;
-  --moz-box-shadow: 0px 4px 16px -6px #004ea2;
+  box-shadow: 0px 4px 16px -6px var(--color);
+  --webkit-box-shadow: 0px 4px 16px -6px var(--color);
+  --moz-box-shadow: 0px 4px 16px -6px var(--color);
 }
 .forgotPsd {
   font-size: 18px;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
-  color: #004ea2;
+  color: var(--color);
   cursor: pointer;
 }
 </style>

@@ -1,3 +1,4 @@
+
 <template>
   <appNav />
   <search />
@@ -40,4 +41,5 @@ export default {
 </script>
 
 <style>
+
 </style>
