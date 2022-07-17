@@ -28,7 +28,6 @@
 
 <script>
 export default {
-
   name: "appNav",
   data() {
     return {
@@ -44,13 +43,12 @@ export default {
     };
   },
   methods: {
-    showLogIn(){
-      this.$parent.isShowLogIn=!this.$parent.isShowLogIn
+    showLogIn() {
+      this.$parent.isShowLogIn = !this.$parent.isShowLogIn;
     },
-    toRegister(){
-      this.$router.push("/register")
-    }
-
+    toRegister() {
+      this.$router.push("/register");
+    },
   },
 };
 </script>
@@ -70,7 +68,7 @@ export default {
   font-size: 18px;
   /* visual */
   background: #e3f5ff;
-  box-shadow: 0px 0px 40px 0px rgba(0, 78, 162, 0.15);
+  box-shadow: 0px 0px 40px 0px rgba(0, 78, 162, 0.23) inset;
   /* 内部阴影 */
 }
 .h {
