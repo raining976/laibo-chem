@@ -1,17 +1,27 @@
 // 热门产品
 <template>
-<router-view></router-view>
+  <router-view></router-view>
   <div class="hotProducts">
     <div class="title">热门<span style="color: #004ea2">产品</span></div>
     <div class="hotProductBox">
-      <div class="hotProduct" v-for="(item, index) in productList" :key="index" @click="toProductInfo()">
-        <div class="hotProductPic"><img :src="item.img" alt="" /><div class="shadow"></div></div>
+      <div
+        class="hotProduct"
+        v-for="(item, index) in productList"
+        :key="index"
+        @click="toProductInfo()"
+      >
+        <div class="hotProductPic">
+          <img :src="item.img" alt="" />
+          <div class="shadow"></div>
+        </div>
         <div class="hotProductName">{{ item.name }}</div>
       </div>
     </div>
     <div class="aboutIt">
-      <div class="aboutMore">了解更多&nbsp;&nbsp;<div class="aboutArrow">></div></div>
-      
+      <div class="aboutMore">
+        了解更多&nbsp;&nbsp;
+        <div class="aboutArrow">></div>
+      </div>
     </div>
   </div>
 </template>
@@ -29,16 +39,15 @@ export default {
         { img: require("../../assets/p3.png"), name: "染料" },
       ],
     };
-   
-  }, 
+  },
   methods: {
-      toProductInfo() {
+    toProductInfo() {
       this.$router.push({
         path: "/productInfo",
       });
     },
-},
-}
+  },
+};
 </script>
 <style scoped>
 .hotProducts {
@@ -126,13 +135,12 @@ width: 958.08px;
   height: 100%;
   background-color: #000;
   opacity: 0;
- pointer-events: none;
-   transition: all 0.6s;
+  pointer-events: none;
+  transition: all 0.6s;
 }
 /*遮罩 */
-.hotProductPic > img:hover + .shadow{
+.hotProductPic > img:hover + .shadow {
   opacity: 0.4;
-
 }
 .hotProductName {
   width: 100%;
@@ -189,5 +197,4 @@ line-height: 22.08px;
     right: 9.98px;
   }
 }
-
 </style>

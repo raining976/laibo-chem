@@ -7,7 +7,7 @@
             v-for="(item, index) in menuLists"
             :key="index"
             :class="{ chosen: index == currentIndex }"
-            @click="currentIndex = index"
+            @click="routerTo(index)"
           >
             {{ item.menuName }}
           </li>
@@ -42,12 +42,49 @@ export default {
       currentIndex: 0, // 当前选中的菜单索引
     };
   },
+  watch: {
+    // 监听路由
+    $route: {
+      handler() {
+        let routeName = this.$route.name;
+        switch (routeName) {
+          case "mainPage":
+            this.currentIndex = 0;
+            break;
+          case "order":
+            this.currentIndex = 1;
+            break;
+          case "cart":
+            this.currentIndex = 2;
+            break;
+          default:
+            break;
+        }
+      },
+      immediate: true,
+    },
+  },
   methods: {
     showLogIn() {
       this.$parent.isShowLogIn = !this.$parent.isShowLogIn;
     },
     toRegister() {
       this.$router.push("/register");
+    },
+    routerTo(index) {
+      switch (index) {
+        case 0:
+          this.$router.push("/mainPage");
+          break;
+        case 1:
+          this.$router.push("/order");
+          break;
+        case 2:
+          this.$router.push("/cart");
+          break;
+        default:
+          break;
+      }
     },
   },
 };

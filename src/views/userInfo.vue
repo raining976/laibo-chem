@@ -1,8 +1,26 @@
 <template>
-  <div class="userInfo">\
-    <div class="contentBox">
-        <div class="menuBox"></div>
-        <div class="menuContent"></div>
+  <div class="userInfo">
+    <div class="h">
+      <div class="contentBox">
+        <div class="menuBox">
+          <ul class="menuUl">
+            <li
+              class="eachSelect"
+              v-for="(item, index) in menuList"
+              :key="index"
+              :class="{ choose: currentIdx == index }"
+              @click="chooseThis(index)"
+            >
+              {{ item.selectName }}
+              <span class="square"></span>
+            </li>
+          </ul>
+        </div>
+        <div class="line"></div>
+        <div class="menuContent">
+          <router-view></router-view>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -10,7 +28,70 @@
 <script>
 export default {
   name: "userInfo",
-
+  data() {
+    return {
+      menuList: [
+        { selectName: "购物车" },
+        { selectName: "我的订单" },
+        { selectName: "团队管理" },
+        { selectName: "收货地址" },
+        { selectName: "个人信息" },
+      ],
+      currentIdx: 0, // 当前选中的菜单选项
+    };
+  },
+  watch: {
+    // 监听路由
+    $route: {
+      handler() {
+        let name = this.$route.name
+        switch (name) {
+          case 'cart':
+            this.currentIdx = 0
+            break;
+          case 'order':
+            this.currentIdx = 1
+            break;
+          case 'team':
+            this.currentIdx = 2
+            break;
+          case 'address':
+            this.currentIdx = 3
+            break;
+          case 'info':
+            this.currentIdx = 4
+            break;
+          default:
+            break;
+        }
+      },
+      immediate: true,
+    },
+  },
+  methods: {
+    // 跳转到对应路由
+    chooseThis(idx) {
+      switch (idx) {
+        case 0:
+          this.$router.push("/cart");
+          break;
+        case 1:
+          this.$router.push("/order");
+          break;
+        case 2:
+          this.$router.push("/team");
+          break;
+        case 3:
+          this.$router.push("/address");
+          break;
+        case 4:
+          this.$router.push("/info");
+          break;
+        default:
+          break;
+      }
+    },
+  },
 };
 </script>
 
@@ -19,5 +100,51 @@ export default {
 .userInfo {
   width: 100%;
   height: 1054px;
+}
+.contentBox {
+  display: flex;
+}
+.menuBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 330px;
+}
+.eachSelect {
+  position: relative;
+  text-align: start;
+  line-height: 50px;
+  width: calc(307px - 82px);
+  padding: 0 41px;
+  height: 50px;
+  border-radius: 5px;
+  font-size: 18px;
+  font-family: Microsoft YaHei UI;
+  font-weight: bold;
+  color: #4a4a4a;
+  cursor: pointer;
+  margin: 8px 0;
+  transition: all 0.3s;
+  /* background: #e3f5ff; */
+}
+
+.choose {
+  background: #e3f5ff;
+}
+.choose .square {
+  transition: all 0.3s;
+  position: absolute;
+  left: 24px;
+  top: 21px;
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background: #004ea2;
+}
+.line {
+  width: 3px;
+  background-color: #eaeaec;
+  height: 862px;
+  margin-top: 12px;
 }
 </style>
