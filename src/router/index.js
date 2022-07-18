@@ -62,6 +62,14 @@ const routes = [
         }
       },
       {
+        path: "moreNewsArticle",
+        name: "moreNewsArticle",
+        components: {
+          table: moreNewsArticle,
+          search: searchHead,
+        }
+      },
+      {
         path: "/userInfo",
         components: {
           table: userInfo,
@@ -94,13 +102,6 @@ const routes = [
             component: info,
           },
         ],
-      },
-      {
-        path: "/moreNewsArticle",
-        name: "moreNewsArticle",
-        components: {
-          table: moreNewsArticle,
-        }
       },
     ]
   },
