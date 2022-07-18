@@ -15,7 +15,7 @@
             <!-- 以下为 不是-->
             <div class="oneDetail">
               <div class="detailName">CAS编号:</div>
-              <div class="detailContent">{{ CAScode }}</div>
+              <div class="detailContent">{{ casCode }}</div>
             </div>
 
             <div class="oneDetail">
@@ -30,12 +30,12 @@
 
             <div class="oneDetail">
               <div class="detailName">EINECS编号:</div>
-              <div class="detailContent">{{ EINECScode }}</div>
+              <div class="detailContent">{{ einecsCode }}</div>
             </div>
 
             <div class="oneDetail">
               <div class="detailName">MDL:</div>
-              <div class="detailContent">{{ MDLcode }}</div>
+              <div class="detailContent">{{ mdlCode }}</div>
             </div>
 
             <div class="oneDetail">
@@ -69,14 +69,28 @@
             <div class="delivery">预计交期：{{ delivery }}</div>
           </div>
           <!-- 价格 -->
-          <div class="aprize">
-            <el-table :data="tableData" style="width: 100%" height="250">
-              <el-table-column prop="date" label="Date" width="150" />
-              <el-table-column prop="name" label="Name" width="120" />
-              <el-table-column prop="state" label="State" width="120" />
-              <el-table-column prop="city" label="City" width="120" />
-              <el-table-column prop="address" label="Address" width="150" />
-              <el-table-column prop="zip" label="Zip" width="120" />
+          <div class="prize">
+            <el-table :data="tableData" style="width: 100%" height="174" border="true">
+              <el-table-column prop="huohao" label="货号" width="180" >
+<!-- {{item.huohao}} v-for="(item, index) in tableData" :key="index"-->
+              </el-table-column>
+              <el-table-column prop="size" label="规格" width="140" >
+<!-- {{item.size}} -->
+              </el-table-column>
+              <el-table-column prop="rmb" label="售价(RMB)" width="170" >
+<!-- {{item.rmb}} -->
+              </el-table-column>
+              <el-table-column prop="rmb_vip" label="会员价(RMB)" width="170" >
+<!-- {{item.rmb_vip}} -->
+              </el-table-column>
+              <el-table-column prop="count" label="数量" width="210">
+                    <div class="selectCount">
+                    <div>-</div>
+                    <div>{{count}}</div>
+                    <div>+</div>   
+                    </div>
+                    
+              </el-table-column>
             </el-table>
           </div>
         </div>
@@ -98,36 +112,32 @@ export default {
       concentration: ">95%",
   tableData : [
   {
-    date: '2016-05-03',
-    name: 'Tom',
-    state: 'California',
-    city: 'Los Angeles',
-    address: 'No. 189, Grove St, Los Angeles',
-    zip: 'CA 90036',
+    huohao: '2016-05-03',
+    size: 'Tom',
+    rmb: 'California',
+    rmb_vip: 'Los Angeles',
+    count: 0,
   },
   {
-    date: '2016-05-02',
-    name: 'Tom',
-    state: 'California',
-    city: 'Los Angeles',
-    address: 'No. 189, Grove St, Los Angeles',
-    zip: 'CA 90036',
+    huohao: '2016-05-02',
+    size: 'Tom',
+    rmb: 'California',
+    rmb_vip: 'Los Angeles',
+    count: 0,
   },
   {
-    date: '2016-05-04',
-    name: 'Tom',
-    state: 'California',
-    city: 'Los Angeles',
-    address: 'No. 189, Grove St, Los Angeles',
-    zip: 'CA 90036',
+    huohao: '2016-05-04',
+    size: 'Tom',
+    rmb: 'California',
+    rmb_vip: 'Los Angeles',
+    count: 0,
   },
    {
-    date: '2016-05-04',
-    name: 'Tom',
-    state: 'California',
-    city: 'Los Angeles',
-    address: 'No. 189, Grove St, Los Angeles',
-    zip: 'CA 90036',
+    huohao: '2016-05-04',
+    size: 'Tom',
+    rmb: 'California',
+    rmb_vip: 'Los Angeles',
+    count: 0,
   },
 ]
     };
@@ -261,7 +271,7 @@ export default {
 }
 .prize {
   width: 99.5%;
-  height: 173.95px;
+  height: 174px;
   border: 0.96px solid #999999;
   border-radius: 4.99px;
   overflow: hidden;
@@ -295,5 +305,8 @@ export default {
 }
 .toCustomize:hover {
   font-weight: 600;
+}
+.selectCount {
+
 }
 </style>

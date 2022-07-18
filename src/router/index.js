@@ -4,7 +4,7 @@ const main = () => import("../views/appMain.vue");
 const adminLogIn = () => import("../views/admin/adminLogIn.vue");
 const searchHead = () => import("../components/main/search.vue");
 const register = () => import("../components/register/register.vue");
-const searchResult = () => import("../components/searchProduct/searchResult.vue");
+const searchResult = () => import("../views/searchResult.vue");
 const mainPage = () => import("../views/mainPage.vue")
 const productInfo = () => import("../components/searchProduct/productInfo.vue");
 // 用户信息页
@@ -14,7 +14,8 @@ const order = () => import("../components/userInfo/myOrder.vue");
 const team = () => import("../components/userInfo/team.vue");
 const address = () => import("../components/userInfo/receiveAddress.vue");
 const info = () => import("../components/userInfo/userInfoChange.vue");
-
+// 新闻/文章页
+const moreNewsArticle = () => import("../views/toMoreNewsArticle/moreNewsArtcle.vue")
 
 
 
@@ -93,7 +94,14 @@ const routes = [
             component: info,
           },
         ],
-      }
+      },
+      {
+        path: "/moreNewsArticle",
+        name: "moreNewsArticle",
+        components: {
+          table: moreNewsArticle,
+        }
+      },
     ]
   },
   {

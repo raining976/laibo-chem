@@ -24,44 +24,44 @@ export default {
 <style scoped>
 .carouselBox {
   width: 100%;
-  height: 36.3vw;
+  height: 696.96px;
   overflow: hidden;
 }
 /deep/ .el-carousel {
   width: 100%;
-   height: 36.3vw;
+   height: 696.96px;
    overflow: hidden;
 }
 /* /* 装轮播图的外层容器 */
 /deep/ .el-carousel__container {
   width: 100%;
-  height: 36.3vw;
+  height: 696.96px;
   overflow: hidden;
 }
 /* 装轮播图的容器 */
 /deep/ .el-carousel-item {
-  height: 36.3vw;
+  height: 696.96px;
   display: flex;
   justify-content: space-between;
 }
 /* 底部按钮 */
 /deep/ .el-carousel__button {
-  width: 1.04vw;
-  height: 1.04vw;
+  width: 19.97px;
+  height: 19.97px;
   background-color: #999;
   border-radius: 50%;
 }
 /* 左右按钮 */
 /deep/ .el-carousel__arrow {
-  width: 5.21vw;
-  height: 5.21vw;
+  width: 100.03px;
+  height: 100.03px;
   display: flex;
    justify-content: center;
    align-items: center;
 }
 /deep/ .el-icon-arrow-right, /deep/ .el-icon-arrow-left {
-   width: 2.6vw;
-   height: 2.6vw;
+   width: 49.92px;
+   height: 49.92px;
    display: flex;
    justify-content: center;
    align-items: center;
@@ -70,8 +70,8 @@ export default {
 /deep/ .el-icon-arrow-right::before {
 display: block;
  content: "";
- width: 2.6vw;;
- height: 2.6vw;
+ width: 49.92px;;
+ height: 49.92px;
  background: url('../../assets/箭头 右 (3).png');
  background-position: 100% auto;
  background-size: contain;
@@ -79,8 +79,8 @@ display: block;
 /deep/ .el-icon-arrow-left::before {
   display: block;
  content: "";
- width: 2.6vw;;
- height: 2.6vw;
+ width: 49.92px;;
+ height: 49.92px;
  background: url('../../assets/箭头 左 (3).png');
  background-position: 100% auto;
  background-size: contain;
@@ -88,11 +88,11 @@ display: block;
 /* ------ */
 .imgBox {
   width: 100%;
-  height: 36.3vw;
+  height: 696.96px;
 }
 .imgBox img {
   object-fit: cover;
   width: 100%;
-  height: 36.3vw; 
+  height: 696.96px; 
 }
 </style>

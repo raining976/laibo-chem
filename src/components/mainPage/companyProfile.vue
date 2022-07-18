@@ -32,19 +32,19 @@ export default {
 <style scoped>
 .profileBox {
   width: 100%;
-  height: 39.58vw;
+  height: 759.94px;
   background: #e3f5ff;
   overflow: hidden;
 }
 .title {
   width: 100%;
-  height: 3.13vw;
-  margin: 2.71vw 0 2.29vw 0;
-  font-size: 3.13vw;
+  height: 60.1px;
+  margin: 52.03px 0 43.97px 0;
+  font-size: 60.1px;
   font-family: Microsoft YaHei UI;
   font-weight: bold;
   color: #000;
-  line-height: 3.13vw;
+  line-height: 60.1px;
   text-align: center;
 }
 .profile {
@@ -53,22 +53,22 @@ export default {
   justify-content: center;
 }
 .companyPic {
-  width: 36.46vw;
-  height: 25.78vw;
+  width: 700.03px;
+  height: 494.98px;
   background: transparent;
-  border-radius: 0.26vw;
+  border-radius: 4.99px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 .companyPic > img {
-  width: 36.46vw;
-  height: 25.78vw;
+  width: 700.03px;
+  height: 494.98px;
     object-fit: cover;
 }
 .companyInfo {
-  width: 36.46vw;
-  height: 25.78vw;
+  width: 700.03px;
+  height: 494.98px;
   background: #333333;
   border-radius: 5px;
   background-color: transparent;
@@ -77,18 +77,18 @@ export default {
   align-items: center;
 }
 .companyName {
-  width: 27.29vw;
-  height: 1.88vw;
-  margin: 3.13vw 0 2.4vw 0;
-  font-size: 1.88vw;
+  width: 523.97px;
+  height: 36.1px;
+  margin: 60.1px 0 46.08px 0;
+  font-size: 36.1px;
   font-family: Microsoft YaHei UI;
   font-weight: bold;
   color: #323333;
-  line-height: 1.88vw;
+  line-height: 36.1px;
 }
 .companyMessage {
-    width: 27.55vw;
-font-size: 0.73vw;
+    width: 528.96px;
+font-size: 14.02px;
 font-family: Microsoft YaHei UI;
 font-weight: 300;
 color: #4A4A4A;
@@ -96,7 +96,7 @@ color: #4A4A4A;
 /* ----地图 */
 .regionDistribution {
  width: 100%;
- height: 47.29vw;
+ height: 907.97px;
  display: flex;
  flex-direction: column;
  align-items: center;
@@ -104,25 +104,25 @@ color: #4A4A4A;
 }
 .mapName {
 width: 100%;
-height: 2.5vw;
-font-size: 2.5vw;
-margin: 3.65vw 0 2.29vw 0;
+height: 48px;
+font-size: 48px;
+margin: 70.08px 0 43.97px 0;
 text-align: center;
 font-family: Microsoft YaHei UI;
 font-weight: 400;
 color: #333333;
-line-height: 2.5vw;
+line-height: 48px;
 }
 .map {
-    width: 73.39vw;
-height: 39.01vw;
+    width: 1409.09px;
+height: 748.99px;
 display: flex;
 justify-content: center;
 overflow: hidden;
 }
 .map > img {
-    width: 73.39vw;
-height: 39.01vw;
+    width: 1409.09px;
+height: 748.99px;
 object-fit: cover;
 }
 </style>

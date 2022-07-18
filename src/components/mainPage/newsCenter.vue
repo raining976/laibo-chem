@@ -28,7 +28,7 @@
           </div>
           <div class="dashedLine"></div>
         </div>
-        <div class="newsMore">查看更多&nbsp;></div>
+        <div class="newsMore" @click="toMoreNewsArticle()">查看更多&nbsp;></div>
       </div>
     </div>
   </div>
@@ -79,6 +79,14 @@ export default {
       ],
     };
   },
+  methods:{
+    toMoreNewsArticle() {
+      this.$router.push({
+        path: "/moreNewsArticle",
+        // 传参
+      });
+    },
+  }
 };
 </script>
 <style scoped>

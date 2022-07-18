@@ -28,7 +28,7 @@ export default {
 <style scoped>
 .productsType {
   width: 100%;
-  height: 38.13vw;
+  height: 732.1px;
   background: #f2f2f2;
   display: flex;
   flex-direction: column;
@@ -38,13 +38,13 @@ export default {
 }
 .title {
   width: 100%;
-  height: 3.13vw;
-  font-size: 3.13vw;
-  margin: 3.85vw 0 3.13vw 0;
+  height: 60.1px;
+  font-size: 60.1px;
+  margin: 73.92px 0 60.1px 0;
   font-family: Source Han Sans SC VF;
   font-weight: bold;
   color: #000;
-  line-height: 3.13vw;
+  line-height: 60.1px;
   text-align: center;
 }
 .productTypeBox {
@@ -53,26 +53,26 @@ export default {
   justify-content: center;
 }
 .productType {
-  width: 23.44vw;
-  height: 20.94vw;
-  margin: 0 0.68vw;
+  width: 450.05px;
+  height: 402.05px;
+  margin: 0 13.06px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  border-radius: 0.26vw;
+  border-radius: 4.99px;
   overflow: hidden;
 }
 .productTypePic {
   position: relative;
   width: 100%;
-  height: 17.55vw;
+  height: 336.96px;
   background-color: #fff;
   overflow: hidden;
 
 }
 .productTypePic > img {
-  width: 23.44vw;
-  height: 17.55vw;
+  width: 450.05px;
+  height: 336.96px;
   /* 让图片居中？ */
   /* text-align: center; */
   object-fit: contain;
@@ -83,8 +83,8 @@ export default {
   position: absolute;
   top: 0;
   left: 0;
-  width: 23.44vw;
-  height: 17.55vw;
+  width: 450.05px;
+  height: 336.96px;
   background-color: #000;
   opacity: 0;
  pointer-events: none;
@@ -97,8 +97,8 @@ export default {
 }
 .productTypeName {
   width: 100%;
-  height: 3.44vw;
-  line-height: 3.44vw;
+  height: 66.05px;
+  line-height: 66.05px;
   background-color: #2867b4;
   color: #fff;
   text-align: center;
