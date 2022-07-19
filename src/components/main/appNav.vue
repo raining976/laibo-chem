@@ -58,6 +58,7 @@ export default {
             this.currentIndex = 2;
             break;
           default:
+            this.currentIndex = -1;
             break;
         }
       },

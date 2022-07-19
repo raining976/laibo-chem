@@ -70,82 +70,91 @@
           </div>
           <!-- 价格 -->
           <div class="prize">
-            <el-table :data="tableData" style="width: 100%" height="174" border="true">
-              <el-table-column prop="huohao" label="货号" width="180" >
-<!-- {{item.huohao}} v-for="(item, index) in tableData" :key="index"-->
+            <el-table
+              :data="tableData"
+              style="width: 100%"
+              height="174"
+              border="true"
+            >
+              <el-table-column prop="huohao" label="货号" width="180">
+                <!-- {{item.huohao}} v-for="(item, index) in tableData" :key="index"-->
               </el-table-column>
-              <el-table-column prop="size" label="规格" width="140" >
-<!-- {{item.size}} -->
+              <el-table-column prop="size" label="规格" width="140">
+                <!-- {{item.size}} -->
               </el-table-column>
-              <el-table-column prop="rmb" label="售价(RMB)" width="170" >
-<!-- {{item.rmb}} -->
+              <el-table-column prop="rmb" label="售价(RMB)" width="170">
+                <!-- {{item.rmb}} -->
               </el-table-column>
-              <el-table-column prop="rmb_vip" label="会员价(RMB)" width="170" >
-<!-- {{item.rmb_vip}} -->
+              <el-table-column prop="rmb_vip" label="会员价(RMB)" width="170">
+                <!-- {{item.rmb_vip}} -->
               </el-table-column>
               <el-table-column prop="count" label="数量" width="210">
-                    <div class="selectCount">
-                    <div>-</div>
-                    <div>{{count}}</div>
-                    <div>+</div>   
-                    </div>
-                    
+                <div class="selectCount">
+                  <div>-</div>
+                  <div>{{ count }}</div>
+                  <div>+</div>
+                </div>
               </el-table-column>
             </el-table>
           </div>
         </div>
       </div>
       <div class="addCart">加入购物车</div>
-      <div class="toCustomize">联系客服私人订制></div>
+      <div class="toCustomize" @click="isShow = true">联系客服私人订制></div>
     </div>
+    <private-order v-show="isShow" />
   </div>
 </template>
 <script>
-
+import privateOrder from "../privateOrder/privateOrder.vue";
 export default {
   name: "productInfo",
-  components: "",
+  components: {
+    privateOrder,
+  },
   data() {
     return {
+      isShow: false, // 私人订制是否显示
       pic: require("../../assets/p11.png"),
       name: "T826255 2-(三丁基锡)-5-三氟甲基吡啶",
       concentration: ">95%",
-  tableData : [
-  {
-    huohao: '2016-05-03',
-    size: 'Tom',
-    rmb: 'California',
-    rmb_vip: 'Los Angeles',
-    count: 0,
-  },
-  {
-    huohao: '2016-05-02',
-    size: 'Tom',
-    rmb: 'California',
-    rmb_vip: 'Los Angeles',
-    count: 0,
-  },
-  {
-    huohao: '2016-05-04',
-    size: 'Tom',
-    rmb: 'California',
-    rmb_vip: 'Los Angeles',
-    count: 0,
-  },
-   {
-    huohao: '2016-05-04',
-    size: 'Tom',
-    rmb: 'California',
-    rmb_vip: 'Los Angeles',
-    count: 0,
-  },
-]
+      tableData: [
+        {
+          huohao: "2016-05-03",
+          size: "Tom",
+          rmb: "California",
+          rmb_vip: "Los Angeles",
+          count: 0,
+        },
+        {
+          huohao: "2016-05-02",
+          size: "Tom",
+          rmb: "California",
+          rmb_vip: "Los Angeles",
+          count: 0,
+        },
+        {
+          huohao: "2016-05-04",
+          size: "Tom",
+          rmb: "California",
+          rmb_vip: "Los Angeles",
+          count: 0,
+        },
+        {
+          huohao: "2016-05-04",
+          size: "Tom",
+          rmb: "California",
+          rmb_vip: "Los Angeles",
+          count: 0,
+        },
+      ],
     };
   },
 };
 </script>
 <style scoped>
 .bg {
+  position: relative;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -307,6 +316,5 @@ export default {
   font-weight: 600;
 }
 .selectCount {
-
 }
 </style>

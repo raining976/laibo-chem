@@ -44,24 +44,25 @@ export default {
     // 监听路由
     $route: {
       handler() {
-        let name = this.$route.name
+        let name = this.$route.name;
         switch (name) {
-          case 'cart':
-            this.currentIdx = 0
+          case "cart":
+            this.currentIdx = 0;
             break;
-          case 'order':
-            this.currentIdx = 1
+          case "order":
+            this.currentIdx = 1;
             break;
-          case 'team':
-            this.currentIdx = 2
+          case "team":
+            this.currentIdx = 2;
             break;
-          case 'address':
-            this.currentIdx = 3
+          case "address":
+            this.currentIdx = 3;
             break;
-          case 'info':
-            this.currentIdx = 4
+          case "info":
+            this.currentIdx = 4;
             break;
           default:
+            this.currentIdx = -1;
             break;
         }
       },
@@ -131,14 +132,18 @@ export default {
 .choose {
   background: #e3f5ff;
 }
-.choose .square {
-  transition: all 0.3s;
+.square {
   position: absolute;
-  left: 24px;
-  top: 21px;
   display: inline-block;
+  left: 10px;
+  top: 21px;
   width: 10px;
   height: 10px;
+  transition: all 0.3s;
+}
+.choose .square {
+  left: 24px;
+  top: 21px;
   background: #004ea2;
 }
 .line {

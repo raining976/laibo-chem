@@ -1,9 +1,9 @@
 <template>
   <div class="register">
     <div class="content">
-     <div class="titleBox">
-       <h3>用户注册</h3>
-     </div>
+      <div class="titleBox">
+        <h3>用户注册</h3>
+      </div>
       <el-form
         :model="ruleForm"
         status-icon
@@ -50,6 +50,15 @@
           <el-input type="text" v-model="ruleForm.teamName"></el-input>
         </el-form-item>
         <!-- /机构名称 -->
+        <!-- 隐私单选框 -->
+        <el-form-item prop="tcp" class="tcp">
+          <el-checkbox
+            label="已阅读并同意以下协议"
+            name="tcp"
+            v-model="ruleForm.tcp"
+          />
+        </el-form-item>
+        <!-- /隐私单选框 -->
         <el-form-item>
           <el-button type="primary" @click="submitForm('ruleForm')"
             >提交</el-button
@@ -112,6 +121,7 @@ export default {
       if (value === "") callback(new Error("机构名称不能为空"));
       callback();
     };
+
     return {
       ruleForm: {
         name: "",
@@ -120,6 +130,7 @@ export default {
         checkPass: "",
         phoneNum: "",
         teamName: "",
+        tcp: false,
       },
       rules: {
         pass: [{ validator: validatePass, trigger: "blur" }],
@@ -128,6 +139,13 @@ export default {
         name: [{ validator: checkName, trigger: "blur" }],
         phoneNum: [{ validator: checkPhoneNum, trigger: "blur" }],
         teamName: [{ validator: checkTeamName, trigger: "blur" }],
+        tcp: [
+          {
+            required: true,
+            message: "请先勾选同意协议",
+            trigger: "change",
+          },
+        ],
       },
     };
   },
@@ -194,6 +212,7 @@ export default {
   line-height: 60px;
   margin-right: 20px;
 }
+
 /* input样式 */
 .el-input {
   width: 530px;
@@ -224,11 +243,20 @@ export default {
   color: #a0c792;
 }
 /* 按钮盒子 */
-.el-form-item__content{
+.el-form-item__content {
   display: flex;
   justify-content: flex-end;
 }
 
+/* 勾选协议部分 */
+.tcp .el-form-item__content {
+  padding-left: 20px;
+  display: flex;
+  justify-content: flex-start;
+}
+.el-form-item__error {
+  margin-left: 20px;
+}
 </style>
 <style scoped>
 .register {
@@ -244,8 +272,9 @@ export default {
   align-items: center;
   height: 700px;
   width: 700px;
+  margin-top: -80px;
 }
-.titleBox{
+.titleBox {
   display: flex;
   justify-content: flex-end;
   width: 670px;
@@ -259,5 +288,4 @@ h3 {
   color: var(--color);
   margin-bottom: 50px;
 }
-
 </style>
