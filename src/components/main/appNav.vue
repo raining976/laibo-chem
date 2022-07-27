@@ -35,6 +35,7 @@ export default {
         { menuName: "首页" },
         { menuName: "我的订单" },
         { menuName: "购物车" },
+        // { menuName: "私人订制" },
       ],
       logIn: "登录",
       register: "注册",
@@ -83,6 +84,9 @@ export default {
         case 2:
           this.$router.push("/cart");
           break;
+        case 3:
+          this.$parent.isShowOrder = !this.$parent.isShowOrder
+          break;
         default:
           break;
       }
@@ -120,19 +124,20 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 600px;
+  
   height: 100%;
 }
 .menu {
   /* box-model */
   display: flex;
   justify-content: space-between;
-  width: 281px;
+
 }
 .btnBox {
   display: flex;
   justify-content: space-between;
   width: 163px;
+  margin-right: 77px;
 }
 .btnBox .btn {
   width: 67px;
@@ -166,6 +171,7 @@ export default {
 .menu li {
   cursor: pointer;
   padding-bottom: 8px;
+  margin-right: 50px;
 }
 /* 被选中菜单按钮的样式 */
 .menu .chosen {

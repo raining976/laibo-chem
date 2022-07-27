@@ -36,6 +36,7 @@ export default {
         { selectName: "团队管理" },
         { selectName: "收货地址" },
         { selectName: "个人信息" },
+        { selectName: "修改密码" },
       ],
       currentIdx: 0, // 当前选中的菜单选项
     };
@@ -60,6 +61,9 @@ export default {
             break;
           case "info":
             this.currentIdx = 4;
+            break;
+          case "changePsd":
+            this.currentIdx = 5;
             break;
           default:
             this.currentIdx = -1;
@@ -88,6 +92,9 @@ export default {
         case 4:
           this.$router.push("/info");
           break;
+        case 5:
+          this.$router.push("/changePsd");
+          break;
         default:
           break;
       }
@@ -100,7 +107,7 @@ export default {
 <style scoped>
 .userInfo {
   width: 100%;
-  height: 1054px;
+  min-height: 1054px;
 }
 .contentBox {
   display: flex;
@@ -108,8 +115,9 @@ export default {
 .menuBox {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items:center;
   width: 330px;
+
 }
 .eachSelect {
   position: relative;
@@ -151,5 +159,10 @@ export default {
   background-color: #eaeaec;
   height: 862px;
   margin-top: 12px;
+}
+.menuContent {
+  min-height: 1054px;
+  margin: 50px 0 100px 50px;
+  flex: 1;
 }
 </style>

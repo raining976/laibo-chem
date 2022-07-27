@@ -102,7 +102,7 @@
       <div class="addCart">加入购物车</div>
       <div class="toCustomize" @click="isShow = true">联系客服私人订制></div>
     </div>
-    <private-order v-show="isShow" />
+    <private-order v-if="isShow" />
   </div>
 </template>
 <script>

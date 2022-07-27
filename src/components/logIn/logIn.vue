@@ -38,6 +38,7 @@
 </template>
 
 <script>
+import { callWithAsyncErrorHandling } from '@vue/runtime-core';
 import forgetPsd from "../forgetPsd/forgetPsd.vue";
 export default {
   name: "logIn",
@@ -84,12 +85,10 @@ export default {
   },
   mounted() {
     // 监听鼠标点击  点击位置为登录之外,则关闭登录页
-    document.addEventListener("mousedown", (e) => {
-      let logIn = this.$refs.logInContent;
-      if (!e.path.includes(logIn)) {
-        this.$parent.isShowLogIn = false;
-      } else this.$parent.isShowLogIn = true;
-    });
+    window.addEventListener("mousedown", this.closeLogIn);
+  },
+  unmounted(){
+    window.removeEventListener("mousedown",this.closeLogIn)
   },
   methods: {
     toRegister() {
@@ -137,6 +136,14 @@ export default {
         a.setAttribute("data-after", "");
       }
       return;
+    },
+
+    // 关闭登录页面
+    closeLogIn(e) {
+      let logIn = this.$refs.logInContent;
+      if (!e.path.includes(logIn)) {
+        this.$parent.isShowLogIn = false;
+      } else this.$parent.isShowLogIn = true;
     },
   },
 };

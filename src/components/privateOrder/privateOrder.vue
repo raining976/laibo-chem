@@ -1,60 +1,67 @@
 <template>
-  <div class="privateOrder" ref="privateOrder">
-    <div class="content">
-      <div class="formBox">
-        <h3 class="title">私人定制</h3>
-        <el-form
-          :model="ruleForm"
-          status-icon
-          :rules="rules"
-          ref="ruleForm"
-          label-width="100px"
-          class="demo-ruleForm"
-        >
-          <el-form-item label="email" prop="email">
-            <el-input
-              placeholder="请输入email地址"
-              type="text"
-              v-model="ruleForm.email"
-            ></el-input>
-          </el-form-item>
-          <el-form-item label="联系人" prop="contact">
-            <el-input
-              placeholder="请输入联系方式"
-              type="text"
-              v-model="ruleForm.contact"
-            ></el-input>
-          </el-form-item>
-          <el-form-item label="联系电话" prop="phoneNum">
-            <el-input
-              placeholder="请输入联系电话"
-              type="text"
-              v-model="ruleForm.phoneNum"
-            ></el-input>
-          </el-form-item>
-          <el-form-item label="联系单位" prop="contactUnit">
-            <el-input
-              placeholder="请输入单位名称"
-              type="text"
-              v-model="ruleForm.contactUnit"
-            ></el-input>
-          </el-form-item>
-          <el-form-item label="需求概述" prop="demand" class="demandBox">
-            <el-input
-              class="demand"
-              placeholder="请输入产品名称，CAS号，规格，数量"
-              type="textarea"
-              v-model="ruleForm.demand"
-            ></el-input>
-          </el-form-item>
-          <p class="contactUs">联系方式&nbsp;:&nbsp;labservice@188.com</p>
-        </el-form>
-        <el-form-item class="btnBox">
-          <el-button type="primary" @click="submitForm('ruleForm')"
-            >提交</el-button
+  <div class="h">
+    <div class="privateOrderBox" ref="privateOrder">
+      <div class="content">
+        <div class="formBox">
+          <h3 class="title">私人定制</h3>
+          <el-form
+            :model="ruleForm"
+            status-icon
+            :rules="rules"
+            ref="ruleForm"
+            label-width="100px"
+            class="demo-ruleForm"
           >
-          <el-button @click="resetForm('ruleForm')">重置</el-button>
-        </el-form-item>
+            <el-form-item label="email" prop="email">
+              <el-input
+                placeholder="请输入email地址"
+                type="text"
+                v-model="ruleForm.email"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="联系人" prop="contact">
+              <el-input
+                placeholder="请输入联系方式"
+                type="text"
+                v-model="ruleForm.contact"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="联系电话" prop="phoneNum">
+              <el-input
+                placeholder="请输入联系电话"
+                type="text"
+                v-model="ruleForm.phoneNum"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="联系单位" prop="contactUnit">
+              <el-input
+                placeholder="请输入单位名称"
+                type="text"
+                v-model="ruleForm.contactUnit"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="需求概述" prop="demand" class="demandBox">
+              <el-input
+                class="demand"
+                placeholder="请输入产品名称，CAS号，规格，数量"
+                type="textarea"
+                v-model="ruleForm.demand"
+              ></el-input>
+            </el-form-item>
+            <p class="contactUs">联系方式&nbsp;:&nbsp;labservice@188.com</p>
+          </el-form>
+          <el-form-item class="btnBox">
+            <el-button
+              type="primary"
+              @click="submitForm('ruleForm')"
+              class="orderSubmit"
+              >提交</el-button
+            >
+            <el-button @click="resetForm('ruleForm')" class="orderReset"
+              >重置</el-button
+            >
+          </el-form-item>
+        </div>
       </div>
     </div>
   </div>
@@ -66,9 +73,8 @@ export default {
       if (!value) {
         return callback(new Error("邮箱不能为空"));
       }
-      let pattern = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/
-      if(!pattern.test(value))
-      callback(new Error("邮箱格式不正确"))
+      let pattern = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+      if (!pattern.test(value)) callback(new Error("邮箱格式不正确"));
       callback();
     };
     var checkContact = (_, value, callback) => {
@@ -119,12 +125,11 @@ export default {
     };
   },
   mounted() {
-    document.addEventListener("mousedown", (e) => {
-      let privateOrder = this.$refs.privateOrder;
-      if (!e.path.includes(privateOrder)) {
-        this.$parent.isShow = false;
-      }
-    });
+    window.addEventListener("mousedown",this.closeForm)
+  },
+  
+  unmounted(){
+    window.removeEventListener("mousedown",this.closeForm)
   },
   methods: {
     submitForm(formName) {
@@ -143,95 +148,108 @@ export default {
     closeThis() {
       this.$parent.isShow = false;
     },
+    // 关闭私人定制表单
+    closeForm(e) {
+      let privateOrder = this.$refs.privateOrder;
+      if (!e.path.includes(privateOrder)) {
+        this.$parent.isShow = false;
+      }
+    },
   },
 };
 </script>
 <style>
-.el-form-item__label {
+.privateOrderBox .el-form-item__label {
   font-size: 16px;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #666666;
 }
-.el-form-item__content {
+.privateOrderBox .el-form-item__content {
   width: 367px;
   height: 41px;
   border-radius: 5px;
 }
-.el-input {
+.privateOrderBox .el-input {
   width: 367px;
   height: 41px;
   border-radius: 5px;
 }
-.el-input__inner {
+.privateOrderBox .el-input__inner {
   width: 367px;
   height: 41px;
   border-radius: 5px;
   border: 1px solid #999999;
 }
-.el-input__inner:focus,
-.el-input__inner:hover {
+.privateOrderBox .el-input__inner:focus,
+.privateOrderBox .el-input__inner:hover {
   border: 1px solid var(--color);
 }
 
-.el-form-item .demand {
+.privateOrderBox .el-form-item .demand {
   width: 367px;
   height: 103px;
 }
 
-.el-form-item .el-textarea__inner {
+.privateOrderBox .el-form-item .el-textarea__inner {
   width: 367px;
   height: 103px;
   border: 1px solid #999999;
   border-radius: 5px;
   resize: none;
 }
-.demandBox .el-form-item__content {
+.privateOrderBox .demandBox .el-form-item__content {
   width: 367px;
   height: 103px;
 }
-.el-form-item {
-  margin-bottom: 37px;
+.privateOrderBox .el-form-item {
+  margin-top: 30px;
 }
-.btnBox .el-form-item__content {
+.privateOrderBox .btnBox .el-form-item__content {
   display: flex;
   justify-content: center;
 }
-.el-button:nth-child(1) {
+.privateOrderBox .orderSubmit:nth-child(1) {
   width: 69px;
   height: 38px;
   background: var(--color);
   border-radius: 5px;
 }
-.el-button:nth-child(2) {
+.privateOrderBox .orderReset:nth-child(2) {
   width: 69px;
   height: 38px;
   color: var(--color);
   border-radius: 5px;
   border-color: var(--color);
 }
-.el-button--default:hover {
+.privateOrderBox .el-button--default:hover {
   background: #a5d0ff;
 }
 
 /* 后置对钩或叉 */
 
-.el-input__icon{
- transform: scale(1.5);
+.privateOrderBox .el-input__icon {
+  transform: scale(1.5);
 }
-.el-icon-circle-check{
-  color: rgb(74, 189, 150);
+.privateOrderBox .el-icon-circle-check {
+  color: var(--check-color);
 }
 </style>
 <style scoped>
-.privateOrder {
+.h {
   position: absolute;
-  top: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+.privateOrderBox {
   display: flex;
   justify-content: center;
   align-items: center;
   transition: 0.5s;
-  z-index: 999;
+  margin: 0 auto;
 }
 .content {
   display: flex;
