@@ -10,14 +10,13 @@ export default {
 </script>
 
 <style>
-
 :root {
   /* 字体颜色 */
   --text--color: #666666;
   /* 主题色 */
-  --color:#004EA2; 
+  --color: #004ea2;
   /* 判定通过颜色 */
-  --check-color:#1c6905;
+  --check-color: #1c6905;
 }
 * {
   margin: 0;
@@ -33,7 +32,7 @@ li {
   list-style: none;
 }
 input,
-textarea{
+textarea {
   resize: none;
 }
 
