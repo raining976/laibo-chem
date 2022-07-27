@@ -135,6 +135,7 @@ export default {
 <style scoped>
 .content {
   width: 550px;
+  padding-left: 30px;
 }
 .title {
   font-size: 20px;
