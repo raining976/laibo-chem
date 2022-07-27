@@ -69,7 +69,9 @@ export default {
         checkPass: "",
       },
       rules: {
-        oldPass: [{ required: true, message: "请输入原始密码", trigger: "blur" }],
+        oldPass: [
+          { required: true, message: "请输入原始密码", trigger: "blur" },
+        ],
         newPass: [{ required: true, validator: validatePass, trigger: "blur" }],
         checkPass: [
           { required: true, validator: validatePass2, trigger: "blur" },
@@ -104,26 +106,30 @@ export default {
   color: #333333;
 }
 .changePsd .el-input__inner {
-
   height: 43px;
   border: 2px solid #999999;
   border-radius: 5px;
 }
 .changePsd .el-input__inner:hover,
-.changePsd .el-input__inner:focus{
-    border: 2px solid var(--color);
+.changePsd .el-input__inner:focus {
+  border: 2px solid var(--color);
 }
-.changePsd .el-input__icon{
-    transform: scale(1.5);
+.changePsd .el-input__icon {
+  transform: scale(1.5);
 }
-.changePsd .el-icon-circle-check{
-    color: var(--check-color);
+.changePsd .el-icon-circle-check {
+  color: var(--check-color);
 }
-.changePsd .btnBox .el-form-item__content{
-    padding-left: 20px;
+.changePsd .btnBox .el-form-item__content {
+  padding-left: 20px;
 }
-.changePsd .btnBox .el-button--primary{
-    background: var(--color);
+.changePsd .btnBox .el-button--primary {
+  background: var(--color);
+}
+.changePsd .el-button {
+  width: 107px;
+  height: 46px;
+  border-radius: 5px;
 }
 </style>
 <style scoped>

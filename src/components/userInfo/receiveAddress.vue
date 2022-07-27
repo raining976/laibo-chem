@@ -2,8 +2,8 @@
 //createDate:2022-07-17
 <template>
   <div class="receiveAddress">
+    <div class="pageTitle">收货地址</div>
     <div class="content">
-      <div class="pageTitle">收货地址</div>
       <div class="addressBox">
         <ul class="addressList">
           <li
@@ -166,7 +166,7 @@ export default {
         address: "", //详细地址
         name: "", // 收货人
         phone: "", // 联系电话
-        selectedOptions:[],
+        selectedOptions: [],
       },
       // 判断绑定
       rules: {
@@ -224,9 +224,7 @@ export default {
     },
 
     // 修改地址方法
-    editAddress(){
-      
-    }
+    editAddress() {},
   },
 };
 </script>
@@ -319,15 +317,15 @@ export default {
 }
 </style>
 <style scoped>
-
 .pageTitle {
   font-size: 20px;
   font-family: Microsoft YaHei UI;
   font-weight: bold;
   color: #333333;
-  padding-bottom: 24px;
+  padding-bottom: 30px;
+  margin-right: 50px;
   border-bottom: 2px solid #eaeaec;
-  margin-bottom: 22px;
+  margin-bottom: 20px;
 }
 .addressList {
   display: flex;
