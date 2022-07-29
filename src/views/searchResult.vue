@@ -4,7 +4,7 @@
     <div class="searchNav">
       <div class="sitePosi">
         <div class="returnBtn" @click="fun()">&lt;返回首页</div>
-        <div>/{{ type }}</div>
+        <div class="nowPosi">/{{ type }}</div>
       </div>
       <div class="typeList">
         <div style="margin-bottom: 10px">更多产品分类：</div>
@@ -21,6 +21,7 @@
     <div>
         <component :is = "res" />
     </div>
+    
   </div>
 </template>
 <script>
@@ -66,7 +67,7 @@ export default {
   cursor: pointer;
   height: 18px;
   margin: 0 5px 0 0;
-  font-size: 0.83vw;
+  font-size: 16px;
   line-height: 18px;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
@@ -75,11 +76,19 @@ export default {
 .returnBtn:hover {
   font-weight: 600;
 }
+.nowPosi {
+   cursor: pointer;
+  height: 18px;
+  font-size: 16px;
+  line-height: 18px;
+  font-family: Microsoft YaHei UI;
+  font-weight: 400;
+  color: #000;
+}
 .sitePosi {
+  cursor: pointer;
   display: flex;
   width: 100%;
-  height: 18px;
-  line-height: 18px;
   align-items: center;
   margin: 14px 0 50px;
 }

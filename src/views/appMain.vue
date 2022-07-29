@@ -3,6 +3,7 @@
   <appNav />
   <router-view name="search"></router-view>
   <router-view name="table"></router-view>
+  <router-view name="textPage"></router-view>
   <appFooter />
   <copyRight />
   <!-- 登录模态框 -->
