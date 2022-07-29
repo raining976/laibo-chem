@@ -15,6 +15,11 @@ const team = () => import("../components/userInfo/team.vue");
 const address = () => import("../components/userInfo/receiveAddress.vue");
 const changePsd = () => import("../components/userInfo/changePsd.vue");
 const info = () => import("../components/userInfo/userInfoChange.vue");
+// 团队管理
+const teamBlank = () => import("../components/teamPage/blank.vue");
+const joinTeam = () => import("../components/teamPage/joinTeam.vue");
+const createTeam = () => import("../components/teamPage/createTeam.vue");
+
 // 新闻/文章页
 const moreNewsArticle = () => import("../views/toMoreNewsArticle/moreNewsArtcle.vue")
 
@@ -90,7 +95,25 @@ const routes = [
           {
             path: '/team',
             name: 'team',
+            redirect:"/teamBlank",
             component: team,
+            children: [
+              {
+                path: '/teamBlank',
+                name: 'teamBlank',
+                component: teamBlank,
+              },
+              {
+                path: '/joinTeam',
+                name: 'joinTeam',
+                component: joinTeam,
+              },
+              {
+                path: '/createTeam',
+                name: 'createTeam',
+                component: createTeam,
+              },
+            ],
           },
           {
             path: '/address',
