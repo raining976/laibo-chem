@@ -3,7 +3,9 @@
 <template>
   <div class="team">
     <div class="title">团队管理</div>
-    <div class="content">内容部分</div>
+    <div class="content">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 <script>
