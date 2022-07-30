@@ -10,6 +10,7 @@ const productInfo = () => import("../components/searchProduct/productInfo.vue");
 // 用户信息页
 const userInfo = () => import("../views/userInfo.vue");
 const cart = () => import("../components/userInfo/shopCart.vue");
+const payment = () => import("../components/userInfo/payment.vue");
 const order = () => import("../components/userInfo/myOrder.vue");
 const team = () => import("../components/userInfo/team.vue");
 const address = () => import("../components/userInfo/receiveAddress.vue");
@@ -86,6 +87,11 @@ const routes = [
             path: '/cart',
             name: 'cart',
             component: cart,
+          },
+          {
+            path: '/payment',
+            name: 'payment',
+            component: payment,
           },
           {
             path: '/order',

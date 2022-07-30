@@ -40,7 +40,7 @@
                 {{ item0.name }}
               </div>
               <div class="infoWord">货号：{{ item0.huohao }}</div>
-              <div class="infoWord">CAS编号：{{ item0.casCode }}</div>
+              <div class="infoWord">CAS编号：{{ item0.shopCart_id }}</div>
             </div>
           </div>
           <div class="size">{{ item0.guige }}</div>
@@ -138,7 +138,7 @@ export default {
     toPay() {
       this.$router.push({
         path: "/payment",
-      })
+      });
     },
     // 分页
     handleSizeChange(val) {
@@ -181,7 +181,6 @@ export default {
 }
 /* ---以下为购物车样式 */
 .shopCart {
-  position: relative;
   width: 100%;
   height: 820px;
   overflow: hidden;
@@ -324,7 +323,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0 20px 0 0;
+  margin: 0 10px 0 0;
 }
 .countBtn {
   width: 28px;
@@ -351,10 +350,8 @@ export default {
 }
 /* 分页器 */
 .pagination {
-  position: absolute;
-  bottom: 43px;
-  left: 40%;
-  margin: 0 auto;
+  margin: 20px 0 0 36%;
+  overflow: hidden;
 }
 /deep/ .el-pagination {
   --el-pagination-button-height: 40px;
@@ -379,9 +376,9 @@ export default {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  background: #FFFFFF;
-border: 1px solid #EAEAEC;
-border-radius: 10px
+  background: #ffffff;
+  border: 1px solid #eaeaec;
+  border-radius: 10px;
 }
 .submitMy {
   display: flex;
@@ -405,7 +402,7 @@ border-radius: 10px
 .allMoney {
   display: flex;
   align-items: center;
-  width: 310px;
+  min-width: 220px;
   height: 18px;
   font-size: 18px;
   font-family: Microsoft YaHei UI;
@@ -420,7 +417,7 @@ border-radius: 10px
 }
 .toPay {
   cursor: pointer;
-padding: 0 23px;
+  padding: 0 23px;
   height: 52px;
   line-height: 52px;
   text-align: center;
