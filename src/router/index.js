@@ -13,6 +13,7 @@ const cart = () => import("../components/userInfo/shopCart.vue");
 const order = () => import("../components/userInfo/myOrder.vue");
 const team = () => import("../components/userInfo/team.vue");
 const address = () => import("../components/userInfo/receiveAddress.vue");
+const changePsd = () => import("../components/userInfo/changePsd.vue");
 const info = () => import("../components/userInfo/userInfoChange.vue");
 // 新闻/文章页
 const moreNewsArticle = () => import("../views/toMoreNewsArticle/moreNewsArtcle.vue")
@@ -38,7 +39,7 @@ const routes = [
         }
       },
       {
-        name:'mainPage',
+        name: 'mainPage',
         path: "/mainPage",
         components: {
           table: mainPage,
@@ -100,6 +101,11 @@ const routes = [
             path: '/info',
             name: 'info',
             component: info,
+          },
+          {
+            path: '/changePsd',
+            name: 'changePsd',
+            component: changePsd,
           },
         ],
       },

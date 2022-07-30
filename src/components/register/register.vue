@@ -1,15 +1,15 @@
 <template>
-  <div class="register">
+  <div class="registerBox">
     <div class="content">
-     <div class="titleBox">
-       <h3>用户注册</h3>
-     </div>
+      <div class="titleBox">
+        <h3>用户注册</h3>
+      </div>
       <el-form
         :model="ruleForm"
         status-icon
         :rules="rules"
         ref="ruleForm"
-        label-width="120px"
+        label-width="130px"
         class="demo-ruleForm"
       >
         <!-- 姓名部分 -->
@@ -50,6 +50,15 @@
           <el-input type="text" v-model="ruleForm.teamName"></el-input>
         </el-form-item>
         <!-- /机构名称 -->
+        <!-- 隐私单选框 -->
+        <el-form-item prop="tcp" class="tcp">
+          <el-checkbox
+            label="已阅读并同意以下协议"
+            name="tcp"
+            v-model="ruleForm.tcp"
+          />
+        </el-form-item>
+        <!-- /隐私单选框 -->
         <el-form-item>
           <el-button type="primary" @click="submitForm('ruleForm')"
             >提交</el-button
@@ -112,6 +121,7 @@ export default {
       if (value === "") callback(new Error("机构名称不能为空"));
       callback();
     };
+
     return {
       ruleForm: {
         name: "",
@@ -120,14 +130,22 @@ export default {
         checkPass: "",
         phoneNum: "",
         teamName: "",
+        tcp: false,
       },
       rules: {
-        pass: [{ validator: validatePass, trigger: "blur" }],
-        checkPass: [{ validator: validatePass2, trigger: "blur" }],
-        email: [{ validator: checkEmail, trigger: "blur" }],
-        name: [{ validator: checkName, trigger: "blur" }],
-        phoneNum: [{ validator: checkPhoneNum, trigger: "blur" }],
-        teamName: [{ validator: checkTeamName, trigger: "blur" }],
+        pass: [{ required: true,validator: validatePass, trigger: "blur" }],
+        checkPass: [{ required: true,validator: validatePass2, trigger: "blur" }],
+        email: [{ required: true,validator: checkEmail, trigger: "blur" }],
+        name: [{ required: true,validator: checkName, trigger: "blur" }],
+        phoneNum: [{ required: true,validator: checkPhoneNum, trigger: "blur" }],
+        teamName: [{ required: true,validator: checkTeamName, trigger: "blur" }],
+        tcp: [
+          {
+            required: true,
+            message: "请先勾选同意协议",
+            trigger: "change",
+          },
+        ],
       },
     };
   },
@@ -158,7 +176,7 @@ export default {
 };
 </script>
 <style>
-.el-button {
+.registerBox .el-button {
   width: 115px;
   height: 49px;
   border-radius: 5px;
@@ -168,25 +186,25 @@ export default {
   color: #ffffff;
   transition: 0.2s;
 }
-.el-button--primary {
+.registerBox  .el-button--primary {
   background: var(--color);
 }
-.el-button--primary:hover,
-.el-button--primary:focus {
+.registerBox  .el-button--primary:hover,
+.registerBox  .el-button--primary:focus {
   background: #024287;
 }
-.resetBtn {
+.registerBox  .resetBtn {
   color: #409eff;
 }
-.resetBtn:hover,
-.resetBtn:focus {
+.registerBox .resetBtn:hover,
+.registerBox .resetBtn:focus {
   background: #cbdff2;
 }
-.el-form-item:last-child {
+.registerBox .el-form-item:last-child {
   margin-top: 30px;
 }
 /* 每个item的名字 */
-.el-form-item__label {
+.registerBox .el-form-item__label {
   font-size: 22px;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
@@ -194,44 +212,54 @@ export default {
   line-height: 60px;
   margin-right: 20px;
 }
+
 /* input样式 */
-.el-input {
+.registerBox  .el-input {
   width: 530px;
   height: 55px;
 }
-.el-input__inner {
+.registerBox  .el-input__inner {
   width: 530px;
   height: 55px;
   border: 2px solid #999999;
   border-radius: 5px;
   font-size: 18px;
 }
-.el-input__inner:hover {
+.registerBox  .el-input__inner:hover {
   border-color: #78b3f3;
 }
-.el-input__inner:focus {
+.registerBox .el-input__inner:focus {
   border-color: var(--color);
 }
 /* 后置判断标识 */
-.el-input__suffix {
+.registerBox .el-input__suffix {
   top: 8px;
   right: 10px;
 }
-.el-input__icon {
+.registerBox .el-input__icon {
   transform: scale(2);
 }
-.el-icon-circle-check {
-  color: #a0c792;
+.registerBox .el-icon-circle-check {
+  color: var(--check-color);
 }
 /* 按钮盒子 */
-.el-form-item__content{
+.registerBox .el-form-item__content {
   display: flex;
   justify-content: flex-end;
 }
 
+/* 勾选协议部分 */
+.registerBox  .tcp .el-form-item__content {
+  padding-left: 20px;
+  display: flex;
+  justify-content: flex-start;
+}
+.registerBox  .el-form-item__error {
+  margin-left: 20px;
+}
 </style>
 <style scoped>
-.register {
+.registerBox {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -244,8 +272,9 @@ export default {
   align-items: center;
   height: 700px;
   width: 700px;
+  margin-top: -80px;
 }
-.titleBox{
+.titleBox {
   display: flex;
   justify-content: flex-end;
   width: 670px;
@@ -259,5 +288,4 @@ h3 {
   color: var(--color);
   margin-bottom: 50px;
 }
-
 </style>

@@ -7,7 +7,7 @@
   <appFooter />
   <copyRight />
   <!-- 登录模态框 -->
-  <log-in v-show="isShowLogIn"   />
+  <log-in v-if="isShowLogIn" />
 </template>
 
 <script>
@@ -23,11 +23,10 @@ export default {
     appFooter,
     copyRight,
     logIn,
-  
   },
   data() {
     return {
-      isShowLogIn: false,
+      isShowLogIn: false, // 是否显示登录
     };
   },
   methods: {
@@ -40,5 +39,4 @@ export default {
 </script>
 
 <style>
-
 </style>

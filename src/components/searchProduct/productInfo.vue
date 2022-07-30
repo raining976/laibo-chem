@@ -102,15 +102,19 @@
       
       <div class="toCustomize">联系客服私人订制></div>
     </div>
+    <private-order v-if="isShow" />
   </div>
 </template>
 <script>
-
+import privateOrder from "../privateOrder/privateOrder.vue";
 export default {
   name: "productInfo",
-  components: "",
+  components: {
+    privateOrder,
+  },
   data() {
     return {
+      isShow: false, // 私人订制是否显示
       pic: require("../../assets/p11.png"),
       name: "T826255 2-(三丁基锡)-5-三氟甲基吡啶",
       concentration: ">95%",
@@ -150,6 +154,7 @@ export default {
 </script>
 <style scoped>
 .bg {
+  position: relative;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -379,7 +384,6 @@ color: #171717;
   background-color: #004ea2;
 }
 .selectCount {
-
 }
 
 </style>

@@ -28,7 +28,7 @@ export default {
     return {
         pagesize: 8, // 每页显示多少条
         currentPage: 1, // 当前页数
-        pagerCount: 5,
+        pagerCount: 5, //五个以上加省略号
       titleBox: [
         {
           title: "莱博斯威2022春节发货通知莱博斯威2022春节发货通知",
@@ -87,11 +87,11 @@ export default {
     },
       // 分页
       handleSizeChange(val) {
-        this.pagesize = val
+        this.$data.pagesize = val
         // console.log(`每页 ${val} 条`);
       },
       handleCurrentChange(val) {
-          this.currentPage = val
+          this.$data.currentPage = val
         // console.log(`当前页: ${val}`);
       },
     

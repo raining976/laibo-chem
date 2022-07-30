@@ -1,6 +1,6 @@
 <template>
   <div class="carouselBox">
-    <el-carousel trigger="click" >
+    <el-carousel trigger="click">
       <el-carousel-item v-for="(item, index) in imgList" :key="index">
         <div class="imgBox"><img :src="item.img" alt="" /></div>
       </el-carousel-item>
@@ -27,63 +27,64 @@ export default {
   height: 696.96px;
   overflow: hidden;
 }
-/deep/ .el-carousel {
+.carouselBox /deep/ .el-carousel {
   width: 100%;
-   height: 696.96px;
-   overflow: hidden;
+  height: 696.96px;
+  overflow: hidden;
 }
 /* /* 装轮播图的外层容器 */
-/deep/ .el-carousel__container {
+.carouselBox /deep/ .el-carousel__container {
   width: 100%;
   height: 696.96px;
   overflow: hidden;
 }
 /* 装轮播图的容器 */
-/deep/ .el-carousel-item {
+.carouselBox /deep/ .el-carousel-item {
   height: 696.96px;
   display: flex;
   justify-content: space-between;
 }
 /* 底部按钮 */
-/deep/ .el-carousel__button {
+.carouselBox /deep/ .el-carousel__button {
   width: 19.97px;
   height: 19.97px;
   background-color: #999;
   border-radius: 50%;
 }
 /* 左右按钮 */
-/deep/ .el-carousel__arrow {
+.carouselBox /deep/ .el-carousel__arrow {
   width: 100.03px;
   height: 100.03px;
   display: flex;
-   justify-content: center;
-   align-items: center;
+  justify-content: center;
+  align-items: center;
 }
-/deep/ .el-icon-arrow-right, /deep/ .el-icon-arrow-left {
-   width: 49.92px;
-   height: 49.92px;
-   display: flex;
-   justify-content: center;
-   align-items: center;
+.carouselBox /deep/ .el-icon-arrow-right,
+.carouselBox /deep/ .el-icon-arrow-left {
+  width: 49.92px;
+  height: 49.92px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 /* 针对箭头修改 */
-/deep/ .el-icon-arrow-right::before {
-display: block;
- content: "";
- width: 49.92px;;
- height: 49.92px;
- background: url('../../assets/箭头 右 (3).png');
- background-position: 100% auto;
- background-size: contain;
-}
-/deep/ .el-icon-arrow-left::before {
+.carouselBox /deep/ .el-icon-arrow-right::before {
   display: block;
- content: "";
- width: 49.92px;;
- height: 49.92px;
- background: url('../../assets/箭头 左 (3).png');
- background-position: 100% auto;
- background-size: contain;
+  content: "";
+  width: 49.92px;
+  height: 49.92px;
+  background: url("../../assets/箭头 右 (3).png");
+  background-position: 100% auto;
+  background-size: contain;
+}
+.carouselBox /deep/ .el-icon-arrow-left::before {
+  display: block;
+  content: "";
+  width: 49.92px;
+  height: 49.92px;
+  background: url("../../assets/箭头 左 (3).png");
+  background-position: 100% auto;
+  background-size: contain;
 }
 /* ------ */
 .imgBox {
@@ -93,6 +94,6 @@ display: block;
 .imgBox img {
   object-fit: cover;
   width: 100%;
-  height: 696.96px; 
+  height: 696.96px;
 }
 </style>

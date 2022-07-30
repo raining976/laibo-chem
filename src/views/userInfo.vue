@@ -36,6 +36,7 @@ export default {
         { selectName: "团队管理" },
         { selectName: "收货地址" },
         { selectName: "个人信息" },
+        { selectName: "修改密码" },
       ],
       currentIdx: 0, // 当前选中的菜单选项
     };
@@ -44,24 +45,28 @@ export default {
     // 监听路由
     $route: {
       handler() {
-        let name = this.$route.name
+        let name = this.$route.name;
         switch (name) {
-          case 'cart':
-            this.currentIdx = 0
+          case "cart":
+            this.currentIdx = 0;
             break;
-          case 'order':
-            this.currentIdx = 1
+          case "order":
+            this.currentIdx = 1;
             break;
-          case 'team':
-            this.currentIdx = 2
+          case "team":
+            this.currentIdx = 2;
             break;
-          case 'address':
-            this.currentIdx = 3
+          case "address":
+            this.currentIdx = 3;
             break;
-          case 'info':
-            this.currentIdx = 4
+          case "info":
+            this.currentIdx = 4;
+            break;
+          case "changePsd":
+            this.currentIdx = 5;
             break;
           default:
+            this.currentIdx = -1;
             break;
         }
       },
@@ -87,6 +92,9 @@ export default {
         case 4:
           this.$router.push("/info");
           break;
+        case 5:
+          this.$router.push("/changePsd");
+          break;
         default:
           break;
       }
@@ -99,7 +107,7 @@ export default {
 <style scoped>
 .userInfo {
   width: 100%;
-  height: 1054px;
+  min-height: 1054px;
 }
 .contentBox {
   display: flex;
@@ -107,8 +115,9 @@ export default {
 .menuBox {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items:center;
   width: 330px;
+
 }
 .eachSelect {
   position: relative;
@@ -131,14 +140,18 @@ export default {
 .choose {
   background: #e3f5ff;
 }
-.choose .square {
-  transition: all 0.3s;
+.square {
   position: absolute;
-  left: 24px;
-  top: 21px;
   display: inline-block;
+  left: 10px;
+  top: 21px;
   width: 10px;
   height: 10px;
+  transition: all 0.3s;
+}
+.choose .square {
+  left: 24px;
+  top: 21px;
   background: #004ea2;
 }
 .line {
@@ -146,5 +159,10 @@ export default {
   background-color: #eaeaec;
   height: 862px;
   margin-top: 12px;
+}
+.menuContent {
+  min-height: 1054px;
+  margin: 50px 50px 100px 50px;
+  flex: 1;
 }
 </style>

@@ -8,11 +8,18 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "area-data": "^5.0.6",
+    "area-data-vue": "^1.0.9",
+    "area-linkage-vue": "^5.1.2",
     "axios": "^0.27.2",
     "core-js": "^3.8.3",
+    "element-china-area-data": "^5.0.2",
     "element-plus": "^1.0.2-beta.28",
+    "v-distpicker": "^1.2.13",
     "vue": "^3.2.13",
-    "vue-router": "^4.0.3"
+    "vue-area-linkage": "^5.1.0",
+    "vue-router": "^4.0.3",
+    "vue3-country-intl": "^1.0.13"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
