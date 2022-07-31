@@ -48,12 +48,16 @@ export default {
         let name = this.$route.name;
         switch (name) {
           case "cart":
+          case "payment":
             this.currentIdx = 0;
             break;
           case "order":
             this.currentIdx = 1;
             break;
           case "team":
+          case "teamBlank":
+          case "joinTeam":
+          case "createTeam":
             this.currentIdx = 2;
             break;
           case "address":
@@ -115,9 +119,8 @@ export default {
 .menuBox {
   display: flex;
   flex-direction: column;
-  align-items:center;
+  align-items: center;
   width: 330px;
-
 }
 .eachSelect {
   position: relative;

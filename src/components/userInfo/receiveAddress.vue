@@ -100,9 +100,9 @@
   </div>
 </template>
 <script>
-// import { regionData, CodeToText } from "element-china-area-data";
-// import vue3CountryIntl from "vue3-country-intl";
-// import "vue3-country-intl/lib/vue3-country-intl.css";
+import { regionData, CodeToText } from "element-china-area-data";
+import vue3CountryIntl from "vue3-country-intl";
+import "vue3-country-intl/lib/vue3-country-intl.css";
 export default {
   name: "receiveAddress",
   components: {

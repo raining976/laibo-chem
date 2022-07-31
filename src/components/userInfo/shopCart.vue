@@ -353,20 +353,20 @@ export default {
   margin: 20px 0 0 36%;
   overflow: hidden;
 }
-/deep/ .el-pagination {
+.shopCart /deep/ .el-pagination {
   --el-pagination-button-height: 40px;
   --el-pagination-font-size: 16px;
 }
-/deep/ .el-pagination.is-background .el-pager li:not(.disabled).active {
+.shopCart >>> .el-pagination.is-background .el-pager li:not(.disabled).active {
   background-color: #004ea2;
 }
-/deep/.el-pagination.is-background .btn-next,
-/deep/.el-pagination.is-background .btn-prev,
-/deep/.el-pagination.is-background .el-pager li {
+.shopCart /deep/.el-pagination.is-background .btn-next,
+.shopCart /deep/.el-pagination.is-background .btn-prev,
+.shopCart /deep/.el-pagination.is-background .el-pager li {
   min-width: 40px;
   border-radius: 5px;
 }
-/deep/ .el-icon {
+.shopCart /deep/ .el-icon {
   margin: 0 auto;
 }
 /* 以下为底部 */
