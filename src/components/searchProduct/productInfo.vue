@@ -100,7 +100,7 @@
         <div class="toBuy">购买</div>
       </div>
       
-      <div class="toCustomize">联系客服私人订制></div>
+      <div class="toCustomize" @click="isShow = !isShow">联系客服私人订制></div>
     </div>
     <private-order v-if="isShow" />
   </div>

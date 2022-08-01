@@ -58,6 +58,7 @@ export default {
           case "teamBlank":
           case "joinTeam":
           case "createTeam":
+          case "searchMember":
             this.currentIdx = 2;
             break;
           case "address":
