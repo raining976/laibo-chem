@@ -20,6 +20,7 @@ const info = () => import("../components/userInfo/userInfoChange.vue");
 const teamBlank = () => import("../components/teamPage/blank.vue");
 const joinTeam = () => import("../components/teamPage/joinTeam.vue");
 const createTeam = () => import("../components/teamPage/createTeam.vue");
+const editTeam = () => import("../components/teamPage/editTeam.vue");
 const searchMember = () => import("../components/teamPage/searchMember.vue");
 
 // 新闻/文章页
@@ -119,6 +120,11 @@ const routes = [
                 path: '/createTeam',
                 name: 'createTeam',
                 component: createTeam,
+              },
+              {
+                path: '/editTeam',
+                name: 'editTeam',
+                component: editTeam,
               },
               {
                 path: '/searchMember',
