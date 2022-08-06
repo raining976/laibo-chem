@@ -27,7 +27,8 @@
           <span>{{ item.phone }}</span>
           <span>{{ item.email }}</span>
           <span>
-            <a class="joinBtn">申请加入</a>
+            <router-link to="/searchMember"><a class="joinBtn">申请加入</a></router-link>
+            
           </span>
         </li>
       </ul>
