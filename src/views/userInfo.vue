@@ -52,6 +52,7 @@ export default {
             this.currentIdx = 0;
             break;
           case "order":
+          case "orderInfo":
             this.currentIdx = 1;
             break;
           case "team":

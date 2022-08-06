@@ -187,6 +187,7 @@ export default {
 }
 /* 表头 ------*/
 .listHead {
+  position: relative;
   width: 100%;
   height: 44px;
   display: flex;
@@ -194,6 +195,7 @@ export default {
 }
 .quanxuan {
   width: 230px;
+  position: absolute;
   display: flex;
   align-items: center;
   margin: 0 0px 0 28px;
@@ -217,19 +219,30 @@ export default {
   line-height: 18px;
 }
 ._productInfo {
-  width: 565px;
+  /* width: 565px; */
+  flex: 4.5;
+  text-align: center;
+  /* margin: 0 0 0 262px; */
 }
 ._size {
-  width: 195px;
+  /* width: 195px; */
+  text-align: center;
+  flex: 1;
 }
 ._price {
-  width: 165px;
+  /* width: 165px; */
+  text-align: center;
+  flex: 1;
 }
 ._count {
-  width: 165px;
+  /* width: 165px; */
+  text-align: center;
+  flex: 1;
 }
 ._payment {
-  width: 130px;
+  /* width: 130px; */
+  text-align: center;
+  flex: 1;
 }
 /* 内容 */
 .allcommodity {
@@ -243,7 +256,8 @@ export default {
   display: flex;
   align-items: center;
   /* justify-content: center; */
-  width: 1492px;
+  width: 100%;
+  min-width: 940px;
   height: 207px;
   margin: 0 0 20px 0;
   background: #f7f7f7;
@@ -261,7 +275,8 @@ export default {
   border-radius: 2px;
 }
 .productInfo {
-  width: 700px;
+  flex: 4.1;
+  /* width: 700px; */
   height: 165px;
   display: flex;
   align-items: center;
@@ -309,17 +324,20 @@ export default {
   margin: 8px 0;
 }
 .size {
-  width: 110px;
-  margin: 0 50px 0 0;
+  flex: 1;
+  /* width: 110px; */
+  /* margin: 0 50px 0 0; */
   text-align: center;
 }
 .price {
-  width: 165px;
+  flex: 1;
+  /* width: 165px; */
   text-align: center;
   font-weight: 600;
 }
 .count {
-  width: 165px;
+  flex: 1;
+  /* width: 165px; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -344,7 +362,8 @@ export default {
   margin: 0 2px;
 }
 .payment {
-  width: 150px;
+  flex: 1;
+  /* width: 150px; */
   text-align: center;
   font-weight: 600;
 }

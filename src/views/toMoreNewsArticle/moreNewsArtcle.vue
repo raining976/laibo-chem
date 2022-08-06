@@ -16,7 +16,7 @@
     </div>
     <div class="pagination">
     <el-pagination background="#004ea2" layout="prev,pager,next" :total="titleBox.length" :page-size="pagesize" :pager-count="pagerCount" :current-page="currentPage" @current-change="handleCurrentChange" @size-change="handleSizeChange">
-     </el-pagination>
+    </el-pagination>
     </div>
   </div>
 </template> 
@@ -26,9 +26,9 @@ export default {
   components: "",
   data() {
     return {
-        pagesize: 8, // 每页显示多少条
+        pagesize: 3, // 每页显示多少条
         currentPage: 1, // 当前页数
-        pagerCount: 5, //五个以上加省略号
+        pagerCount: 2, //五个以上加省略号
       titleBox: [
         {
           title: "莱博斯威2022春节发货通知莱博斯威2022春节发货通知",

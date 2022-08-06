@@ -92,24 +92,24 @@ export default {
 <style scoped>
 .newsCenter {
   width: 100%;
-  height: 48.8vw;
+  height: 936.96px;
   background: #e3f5ff;
   overflow: hidden;
 }
 .title {
   width: 100%;
-  height: 3.13vw;
-  font-size: 3.13vw;
-  margin: 3.13vw 0 4.17vw;
+  height: 60.1px;
+  font-size: 60.1px;
+  margin: 60.1px 0 80.06px;
   font-family: Microsoft YaHei UI;
   font-weight: bold;
   color: #000;
-  line-height: 3.13vw;
+  line-height: 60.1px;
   text-align: center;
 }
 .newsBigBox {
   /* 固定一行两个 */
-  width: 100vw;
+  width: 1920px;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
@@ -117,21 +117,21 @@ export default {
 /* 单个新闻盒子的样式 */
 .newsBox {
     position: relative;
-  width: 30.21vw;
-  height: 32.55vw;
-  padding: 0 1.98vw;
+  width: 580.03px;
+  height: 624.96px;
+  padding: 0 38.02px;
   background: #ffffff;
-  border-radius: 0.26vw;
-  margin: 0 2.4vw;
+  border-radius: 4.99px;
+  margin: 0 46.08px;
   overflow: hidden;
 }
 /* 类别 ----问题width要不要改为100%*/
 .newsType {
   width: 100%;
-  height: 1.88vw;
+  height: 36.1px;
   display: flex;
   align-items: center;
-  margin: 1.88vw 0.78vw 0.94vw 0;
+  margin: 36.1px 14.98px 18.05px 0;
 }
 .sign {
   width: 36px;
@@ -139,68 +139,68 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0 0.78vw 0 0;
+  margin: 0 14.98px 0 0;
 }
 .sign > img {
-  width: 1.88vw;
-  height: 1.88vw;
+  width: 36.1px;
+  height: 36.1px;
   object-fit: cover;
 }
 .type {
   /* width: 94px; */
-  height: 1.25vw;
-  font-size: 1.25vw;
+  height: 24px;
+  font-size: 24px;
   font-family: Microsoft YaHei UI;
   font-weight: bold;
   color: #333333;
-  line-height: 0.73vw;
+  line-height: 14.02px;
 }
 .dashedLine {
-  width: 30.21vw;
-  height: 0.1vw;
+  width: 580.03px;
+  height: 1.92px;
    background-image: linear-gradient(to right, #e4e4e4 70%, rgba(255,255,255,0) 0%); /* 35%设置虚线点x轴上的长度 */
         background-position: bottom; /* top配置上边框位置的虚线 */
-        background-size: 0.78vw 0.1vw; /* 第一个参数设置虚线点的间距；第二个参数设置虚线点y轴上的长度 */
+        background-size: 14.98px 1.92px; /* 第一个参数设置虚线点的间距；第二个参数设置虚线点y轴上的长度 */
         background-repeat: repeat-x;
 }
 .newsPic {
-  width: 30.21vw;
-  height: 13.23vw;
+  width: 580.03px;
+  height: 254.02px;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 1.41vw 0;
+  margin: 27.07px 0;
 }
 .newsPic > img {
-  width: 30.21vw;
-  height: 13.23vw;
+  width: 580.03px;
+  height: 254.02px;
   object-fit: cover;
 }
 .newsContent {
-  width: 30.21vw;
+  width: 580.03px;
   overflow: hidden;
 }
 .news {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 30.21vw;
-  height: 0.94vw;
-  font-size: 0.94vw;
+  width: 580.03px;
+  height: 18.05px;
+  font-size: 18.05px;
   font-family: Microsoft YaHei UI;
   font-weight: bold;
   color: #323333;
-  line-height: 0.94vw;
-  margin: 1.04vw 0 0.68vw;
+  line-height: 18.05px;
+  margin: 19.97px 0 13.06px;
 }
 .newsTitle {
     cursor: pointer;
-  height: 0.94vw;
-  font-size: 0.94vw;
+  height: 18.05px;
+  font-size: 18.05px;
   font-family: Microsoft YaHei UI;
   font-weight: bold;
   color: #323333;
-  line-height: 0.94vw;
+  line-height: 18.05px;
   transition: 0.8s;
 }
 .newsTitle:hover {
@@ -208,25 +208,25 @@ export default {
 }
 .pubdate {
   /* width: 42px; */
-  height: 0.83vw;
-  font-size: 0.83vw;
+  height: 15.94px;
+  font-size: 15.94px;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #323333;
-  line-height: 0.83vw;
+  line-height: 15.94px;
 }
 .newsMore {
     cursor: pointer;
   position: absolute;
-  bottom: 1.25vw;
-  right: 1.98vw;
+  bottom: 24px;
+  right: 38.02px;
   /* width: 75px; */
-  height: 0.83vw;
-  font-size: 0.83vw;
+  height: 15.94px;
+  font-size: 15.94px;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #004ea2;
-  line-height: 0.83vw;
+  line-height: 15.94px;
   margin-left: auto;
   /* 让盒子要右靠 */
   /* transition: 1s; */

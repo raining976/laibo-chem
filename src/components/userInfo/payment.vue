@@ -11,7 +11,7 @@
             class="eachAddress"
             v-for="(address, index) in addresses"
             :key="index"
-            :class="{border: index == flag }"
+            :class="{ border: index == flag }"
             @click="chooseAddress(index)"
           >
             <p class="name">收件人&nbsp;:&nbsp;{{ address.name }}</p>
@@ -211,8 +211,13 @@ export default {
       // console.log(`当前页: ${val}`);
     },
     chooseAddress(id) {
-        this.$data.flag = id;
-    }
+      this.$data.flag = id;
+    },
+      toProductInfo() {
+      this.$router.push({
+           path: "/productInfo",
+      })
+    },
   },
 };
 </script>
@@ -245,7 +250,7 @@ export default {
   margin-right: 50px;
 }
 .border {
-      border: 3px solid #004EA2;
+  border: 3px solid #004ea2;
 }
 .eachAddress p {
   margin-bottom: 14px;
@@ -305,24 +310,35 @@ export default {
 }
 
 ._productInfo {
-  width: 565px;
-  margin: 0 0 0 262px;
+  /* width: 565px; */
+ text-align: center;
+ flex: 4.5;
+  /* margin: 0 0 0 262px; */
 }
 ._size {
-  width: 195px;
+  /* width: 195px; */
+  text-align: center;
+  flex: 1;
 }
 ._price {
-  width: 165px;
+  /* width: 165px; */
+  text-align: center;
+  flex: 1;
 }
 ._count {
-  width: 165px;
+  /* width: 165px; */
+  text-align: center;
+  flex: 1;
 }
 ._payment {
-  width: 130px;
+  /* width: 130px; */
+  text-align: center;
+  flex: 1;
 }
 /* 内容 */
 .allcommodity {
   width: 100%;
+  height: 455px;
   display: flex;
   flex-direction: column;
 }
@@ -331,17 +347,26 @@ export default {
   position: relative;
   display: flex;
   align-items: center;
-  /* justify-content: center; */
-  width: 1492px;
+  width: 100%;
+  min-width: 940px;
   height: 207px;
   margin: 0 0 20px 0;
   background: #f7f7f7;
   border-radius: 10px;
   overflow: hidden;
 }
-
+.word {
+  /* width: 65px; */
+  height: 18px;
+  font-size: 18px;
+  font-family: Microsoft YaHei UI;
+  font-weight: 400;
+  color: #4a4a4a;
+  line-height: 18px;
+}
 .productInfo {
-  width: 700px;
+  flex: 4.1;
+  /* width: 700px; */
   height: 165px;
   display: flex;
   align-items: center;
@@ -389,17 +414,19 @@ export default {
   margin: 8px 0;
 }
 .size {
-  width: 110px;
-  margin: 0 50px 0 0;
+  flex: 1;
+  /* width: 110px; */
   text-align: center;
 }
 .price {
-  width: 165px;
+  flex: 1;
+  /* width: 165px; */
   text-align: center;
   font-weight: 600;
 }
 .count {
-  width: 165px;
+  flex: 1;
+  /* width: 165px; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -414,7 +441,8 @@ export default {
   margin: 0 2px;
 }
 .payment {
-  width: 150px;
+  flex: 1;
+  /* width: 150px; */
   text-align: center;
   font-weight: 600;
 }
@@ -423,77 +451,77 @@ export default {
   margin: 20px 0 0 36%;
   overflow: hidden;
 }
-/deep/ .el-pagination {
+.paymentPage /deep/ .el-pagination {
   --el-pagination-button-height: 40px;
   --el-pagination-font-size: 16px;
 }
-/deep/ .el-pagination.is-background .el-pager li:not(.disabled).active {
+.paymentPage /deep/ .el-pagination.is-background .el-pager li:not(.disabled).active {
   background-color: #004ea2;
 }
-/deep/.el-pagination.is-background .btn-next,
-/deep/.el-pagination.is-background .btn-prev,
-/deep/.el-pagination.is-background .el-pager li {
+.paymentPage /deep/.el-pagination.is-background .btn-next,
+.paymentPage /deep/.el-pagination.is-background .btn-prev,
+.paymentPage /deep/.el-pagination.is-background .el-pager li {
   min-width: 40px;
   border-radius: 5px;
 }
-/deep/ .el-icon {
+.paymentPage /deep/ .el-icon {
   margin: 0 auto;
 }
 /* 以下为支付类型 */
 .payType {
-overflow: hidden;
+  overflow: hidden;
 }
 .typeTitle {
-margin: 40px 0 30px;
-height: 20px;
-font-size: 20px;
-font-family: Microsoft YaHei UI;
-font-weight: bold;
-color: #333333;
-line-height: 20px;
+  margin: 40px 0 30px;
+  height: 20px;
+  font-size: 20px;
+  font-family: Microsoft YaHei UI;
+  font-weight: bold;
+  color: #333333;
+  line-height: 20px;
 }
 .typeBox {
- display: flex;
-
+  display: flex;
+  flex-wrap: wrap;
 }
 .type {
-    width: 200px;
-height: 56px;
-line-height: 58px;
-border: 1px solid #999999;
-border-radius: 5px;
-margin: 0 46px 0 0;
-padding: 2px;
-display: flex;
-justify-content: center;
-align-items: center;
-cursor: pointer;
+  width: 200px;
+  height: 56px;
+  line-height: 58px;
+  border: 1px solid #999999;
+  border-radius: 5px;
+  margin: 0 46px 5px 0;
+  padding: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 }
 .type:hover {
-border: 3px solid #004EA2;
-padding: 0;
+  border: 3px solid #004ea2;
+  padding: 0;
 }
 .typeSign {
-    width: 38px;
-    height: 38px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-margin: 0 14px 0 0;
-overflow: hidden;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 14px 0 0;
+  overflow: hidden;
 }
 .typeSign img {
-    object-fit: contain;
-        width: 38px;
-    height: 38px;
+  object-fit: contain;
+  width: 38px;
+  height: 38px;
 }
 .typeName {
-height: 16px;
-font-size: 16px;
-font-family: Microsoft YaHei UI;
-font-weight: 400;
-color: #4A4A4A;
-line-height: 16px;
+  height: 16px;
+  font-size: 16px;
+  font-family: Microsoft YaHei UI;
+  font-weight: 400;
+  color: #4a4a4a;
+  line-height: 16px;
 }
 /* 以下为底部 */
 .footer {

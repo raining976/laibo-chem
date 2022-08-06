@@ -12,6 +12,7 @@ const userInfo = () => import("../views/userInfo.vue");
 const cart = () => import("../components/userInfo/shopCart.vue");
 const payment = () => import("../components/userInfo/payment.vue");
 const order = () => import("../components/userInfo/myOrder.vue");
+const orderInfo = () => import("../components/userInfo/orderInfo.vue");
 const team = () => import("../components/userInfo/team.vue");
 const address = () => import("../components/userInfo/receiveAddress.vue");
 const changePsd = () => import("../components/userInfo/changePsd.vue");
@@ -97,6 +98,11 @@ const routes = [
             path: '/order',
             name: 'order',
             component: order,
+          },
+          {
+            path: '/orderInfo',
+            name: 'orderInfo',
+            component: orderInfo,
           },
           {
             path: '/team',
