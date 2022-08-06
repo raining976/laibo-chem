@@ -144,7 +144,6 @@ export default {
   color: #333333;
   padding-bottom: 30px;
   margin-bottom: 20px;
-  margin-right: 50px;
   border-bottom: 2px solid #eaeaec;
 }
 </style>

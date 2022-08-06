@@ -78,7 +78,6 @@ export default {
   justify-content: space-between;
   align-items: center;
   padding-bottom: 30px;
-  margin-right: 50px;
   margin-bottom: 20px;
   border-bottom: 2px solid #eaeaec;
 }

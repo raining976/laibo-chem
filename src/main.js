@@ -11,5 +11,7 @@ import axios from 'axios';
 const app = createApp(App);
 app.config.globalProperties.$http = axios;
 
+
 axios.defaults.baseURL = 'https://hnxnb.tk/';
+
 app.use(router).use(installElementPlus).mount("#app");
