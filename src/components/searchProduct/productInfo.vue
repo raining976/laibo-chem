@@ -68,29 +68,43 @@
           <div class="prize">
             <table border="0" cellspacing="0">
               <thead>
-              <tr class="tableHead">
-                <th style="width:145px">货号</th>
-                <th style="width:140px">规格</th>
-                <th style="width:215px">库存</th>
-                <th style="width:170px">售价（RMB）</th>               
-                <th style="width:200px">数量</th>
-              </tr>
+                <tr class="tableHead">
+                  <th style="width: 145px">货号</th>
+                  <th style="width: 140px">规格</th>
+                  <th style="width: 215px">库存</th>
+                  <th style="width: 170px">售价（RMB）</th>
+                  <th style="width: 200px">数量</th>
+                </tr>
               </thead>
-              <tbody>
-                 <tr class="tableContent" v-for="(item, index) in productData" :key="index">
-                  <td class="huohao"><div>{{item.huohao}}</div></td>
-                  <td class="size"><div>{{item.size}}</div></td>
-                  <td class="store"><div>{{item.store}}</div></td>
-                  <td class="rmb"><div>{{item.rmb}}</div></td>
-                  <td class="count">
-                    <div class="countBtn">
-                      <div>-</div>
-                      <div>0{{la}}</div>
-                      <div>+</div>
-                    </div>
-                  </td>
-                 </tr>
-                 </tbody>
+              <el-scrollbar max-height="132px">
+                <tbody>
+                  <tr
+                    class="tableContent"
+                    v-for="(item, index) in productData"
+                    :key="index"
+                  >
+                    <td class="huohao">
+                      <div>{{ item.huohao }}</div>
+                    </td>
+                    <td class="size">
+                      <div>{{ item.size }}</div>
+                    </td>
+                    <td class="store">
+                      <div>{{ item.store }}</div>
+                    </td>
+                    <td class="rmb">
+                      <div>{{ item.rmb }}</div>
+                    </td>
+                    <td class="count">
+                      <div class="countBtn">
+                        <div>-</div>
+                        <div>0{{ la }}</div>
+                        <div>+</div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </el-scrollbar>
             </table>
           </div>
         </div>
@@ -99,7 +113,7 @@
         <div class="addCart">加入购物车</div>
         <div class="toBuy">购买</div>
       </div>
-      
+
       <div class="toCustomize" @click="isShow = !isShow">联系客服私人订制></div>
     </div>
     <private-order v-if="isShow" />
@@ -118,36 +132,36 @@ export default {
       pic: require("../../assets/p11.png"),
       name: "T826255 2-(三丁基锡)-5-三氟甲基吡啶",
       concentration: ">95%",
-  productData : [
-  {
-    huohao: '2016-05-03',
-    size: 'Tom',
-    rmb: 'California',
-    store: 'Los Angeles',
-    count: 0,
-  },
-  {
-    huohao: '2016-05-02',
-    size: 'Tom',
-    rmb: 'California',
-    store: 'Los Angeles',
-    count: 0,
-  },
-  {
-    huohao: '2016-05-04',
-    size: 'Tom',
-    rmb: 'California',
-    store: 'Los Angeles',
-    count: 0,
-  },
-  {
-    huohao: '2016-05-04',
-    size: 'Tom',
-    rmb: 'California',
-    store: 'Los Angeles',
-    count: 0,
-  },
-]
+      productData: [
+        {
+          huohao: "2016-05-03",
+          size: "Tom",
+          rmb: "California",
+          store: "Los Angeles",
+          count: 0,
+        },
+        {
+          huohao: "2016-05-02",
+          size: "Tom",
+          rmb: "California",
+          store: "Los Angeles",
+          count: 0,
+        },
+        {
+          huohao: "2016-05-04",
+          size: "Tom",
+          rmb: "California",
+          store: "Los Angeles",
+          count: 0,
+        },
+        {
+          huohao: "2016-05-04",
+          size: "Tom",
+          rmb: "California",
+          store: "Los Angeles",
+          count: 0,
+        },
+      ],
     };
   },
 };
@@ -213,13 +227,13 @@ export default {
   margin: 0 0 12px 0;
 }
 .productName_en {
-  width:100%;
-height: 32px;
-font-size: 30px;
-line-height: 32px;
-font-family: Microsoft YaHei UI;
-font-weight: 400;
-color: #333333;
+  width: 100%;
+  height: 32px;
+  font-size: 30px;
+  line-height: 32px;
+  font-family: Microsoft YaHei UI;
+  font-weight: 400;
+  color: #333333;
 }
 .concentration {
   width: 100%;
@@ -277,54 +291,55 @@ color: #333333;
   height: 174px;
   border: 0.96px solid #999999;
   border-radius: 4.99px;
-  overflow: hidden; 
+  overflow: hidden;
 }
 table {
-            width: 100%;
-            border-spacing: 0px;
-            border-collapse: collapse;
-        }
+  width: 100%;
+  border-spacing: 0px;
+  border-collapse: collapse;
+}
 table thead tr {
   display: block;
 }
- tbody {
+tbody {
   display: block;
   height: 132px;
-  overflow-x: hidden;
+  /* overflow-x: hidden;
   overflow-y: overlay;
   -webkit-overflow-y: overlay;
- -webkit-overflow-scrolling: touch;
+ -webkit-overflow-scrolling: touch; */
 }
-table thead tr, table tbody tr {
+/* table thead tr,
+table tbody tr {
   display: table;
-            table-layout: fixed;
-            width: 100%;
-        }
+  table-layout: fixed;
+  width: 100%;
+} */
 
-.tableHead > th{
-height: 42px;
-color:#333;
-background-color: #eaebed;
+.tableHead > th {
+  height: 42px;
+  color: #333;
+  background-color: #eaebed;
 }
 .tableContent div {
   overflow: hidden;
-height: 44px;
-line-height: 44px;
-font-size: 16px;
+  height: 44px;
+  line-height: 44px;
+  font-size: 16px;
   text-align: center;
 }
 
 .huohao {
   width: 145px;
-  color:#004ea2
+  color: #004ea2;
 }
 .size {
-width: 140px;
-color: #171717;
+  width: 140px;
+  color: #171717;
 }
 .store {
   width: 215px;
-  color:#004ea2
+  color: #004ea2;
 }
 .rmb {
   width: 170px;
@@ -332,23 +347,23 @@ color: #171717;
 }
 /* 购买数量按钮 */
 .count {
-   width: 200px;
-   display: flex;
-   align-items: center;
-   justify-content: center;
+  width: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .countBtn {
   display: flex;
- align-items: center;
-   justify-content: center;
+  align-items: center;
+  justify-content: center;
 }
 /* ---- */
 .btn {
   margin: 33.98px 0 0 0;
   display: flex;
-
 }
-.addCart, .toBuy {
+.addCart,
+.toBuy {
   cursor: pointer;
   width: 240px;
   height: 64px;
@@ -357,14 +372,15 @@ color: #171717;
   color: #004ea2;
   font-weight: 600;
   text-align: center;
-  background: #E0F3FE;
+  background: #e0f3fe;
   border-radius: 5px;
   transition: all 0.4s;
 }
 .addCart {
   margin: 0 16px 0 0;
 }
-.addCart:hover ,.toBuy:hover{
+.addCart:hover,
+.toBuy:hover {
   color: #fff;
   background-color: #004ea2;
 }
@@ -374,7 +390,7 @@ color: #171717;
   cursor: pointer;
   position: absolute;
   color: #004ea2;
-  background-color: #E0F3FE;
+  background-color: #e0f3fe;
   bottom: 38.02px;
   right: 0;
   font-size: 22px;
@@ -383,7 +399,4 @@ color: #171717;
   color: #fff;
   background-color: #004ea2;
 }
-.selectCount {
-}
-
 </style>

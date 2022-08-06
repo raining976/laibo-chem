@@ -27,6 +27,7 @@
             (currentPage - 1) * pagesize,
             currentPage * pagesize
           )"
+          :ref="setCommodityBox"
           :key="index"
         >
           <div class="radio"></div>
@@ -46,9 +47,9 @@
           <div class="size">{{ item0.guige }}</div>
           <div class="price">{{ item0.price }}</div>
           <div class="count">
-            <div class="countBtn" @click="func()">-</div>
-            <div class="num">1{{}}</div>
-            <div class="countBtn" @click="func()">+</div>
+            <div class="countBtn" @click="minus(item0.num,index)">-</div>
+            <div class="num">1{{item0.num}}</div>
+            <div class="countBtn" @click="plus(item0.num,index)">+</div>
           </div>
           <!-- 关于金额的计算方式 -->
           <div class="payment">{{ item0.payment }}</div>
@@ -92,13 +93,16 @@ export default {
       pagesize: 3, // 每页显示多少条
       currentPage: 1, // 当前页数
       pagerCount: 5, //五个以上加省略号
+
+      commodityBox:[],
       commodityList: [
         {
           name: "1",
           huohao: "2",
           shopCart_id: 3,
           guige: "95%",
-          price: 5,
+          num: 0,
+         price: 5,
           payment: 666,
         },
         {
@@ -106,7 +110,8 @@ export default {
           huohao: "2",
           shopCart_id: 3,
           guige: "%",
-          price: 5,
+          num: 0,
+         price: 5,
           payment: 666,
         },
         {
@@ -114,7 +119,8 @@ export default {
           huohao: "2",
           shopCart_id: 3,
           guige: "%",
-          price: 5,
+          num: 0,
+         price: 5,
           payment: 666,
         },
         {
@@ -122,13 +128,41 @@ export default {
           huohao: "2",
           shopCart_id: 3,
           guige: "%",
-          price: 5,
+          num: 0,
+         price: 5,
           payment: 666,
         },
       ],
     };
   },
+  created() {
+        this.$http
+        .get("/cart/", {
+          params: {
+        
+          },
+        })
+        //回调函数
+        .then((res) => {
+          this.$data.commodityList = res.data.productList;
+          console.log("ceshi", this.$data.commodityList);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+  },
+   beforeUpdate() {
+    this.commodityBox = []
+  },
+  updated() {
+    console.log(this.commodityBox)
+  },
   methods: {
+    setCommodityBox(el) {
+      if(el) {
+        this.commodityBox.push(el);
+      }
+    },
     // 跳转文章详情页（需传参）
     toProductInfo() {
       this.$router.push({
@@ -139,6 +173,16 @@ export default {
       this.$router.push({
         path: "/payment",
       });
+    },
+    //商品数量调节
+    plus() {
+       
+    },
+    minus(num, id) {
+       if(num <= 0) {
+        
+       }
+
     },
     // 分页
     handleSizeChange(val) {
