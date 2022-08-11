@@ -3,7 +3,10 @@
   <div class="paymentPage">
     <!-- 收获地址 -->
     <div class="amount">
-      <div class="pageTitle">收货地址</div>
+    <div class="top">
+      <div class="title">结算界面</div>
+      <div class="returnBtn" @click="func()">/购物车列表</div>
+    </div>
       <div class="addressBox">
         <ul class="addressList">
           <!-- 以下v-for -->
@@ -222,16 +225,41 @@ export default {
 };
 </script>
 <style scoped>
-.pageTitle {
+.top {
+  width: 100%;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #eaeaec;
+  display: flex;
+  /* justify-content: space-between; */
+  overflow: hidden;
+}
+
+.returnBtn {
+  margin: 0 48px 0 0;
+  height: 20px;
+  line-height: 20px;
+  font-size: 20px;
+  margin-bottom: 30px;
+  cursor: pointer;
+  overflow: hidden;
+  font-weight: bold;
+    font-family: Microsoft YaHei UI;
+}
+.returnBtn:hover {
+  color: #004ea2;
+}
+
+.title {
+  height: 20px;
+  line-height: 20px;
   font-size: 20px;
   font-family: Microsoft YaHei UI;
   font-weight: bold;
   color: #333333;
-  padding-bottom: 30px;
-  margin-right: 50px;
-  border-bottom: 2px solid #eaeaec;
-  margin-bottom: 20px;
+  /* margin-right: 50px; */
+  margin-bottom: 30px;
 }
+/* ----- */
 .addressList {
   display: flex;
   justify-content: flex-start;

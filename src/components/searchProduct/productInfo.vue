@@ -89,6 +89,7 @@
                     <td class="size">
                       <div>{{ item.size }}</div>
                     </td>
+
                     <td class="store">
                       <div>{{ item.store }}</div>
                     </td>
@@ -96,10 +97,8 @@
                       <div>{{ item.rmb }}</div>
                     </td>
                     <td class="count">
-                      <div class="countBtn">
-                        <div>-</div>
-                        <div>0{{ la }}</div>
-                        <div>+</div>
+                      <div class="countBtnBox">
+                                      <el-input-number v-model="item.num" @change="handleChange" :min="0"  ></el-input-number>
                       </div>
                     </td>
                   </tr>
@@ -138,32 +137,40 @@ export default {
           size: "Tom",
           rmb: "California",
           store: "Los Angeles",
-          count: 0,
+          num: 0,
         },
         {
           huohao: "2016-05-02",
           size: "Tom",
           rmb: "California",
           store: "Los Angeles",
-          count: 0,
+          num: 0,
         },
         {
           huohao: "2016-05-04",
           size: "Tom",
           rmb: "California",
           store: "Los Angeles",
-          count: 0,
+          num: 0,
         },
         {
           huohao: "2016-05-04",
           size: "Tom",
           rmb: "California",
           store: "Los Angeles",
-          count: 0,
+          num: 0,
         },
       ],
     };
   },
+  methods: {
+    //商品数量调节
+        //商品数量调节
+    handleChange(value) {
+        console.log(value);
+      },
+    
+  }
 };
 </script>
 <style scoped>
@@ -352,11 +359,44 @@ table tbody tr {
   align-items: center;
   justify-content: center;
 }
-.countBtn {
+.countBtnBox {
+  width: 160px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
+.countBtnBox /deep/ .el-input-number {
+  width: 90%;
+  height: 30px;
+  line-height: 30px;
+}
+.countBtnBox /deep/ .el-input-number__decrease, .count /deep/.el-input-number__increase {
+
+  width: 30px;
+  height: 30px;  
+  line-height: 30px;
+  border-radius: 2px;
+  background: #eaebed;
+}
+.countBtnBox /deep/ .el-input-number__decrease {
+  left: 0;
+}
+.countBtnBox /deep/.el-input-number__increase {
+  right: 0;
+}
+.countBtnBox /deep/ .el-input__inner {
+  position: absolute;
+  top: 2px;
+  left: 30px;
+ width: calc(100% - 60px);
+  height: 29px;
+  line-height: 29px;
+  border: 2px solid #eaebed;
+  padding: 0;
+  /* background: #eaebed; */
+}
+
+
 /* ---- */
 .btn {
   margin: 33.98px 0 0 0;
