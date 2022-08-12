@@ -4,7 +4,11 @@
   <div class="orderInfoPage">
     <div class="top">
       <div class="title">订单详情</div>
+      <div class="Btn">
+      <div class="returnBtn" @click="toMyOrder()">返回我的订单</div>
       <div class="deleteBtn" @click="func()">删除订单</div>
+      </div>
+      
     </div>
     <div class="orderInfo">
       <div class="detail"><strong>订单编号：</strong>{{}}</div>
@@ -68,10 +72,10 @@
           <div class="size">{{ item0.guige }}</div>
           <div class="price">{{ item0.price }}</div>
           <div class="count">
-            <div class="num">1{{}}</div>
+            <div class="num">{{item0.num}}</div>
           </div>
           <!-- 关于金额的计算方式 -->
-          <div class="payment">{{ item0.payment }}</div>
+          <div class="payment">{{ item0.num * item0.price }}</div>
         </div>
       </div>
       <div class="pagination">
@@ -127,6 +131,7 @@ export default {
           huohao: "2",
           shopCart_id: 3,
           guige: "95%",
+          num: 2,
           price: 5,
           payment: 666,
         },
@@ -135,7 +140,8 @@ export default {
           huohao: "2",
           shopCart_id: 3,
           guige: "%",
-          price: 5,
+          num: 2,
+          price: 10,
           payment: 666,
         },
         {
@@ -143,7 +149,8 @@ export default {
           huohao: "2",
           shopCart_id: 3,
           guige: "%",
-          price: 5,
+          num: 2,
+          price: 50,
           payment: 666,
         },
         {
@@ -151,13 +158,24 @@ export default {
           huohao: "2",
           shopCart_id: 3,
           guige: "%",
-          price: 5,
+          num: 2,
+          price: 55,
           payment: 666,
         },
       ],
     };
   },
  methods: {
+     toMyOrder() {
+      this.$router.push({
+        path: "/order",
+      })
+     },
+     toProductInfo() {
+      this.$router.push({
+           path: "/productInfo",
+      })
+    },
     // 分页
     handleSizeChange(val) {
       this.$data.pagesize = val;
@@ -167,11 +185,7 @@ export default {
       this.$data.currentPage = val;
       // console.log(`当前页: ${val}`);
     },
-    toProductInfo() {
-      this.$router.push({
-           path: "/productInfo",
-      })
-    },
+    
   },
   setup() {
     const activeName = ref("1");
@@ -187,11 +201,22 @@ export default {
   justify-content: space-between;
   overflow: hidden;
 }
-
+.Btn {
+  font-size: 16px;
+  display: flex;
+  justify-content: space-between;
+  overflow: hidden;
+}
+.returnBtn {
+  margin: 0 30px 0 0;
+  cursor: pointer;
+}
+.returnBtn:hover {
+  color:#004ea2;
+}
 .deleteBtn {
   margin: 0 48px 0 0;
   cursor: pointer;
-  overflow: hidden;
 }
 .deleteBtn:hover {
   color: #ff4747;

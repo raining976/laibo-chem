@@ -199,6 +199,10 @@ export default {
   //   console.log(this.commodityBox);
   // },
   computed: {
+    // 购物车件数
+    allProducts() {
+      return this.$data.commodityList.length;
+    },
     // 总计
 money() {
   let _money = this.$data.money

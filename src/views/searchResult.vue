@@ -3,7 +3,7 @@
   <div class="bg">
     <div class="searchNav">
       <div class="sitePosi">
-        <div class="returnBtn" @click="fun()">&lt;返回首页</div>
+        <div class="returnBtn" @click="toMainPage()">&lt;返回首页</div>
         <div class="nowPosi">/{{ type }}</div>
       </div>
       <div class="typeList">
@@ -41,6 +41,11 @@ export default {
     };
   },
   methods:{
+         toMainPage() {
+      this.$router.push({
+        path: "/",
+      });
+    },
     // js判断页面未写
   }
 };
@@ -52,7 +57,7 @@ export default {
   justify-content: center;
 }
 .solidLine {
-  width: 1410px;
+  width: 100%;
   height: 0.96px;
   border-bottom: 0.96px solid #999999;
   margin: 0 auto;

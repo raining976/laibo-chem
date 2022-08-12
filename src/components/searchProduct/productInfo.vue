@@ -64,7 +64,7 @@
               <div class="detailContent">{{ storageCondition }}</div>
             </div>
           </div>
-          <!-- 价格 -->
+          <!-- 价格表格 -->
           <div class="prize">
             <table border="0" cellspacing="0">
               <thead>
@@ -97,8 +97,9 @@
                       <div>{{ item.rmb }}</div>
                     </td>
                     <td class="count">
+                      <!-- 计数器 -->
                       <div class="countBtnBox">
-                                      <el-input-number v-model="item.num" @change="handleChange" :min="0"  ></el-input-number>
+                       <el-input-number v-model="item.num" @change="handleChange" :min="0"  ></el-input-number>
                       </div>
                     </td>
                   </tr>

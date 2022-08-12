@@ -5,7 +5,7 @@
     <div class="amount">
     <div class="top">
       <div class="title">结算界面</div>
-      <div class="returnBtn" @click="func()">/购物车列表</div>
+      <div class="returnBtn" @click="toShopCart()">返回购物车列表</div>
     </div>
       <div class="addressBox">
         <ul class="addressList">
@@ -28,7 +28,7 @@
         </ul>
       </div>
       <div class="freight">
-        预估运费：<strong>120{{ freight }}</strong>
+        预估运费：<strong>{{ freight }}</strong>
       </div>
     </div>
     <!-- 商品统计 -->
@@ -65,10 +65,10 @@
           <div class="size">{{ item0.guige }}</div>
           <div class="price">{{ item0.price }}</div>
           <div class="count">
-            <div class="num">1{{}}</div>
+            <div class="num">{{item0.num}}</div>
           </div>
           <!-- 关于金额的计算方式 -->
-          <div class="payment">{{ item0.payment }}</div>
+          <div class="payment">{{ item0.num * item0.price }}</div>
         </div>
       </div>
       <div class="pagination">
@@ -89,25 +89,25 @@
     <div class="payType">
       <div class="typeTitle">支付类型</div>
       <div class="typeBox">
-        <div class="type" @click="pay()">
+        <div class="type" :class="{type_checked:wechar == true}" @click="payType('wechar')">
           <div class="typeSign">
             <img src="../../assets/weixinzhifu.png" alt="" />
           </div>
           <div class="typeName">微信支付</div>
         </div>
-        <div class="type" @click="pay()">
+        <div class="type" :class="{type_checked:zhifubao == true}" @click="payType('zhifubao')">
           <div class="typeSign">
             <img src="../../assets/zhifubao.png" alt="" />
           </div>
           <div class="typeName">支付宝支付</div>
         </div>
-        <div class="type" @click="pay()">
+        <div class="type" :class="{type_checked:geren == true}" @click="payType('geren')">
           <div class="typeSign">
             <img src="../../assets/gerenzhifu.png" alt="" />
           </div>
           <div class="typeName">上传单联（个人）</div>
         </div>
-        <div class="type" @click="pay()">
+        <div class="type" :class="{type_checked:gongsi == true}" @click="payType('gongsi')">
           <div class="typeSign">
             <img src="../../assets/gongsi.png" alt="" />
           </div>
@@ -119,7 +119,7 @@
     <div class="footer">
       <div class="allMoney">
         最终合计&nbsp;&nbsp;&nbsp;
-        <div>999{{ all }}</div>
+        <div>{{ allmoney }}</div>
       </div>
       <div class="pay" @click="toPay()">结算</div>
     </div>
@@ -135,6 +135,12 @@ export default {
       currentPage: 1, // 当前页数
       pagerCount: 5, //五个以上加省略号
       flag: 0, //用于地址框加边框
+      wechar:false,
+      zhifubao:false,
+      geren:false,
+      gongsi:false,
+      freight: 120, //运费
+      allmoney: 0, //总计
       addresses: [
         {
           name: "张三",
@@ -169,6 +175,7 @@ export default {
           huohao: "2",
           shopCart_id: 3,
           guige: "95%",
+          num: 2,
           price: 5,
           payment: 666,
         },
@@ -177,7 +184,8 @@ export default {
           huohao: "2",
           shopCart_id: 3,
           guige: "%",
-          price: 5,
+          num: 2,
+          price: 50,
           payment: 666,
         },
         {
@@ -185,7 +193,8 @@ export default {
           huohao: "2",
           shopCart_id: 3,
           guige: "%",
-          price: 5,
+          num: 2,
+          price: 15,
           payment: 666,
         },
         {
@@ -193,18 +202,39 @@ export default {
           huohao: "2",
           shopCart_id: 3,
           guige: "%",
-          price: 5,
+          num: 2,
+          price: 25,
           payment: 666,
         },
       ],
     };
   },
+  computed: {
+    allmoney() {
+  let _allmoney = this.$data.allmoney;
+  _allmoney += this.$data.freight;
+     this.$data.commodityList.forEach((item) => {
+      _allmoney += item.num * item.price;
+     })
+     return _allmoney;
+},
+  },
   methods: {
+    toShopCart() {
+      this.$router.push({
+        path: "cart",
+      })
+    },
+     toProductInfo() {
+      this.$router.push({
+           path: "/productInfo",
+      })
+    },
     // 修改地址
     editAddress() {},
     // 修改地址
     deleteAddress() {},
-    // 分页
+    // 分页---
     handleSizeChange(val) {
       this.$data.pagesize = val;
       // console.log(`每页 ${val} 条`);
@@ -215,12 +245,39 @@ export default {
     },
     chooseAddress(id) {
       this.$data.flag = id;
-    },
-      toProductInfo() {
-      this.$router.push({
-           path: "/productInfo",
-      })
-    },
+    },    
+     payType(str) {
+        switch(str){
+          case 'wechar':
+            this.$data.wechar = true;
+             this.$data.zhifubao = false;
+             this.$data.geren = false;
+             this.$data.gongsi = false;
+            break;
+          case 'zhifubao':
+            this.$data.wechar = false;
+             this.$data.zhifubao = true;
+             this.$data.geren = false;
+             this.$data.gongsi = false;
+            break;
+          case 'geren':
+             this.$data.wechar = false;
+             this.$data.zhifubao = false;
+             this.$data.geren = true;
+             this.$data.gongsi = false;
+            break;
+          case 'gongsi':
+             this.$data.wechar = false;
+             this.$data.zhifubao = false;
+             this.$data.geren = false;
+             this.$data.gongsi = true;
+            break;
+        }
+     },
+     toPay() {
+
+     },
+
   },
 };
 </script>
@@ -230,7 +287,7 @@ export default {
   margin-bottom: 20px;
   border-bottom: 2px solid #eaeaec;
   display: flex;
-  /* justify-content: space-between; */
+  justify-content: space-between;
   overflow: hidden;
 }
 
@@ -238,7 +295,7 @@ export default {
   margin: 0 48px 0 0;
   height: 20px;
   line-height: 20px;
-  font-size: 20px;
+  font-size: 16px;
   margin-bottom: 30px;
   cursor: pointer;
   overflow: hidden;
@@ -526,6 +583,10 @@ export default {
   cursor: pointer;
 }
 .type:hover {
+  border: 3px solid #004ea2;
+  padding: 0;
+}
+.type_checked {
   border: 3px solid #004ea2;
   padding: 0;
 }

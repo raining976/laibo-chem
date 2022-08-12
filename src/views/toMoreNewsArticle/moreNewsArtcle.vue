@@ -15,7 +15,7 @@
       </div>
     </div>
     <div class="pagination">
-    <el-pagination background="#004ea2" layout="prev,pager,next" :total="titleBox.length" :page-size="pagesize" :pager-count="pagerCount" :current-page="currentPage" @current-change="handleCurrentChange" @size-change="handleSizeChange">
+    <el-pagination background="#004ea2" layout="prev,pager,next" :total="titleBox.length" :page-size="pagesize" :current-page="currentPage" @current-change="handleCurrentChange" @size-change="handleSizeChange">
     </el-pagination>
     </div>
   </div>
@@ -26,9 +26,9 @@ export default {
   components: "",
   data() {
     return {
-        pagesize: 3, // 每页显示多少条
+        pagesize: 8, // 每页显示多少条
         currentPage: 1, // 当前页数
-        pagerCount: 2, //五个以上加省略号
+        
       titleBox: [
         {
           title: "莱博斯威2022春节发货通知莱博斯威2022春节发货通知",
@@ -172,18 +172,18 @@ export default {
   bottom: 43px;
   margin: 0 auto;
 }
-/deep/ .el-pagination {
+.pagination /deep/ .el-pagination {
    --el-pagination-button-height: 40px;
    --el-pagination-font-size: 16px;
 }
-/deep/ .el-pagination.is-background .el-pager li:not(.disabled).active {
+.pagination /deep/ .el-pagination.is-background .el-pager li:not(.disabled).active {
   background-color: #004ea2;
 } 
-/deep/.el-pagination.is-background .btn-next, /deep/.el-pagination.is-background .btn-prev, /deep/.el-pagination.is-background .el-pager li  {
+.pagination /deep/.el-pagination.is-background .btn-next, /deep/.el-pagination.is-background .btn-prev, /deep/.el-pagination.is-background .el-pager li  {
   min-width: 40px;
   border-radius: 5px;
 }
-/deep/ .el-icon {
+.pagination /deep/ .el-icon {
   margin: 0 auto;
 }
 </style>
