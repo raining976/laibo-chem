@@ -1,27 +1,36 @@
 //createDate:2022-07-27
 <template>
   <div class="changePsd">
-    <div class="title">修改密码</div>
+    <div class="title">{{ $t("base.edit") + " " + $t("base.pass") }}</div>
     <div class="content">
       <el-form
         :model="ruleForm"
         status-icon
         :rules="rules"
         ref="ruleForm"
-        label-width="100px"
+        label-width="170px"
         class="demo-ruleForm"
       >
-        <el-form-item label="原始密码" prop="oldPass">
+        <el-form-item
+          :label="$t('editPass.old') + $t('base.pass')"
+          prop="oldPass"
+        >
           <el-input v-model="ruleForm.oldPass"></el-input>
         </el-form-item>
-        <el-form-item label="新密码" prop="newPass">
+        <el-form-item
+          :label="$t('editPass.new') + $t('base.pass')"
+          prop="newPass"
+        >
           <el-input
             type="password"
             v-model="ruleForm.newPass"
             autocomplete="off"
           ></el-input>
         </el-form-item>
-        <el-form-item label="确认密码" prop="checkPass">
+        <el-form-item
+          :label="$t('editPass.confirm') + $t('base.pass')"
+          prop="checkPass"
+        >
           <el-input
             type="password"
             v-model="ruleForm.checkPass"
@@ -30,10 +39,12 @@
         </el-form-item>
 
         <el-form-item class="btnBox">
-          <el-button type="primary" @click="submitForm('ruleForm')"
-            >修改</el-button
-          >
-          <el-button @click="resetForm('ruleForm')">重置</el-button>
+          <el-button type="primary" @click="submitForm('ruleForm')">{{
+            $t("base.submit")
+          }}</el-button>
+          <el-button @click="resetForm('ruleForm')">{{
+            $t("base.reset")
+          }}</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -45,7 +56,13 @@ export default {
   data() {
     var validatePass = (rule, value, callback) => {
       if (value === "") {
-        callback(new Error("请输入新密码"));
+        callback(
+          new Error(
+            this.$t("editPass.enter") +
+              this.$t("editPass.new") +
+              this.$t("base.pass")
+          )
+        );
       } else {
         if (this.ruleForm.checkPass !== "") {
           this.$refs.ruleForm.validateField("checkPass");
@@ -55,9 +72,9 @@ export default {
     };
     var validatePass2 = (rule, value, callback) => {
       if (value === "") {
-        callback(new Error("请再次输入密码"));
+        callback(new Error(this.$t('register.passAgain')));
       } else if (value !== this.ruleForm.newPass) {
-        callback(new Error("两次输入密码不一致!"));
+        callback(new Error(this.$t('register.checkError')));
       } else {
         callback();
       }
@@ -70,7 +87,14 @@ export default {
       },
       rules: {
         oldPass: [
-          { required: true, message: "请输入原始密码", trigger: "blur" },
+          {
+            required: true,
+            message:
+              this.$t("editPass.enter") +
+              this.$t("editPass.old") +
+              this.$t("base.pass"),
+            trigger: "blur",
+          },
         ],
         newPass: [{ required: true, validator: validatePass, trigger: "blur" }],
         checkPass: [
@@ -130,6 +154,11 @@ export default {
   width: 107px;
   height: 46px;
   border-radius: 5px;
+}
+.changePsd .el-button span {
+  font-size: 20px;
+  font-family: Microsoft YaHei UI;
+  font-weight: 400;
 }
 </style>
 <style scoped>

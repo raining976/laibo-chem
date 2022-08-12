@@ -3,23 +3,31 @@
 <template>
   <div>
     <div class="top">
-      <div class="title">购物车（共&nbsp;{{ allProducts }}&nbsp;件）</div>
-      <div class="deleteBtn" @click="delProduct()">删除</div>
+      <div class="title">
+        {{
+          $t("userMenu.cart") +
+          "( " +
+          $t("cart.total") +
+          " : " +
+          allProducts +
+          ")"
+        }}
+      </div>
+      <div class="deleteBtn" @click="delProduct()">{{ $t("base.dele") }}</div>
     </div>
     <!-- 以下是购物车信息 -->
     <div class="shopCart">
       <div class="listHead">
         <div class="quanxuan">
           <input
-              class="checkAll"
-              id="checkall"
-              name="commodity"
-              type="checkbox"
-              v-model="checkall"
-              @change="checkAll()"
-            />
-            <label class="word" for="checkAll">全选
-          </label>
+            class="checkAll"
+            id="checkall"
+            name="commodity"
+            type="checkbox"
+            v-model="checkall"
+            @change="checkAll()"
+          />
+          <label class="word" for="checkAll">{{ $t("cart.allCheck") }} </label>
           <!-- <el-checkbox
             v-model="checkAll"
             :indeterminate="isIndeterminate"
@@ -27,11 +35,11 @@
             >全选
           </el-checkbox> -->
         </div>
-        <div class="_productInfo word">产品信息</div>
-        <div class="_size word">规格</div>
-        <div class="_price word">单价</div>
-        <div class="_count word">数量</div>
-        <div class="_payment word">金额</div>
+        <div class="_productInfo word">{{ $t("order.productInfo") }}</div>
+        <div class="_size word">{{ $t("order.size") }}</div>
+        <div class="_price word">{{ $t("order.price") }}</div>
+        <div class="_count word">{{ $t("order.count") }}</div>
+        <div class="_payment word">{{ $t("order.money") }}</div>
       </div>
       <div class="allCommodity">
         <!-- 以下v-for一个商品 -->
@@ -53,7 +61,7 @@
             <div class="radio">
               <label>
                 <input
-                class="checkOne"
+                  class="checkOne"
                   name="commodity"
                   type="checkbox"
                   @change="checkOne(item0)"
@@ -70,17 +78,25 @@
                 <div class="name_zh" @click="toProductInfo()">
                   {{ item0.name }}
                 </div>
-                <div class="infoWord">货号：{{ item0.huohao }}</div>
-                <div class="infoWord">CAS编号：{{ item0.shopCart_id }}</div>
+                <div class="infoWord">
+                  {{ $t("order.itemNo") + "：" }}{{ item0.huohao }}
+                </div>
+                <div class="infoWord">
+                  {{ $t("casNum") + "：" }}{{ item0.shopCart_id }}
+                </div>
               </div>
             </div>
             <div class="size">{{ item0.guige }}</div>
             <div class="price">{{ item0.price }}</div>
             <div class="count">
-              <el-input-number v-model="item0.num" @change="handleChange" :min="0"  ></el-input-number>
+              <el-input-number
+                v-model="item0.num"
+                @change="handleChange"
+                :min="0"
+              ></el-input-number>
             </div>
             <!-- 关于金额的计算方式 -->
-            <div class="payment">{{ item0.price* item0.num }}</div>
+            <div class="payment">{{ item0.price * item0.num }}</div>
           </div>
         </div>
         <!-- </el-checkbox-group> -->
@@ -106,13 +122,15 @@
           class="submitMyBtn"
           :class="{ agree_submitMy: isSubmitMy == true }"
         ></div>
-        提交到个人账单
+        {{ $t("cart.submitOwn") }}
       </div>
       <div class="allMoney">
-        合计（不含运费）&nbsp;&nbsp;
+        {{ $t("cart.addUp") }}&nbsp;&nbsp;
         <div>{{ money }}</div>
       </div>
-      <div class="toPay" @click="toPay()">去结算</div>
+      <div class="toPay" @click="toPay()">
+        {{ $t("cart.to") + $t("cart.settlement") }}
+      </div>
     </div>
   </div>
 </template>
@@ -174,23 +192,21 @@ export default {
     };
   },
   created() {
-        // this.$http
-        // .get("/cart", {
-        //   params: {
+    // this.$http
+    // .get("/cart", {
+    //   params: {
 
-        //   },
-        // })
-        // //回调函数
-        // .then((res) => {
-        //   this.$data.commodityList = res.data.productList;
-        //   console.log("ceshi", this.$data.commodityList);
-        // })
-        // .catch((err) => {
-        //   console.log(err);
-        // });
-        this.addChecked();
-        
-
+    //   },
+    // })
+    // //回调函数
+    // .then((res) => {
+    //   this.$data.commodityList = res.data.productList;
+    //   console.log("ceshi", this.$data.commodityList);
+    // })
+    // .catch((err) => {
+    //   console.log(err);
+    // });
+    this.addChecked();
   },
   // beforeUpdate() {
   //   this.commodityBox = [];
@@ -204,17 +220,16 @@ export default {
       return this.$data.commodityList.length;
     },
     // 总计
-money() {
-  let _money = this.$data.money
-     this.$data.checkedCommodities.forEach((item) => {
-      _money += item.num * item.price;
-     })
-     this.$data.money = _money;
-     return _money;  //return 回去的新值不会赋给data里的money ,因为html代码里的money相当于函数作为变量？
-}
+    money() {
+      let _money = this.$data.money;
+      this.$data.checkedCommodities.forEach((item) => {
+        _money += item.num * item.price;
+      });
+      this.$data.money = _money;
+      return _money; //return 回去的新值不会赋给data里的money ,因为html代码里的money相当于函数作为变量？
+    },
   },
   methods: {
-   
     // setCommodityBox(el) {
     //   if (el) {
     //     this.commodityBox.push(el);
@@ -227,81 +242,79 @@ money() {
       });
     },
     toPay() {
-      if(this.$data.money > 0){
-            this.$router.push({
-        path: "/payment",
-      });
+      if (this.$data.money > 0) {
+        this.$router.push({
+          path: "/payment",
+        });
       }
     },
     //删除按钮
     delProduct() {
-      // console.log(this.$data.commodityList,"删除前");
       this.$data.checkall = false;
       this.$data.checkedCommodities = [];
-       this.$data.commodityList = this.$data.commodityList.filter((item) => {
-            return item.checked === false;
-      })
-          //  console.log(this.$data.commodityList,"删除后");
+      this.$data.commodityList = this.$data.commodityList.filter((item) => {
+        return item.checked === false;
+      });
     },
     //复选框相关
-     addChecked() {
-              //  function(){}      
-    this.$data.commodityList.forEach((item) => {
-        Object.assign(item, {checked: false});
-        });
+    addChecked() {
+      //  function(){}
+      this.$data.commodityList.forEach((item) => {
+        Object.assign(item, { checked: false });
+      });
     },
     // 多选
     checkAll() {
       // 数组为空时无法点击
-      if(this.$data.commodityList.length === 0) {
+      if (this.$data.commodityList.length === 0) {
         this.$data.checkall = false;
       }
       // 实现全选
-      if( this.$data.checkall === true)
-      {
+      if (this.$data.checkall === true) {
         this.$data.checkedCommodities = this.$data.commodityList;
-        this.$data.commodityList.forEach(function(item){
+        this.$data.commodityList.forEach(function (item) {
           item.checked = true;
-          if(item.num === 0)item.num ++;
-        })
+          if (item.num === 0) item.num++;
+        });
       }
       // 实现反选
-      else if( this.$data.checkall === false) {
+      else if (this.$data.checkall === false) {
         this.$data.checkedCommodities = [];
-        this.$data.commodityList.forEach(function(item){
+        this.$data.commodityList.forEach(function (item) {
           item.checked = false;
-        })
+        });
       }
-     
     },
     checkOne(item) {
       var _this = this;
-      // console.log(_this.$data.checkedCommodities,"改变前");
       //选中时操作
-         if(item.checked === true){
-          if(item.num === 0)item.num ++;
-          _this.$data.checkedCommodities.push(item);
-         }
-          //取消选中操作
-         else if(item.checked ===false) {
-          _this.$data.checkedCommodities = _this.$data.checkedCommodities.filter((ele) => {
-            return ele.name !== item.name; 
-          })
-         }
-    //  console.log(_this.$data.checkedCommodities,"改变后");
-       //取消全选状态
-       if(_this.$data.checkedCommodities.length === _this.$data.commodityList.length){
-          _this.$data.checkall = true;
-       }else {
+      if (item.checked === true) {
+        if (item.num === 0) item.num++;
+        _this.$data.checkedCommodities.push(item);
+      }
+      //取消选中操作
+      else if (item.checked === false) {
+        _this.$data.checkedCommodities = _this.$data.checkedCommodities.filter(
+          (ele) => {
+            return ele.name !== item.name;
+          }
+        );
+      }
+      //取消全选状态
+      if (
+        _this.$data.checkedCommodities.length ===
+        _this.$data.commodityList.length
+      ) {
+        _this.$data.checkall = true;
+      } else {
         _this.$data.checkall = false;
-       }
+      }
     },
-    
+
     //商品数量调节
     handleChange(value) {
-        // console.log(value);
-      },
-
+      // console.log(value);
+    },
     // 分页
     handleSizeChange(val) {
       this.$data.pagesize = val;
@@ -375,7 +388,7 @@ money() {
   cursor: pointer;
   width: 18px;
   height: 18px;
-  
+
   margin: 0 6px 0 0px;
   border: 1px solid #999999;
   border-radius: 2px;
@@ -395,7 +408,7 @@ money() {
   font-weight: 400;
   color: #4a4a4a;
   line-height: 18px;
-} 
+}
 ._productInfo {
   /* width: 565px; */
   flex: 4.5;
@@ -447,7 +460,7 @@ money() {
   width: 18px;
   height: 18px;
   border: 1px solid #999;
-    border-radius: 2px;
+  border-radius: 2px;
 }
 .radio {
   position: absolute;
@@ -533,10 +546,10 @@ money() {
   height: 30px;
   line-height: 30px;
 }
-.count /deep/ .el-input-number__decrease, .count /deep/.el-input-number__increase {
-
+.count /deep/ .el-input-number__decrease,
+.count /deep/.el-input-number__increase {
   width: 30px;
-  height: 30px;  
+  height: 30px;
   line-height: 30px;
   border-radius: 2px;
   background: #eaebed;
@@ -551,7 +564,7 @@ money() {
   position: absolute;
   top: 2px;
   left: 30px;
- width: calc(100% - 60px);
+  width: calc(100% - 60px);
   height: 29px;
   line-height: 29px;
   border: 2px solid #eaebed;
@@ -601,7 +614,7 @@ money() {
   display: flex;
   align-items: center;
   cursor: pointer;
-  width: 160px;
+  /* width: 160px; */
   height: 20px;
   line-height: 20px;
   font-size: 18px;

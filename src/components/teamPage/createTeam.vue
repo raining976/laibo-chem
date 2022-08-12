@@ -2,7 +2,7 @@
 <template>
   <div class="createTeam">
     <div class="backBtn">
-      <router-link to="/teamBlank">返回上一级</router-link>
+      <router-link to="/teamBlank">{{ $t("base.back") }}</router-link>
     </div>
     <div class="content">
       <el-form
@@ -13,26 +13,28 @@
         label-width="130px"
         class="demo-ruleForm"
       >
-        <el-form-item label="团队名称" prop="name">
+        <el-form-item :label="$t('team.name')" prop="name">
           <el-input v-model="ruleForm.name"></el-input>
         </el-form-item>
-        <el-form-item label="Email地址" prop="email">
+        <el-form-item :label="$t('base.email')" prop="email">
           <el-input v-model="ruleForm.email"></el-input>
         </el-form-item>
-        <el-form-item label="联系电话" prop="phone">
+        <el-form-item :label="$t('base.phone')" prop="phone">
           <el-input v-model="ruleForm.phone"></el-input>
         </el-form-item>
-        <el-form-item label="订单权限" prop="check">
+        <el-form-item :label="$t('team.Privilege')" prop="check">
           <el-radio-group v-model="ruleForm.check">
-            <el-radio :label="0">需要负责人审核</el-radio>
-            <el-radio :label="1">无需审核</el-radio>
+            <el-radio :label="0">{{ $t("team.need") }}</el-radio>
+            <el-radio :label="1">{{ $t("team.noNeed") }}</el-radio>
           </el-radio-group></el-form-item
         >
         <el-form-item>
-          <el-button type="primary" @click="submitForm('ruleForm')"
-            >提交</el-button
-          >
-          <el-button @click="resetForm('ruleForm')">重置</el-button>
+          <el-button type="primary" @click="submitForm('ruleForm')">{{
+            $t("base.submit")
+          }}</el-button>
+          <el-button @click="resetForm('ruleForm')">{{
+            $t("base.reset")
+          }}</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -68,11 +70,25 @@ export default {
       },
       rules: {
         name: [
-          { required: true, message: "团队名称不能为空", trigger: "blur" },
+          {
+            required: true,
+            message: this.$t("team.name") + this.$t("base.noEmpty"),
+            trigger: "blur",
+          },
         ],
-        email: [{ required: true, message: "email不能为空", trigger: "blur" }],
+        email: [
+          {
+            required: true,
+            message: this.$t("base.email") + this.$t("base.noEmpty"),
+            trigger: "blur",
+          },
+        ],
         phone: [
-          { required: true, message: "联系电话不能为空", trigger: "blur" },
+          {
+            required: true,
+            message: this.$t("base.phone") + this.$t("base.noEmpty"),
+            trigger: "blur",
+          },
         ],
         check: [{ required: true, message: "请选择订单权限", trigger: "blur" }],
       },
@@ -126,7 +142,7 @@ export default {
   border-color: var(--color);
   background: var(--color);
 }
-.createTeam .el-radio-group{
+.createTeam .el-radio-group {
   transform: scale(1.2);
   transform-origin: left;
 }

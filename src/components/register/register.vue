@@ -2,28 +2,38 @@
   <div class="registerBox">
     <div class="content">
       <div class="titleBox">
-        <h3>用户注册</h3>
+        <h3>{{ $t("register.userRegister") }}</h3>
       </div>
       <el-form
         :model="ruleForm"
         status-icon
         :rules="rules"
         ref="ruleForm"
-        label-width="130px"
+        label-width="200px"
         class="demo-ruleForm"
       >
         <!-- 姓名部分 -->
-        <el-form-item label="真实姓名" prop="name">
+        <el-form-item :label="$t('register.name')" prop="name">
           <el-input type="text" v-model="ruleForm.name"></el-input>
         </el-form-item>
         <!-- /姓名部分 -->
         <!-- email部分 -->
-        <el-form-item label="Email地址" prop="email">
+        <el-form-item :label="$t('register.email')" prop="email">
           <el-input type="text" v-model="ruleForm.email"></el-input>
         </el-form-item>
         <!-- /email部分 -->
+        <!-- 验证码 -->
+        <el-form-item
+          :label="$t('register.verfiCode')"
+          prop="verfiCode"
+          class="verfiBox"
+        >
+          <el-input type="text" v-model="ruleForm.verfiCode"></el-input>
+          <div class="getVerfiBtn">{{$t('base.get') + $t('register.verfiCode')}}</div>
+        </el-form-item>
+        <!-- /验证码 -->
         <!-- 登录密码 -->
-        <el-form-item label="登录密码" prop="pass">
+        <el-form-item :label="$t('register.pass')" prop="pass">
           <el-input
             type="password"
             v-model="ruleForm.pass"
@@ -32,7 +42,7 @@
         </el-form-item>
         <!-- /登录密码 -->
         <!-- 确认密码 -->
-        <el-form-item label="确认密码" prop="checkPass">
+        <el-form-item :label="$t('register.checkPass')" prop="checkPass">
           <el-input
             type="password"
             v-model="ruleForm.checkPass"
@@ -41,31 +51,31 @@
         </el-form-item>
         <!-- /确认密码 -->
         <!-- 电话号码 -->
-        <el-form-item label="电话号码" prop="phoneNum">
+        <el-form-item :label="$t('register.phone')" prop="phoneNum">
           <el-input type="text" v-model="ruleForm.phoneNum"></el-input>
         </el-form-item>
         <!-- /电话号码 -->
         <!-- 机构名称 -->
-        <el-form-item label="机构名称" prop="teamName">
+        <el-form-item :label="$t('register.team')" prop="teamName">
           <el-input type="text" v-model="ruleForm.teamName"></el-input>
         </el-form-item>
         <!-- /机构名称 -->
         <!-- 隐私单选框 -->
         <el-form-item prop="tcp" class="tcp">
           <el-checkbox
-            label="已阅读并同意以下协议"
+            :label="$t('register.deal')"
             name="tcp"
             v-model="ruleForm.tcp"
           />
         </el-form-item>
         <!-- /隐私单选框 -->
         <el-form-item>
-          <el-button type="primary" @click="submitForm('ruleForm')"
-            >提交</el-button
-          >
-          <el-button @click="resetForm('ruleForm')" class="resetBtn"
-            >重置</el-button
-          >
+          <el-button type="primary" @click="submitForm('ruleForm')">{{
+            $t("register.submit")
+          }}</el-button>
+          <el-button @click="resetForm('ruleForm')" class="resetBtn">{{
+            $t("register.reset")
+          }}</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -75,23 +85,23 @@
 export default {
   data() {
     var checkName = (_, value, callback) => {
-      if (value === "") callback(new Error("姓名不能为空"));
+      if (value === "")
+        callback(new Error(this.$t("base.name") + this.$t("base.noEmpty")));
       callback();
-      //   if (value.length > 30) callback(new Error("姓名过长"));
     };
     var checkEmail = (_, value, callback) => {
       if (value === "") {
-        callback(new Error("邮箱不能为空"));
+        callback(new Error(this.$t("base.email") + this.$t("base.noEmpty")));
       }
       let email = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
       if (!email.test(value)) {
-        callback(new Error("请输入合理的邮箱"));
+        callback(new Error(this.$t("base.valid") + this.$t("base.email")));
       }
       callback();
     };
     var validatePass = (rule, value, callback) => {
       if (value === "") {
-        callback(new Error("请输入密码"));
+        callback(new Error(this.$t("base.pass") + this.$t("base.noEmpty")));
       } else {
         if (this.ruleForm.checkPass !== "") {
           this.$refs.ruleForm.validateField("checkPass");
@@ -101,9 +111,9 @@ export default {
     };
     var validatePass2 = (rule, value, callback) => {
       if (value === "") {
-        callback(new Error("请再次输入密码"));
+        callback(new Error(this.$t("register.passAgain")));
       } else if (value !== this.ruleForm.pass) {
-        callback(new Error("两次输入密码不一致!"));
+        callback(new Error(this.$t("register.checkError")));
       } else {
         callback();
       }
@@ -111,14 +121,16 @@ export default {
     var checkPhoneNum = (_, value, callback) => {
       let phoneNum =
         /((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d)|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d))$)/;
-      if (value === "") callback(new Error("电话号码不能为空"));
+      if (value === "")
+        callback(new Error(this.$t("base.phone") + this.$t("base.noEmpty")));
       if (!phoneNum.test(value)) {
-        callback(new Error("请输入合理的电话号码"));
+        callback(new Error(this.$t("base.valid") + this.$t("base.phone")));
       }
       callback();
     };
     var checkTeamName = (_, value, callback) => {
-      if (value === "") callback(new Error("机构名称不能为空"));
+      if (value === "")
+        callback(new Error(this.$t("base.name") + this.$t("base.noEmpty")));
       callback();
     };
 
@@ -130,15 +142,29 @@ export default {
         checkPass: "",
         phoneNum: "",
         teamName: "",
+        verfiCode: "",
         tcp: false,
       },
       rules: {
-        pass: [{ required: true,validator: validatePass, trigger: "blur" }],
-        checkPass: [{ required: true,validator: validatePass2, trigger: "blur" }],
-        email: [{ required: true,validator: checkEmail, trigger: "blur" }],
-        name: [{ required: true,validator: checkName, trigger: "blur" }],
-        phoneNum: [{ required: true,validator: checkPhoneNum, trigger: "blur" }],
-        teamName: [{ required: true,validator: checkTeamName, trigger: "blur" }],
+        pass: [{ required: true, validator: validatePass, trigger: "blur" }],
+        checkPass: [
+          { required: true, validator: validatePass2, trigger: "blur" },
+        ],
+        email: [{ required: true, validator: checkEmail, trigger: "blur" }],
+        verfiCode: [
+          {
+            required: true,
+            message: this.$t("register.verfiCode") + this.$t("base.noEmpty"),
+            trigger: "blur",
+          },
+        ],
+        name: [{ required: true, validator: checkName, trigger: "blur" }],
+        phoneNum: [
+          { required: true, validator: checkPhoneNum, trigger: "blur" },
+        ],
+        teamName: [
+          { required: true, validator: checkTeamName, trigger: "blur" },
+        ],
         tcp: [
           {
             required: true,
@@ -153,7 +179,10 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.bouncedMsg();
+          this.$http.post("/register", this.ruleForm).then((res) => {
+            console.log("res.data.msg", res.data.msg);
+            this.bouncedMsg();
+          });
         } else {
           console.log("error submit!!");
           return false;
@@ -177,7 +206,7 @@ export default {
 </script>
 <style>
 .registerBox .el-button {
-  width: 115px;
+  width: 130px;
   height: 49px;
   border-radius: 5px;
   font-size: 22px;
@@ -186,14 +215,14 @@ export default {
   color: #ffffff;
   transition: 0.2s;
 }
-.registerBox  .el-button--primary {
+.registerBox .el-button--primary {
   background: var(--color);
 }
-.registerBox  .el-button--primary:hover,
-.registerBox  .el-button--primary:focus {
+.registerBox .el-button--primary:hover,
+.registerBox .el-button--primary:focus {
   background: #024287;
 }
-.registerBox  .resetBtn {
+.registerBox .resetBtn {
   color: #409eff;
 }
 .registerBox .resetBtn:hover,
@@ -214,18 +243,18 @@ export default {
 }
 
 /* input样式 */
-.registerBox  .el-input {
+.registerBox .el-input {
   width: 530px;
   height: 55px;
 }
-.registerBox  .el-input__inner {
+.registerBox .el-input__inner {
   width: 530px;
   height: 55px;
   border: 2px solid #999999;
   border-radius: 5px;
   font-size: 18px;
 }
-.registerBox  .el-input__inner:hover {
+.registerBox .el-input__inner:hover {
   border-color: #78b3f3;
 }
 .registerBox .el-input__inner:focus {
@@ -249,13 +278,32 @@ export default {
 }
 
 /* 勾选协议部分 */
-.registerBox  .tcp .el-form-item__content {
+.registerBox .tcp .el-form-item__content {
   padding-left: 20px;
   display: flex;
   justify-content: flex-start;
 }
-.registerBox  .el-form-item__error {
+.registerBox .el-form-item__error {
   margin-left: 20px;
+}
+.registerBox .verfiBox {
+  position: relative;
+}
+.verfiBox .getVerfiBtn {
+  position: absolute;
+  right: 12px;
+  top: 9px;
+  width: 111px;
+  height: 37px;
+  background: #004ea2;
+  border-radius: 5px;
+  font-size: 16px;
+  font-family: Microsoft YaHei UI;
+  font-weight: 400;
+  color: #ffffff;
+  text-align: center;
+  line-height: 37px;
+  cursor: pointer;
 }
 </style>
 <style scoped>

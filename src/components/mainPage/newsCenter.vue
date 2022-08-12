@@ -1,6 +1,6 @@
 <template>
   <div class="newsCenter">
-    <div class="title"><span style="color: #004ea2">新闻</span>中心</div>
+    <div class="title"><span style="color: #004ea2">{{$t('home.news')}}</span>{{$t('home.center')}}</div>
     <div class="newsBigBox">
       <!-- 下为v-for模块 -->
       <div class="newsBox" v-for="(item, index) in newsBox" :key="index">
@@ -109,6 +109,9 @@ export default {
   color: #000;
   line-height: 60.1px;
   text-align: center;
+}
+.title > span{
+  margin-right: 10px;
 }
 .newsBigBox {
   /* 固定一行两个 */

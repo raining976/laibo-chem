@@ -18,6 +18,7 @@
     "v-distpicker": "^1.2.13",
     "vue": "^3.2.13",
     "vue-area-linkage": "^5.1.0",
+    "vue-i18n": "^9.2.0",
     "vue-router": "^4.0.3",
     "vue3-country-intl": "^1.0.13"
   },

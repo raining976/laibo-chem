@@ -2,7 +2,7 @@
 //createDate:2022-07-17
 <template>
   <div class="userInfoChange">
-    <div class="title">个人信息</div>
+    <div class="title">{{$t('userMenu.info')}}</div>
     <div class="content">
       <el-form
         :model="ruleForm"
@@ -12,23 +12,23 @@
         label-width="120px"
         class="demo-ruleForm"
       >
-        <el-form-item label="真实姓名" prop="name">
+        <el-form-item :label="$t('base.name')" prop="name">
           <el-input v-model="ruleForm.name"></el-input>
         </el-form-item>
-        <el-form-item label="Email账号" prop="email">
+        <el-form-item :label="$t('base.email')" prop="email">
           <el-input v-model="ruleForm.email"></el-input>
         </el-form-item>
-        <el-form-item label="手机号码" prop="phone">
+        <el-form-item :label="$t('phone')" prop="phone">
           <el-input v-model="ruleForm.phone"></el-input>
         </el-form-item>
-        <el-form-item label="性别">
+        <el-form-item :label="$t('base.sex')">
           <el-radio-group v-model="ruleForm.gender">
-            <el-radio :label="0">男</el-radio>
-            <el-radio :label="1">女</el-radio>
-            <el-radio :label="2">保密</el-radio>
+            <el-radio :label="0">{{ $t("base.man") }}</el-radio>
+            <el-radio :label="1">{{ $t("base.woman") }}</el-radio>
+            <el-radio :label="2">{{ $t("userInfo.secret") }}</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="团队名称">
+        <el-form-item :label="$t('base.team')">
           <el-input
             v-model="ruleForm.team"
             :disabled="true"
@@ -36,10 +36,12 @@
           ></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="submitForm('ruleForm')"
-            >修改</el-button
-          >
-          <el-button @click="resetForm('ruleForm')">重置</el-button>
+          <el-button type="primary" @click="submitForm('ruleForm')">{{
+            $t("base.edit")
+          }}</el-button>
+          <el-button @click="resetForm('ruleForm')">{{
+            $t("base.reset")
+          }}</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -59,11 +61,27 @@ export default {
         team: "这里是团队名称",
       },
       rules: {
-        name: [{ required: true, message: "请输入真实姓名", trigger: "blur" }],
-        email: [
-          { required: true, message: "请输入email地址", trigger: "blur" },
+        name: [
+          {
+            required: true,
+            message: this.$t("form.enter") + this.$t("base.name"),
+            trigger: "blur",
+          },
         ],
-        phone: [{ required: true, message: "请输入手机号码", trigger: "blur" }],
+        email: [
+          {
+            required: true,
+            message: this.$t("form.enter") + this.$t("base.email"),
+            trigger: "blur",
+          },
+        ],
+        phone: [
+          {
+            required: true,
+            message: this.$t("form.enter") + this.$t("base.phone"),
+            trigger: "blur",
+          },
+        ],
       },
     };
   },
@@ -116,7 +134,7 @@ export default {
   border: 0;
 }
 .userInfoChange .el-button {
-  width: 107px;
+  width: 120px;
   height: 46px;
   border-radius: 5px;
   margin-left: 20px;
@@ -146,6 +164,11 @@ export default {
 }
 .userInfoChange .el-icon-circle-check {
   color: var(--check-color);
+}
+.userInfoChange .el-button span {
+  font-size: 20px;
+  font-family: Microsoft YaHei UI;
+  font-weight: 400;
 }
 </style>
 <style scoped>

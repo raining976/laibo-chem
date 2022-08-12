@@ -2,21 +2,24 @@
 <template>
   <div class="searchMember">
     <div class="searchBox">
-      <div class="tag">成员名称：</div>
+      <div class="tag">{{ $t("team.member") + " :" }}</div>
       <div class="inputBox">
-        <input type="text" placeholder="请输入成员名称" />
+        <input
+          type="text"
+          :placeholder="$t('base.enter') + $t('team.member')"
+        />
       </div>
-      <div class="searchBtn">查询</div>
+      <div class="searchBtn">{{ $t("base.query") }}</div>
     </div>
     <div class="listBox">
-      <h3 class="listTitle">团队成员</h3>
+      <h3 class="listTitle">{{ $t("team.teamMember") }}</h3>
       <ul class="memberList">
         <li class="listHead eachLi">
-          <span class="name">姓名</span>
-          <span class="email">邮箱</span>
-          <span class="phone">联系电话</span>
-          <span class="privilege">权限</span>
-          <span class="operation">操作</span>
+          <span class="name">{{ $t("base.name") }}</span>
+          <span class="email">{{ $t("base.email") }}</span>
+          <span class="phone">{{ $t("base.phone") }}</span>
+          <span class="privilege">{{ $t("team.privilege") }}</span>
+          <span class="operation">{{ $t("base.action") }}</span>
         </li>
         <li
           class="eachLi"
@@ -30,7 +33,7 @@
           <span class="email">{{ item.email }}</span>
           <span class="phone">{{ item.phone }}</span>
           <span class="privilege">{{ item.privilege }}</span>
-          <span class="operation">删除</span>
+          <span class="operation">{{$t('base.dele')}}</span>
         </li>
       </ul>
       <div class="layPage">
@@ -161,7 +164,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 520px;
+  width: 550px;
   padding-top: 30px;
   padding-bottom: 50px;
   margin-right: 50px;

@@ -1,5 +1,5 @@
 <template>
-<router-view name="textPage"></router-view>
+  <router-view name="textPage"></router-view>
   <div class="solidLine"></div>
   <div class="siteNav">
     <div class="mainPage">&lt;返回首页&nbsp;</div>
@@ -9,14 +9,29 @@
   <div class="bg">
     <div class="allTitles">
       <!-- v-for -->
-      <div class="titleBox" v-for="(item, index) in titleBox.slice((currentPage-1)*pagesize,currentPage*pagesize)" :key="index">
+      <div
+        class="titleBox"
+        v-for="(item, index) in titleBox.slice(
+          (currentPage - 1) * pagesize,
+          currentPage * pagesize
+        )"
+        :key="index"
+      >
         <div class="title" @click="toTextPage()">{{ item.title }}</div>
         <div class="time">{{ item.time }}</div>
       </div>
     </div>
     <div class="pagination">
-    <el-pagination background="#004ea2" layout="prev,pager,next" :total="titleBox.length" :page-size="pagesize" :current-page="currentPage" @current-change="handleCurrentChange" @size-change="handleSizeChange">
-    </el-pagination>
+      <el-pagination
+        background="#004ea2"
+        layout="prev,pager,next"
+        :total="titleBox.length"
+        :page-size="pagesize"
+        :current-page="currentPage"
+        @current-change="handleCurrentChange"
+        @size-change="handleSizeChange"
+      >
+      </el-pagination>
     </div>
   </div>
 </template> 
@@ -26,9 +41,8 @@ export default {
   components: "",
   data() {
     return {
-        pagesize: 8, // 每页显示多少条
-        currentPage: 1, // 当前页数
-        
+      pagesize: 8, // 每页显示多少条
+      currentPage: 1, // 当前页数
       titleBox: [
         {
           title: "莱博斯威2022春节发货通知莱博斯威2022春节发货通知",
@@ -74,27 +88,25 @@ export default {
           title: "莱博斯威2022春节发货通知莱博斯威2022春节发货通知",
           time: "[2022-01-21]",
         },
-
       ],
     };
   },
   methods: {
     // 跳转文章详情页（需传参）
-     toTextPage() {
+    toTextPage() {
       this.$router.push({
         path: "",
       });
     },
-      // 分页
-      handleSizeChange(val) {
-        this.$data.pagesize = val
-        // console.log(`每页 ${val} 条`);
-      },
-      handleCurrentChange(val) {
-          this.$data.currentPage = val
-        // console.log(`当前页: ${val}`);
-      },
-    
+    // 分页
+    handleSizeChange(val) {
+      this.$data.pagesize = val;
+      // console.log(`每页 ${val} 条`);
+    },
+    handleCurrentChange(val) {
+      this.$data.currentPage = val;
+      // console.log(`当前页: ${val}`);
+    },
   },
 };
 </script>
@@ -173,13 +185,32 @@ export default {
   margin: 0 auto;
 }
 .pagination /deep/ .el-pagination {
-   --el-pagination-button-height: 40px;
-   --el-pagination-font-size: 16px;
+  --el-pagination-button-height: 40px;
+  --el-pagination-font-size: 16px;
 }
-.pagination /deep/ .el-pagination.is-background .el-pager li:not(.disabled).active {
+.pagination
+  /deep/
+  .el-pagination.is-background
+  .el-pager
+  li:not(.disabled).active {
   background-color: #004ea2;
-} 
-.pagination /deep/.el-pagination.is-background .btn-next, /deep/.el-pagination.is-background .btn-prev, /deep/.el-pagination.is-background .el-pager li  {
+}
+.pagination /deep/.el-pagination.is-background .btn-next,
+.pagination /deep/.el-pagination.is-background .btn-prev,
+.pagination /deep/.el-pagination.is-background .el-pager li {
+  --el-pagination-button-height: 40px;
+  --el-pagination-font-size: 16px;
+}
+.pagination
+  /deep/
+  .el-pagination.is-background
+  .el-pager
+  li:not(.disabled).active {
+  background-color: #004ea2;
+}
+.pagination /deep/.el-pagination.is-background .btn-next,
+.pagination /deep/.el-pagination.is-background .btn-prev,
+.pagination /deep/.el-pagination.is-background .el-pager li {
   min-width: 40px;
   border-radius: 5px;
 }

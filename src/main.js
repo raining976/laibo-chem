@@ -3,9 +3,7 @@ import App from "./App.vue";
 import router from "./router";
 import installElementPlus from './plugins/element'
 import axios from 'axios';
-// 地址选择器
-// import 'vue-area-linkage/dist/index.css';
-// import 'vue3-country-intl/lib/vue3-country-intl.css'
+import VueI18n from './i18n/index'
 
 
 const app = createApp(App);
@@ -14,4 +12,4 @@ app.config.globalProperties.$http = axios;
 
 axios.defaults.baseURL = 'https://hnxnb.tk/';
 
-app.use(router).use(installElementPlus).mount("#app");
+app.use(router).use(installElementPlus).use(VueI18n).mount("#app");

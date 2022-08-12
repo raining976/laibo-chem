@@ -3,10 +3,10 @@
 <template>
   <div class="team">
     <div class="topBox">
-      <h3 class="title">团队管理</h3>
+      <h3 class="title">{{$t('userMenu.team')}}</h3>
       <div class="setBox">
         <el-tooltip
-          content="编辑团队信息"
+          :content="$t('team.edit')"
           placement="top"
           effect="light"
           popper-class="editTip"
@@ -14,7 +14,7 @@
           <i class="el-icon-edit-outline edit set" @click="toEditTeam()"></i>
         </el-tooltip>
         <el-tooltip
-          content="消息通知"
+          :content="$t('team.message')"
           placement="top"
           effect="light"
           popper-class="editTip"
@@ -94,7 +94,7 @@ export default {
 .team .setBox >>> .set {
   margin: 0 20px;
   transform: scale(2.5);
-  transform-origin: left;
+  transform-origin: center;
   cursor: pointer;
   transition: all 0.3s;
   background: #e3f5ff;

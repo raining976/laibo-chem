@@ -2,8 +2,8 @@
 <template>
   <div class="noticeBox"  >
     <div class="titleBox">
-      <div class="title">消息</div>
-      <div class="btn" @click="allRead()">全部已读</div>
+      <div class="title">{{$t('team.message')}}</div>
+      <div class="btn" @click="allRead()">{{$t('team.read')}}</div>
     </div>
     <ul class="noticeList">
       <li class="eachNotice" v-for="(notice, index) in notices" :key="index">
@@ -14,14 +14,14 @@
             ></el-badge>
           </div>
           <div class="infoContent">
-            <span>{{ notice.name }}用户</span>
+            <span>{{ notice.name }}{{ " " +$t('base.user')}}</span>
             <span>{{ notice.content }}</span>
             <span class="time">{{ notice.time }}</span>
           </div>
         </div>
         <div class="btnBox">
-          <div class="btn ignore">忽略</div>
-          <div class="btn agree">同意</div>
+          <div class="btn ignore">{{$t('team.refuse')}}</div>
+          <div class="btn agree">{{$t('team.agree')}}</div>
         </div>
       </li>
     </ul>
@@ -36,7 +36,7 @@ export default {
         {
           name: "张三",
           content: "申请加入团队",
-          time: "2022年八月五日",
+          time: "2022.8.5",
           isDot:true,
         },
         {

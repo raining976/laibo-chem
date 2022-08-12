@@ -3,18 +3,18 @@
 <template>
   <div class="orderInfoPage">
     <div class="top">
-      <div class="title">订单详情</div>
+      <div class="title">{{$t('order.detail')}}</div>
       <div class="Btn">
-      <div class="returnBtn" @click="toMyOrder()">返回我的订单</div>
-      <div class="deleteBtn" @click="func()">删除订单</div>
+      <div class="returnBtn" @click="toMyOrder()">{{$t('base.back')}}</div>
+      <div class="deleteBtn" @click="func()">{{$t('base.dele') + $t('base.order')}}</div>
       </div>
       
     </div>
     <div class="orderInfo">
-      <div class="detail"><strong>订单编号：</strong>{{}}</div>
-      <div class="detail"><strong>物流公司：</strong>{{}}</div>
-      <div class="detail"><strong>发货地址：</strong>{{}}</div>
-      <div class="detail"><strong>收货地址：</strong>{{}}</div>
+      <div class="detail"><strong>{{$t('order.num')+'：'}}</strong>{{}}</div>
+      <div class="detail"><strong>{{$t('order.logistic')+'：'}}</strong>{{}}</div>
+      <div class="detail"><strong>{{$t('order.shipping')+'：'}}</strong>{{}}</div>
+      <div class="detail"><strong>{{$t('order.receive')+'：'}}</strong>{{}}</div>
     </div>
     <!-- 可折叠列表 -->
     <div class="collapse">
@@ -41,11 +41,11 @@
     <!-- 商品统计 -->
     <div class="shopCart">
       <div class="listHead">
-        <div class="_productInfo word">产品信息</div>
-        <div class="_size word">规格</div>
-        <div class="_price word">单价</div>
-        <div class="_count word">数量</div>
-        <div class="_payment word">金额</div>
+        <div class="_productInfo word">{{$t('order.productInfo')}}</div>
+        <div class="_size word">{{$t('order.size')}}</div>
+        <div class="_price word">{{$t('order.price')}}</div>
+        <div class="_count word">{{$t('order.count')}}</div>
+        <div class="_payment word">{{$t('order.money')}}</div>
       </div>
       <div class="allCommodity">
         <!-- 以下v-for一个商品 -->
@@ -65,8 +65,8 @@
               <div class="name_zh" @click="toProductInfo()">
                 {{ item0.name }}
               </div>
-              <div class="infoWord">货号：{{ item0.huohao }}</div>
-              <div class="infoWord">CAS编号：{{ item0.shopCart_id }}</div>
+              <div class="infoWord">{{$t('order.itemNo')+'：'}}{{ item0.huohao }}</div>
+              <div class="infoWord">{{$t('order.casNum')+'：'}}{{ item0.shopCart_id }}</div>
             </div>
           </div>
           <div class="size">{{ item0.guige }}</div>
