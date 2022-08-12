@@ -3,7 +3,7 @@
 <template>
   <div>
     <div class="top">
-      <div class="title">购物车（共{{ allProducts }}件）</div>
+      <div class="title">购物车（共&nbsp;{{ allProducts }}&nbsp;件）</div>
       <div class="deleteBtn" @click="delProduct()">删除</div>
     </div>
     <!-- 以下是购物车信息 -->
@@ -209,7 +209,8 @@ money() {
      this.$data.checkedCommodities.forEach((item) => {
       _money += item.num * item.price;
      })
-     return _money;
+     this.$data.money = _money;
+     return _money;  //return 回去的新值不会赋给data里的money ,因为html代码里的money相当于函数作为变量？
 }
   },
   methods: {
@@ -226,19 +227,21 @@ money() {
       });
     },
     toPay() {
-      this.$router.push({
+      if(this.$data.money > 0){
+            this.$router.push({
         path: "/payment",
       });
+      }
     },
     //删除按钮
     delProduct() {
-      console.log(this.$data.commodityList,"删除前");
+      // console.log(this.$data.commodityList,"删除前");
       this.$data.checkall = false;
       this.$data.checkedCommodities = [];
        this.$data.commodityList = this.$data.commodityList.filter((item) => {
             return item.checked === false;
       })
-           console.log(this.$data.commodityList,"删除后");
+          //  console.log(this.$data.commodityList,"删除后");
     },
     //复选框相关
      addChecked() {
@@ -247,7 +250,7 @@ money() {
         Object.assign(item, {checked: false});
         });
     },
-    // 多选val: boolean
+    // 多选
     checkAll() {
       // 数组为空时无法点击
       if(this.$data.commodityList.length === 0) {
@@ -272,9 +275,8 @@ money() {
      
     },
     checkOne(item) {
-      console.log(item,"aaaa");
       var _this = this;
-      console.log(_this.$data.checkedCommodities,"改变前");
+      // console.log(_this.$data.checkedCommodities,"改变前");
       //选中时操作
          if(item.checked === true){
           if(item.num === 0)item.num ++;
@@ -286,7 +288,7 @@ money() {
             return ele.name !== item.name; 
           })
          }
-     console.log(_this.$data.checkedCommodities,"改变后");
+    //  console.log(_this.$data.checkedCommodities,"改变后");
        //取消全选状态
        if(_this.$data.checkedCommodities.length === _this.$data.commodityList.length){
           _this.$data.checkall = true;
@@ -297,7 +299,7 @@ money() {
     
     //商品数量调节
     handleChange(value) {
-        console.log(value);
+        // console.log(value);
       },
 
     // 分页

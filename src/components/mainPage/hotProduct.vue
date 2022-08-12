@@ -11,7 +11,7 @@
         @click="toProductInfo()"
       >
         <div class="hotProductPic">
-          <img :src="item.img" alt="" />
+          <img :src="item.pic_url" alt="" />
           <div class="shadow"></div>
         </div>
         <div class="hotProductName">{{ item.name }}</div>
@@ -32,13 +32,30 @@ export default {
   data() {
     return {
       productList: [
-        { img: require("../../assets/p3.png"), name: "染料" },
-        { img: require("../../assets/p3.png"), name: "染料" },
-        { img: require("../../assets/p3.png"), name: "染料" },
-        { img: require("../../assets/p3.png"), name: "染料" },
-        { img: require("../../assets/p3.png"), name: "染料" },
+        { pic_url: require("../../assets/p3.png"), name: "染料" },
+        { pic_url: require("../../assets/p3.png"), name: "染料" },
+        { pic_url: require("../../assets/p3.png"), name: "染料" },
+        { pic_url: require("../../assets/p3.png"), name: "染料" },
+        { pic_url: require("../../assets/p3.png"), name: "染料" },
       ],
     };
+  },
+  created() {
+      this.$http
+        .get("/hotProducts", {
+          params: {
+
+          },
+        })
+        //回调函数
+        .then((res) => {
+
+          this.$data.productList = res.data.data;
+          console.log("ceshi", this.$data.productList);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
   },
   methods: {
     toProductInfo() {

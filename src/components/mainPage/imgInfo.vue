@@ -2,7 +2,7 @@
   <div class="carouselBox">
     <el-carousel trigger="click">
       <el-carousel-item v-for="(item, index) in imgList" :key="index">
-        <div class="imgBox"><img :src="item.img" alt="" /></div>
+        <div class="imgBox"><a :href="item.href"><img :src="item.pic" alt="" /></a></div>
       </el-carousel-item>
     </el-carousel>
   </div>
@@ -14,10 +14,26 @@ export default {
   data() {
     return {
       imgList: [
-        { img: require("../../assets/93390700.png") },
-        { img: require("../../assets/93390700.png") },
+        { pic: require("../../assets/93390700.png") ,href: "https://www.bilibili.com/"},
+        { pic: require("../../assets/93390700.png") ,href: "https://www.bilibili.com/"},
       ],
     };
+  },
+  created() {
+      this.$http
+        .get("/banner", {
+          params: {
+
+          },
+        })
+        //回调函数
+        .then((res) => {
+          this.$data.imgList = res.data.data;
+          console.log("ceshi", this.$data.imgList);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
   },
 };
 </script>

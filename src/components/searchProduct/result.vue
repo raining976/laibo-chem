@@ -28,8 +28,13 @@
             </div>
           </div>
         </div>
-        <div class="solidLine"></div>
         <!-- 价格表格 -->
+        <div class="collapse">
+      <el-collapse v-model="activeName" accordion>
+        <el-collapse-item  name="1">
+          <template #title>
+               价格与库存&nbsp;<img src="../../assets/价格预测.png" style="width: 20px;height: 20px" alt="">
+          </template>
         <div class="prize">
           <table border="0" cellspacing="0">
             <thead>
@@ -74,10 +79,14 @@
               </tbody>
             </el-scrollbar>
           </table>
-        </div>
-        <div class="addCart">
+          <div class="addCart">
           加入购物车<img src="../../assets/gouwuche.png" alt="" />
         </div>
+        </div>
+         </el-collapse-item>
+      </el-collapse>
+    </div>
+        
       </div>
     </div>
     <div class="pagination">
@@ -208,16 +217,15 @@ export default {
 }
 .resultBigBox {
   width: 1120px;
-  height: 1240px;
+  min-height: 1240px;
   overflow: hidden;
 }
 .resultBox {
-  position: relative;
   width: 100%;
-  height: 390px;
+  /* height: 390px; */
   margin: 0 0 15px 0;
   background-color: #f7f7f7;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 .result {
   display: flex;
@@ -228,12 +236,6 @@ export default {
   border-radius: 5px;
   overflow: hidden;
   background-color: #f7f7f7;
-}
-.solidLine {
-  width: 90%;
-  margin: 0 auto;
-  height: 2px;
-  background-color: #e1e1e1;
 }
 .resultPic {
   width: 160px;
@@ -295,6 +297,36 @@ export default {
   color: #333333;
   line-height: 15px;
 }
+/* 可折叠列表 */
+.collapse {
+  width: 97%;
+  margin: 0 auto;
+  /* height: 422px; */
+  background: #f7f7f7;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.collapse /deep/ .el-collapse-item__header {
+  text-indent: 45px;
+  font-size: 16px;
+  color: #004ea2;
+  background-color: transparent;
+  border-bottom: 1px solid #eaeaec;
+}
+.collapse /deep/ .el-collapse-item__arrow,
+.el-icon-arrow-right,
+.is-active {
+  text-indent: 0px;
+  /* height: 1px;
+*/
+}
+.collapse /deep/ .el-collapse-item__wrap {
+  background-color: transparent;
+}
+.collapse /deep/ .el-collapse-item__content{
+  position: relative;
+}
 /* 以下是表格 */
 .prize {
   width: 77.5%;
@@ -329,6 +361,7 @@ table tbody tr {
 
 .tableHead > th {
   height: 42px;
+  font-size: 16px;
   color: #333;
   background-color: transparent;
 }
@@ -410,8 +443,8 @@ table tbody tr {
   font-size: 14px;
   background: #ffffff;
   border-radius: 5px;
-  bottom: 20px;
-  right: 54px;
+  bottom: 14px;
+  right: 36px;
   cursor: pointer;
 }
 .addCart > img {

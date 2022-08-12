@@ -247,7 +247,6 @@ export default {
   border-radius: 10px;
   overflow: hidden;
 }
-/* 时间线 */
 .process {
   margin-top: 18px;
   overflow: hidden;

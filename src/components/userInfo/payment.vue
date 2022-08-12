@@ -216,6 +216,7 @@ export default {
      this.$data.commodityList.forEach((item) => {
       _allmoney += item.num * item.price;
      })
+     this.$data.allmoney = _allmoney;
      return _allmoney;
 },
   },
