@@ -23,6 +23,7 @@ export default {
         dele: "Delete",
         user: "User",
         order: "Order",
+        get:"Get",
 
 
     },
@@ -85,6 +86,7 @@ export default {
         userRegister: "Sign In",
         name: "Name",
         email: "Email",
+        verfiCode:"VerfiCode",
         pass: "Password",
         checkPass: "Verify Password",
         phone: "Tel No",

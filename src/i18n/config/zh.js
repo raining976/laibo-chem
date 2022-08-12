@@ -25,8 +25,7 @@ export default {
         dele: "删除",
         user: "用户",
         order: "订单",
-
-
+        get:"获取",
     },
     // 表单
     form: {
@@ -87,6 +86,7 @@ export default {
         userRegister: "用户注册",
         name: "真实姓名",
         email: "Email地址",
+        verfiCode:"验证码",
         pass: "登录密码",
         checkPass: "确认密码",
         phone: "电话号码",
