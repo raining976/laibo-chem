@@ -31,12 +31,12 @@ export default {
   data() {
     return {
       menuList: [
-        { selectName: "购物车" },
-        { selectName: "我的订单" },
-        { selectName: "团队管理" },
-        { selectName: "收货地址" },
-        { selectName: "个人信息" },
-        { selectName: "修改密码" },
+        { selectName: this.$t('userMenu.cart') },
+        { selectName: this.$t('userMenu.order') },
+        { selectName: this.$t('userMenu.team')  },
+        { selectName: this.$t('userMenu.address') },
+        { selectName: this.$t('userMenu.info')  },
+        { selectName: this.$t('userMenu.changePass')  },
       ],
       currentIdx: 0, // 当前选中的菜单选项
     };

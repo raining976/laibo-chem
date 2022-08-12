@@ -2,15 +2,15 @@
 //createDate:2022-07-17
 <template>
   <div class="myOrder">
-    <div class="title">订单状态</div>
+    <div class="title">{{$t('base.order')}}</div>
     <div class="orderList">
       <div class="listHead">
-        <div class="_shopId word">订单编号</div>
-        <div class="_product word">购买产品</div>
-        <div class="_type word">类型（团队/个人）</div>
-        <div class="_unit word">购买单位</div>
-        <div class="_orderStatus word">订单状态</div>
-        <div class="_payment word">最终金额</div>
+        <div class="_shopId word">{{$t('order.num')}}</div>
+        <div class="_product word">{{$t('order.product')}}</div>
+        <div class="_type word">{{$t('order.type')}}</div>
+        <div class="_unit word">{{$t('order.unit')}}</div>
+        <div class="_orderStatus word">{{$t('order.state')}}</div>
+        <div class="_payment word">{{$t('order.sum')}}</div>
       </div>
       <div class="allOrder">
         <!-- 以下v-for一个商品 -->
@@ -40,7 +40,7 @@
           <div class="orderStatus">{{item0.status}}</div>
           <!-- 关于金额的计算方式 ？-->
           <div class="payment">{{ item0.payment }}</div>
-          <div class="toOrderInfo" @click="toOrderInfo()">查看订单详情></div>
+          <div class="toOrderInfo" @click="toOrderInfo()">{{$t('order.checkDetail')}}></div>
         </div>
       </div>
       <div class="pagination">

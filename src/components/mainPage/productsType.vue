@@ -1,10 +1,16 @@
 // 产品分类
 <template>
   <div class="productsType">
-    <div class="title"><span style="color: #004ea2">产品</span>分类</div>
+    <div class="title">
+      <span style="color: #004ea2">{{ $t("home.product") }}</span
+      >{{ $t("home.sort") }}
+    </div>
     <div class="productTypeBox">
       <div class="productType" v-for="(item, index) in typeList" :key="index">
-        <div class="productTypePic"><img :src="item.img" alt="" /><div class="shadow"></div></div>
+        <div class="productTypePic">
+          <img :src="item.img" alt="" />
+          <div class="shadow"></div>
+        </div>
         <div class="productTypeName">{{ item.name }}</div>
       </div>
     </div>
@@ -47,6 +53,9 @@ export default {
   line-height: 60.1px;
   text-align: center;
 }
+.title>span{
+  margin-right: 10px;
+}
 .productTypeBox {
   width: 100%;
   display: flex;
@@ -68,7 +77,6 @@ export default {
   height: 336.96px;
   background-color: #fff;
   overflow: hidden;
-
 }
 .productTypePic > img {
   width: 450.05px;
@@ -87,13 +95,12 @@ export default {
   height: 336.96px;
   background-color: #000;
   opacity: 0;
- pointer-events: none;
-   transition: all 0.6s;
+  pointer-events: none;
+  transition: all 0.6s;
 }
 /*遮罩 */
-.productTypePic > img:hover + .shadow{
+.productTypePic > img:hover + .shadow {
   opacity: 0.4;
-
 }
 .productTypeName {
   width: 100%;

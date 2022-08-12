@@ -11,7 +11,7 @@
         <div class="inputBox">
           <input
             type="text"
-            placeholder="请输入产品编码，CAS编码，关键字或结构式查询"
+            :placeholder="$t('home.searchTip')"
           />
         </div>
         <div class="searchBtn" @click="toSearchResult()">
@@ -19,7 +19,7 @@
         </div>
       </div>
       <div class="toILabPlus">
-        {{ toILabPlus }}
+        {{ $t('home.toILaiBoPlus') }}
       </div>
     </div>
   </div>
@@ -28,11 +28,6 @@
 <script>
 export default {
   name: "search",
-  data() {
-    return {
-      toILabPlus: "进入iLabplus平台",
-    };
-  },
   methods: {
     toSearchResult() {
       this.$router.push({
@@ -65,7 +60,7 @@ export default {
   height: 80px;
   border: 2px solid #666666;
   border-radius: 1px;
-  margin: 0 50px;
+  margin: 0 25px;
 }
 .inputBox {
   flex: 6;
@@ -74,7 +69,7 @@ export default {
 input {
   padding: 0 50px;
   /* width: 570px; */
-  width: calc(100% - 100px);
+  width: calc(100% - 50px);
   height: 100%;
   font-size: 22px;
 }

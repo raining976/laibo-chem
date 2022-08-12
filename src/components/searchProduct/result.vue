@@ -21,9 +21,9 @@
             <div class="resultDetail">
               <!-- v-for模块 -->
 
-              <div class="huohao _data">货号：{{ item.huohao }}</div>
+              <div class="huohao _data">{{$t('order.itemNo')+"："}}{{ item.huohao }}</div>
               <div class="jiegoushi _data">结构式：{{ item.jiegoushi }}</div>
-              <div class="CAScode _data">CAS编码：{{ item.casCode }}</div>
+              <div class="CAScode _data">{{$t('order.casNum')+"："}}{{ item.casCode }}</div>
               <div class="MDLcode _data">MDL号：{{ item.mdlCode }}</div>
             </div>
           </div>
@@ -34,11 +34,11 @@
           <table border="0" cellspacing="0">
             <thead>
               <tr class="tableHead">
-                <th style="width: 145px">货号</th>
-                <th style="width: 140px">规格</th>
-                <th style="width: 215px">库存</th>
-                <th style="width: 170px">售价（RMB）</th>
-                <th style="width: 200px">数量</th>
+                <th style="width: 145px">{{$t('order.itemNo')}}</th>
+                <th style="width: 140px">{{$t('order.size')}}</th>
+                <th style="width: 215px">{{$t('search.stock')}}</th>
+                <th style="width: 170px">{{$t('search.price')}}（RMB）</th>
+                <th style="width: 200px">{{$t('order.count')}}</th>
               </tr>
             </thead>
             <el-scrollbar max-height="132px">
@@ -76,7 +76,7 @@
           </table>
         </div>
         <div class="addCart">
-          加入购物车<img src="../../assets/gouwuche.png" alt="" />
+          {{$t('search.add')}}<img src="../../assets/gouwuche.png" alt="" />
         </div>
       </div>
     </div>
@@ -440,8 +440,8 @@ table tbody tr {
   background-color: #004ea2;
 }
 .pagination /deep/.el-pagination.is-background .btn-next,
-/deep/.el-pagination.is-background .btn-prev,
-/deep/.el-pagination.is-background .el-pager li {
+.pagination /deep/.el-pagination.is-background .btn-prev,
+.pagination /deep/.el-pagination.is-background .el-pager li {
   min-width: 40px;
   border-radius: 5px;
 }

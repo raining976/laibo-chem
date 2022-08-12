@@ -2,24 +2,24 @@
 <template>
   <div class="joinTeam">
     <div class="backBtn">
-      <router-link to="/teamBlank">返回上一级</router-link>
+      <router-link to="/teamBlank">{{ $t("base.back") }}</router-link>
     </div>
     <div class="searchBox">
-      <div class="tag">团队名称</div>
+      <div class="tag">{{ $t("team.name") }}</div>
       <div class="inputBox">
-        <input type="text" placeholder="请输入团队名称" />
+        <input type="text" :placeholder="$t('form.enter') + $t('team.name')" />
       </div>
-      <div class="btn">查询</div>
+      <div class="btn">{{ $t("base.query") }}</div>
     </div>
     <div class="searchListBox">
-      <h3 class="listTitle">查询列表</h3>
+      <h3 class="listTitle">{{ $t("base.query") + " " + $t("base.list") }}</h3>
       <ul class="searchList">
         <li class="listHead eachLi">
-          <span>团队名称</span>
-          <span>负责人</span>
-          <span>联系电话</span>
-          <span>email地址</span>
-          <span>操作</span>
+          <span>{{ $t("team.name") }}</span>
+          <span>{{ $t("team.admin") }}</span>
+          <span>{{ $t("base.phone") }}</span>
+          <span>{{ $t("base.email") }}</span>
+          <span>{{$t('base.action')}}</span>
         </li>
         <li class="eachLi" v-for="(item, index) in searchList" :key="index">
           <span>{{ item.name }}</span>
@@ -27,8 +27,9 @@
           <span>{{ item.phone }}</span>
           <span>{{ item.email }}</span>
           <span>
-            <router-link to="/searchMember"><a class="joinBtn">申请加入</a></router-link>
-            
+            <router-link to="/searchMember"
+              ><a class="joinBtn">{{$t('team.apply')}}</a></router-link
+            >
           </span>
         </li>
       </ul>

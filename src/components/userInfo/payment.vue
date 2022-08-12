@@ -3,10 +3,10 @@
   <div class="paymentPage">
     <!-- 收获地址 -->
     <div class="amount">
-    <div class="top">
-      <div class="title">结算界面</div>
-      <div class="returnBtn" @click="toShopCart()">返回购物车列表</div>
-    </div>
+      <div class="top">
+        <div class="title">{{ $t("cart.settlement") }}</div>
+        <div class="returnBtn" @click="toShopCart()">{{ $t("base.back") }}</div>
+      </div>
       <div class="addressBox">
         <ul class="addressList">
           <!-- 以下v-for -->
@@ -17,9 +17,9 @@
             :class="{ border: index == flag }"
             @click="chooseAddress(index)"
           >
-            <p class="name">收件人&nbsp;:&nbsp;{{ address.name }}</p>
-            <p class="phone">电话号码&nbsp;:&nbsp;{{ address.phone }}</p>
-            <p class="address">收货地址&nbsp;:&nbsp;{{ address.address }}</p>
+            <p class="name">{{$t('address.name')}}&nbsp;:&nbsp;{{ address.name }}</p>
+            <p class="phone">{{$t('base.phone')}}&nbsp;:&nbsp;{{ address.phone }}</p>
+            <p class="address">{{$t('base.address')}}&nbsp;:&nbsp;{{ address.address }}</p>
             <div class="btnBox">
               <div class="deleBtn" @click="deleteAddress()">删除地址</div>
               <div class="editBtn" @click="editAddress()">修改地址</div>
@@ -28,17 +28,17 @@
         </ul>
       </div>
       <div class="freight">
-        预估运费：<strong>{{ freight }}</strong>
+        {{ $t("cart.fright") + "：" }}<strong>{{ freight }}</strong>
       </div>
     </div>
     <!-- 商品统计 -->
     <div class="shopCart">
       <div class="listHead">
-        <div class="_productInfo word">产品信息</div>
-        <div class="_size word">规格</div>
-        <div class="_price word">单价</div>
-        <div class="_count word">数量</div>
-        <div class="_payment word">金额</div>
+        <div class="_productInfo word">{{ $t("order.productInfo") }}</div>
+        <div class="_size word">{{ $t("order.size") }}</div>
+        <div class="_price word">{{ $t("order.price") }}</div>
+        <div class="_count word">{{ $t("order.count") }}</div>
+        <div class="_payment word">{{ $t("order.money") }}</div>
       </div>
       <div class="allCommodity">
         <!-- 以下v-for一个商品 -->
@@ -58,14 +58,18 @@
               <div class="name_zh" @click="toProductInfo()">
                 {{ item0.name }}
               </div>
-              <div class="infoWord">货号：{{ item0.huohao }}</div>
-              <div class="infoWord">CAS编号：{{ item0.shopCart_id }}</div>
+              <div class="infoWord">
+                {{ $t("order.itemNo") + "：" }}{{ item0.huohao }}
+              </div>
+              <div class="infoWord">
+                {{ $t("order.casNum") + "：" }}{{ item0.shopCart_id }}
+              </div>
             </div>
           </div>
           <div class="size">{{ item0.guige }}</div>
           <div class="price">{{ item0.price }}</div>
           <div class="count">
-            <div class="num">{{item0.num}}</div>
+            <div class="num">{{ item0.num }}</div>
           </div>
           <!-- 关于金额的计算方式 -->
           <div class="payment">{{ item0.num * item0.price }}</div>
@@ -87,41 +91,61 @@
     </div>
     <!-- 以下为支付方式-------------->
     <div class="payType">
-      <div class="typeTitle">支付类型</div>
+      <div class="typeTitle">{{ $t("cart.payType") }}</div>
       <div class="typeBox">
-        <div class="type" :class="{type_checked:wechar == true}" @click="payType('wechar')">
+        <div
+          class="type"
+          :class="{ type_checked: wechar == true }"
+          @click="payType('wechar')"
+        >
           <div class="typeSign">
             <img src="../../assets/weixinzhifu.png" alt="" />
           </div>
-          <div class="typeName">微信支付</div>
+          <div class="typeName">
+            {{ $t("cart.weChat") +" "+ $t("cart.payment") }}
+          </div>
         </div>
-        <div class="type" :class="{type_checked:zhifubao == true}" @click="payType('zhifubao')">
+        <div
+          class="type"
+          :class="{ type_checked: zhifubao == true }"
+          @click="payType('zhifubao')"
+        >
           <div class="typeSign">
             <img src="../../assets/zhifubao.png" alt="" />
           </div>
-          <div class="typeName">支付宝支付</div>
+          <div class="typeName">
+            {{ $t("cart.paypal") + " " + $t("cart.payment") }}
+          </div>
         </div>
-        <div class="type" :class="{type_checked:geren == true}" @click="payType('geren')">
+        <div
+          class="type"
+          :class="{ type_checked: geren == true }"
+          @click="payType('geren')"
+        >
           <div class="typeSign">
             <img src="../../assets/gerenzhifu.png" alt="" />
           </div>
-          <div class="typeName">上传单联（个人）</div>
+          <div class="typeName">{{ $t("cart.bills") + $t("cart.person") }}</div>
         </div>
-        <div class="type" :class="{type_checked:gongsi == true}" @click="payType('gongsi')">
+        <div
+          class="type"
+          :class="{ type_checked: gongsi == true }"
+          @click="payType('gongsi')"
+        >
           <div class="typeSign">
             <img src="../../assets/gongsi.png" alt="" />
           </div>
-          <div class="typeName">上传单据（公司）</div>
+          <div class="typeName">{{ $t("cart.bills") + $t("cart.firm") }}</div>
         </div>
       </div>
     </div>
     <!-- 以下为底部 -->
     <div class="footer">
       <div class="allMoney">
-        最终合计&nbsp;&nbsp;&nbsp;
+        {{ $t("cart.total") }}&nbsp;&nbsp;&nbsp;
         <div>{{ allmoney }}</div>
       </div>
-      <div class="pay" @click="toPay()">结算</div>
+      <div class="pay" @click="toPay()">{{ $t("cart.settlement") }}</div>
     </div>
   </div>
 </template>
@@ -135,10 +159,10 @@ export default {
       currentPage: 1, // 当前页数
       pagerCount: 5, //五个以上加省略号
       flag: 0, //用于地址框加边框
-      wechar:false,
-      zhifubao:false,
-      geren:false,
-      gongsi:false,
+      wechar: false,
+      zhifubao: false,
+      geren: false,
+      gongsi: false,
       freight: 120, //运费
       allmoney: 0, //总计
       addresses: [
@@ -211,24 +235,24 @@ export default {
   },
   computed: {
     allmoney() {
-  let _allmoney = this.$data.allmoney;
-  _allmoney += this.$data.freight;
-     this.$data.commodityList.forEach((item) => {
-      _allmoney += item.num * item.price;
-     })
-     return _allmoney;
-},
+      let _allmoney = this.$data.allmoney;
+      _allmoney += this.$data.freight;
+      this.$data.commodityList.forEach((item) => {
+        _allmoney += item.num * item.price;
+      });
+      return _allmoney;
+    },
   },
   methods: {
     toShopCart() {
       this.$router.push({
         path: "cart",
-      })
+      });
     },
-     toProductInfo() {
+    toProductInfo() {
       this.$router.push({
-           path: "/productInfo",
-      })
+        path: "/productInfo",
+      });
     },
     // 修改地址
     editAddress() {},
@@ -245,39 +269,36 @@ export default {
     },
     chooseAddress(id) {
       this.$data.flag = id;
-    },    
-     payType(str) {
-        switch(str){
-          case 'wechar':
-            this.$data.wechar = true;
-             this.$data.zhifubao = false;
-             this.$data.geren = false;
-             this.$data.gongsi = false;
-            break;
-          case 'zhifubao':
-            this.$data.wechar = false;
-             this.$data.zhifubao = true;
-             this.$data.geren = false;
-             this.$data.gongsi = false;
-            break;
-          case 'geren':
-             this.$data.wechar = false;
-             this.$data.zhifubao = false;
-             this.$data.geren = true;
-             this.$data.gongsi = false;
-            break;
-          case 'gongsi':
-             this.$data.wechar = false;
-             this.$data.zhifubao = false;
-             this.$data.geren = false;
-             this.$data.gongsi = true;
-            break;
-        }
-     },
-     toPay() {
-
-     },
-
+    },
+    payType(str) {
+      switch (str) {
+        case "wechar":
+          this.$data.wechar = true;
+          this.$data.zhifubao = false;
+          this.$data.geren = false;
+          this.$data.gongsi = false;
+          break;
+        case "zhifubao":
+          this.$data.wechar = false;
+          this.$data.zhifubao = true;
+          this.$data.geren = false;
+          this.$data.gongsi = false;
+          break;
+        case "geren":
+          this.$data.wechar = false;
+          this.$data.zhifubao = false;
+          this.$data.geren = true;
+          this.$data.gongsi = false;
+          break;
+        case "gongsi":
+          this.$data.wechar = false;
+          this.$data.zhifubao = false;
+          this.$data.geren = false;
+          this.$data.gongsi = true;
+          break;
+      }
+    },
+    toPay() {},
   },
 };
 </script>
@@ -300,7 +321,7 @@ export default {
   cursor: pointer;
   overflow: hidden;
   font-weight: bold;
-    font-family: Microsoft YaHei UI;
+  font-family: Microsoft YaHei UI;
 }
 .returnBtn:hover {
   color: #004ea2;
@@ -324,18 +345,24 @@ export default {
   /* height: 0; */
 }
 .eachAddress {
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
   width: 332px;
-  height: 219px;
+  min-width: 250px;
+  flex: 1;
+  height: 200px;
   background: #f7f7f7;
-  border: 3px solid #f7f7f7;
+  border: 2px solid #f7f7f7;
   border-radius: 10px;
-  padding: 27px 48px 23px;
+  padding: 27px 48px;
   margin-bottom: 50px;
   margin-right: 50px;
+  cursor: pointer;
 }
 .border {
   border: 3px solid #004ea2;
+  padding: 26px 47px;
 }
 .eachAddress p {
   margin-bottom: 14px;
@@ -348,10 +375,9 @@ export default {
   line-height: 30px;
 }
 .btnBox {
-  position: absolute;
-  right: 50px;
-  bottom: 20px;
+  align-self: flex-end;
   display: flex;
+  justify-content: flex-end;
 }
 .btnBox > div {
   font-size: 16px;
@@ -396,8 +422,8 @@ export default {
 
 ._productInfo {
   /* width: 565px; */
- text-align: center;
- flex: 4.5;
+  text-align: center;
+  flex: 4.5;
   /* margin: 0 0 0 262px; */
 }
 ._size {
@@ -540,7 +566,11 @@ export default {
   --el-pagination-button-height: 40px;
   --el-pagination-font-size: 16px;
 }
-.paymentPage /deep/ .el-pagination.is-background .el-pager li:not(.disabled).active {
+.paymentPage
+  /deep/
+  .el-pagination.is-background
+  .el-pager
+  li:not(.disabled).active {
   background-color: #004ea2;
 }
 .paymentPage /deep/.el-pagination.is-background .btn-next,
@@ -570,7 +600,8 @@ export default {
   flex-wrap: wrap;
 }
 .type {
-  width: 200px;
+  /* width: 200px; */
+
   height: 56px;
   line-height: 58px;
   border: 1px solid #999999;
@@ -581,15 +612,18 @@ export default {
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  padding: 0 15px;
 }
-.type:hover {
-  border: 3px solid #004ea2;
-  padding: 0;
-}
+.type:hover,
 .type_checked {
   border: 3px solid #004ea2;
-  padding: 0;
+  height: 52px;
+  padding:0 13px;
 }
+/* .type_checked {
+  border: 3px solid #004ea2;
+  padding: 0;
+} */
 .typeSign {
   width: 38px;
   height: 38px;

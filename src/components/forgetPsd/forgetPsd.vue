@@ -2,38 +2,48 @@
 <template>
   <div class="forgetPsd">
     <div class="content">
-      <h2 class="title" ref="title">找回密码</h2>
+      <h2 class="title" ref="title">{{ $t("logIn.findPass") }}</h2>
       <div class="inputBox">
-        <input type="text" class="eachInput" :placeholder="inputEmail" />
+        <input
+          type="text"
+          class="eachInput"
+          :placeholder="$t('logIn.emailTip')"
+        />
       </div>
       <div class="inputBox verificationBox">
         <input
           type="text"
           class="verification eachInput"
-          :placeholder="inputVerification"
+          :placeholder="$t('logIn.verifyTip')"
         />
-        <span class="getCodeBtn" ref="getCodeBtn">获取验证码</span>
+        <span class="getCodeBtn" ref="getCodeBtn">{{
+          $t("logIn.verifyBtn")
+        }}</span>
       </div>
       <div class="inputBox">
-        <input type="text" class="eachInput" placeholder="请输入新密码"/>
+        <input
+          type="text"
+          class="eachInput"
+          :placeholder="$t('logIn.newPassTip')"
+        />
       </div>
       <div class="inputBox">
-        <input type="text" class="eachInput" placeholder="请确认密码"/>
+        <input
+          type="text"
+          class="eachInput"
+          :placeholder="$t('logIn.checkPassTip')"
+        />
       </div>
-      <div class="submit">提交</div>
-      <div class="returnLogIn" @click="returnLogIn()">返回登录</div>
+      <div class="submit">{{ $t("logIn.submit") }}</div>
+      <div class="returnLogIn" @click="returnLogIn()">
+        {{ $t("logIn.back") }}
+      </div>
     </div>
   </div>
 </template>
 <script>
 export default {
   name: "forgetPsd",
-  data() {
-    return {
-      inputEmail: "请输入邮箱",
-      inputVerification: "请输入验证码",
-    };
-  },
   methods: {
     returnLogIn() {
       this.$parent.isLogIn = true;
@@ -74,8 +84,8 @@ input {
   border: 1px #f4f4f4 solid;
   transition: 0.3s;
 }
-input:focus{
-    border-color: var(--color);
+input:focus {
+  border-color: var(--color);
 }
 input::-webkit-input-placeholder {
   font-size: 18px;

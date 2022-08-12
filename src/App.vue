@@ -6,6 +6,10 @@
 export default {
   name: "App",
   components: {},
+  unmounted(){
+    window.localStorage.removeItem('lang')
+    console.log("已移除")
+  }
 };
 </script>
 

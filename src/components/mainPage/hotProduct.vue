@@ -2,7 +2,10 @@
 <template>
   <router-view></router-view>
   <div class="hotProducts">
-    <div class="title">热门<span style="color: #004ea2">产品</span></div>
+    <div class="title">
+      {{ $t("home.hot")
+      }}<span style="color: #004ea2">{{ $t("home.product") }}</span>
+    </div>
     <div class="hotProductBox">
       <div
         class="hotProduct"
@@ -18,10 +21,8 @@
       </div>
     </div>
     <div class="aboutIt">
-      <div class="aboutMore">
-        了解更多&nbsp;&nbsp;
-        <div class="aboutArrow">></div>
-      </div>
+      <div class="aboutMore">{{ $t("home.learnMore") }}&nbsp;&nbsp;</div>
+      <div class="aboutArrow">></div>
     </div>
   </div>
 </template>
@@ -71,6 +72,9 @@ export default {
   line-height: 60.1px;
   text-align: center;
 }
+.title > span {
+  margin-left: 10px;
+}
 .hotProductBox {
   width: 1920px;
   height: 702.91px;
@@ -85,19 +89,18 @@ export default {
 /* 大图片 */
 .hotProduct:nth-of-type(1) {
   width: 958.08px;
-height: 702.72px;
-
+  height: 702.72px;
 }
 .hotProduct:nth-of-type(1) .hotProductPic {
   width: 958.08px;
   height: 604.03px;
 }
 .hotProduct:nth-of-type(1) .hotProductPic > img {
-    width: 958.08px;
+  width: 958.08px;
   height: 604.03px;
 }
 .hotProduct:nth-of-type(1) .hotProductName {
-width: 958.08px;
+  width: 958.08px;
   height: 96px;
   line-height: 96px;
   font-size: 46.08px;
@@ -145,13 +148,14 @@ width: 958.08px;
 .hotProductName {
   width: 100%;
   height: 48px;
-font-size: 23.04px;
+  font-size: 23.04px;
   line-height: 48px;
   background-color: #2867b4;
   color: #fff;
   text-align: center;
 }
 .aboutIt {
+  position: relative;
   margin: 60.1px 0 0 0;
   width: 221.95px;
   height: 60.1px;
@@ -164,37 +168,32 @@ font-size: 23.04px;
   transition: all 0.8s;
 }
 .aboutIt:hover {
-
-  background-color: #004EA2;
+  background-color: #004ea2;
 }
-.aboutIt:hover .aboutMore {
-    color: #fff;
+.aboutIt:hover >div{
+  color: #fff;
 }
 .aboutMore {
-  position: relative;
-  width: 129.98px;
-height: 22.08px;
-font-size: 22.08px;
-font-family: Source Han Sans SC VF;
-font-weight: bold;
-color: #004EA2;
-line-height: 22.08px;
+  font-size: 22.08px;
+  font-family: Source Han Sans SC VF;
+  font-weight: bold;
+  color: #004ea2;
+ 
 }
 .aboutArrow {
-  position: absolute;
+   position: absolute;
   font-size: 22px;
-  top: 0px;
-  animation: moveArrow 1s ease-out 0.5s infinite alternate;
+  animation: moveArrow 1s ease-out 0.3s infinite alternate;
 }
 @keyframes moveArrow {
   0% {
-    right: 0px;
+    right: 10px;
   }
   50% {
-    right: 8.06px;
+    right: 15px;
   }
   100% {
-    right: 9.98px;
+    right: 20px;
   }
 }
 </style>

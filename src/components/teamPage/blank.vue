@@ -3,11 +3,11 @@
   <div class="blank">
     <div class="imgBox">
       <img src="../../assets/teamBlank.png" alt="" />
-      <h3 class="imgTitle">您还未加入任何团队</h3>
+      <h3 class="imgTitle">{{$t('team.noTeam')}}</h3>
     </div>
     <div class="btnBox">
-      <span class="btn" @click="joinTeam()">加入团队</span>
-      <span class="btn" @click="createTeam()">创建团队</span>
+      <span class="btn" @click="joinTeam()">{{$t('team.join') + $t('base.team')}}</span>
+      <span class="btn" @click="createTeam()">{{$t('team.create') + $t('base.team')}}</span>
     </div>
   </div>
 </template>

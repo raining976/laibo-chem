@@ -13,13 +13,27 @@
           </li>
         </ul>
         <div class="btnBox">
-          <span class="btn logIn" @click="showLogIn()">{{ logIn }}</span>
-          <span class="btn register" @click="toRegister()">{{ register }}</span>
+          <span class="btn logIn" @click="showLogIn()">{{
+            $t("nav.logIn")
+          }}</span>
+          <span class="btn register" @click="toRegister()">{{
+            $t("nav.register")
+          }}</span>
         </div>
-        <div class="zh_enBox" @click="isActive = !isActive">
-          <span class="zh language" :class="{ choose: isActive }">中</span>
+        <div class="zh_enBox">
+          <span
+            class="zh language"
+            :class="{ choose: isActive }"
+            @click="changeLang('zh')"
+            >中</span
+          >
           <span>/</span>
-          <span class="en language" :class="{ choose: !isActive }">EN</span>
+          <span
+            class="en language"
+            :class="{ choose: !isActive }"
+            @click="changeLang('en')"
+            >EN</span
+          >
         </div>
       </div>
     </div>
@@ -32,16 +46,28 @@ export default {
   data() {
     return {
       menuLists: [
-        { menuName: "首页" },
-        { menuName: "我的订单" },
-        { menuName: "购物车" },
+        { menuName: this.$t('nav.home') },
+        { menuName: this.$t('nav.myOrder')},
+        { menuName: this.$t('nav.cart') },
         // { menuName: "私人订制" },
       ],
-      logIn: "登录",
       register: "注册",
       isActive: true, // 当前语言是否为中文
       currentIndex: 0, // 当前选中的菜单索引
     };
+  },
+  created() {
+    let lang = localStorage.getItem("lang");
+    switch (lang) {
+      case "zh":
+        this.isActive = true;
+        break;
+      case "en":
+        this.isActive = false;
+        break;
+      default:
+        break;
+    }
   },
   watch: {
     // 监听路由
@@ -85,10 +111,16 @@ export default {
           this.$router.push("/cart");
           break;
         case 3:
-          this.$parent.isShowOrder = !this.$parent.isShowOrder
+          this.$parent.isShowOrder = !this.$parent.isShowOrder;
           break;
         default:
           break;
+      }
+    },
+    changeLang(lang) {
+      if (lang != localStorage.getItem("lang")) {
+        localStorage.setItem("lang", lang);
+        window.location.reload();
       }
     },
   },
@@ -124,23 +156,22 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  
+
   height: 100%;
 }
 .menu {
   /* box-model */
   display: flex;
   justify-content: space-between;
-
 }
 .btnBox {
   display: flex;
   justify-content: space-between;
-  width: 163px;
+  width: 170px;
   margin-right: 77px;
 }
 .btnBox .btn {
-  width: 67px;
+  width: 75px;
   height: 39px;
   text-align: center;
   line-height: 39px;
@@ -153,14 +184,12 @@ export default {
   background-color: #fec79a;
   color: var(--color);
 }
-.zh_enBox {
-  width: 50px;
-  cursor: pointer;
-}
 .language {
   font-size: 18px;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
+  margin: 0 10px;
+  cursor: pointer;
 }
 /* 被选中的语言按钮的样式 */
 .choose {

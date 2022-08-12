@@ -2,28 +2,28 @@
   <div class="registerBox">
     <div class="content">
       <div class="titleBox">
-        <h3>用户注册</h3>
+        <h3>{{$t('register.userRegister')}}</h3>
       </div>
       <el-form
         :model="ruleForm"
         status-icon
         :rules="rules"
         ref="ruleForm"
-        label-width="130px"
+        label-width="200px"
         class="demo-ruleForm"
       >
         <!-- 姓名部分 -->
-        <el-form-item label="真实姓名" prop="name">
+        <el-form-item :label="$t('register.name')" prop="name">
           <el-input type="text" v-model="ruleForm.name"></el-input>
         </el-form-item>
         <!-- /姓名部分 -->
         <!-- email部分 -->
-        <el-form-item label="Email地址" prop="email">
+        <el-form-item :label="$t('register.email')" prop="email">
           <el-input type="text" v-model="ruleForm.email"></el-input>
         </el-form-item>
         <!-- /email部分 -->
         <!-- 登录密码 -->
-        <el-form-item label="登录密码" prop="pass">
+        <el-form-item :label="$t('register.pass')" prop="pass">
           <el-input
             type="password"
             v-model="ruleForm.pass"
@@ -32,7 +32,7 @@
         </el-form-item>
         <!-- /登录密码 -->
         <!-- 确认密码 -->
-        <el-form-item label="确认密码" prop="checkPass">
+        <el-form-item :label="$t('register.checkPass')" prop="checkPass">
           <el-input
             type="password"
             v-model="ruleForm.checkPass"
@@ -41,19 +41,19 @@
         </el-form-item>
         <!-- /确认密码 -->
         <!-- 电话号码 -->
-        <el-form-item label="电话号码" prop="phoneNum">
+        <el-form-item :label="$t('register.phone')" prop="phoneNum">
           <el-input type="text" v-model="ruleForm.phoneNum"></el-input>
         </el-form-item>
         <!-- /电话号码 -->
         <!-- 机构名称 -->
-        <el-form-item label="机构名称" prop="teamName">
+        <el-form-item :label="$t('register.team')" prop="teamName">
           <el-input type="text" v-model="ruleForm.teamName"></el-input>
         </el-form-item>
         <!-- /机构名称 -->
         <!-- 隐私单选框 -->
         <el-form-item prop="tcp" class="tcp">
           <el-checkbox
-            label="已阅读并同意以下协议"
+            :label="$t('register.deal')"
             name="tcp"
             v-model="ruleForm.tcp"
           />
@@ -61,10 +61,10 @@
         <!-- /隐私单选框 -->
         <el-form-item>
           <el-button type="primary" @click="submitForm('ruleForm')"
-            >提交</el-button
+            >{{$t('register.submit')}}</el-button
           >
           <el-button @click="resetForm('ruleForm')" class="resetBtn"
-            >重置</el-button
+            >{{$t('register.reset')}}</el-button
           >
         </el-form-item>
       </el-form>
@@ -75,23 +75,22 @@
 export default {
   data() {
     var checkName = (_, value, callback) => {
-      if (value === "") callback(new Error("姓名不能为空"));
+      if (value === "") callback(new Error(this.$t("base.name") + this.$t('base.noEmpty')));
       callback();
-      //   if (value.length > 30) callback(new Error("姓名过长"));
     };
     var checkEmail = (_, value, callback) => {
       if (value === "") {
-        callback(new Error("邮箱不能为空"));
+        callback(new Error(this.$t("base.email") + this.$t('base.noEmpty')));
       }
       let email = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
       if (!email.test(value)) {
-        callback(new Error("请输入合理的邮箱"));
+        callback(new Error(this.$t('base.valid') + this.$t('base.email')));
       }
       callback();
     };
     var validatePass = (rule, value, callback) => {
       if (value === "") {
-        callback(new Error("请输入密码"));
+        callback(new Error(this.$t("base.pass") + this.$t('base.noEmpty')));
       } else {
         if (this.ruleForm.checkPass !== "") {
           this.$refs.ruleForm.validateField("checkPass");
@@ -101,9 +100,9 @@ export default {
     };
     var validatePass2 = (rule, value, callback) => {
       if (value === "") {
-        callback(new Error("请再次输入密码"));
+        callback(new Error(this.$t('register.passAgain')));
       } else if (value !== this.ruleForm.pass) {
-        callback(new Error("两次输入密码不一致!"));
+        callback(new Error(this.$t('register.checkError')));
       } else {
         callback();
       }
@@ -111,14 +110,14 @@ export default {
     var checkPhoneNum = (_, value, callback) => {
       let phoneNum =
         /((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d)|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d))$)/;
-      if (value === "") callback(new Error("电话号码不能为空"));
+      if (value === "") callback(new Error(this.$t("base.phone") + this.$t('base.noEmpty')));
       if (!phoneNum.test(value)) {
-        callback(new Error("请输入合理的电话号码"));
+        callback(new Error(this.$t('base.valid') + this.$t('base.phone')));
       }
       callback();
     };
     var checkTeamName = (_, value, callback) => {
-      if (value === "") callback(new Error("机构名称不能为空"));
+      if (value === "") callback(new Error(this.$t("base.name") + this.$t('base.noEmpty')));
       callback();
     };
 

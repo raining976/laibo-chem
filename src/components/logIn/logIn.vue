@@ -2,12 +2,12 @@
   <div class="logIn">
     <div class="content" ref="logInContent">
       <div class="logInBox" v-show="isLogIn">
-        <h2 class="title" ref="title">用户登录</h2>
+        <h2 class="title" ref="title">{{ $t("logIn.userLogIn") }}</h2>
         <div class="inputBox" data-after="">
           <input
             type="text"
             class="email"
-            :placeholder="inputEmail"
+            :placeholder="$t('logIn.emailTip')"
             v-model="logInForm.email"
             @blur="checkEmail($event)"
           />
@@ -17,20 +17,26 @@
             ref="psd_verification"
             type="text"
             class="verification"
-            :placeholder="inputVerification"
+            :placeholder="$t('logIn.verifyTip')"
             v-model="logInForm.psd"
             @blur="checkVerification($event)"
           />
-          <span class="getCodeBtn" ref="getCodeBtn">获取验证码</span>
+          <span class="getCodeBtn" ref="getCodeBtn">{{
+            $t("logIn.verifyBtn")
+          }}</span>
         </div>
         <div class="psd_register">
-          <span class="psdLogIn" @click="changeLogIn()" ref="logInWay"
-            >密码登录</span
-          >
-          <span class="register" @click="toRegister()">立即注册 </span>
+          <span class="psdLogIn" @click="changeLogIn()" ref="logInWay">{{
+            $t("logIn.passLogIn")
+          }}</span>
+          <span class="register" @click="toRegister()"
+            >{{ $t("logIn.register") }}
+          </span>
         </div>
-        <div class="logInBtn">登录</div>
-        <div class="forgotPsd" @click="toForgetPsd()">忘记密码?</div>
+        <div class="logInBtn">{{ $t("logIn.logIn") }}</div>
+        <div class="forgotPsd" @click="toForgetPsd()">
+          {{ $t("logIn.forget") }}
+        </div>
       </div>
       <forget-psd v-show="!isLogIn" />
     </div>
@@ -38,7 +44,6 @@
 </template>
 
 <script>
-import { callWithAsyncErrorHandling } from '@vue/runtime-core';
 import forgetPsd from "../forgetPsd/forgetPsd.vue";
 export default {
   name: "logIn",
@@ -52,8 +57,6 @@ export default {
         email: "",
         psd: "",
       },
-      inputEmail: "请输入邮箱",
-      inputVerification: "请输入验证码",
       pageCode: 1, // 1为验证码登录,2为密码登录,3为忘记密码页,默认为 1
       isLogIn: true, // t显示登录页 f显示忘记密码页
     };
@@ -63,17 +66,16 @@ export default {
       handler(newCode) {
         switch (newCode) {
           case 1:
-            this.$refs.logInWay.innerHTML = "密码登录";
+            this.$refs.logInWay.innerHTML = this.$t('logIn.passLogIn');
             this.$refs.getCodeBtn.style.display = "inline-block";
-            this.inputVerification = "请输入验证码";
+            this.inputVerification = this.$t('logIn.verifyTip');
             this.$refs.psd_verification.type = "text";
             break;
           case 2:
-            this.$refs.logInWay.innerHTML = "验证码登录";
+            this.$refs.logInWay.innerHTML = this.$t('logIn.verifyLogIn');
             this.$refs.getCodeBtn.style.display = "none";
-            this.inputVerification = "请输入密码";
+            this.inputVerification = this.$t('logIn.passTip');
             this.$refs.psd_verification.type = "password";
-
             break;
           case 3:
             break;
@@ -87,8 +89,8 @@ export default {
     // 监听鼠标点击  点击位置为登录之外,则关闭登录页
     window.addEventListener("mousedown", this.closeLogIn);
   },
-  unmounted(){
-    window.removeEventListener("mousedown",this.closeLogIn)
+  unmounted() {
+    window.removeEventListener("mousedown", this.closeLogIn);
   },
   methods: {
     toRegister() {
@@ -98,10 +100,10 @@ export default {
     // 切换登录方式
     changeLogIn() {
       switch (this.$refs.logInWay.innerText) {
-        case "密码登录":
+        case this.$t('logIn.passLogIn'):
           this.pageCode = 2;
           break;
-        case "验证码登录":
+        case this.$t('logIn.verifyLogIn'):
           this.pageCode = 1;
           break;
         default:
