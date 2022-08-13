@@ -115,7 +115,7 @@ export default {
         dele: "删除地址",
         current: "当前配送至",
         full: "详细地址",
-        chooseTip: "请选择收获地址",
+        chooseTip: "请选择收货地址",
         fillTip: "请填写",
 
     },

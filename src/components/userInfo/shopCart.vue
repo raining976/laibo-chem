@@ -82,7 +82,7 @@
                   {{ $t("order.itemNo") + "：" }}{{ item0.huohao }}
                 </div>
                 <div class="infoWord">
-                  {{ $t("casNum") + "：" }}{{ item0.shopCart_id }}
+                  {{ $t("order.casNum") + "：" }}{{ item0.shopCart_id }}
                 </div>
               </div>
             </div>
@@ -149,7 +149,7 @@ export default {
       //
       checkall: false,
       checkedCommodities: [], //复选框有关
-      money: 0,
+      money: 11,
       commodityBox: [], //v-for get
       commodityList: [
         {
