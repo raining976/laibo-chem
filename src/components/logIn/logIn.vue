@@ -3,6 +3,7 @@
     <div class="content" ref="logInContent">
       <div class="logInBox" v-show="isLogIn">
         <h2 class="title" ref="title">{{ $t("logIn.userLogIn") }}</h2>
+        <!-- 邮箱表单部分 -->
         <div class="inputBox" data-after="">
           <input
             type="text"
@@ -12,19 +13,24 @@
             @blur="checkEmail($event)"
           />
         </div>
+        <!-- /邮箱表单部分 -->
+        <!-- 验证码或密码部分  -->
         <div class="inputBox verificationBox" data-after="">
           <input
             ref="psd_verification"
             type="text"
             class="verification"
-            :placeholder="$t('logIn.verifyTip')"
+            :placeholder="inputVerification"
             v-model="logInForm.psd"
             @blur="checkVerification($event)"
           />
-          <span class="getCodeBtn" ref="getCodeBtn">{{
+          <span class="getCodeBtn" v-show="!isPsdLogin" @click="getCode()">{{
             $t("logIn.verifyBtn")
           }}</span>
+          <span class="getCodeBtn" v-show="isTimer">{{ count }}</span>
         </div>
+        <!-- /验证码或密码部分  -->
+        <!-- 切换登录方式和注册 -->
         <div class="psd_register">
           <span class="psdLogIn" @click="changeLogIn()" ref="logInWay">{{
             $t("logIn.passLogIn")
@@ -33,7 +39,8 @@
             >{{ $t("logIn.register") }}
           </span>
         </div>
-        <div class="logInBtn">{{ $t("logIn.logIn") }}</div>
+        <!-- /切换登录方式和注册 -->
+        <div class="logInBtn" @click="login()">{{ $t("logIn.logIn") }}</div>
         <div class="forgotPsd" @click="toForgetPsd()">
           {{ $t("logIn.forget") }}
         </div>
@@ -57,8 +64,15 @@ export default {
         email: "",
         psd: "",
       },
+      inputVerification: this.$t("logIn.verifyTip"), // 验证码input提示
       pageCode: 1, // 1为验证码登录,2为密码登录,3为忘记密码页,默认为 1
       isLogIn: true, // t显示登录页 f显示忘记密码页
+      isEmail: false, //邮箱是否合法,
+      isVerfiCode: false, //验证码是否为空
+      isPsdLogin: false, //是否为密码登录,默认为验证码登录
+      timer: null, // 定时器
+      count: "", // 倒计时
+      isTimer: false, // 是否进入倒计时
     };
   },
   watch: {
@@ -66,15 +80,17 @@ export default {
       handler(newCode) {
         switch (newCode) {
           case 1:
-            this.$refs.logInWay.innerHTML = this.$t('logIn.passLogIn');
-            this.$refs.getCodeBtn.style.display = "inline-block";
-            this.inputVerification = this.$t('logIn.verifyTip');
+            this.clearTimer();
+            this.isTimer = false;
+            this.$refs.logInWay.innerHTML = this.$t("logIn.passLogIn");
+            this.isPsdLogin = true;
+            this.inputVerification = this.$t("logIn.verifyTip");
             this.$refs.psd_verification.type = "text";
             break;
           case 2:
-            this.$refs.logInWay.innerHTML = this.$t('logIn.verifyLogIn');
-            this.$refs.getCodeBtn.style.display = "none";
-            this.inputVerification = this.$t('logIn.passTip');
+            this.$refs.logInWay.innerHTML = this.$t("logIn.verifyLogIn");
+            this.isPsdLogin = false;
+            this.inputVerification = this.$t("logIn.passTip");
             this.$refs.psd_verification.type = "password";
             break;
           case 3:
@@ -100,10 +116,10 @@ export default {
     // 切换登录方式
     changeLogIn() {
       switch (this.$refs.logInWay.innerText) {
-        case this.$t('logIn.passLogIn'):
+        case this.$t("logIn.passLogIn"):
           this.pageCode = 2;
           break;
-        case this.$t('logIn.verifyLogIn'):
+        case this.$t("logIn.verifyLogIn"):
           this.pageCode = 1;
           break;
         default:
@@ -126,6 +142,7 @@ export default {
         a.setAttribute("data-after", "邮箱格式不正确");
       } else {
         a.setAttribute("data-after", "");
+        this.isEmail = true;
       }
     },
 
@@ -136,8 +153,8 @@ export default {
         a.setAttribute("data-after", "验证码不能为空");
       } else {
         a.setAttribute("data-after", "");
+        this.isVerfiCode = true;
       }
-      return;
     },
 
     // 关闭登录页面
@@ -147,6 +164,73 @@ export default {
         this.$parent.isShowLogIn = false;
       } else this.$parent.isShowLogIn = true;
     },
+
+    // 登录
+    login() {
+      console.log("登录");
+      switch (this.pageCode) {
+        // 验证码登录时
+        case 1:
+          if (this.isEmail && this.isVerfiCode) {
+            let rule = {
+              email: this.logInForm.email,
+              code: this.logInForm.psd,
+              type: "code",
+            };
+            this.$http.post("/login/", rule).then((res) => {
+              console.log("res", res.data);
+            });
+          }
+          break;
+        default:
+          break;
+      }
+    },
+
+    // 获取验证码
+    getCode() {
+      this.timerInterval();
+      // if (this.isEmail) {
+      //   let rule = {
+      //     email: this.logInForm.email,
+      //     type: "login",
+      //   };
+      //   this.$http.post("/verificationCode", rule).then((res) => {
+      //     if(res.data.code == 20000){
+      //       alert("发送成功")
+      //       this.timerInterval()
+      //     }
+      //   });
+      // }
+    },
+
+    // 获取验证码倒计时
+    timerInterval() {
+      const TIME_COUNT = 10;
+      this.count = TIME_COUNT;
+      this.isTimer = true; // 打开倒计时
+      this.isPsdLogin = true; // 关闭对应发送验证码的按钮
+      this.timer = setInterval(() => {
+        if (this.count > 0) {
+          this.count--;
+        } else {
+          this.isTimer = false;
+          this.isPsdLogin = false;
+          this.clearTimer();
+          console.log("已清除");
+        }
+      }, 1000);
+    },
+    // 清除定时器
+    clearTimer() {
+      if (this.timer) {
+        clearInterval(this.timer);
+        this.timer = null;
+      }
+    },
+  },
+  unmounted() {
+    this.clearTimer();
   },
 };
 </script>
@@ -243,7 +327,9 @@ input::-webkit-input-placeholder {
   position: absolute;
   top: 16px;
   right: 22px;
+  min-width: 103px;
   height: 33px;
+  text-align: center;
   line-height: 33px;
   font-size: 18px;
   font-family: Microsoft YaHei UI;

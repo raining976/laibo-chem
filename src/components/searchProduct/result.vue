@@ -21,72 +21,83 @@
             <div class="resultDetail">
               <!-- v-for模块 -->
 
-              <div class="huohao _data">{{$t('order.itemNo')+"："}}{{ item.huohao }}</div>
+              <div class="huohao _data">
+                {{ $t("order.itemNo") + "：" }}{{ item.huohao }}
+              </div>
               <div class="jiegoushi _data">结构式：{{ item.jiegoushi }}</div>
-              <div class="CAScode _data">{{$t('order.casNum')+"："}}{{ item.casCode }}</div>
+              <div class="CAScode _data">
+                {{ $t("order.casNum") + "：" }}{{ item.casCode }}
+              </div>
               <div class="MDLcode _data">MDL号：{{ item.mdlCode }}</div>
             </div>
           </div>
         </div>
         <!-- 价格表格 -->
         <div class="collapse">
-      <el-collapse v-model="activeName" accordion>
-        <el-collapse-item  name="1">
-          <template #title>
-               价格与库存&nbsp;<img src="../../assets/价格预测.png" style="width: 20px;height: 20px" alt="">
-          </template>
-        <div class="prize">
-          <table border="0" cellspacing="0">
-            <thead>
-              <tr class="tableHead">
-                <th style="width: 145px">{{$t('order.itemNo')}}</th>
-                <th style="width: 140px">{{$t('order.size')}}</th>
-                <th style="width: 215px">{{$t('search.stock')}}</th>
-                <th style="width: 170px">{{$t('search.price')}}（RMB）</th>
-                <th style="width: 200px">{{$t('order.count')}}</th>
-              </tr>
-            </thead>
-            <el-scrollbar max-height="132px">
-              <tbody>
-                <tr
-                  class="tableContent"
-                  v-for="(item1, index) in productData"
-                  :key="index"
-                >
-                  <td class="huohao">
-                    <div>{{ item1.huohao }}</div>
-                  </td>
-                  <td class="size">
-                    <div>{{ item1.size }}</div>
-                  </td>
+          <el-collapse v-model="activeName" accordion>
+            <el-collapse-item name="1">
+              <template #title>
+                <span class="textBox">价格与库存&nbsp;</span
+                ><img
+                  src="../../assets/价格预测.png"
+                  style="width: 20px; height: 20px"
+                  alt=""
+                />
+              </template>
+              <div class="prize">
+                <table border="0" cellspacing="0">
+                  <thead>
+                    <tr class="tableHead">
+                      <th style="width: 145px">{{ $t("order.itemNo") }}</th>
+                      <th style="width: 140px">{{ $t("order.size") }}</th>
+                      <th style="width: 215px">{{ $t("search.stock") }}</th>
+                      <th style="width: 170px">
+                        {{ $t("search.price") }}（RMB）
+                      </th>
+                      <th style="width: 200px">{{ $t("order.count") }}</th>
+                    </tr>
+                  </thead>
+                  <el-scrollbar max-height="132px">
+                    <tbody>
+                      <tr
+                        class="tableContent"
+                        v-for="(item1, index) in productData"
+                        :key="index"
+                      >
+                        <td class="huohao">
+                          <div>{{ item1.huohao }}</div>
+                        </td>
+                        <td class="size">
+                          <div>{{ item1.size }}</div>
+                        </td>
 
-                  <td class="store">
-                    <div>{{ item1.store }}</div>
-                  </td>
-                  <td class="rmb">
-                    <div>{{ item1.rmb }}</div>
-                  </td>
-                  <td class="count">
-                    <div class="countBtnBox">
-                      <el-input-number
-                        v-model="item1.num"
-                        @change="handleChange"
-                        :min="0"
-                      ></el-input-number>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </el-scrollbar>
-          </table>
-        <div class="addCart">
-          {{$t('search.add')}}<img src="../../assets/gouwuche.png" alt="" />
+                        <td class="store">
+                          <div>{{ item1.store }}</div>
+                        </td>
+                        <td class="rmb">
+                          <div>{{ item1.rmb }}</div>
+                        </td>
+                        <td class="count">
+                          <div class="countBtnBox">
+                            <el-input-number
+                              v-model="item1.num"
+                              @change="handleChange"
+                              :min="0"
+                            ></el-input-number>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </el-scrollbar>
+                </table>
+                <div class="addCart">
+                  {{ $t("search.add")
+                  }}<img src="../../assets/gouwuche.png" alt="" />
+                </div>
+              </div>
+            </el-collapse-item>
+          </el-collapse>
         </div>
-        </div>
-         </el-collapse-item>
-      </el-collapse>
-    </div>
-        
       </div>
     </div>
     <div class="pagination">
@@ -200,6 +211,14 @@ export default {
   },
 };
 </script>
+<style>
+.resultPage .el-collapse-item__arrow{
+  margin: 0 10px;
+}
+.resultPage .el-collapse-item__header{
+  justify-content: flex-end;
+}
+</style>
 <style scoped>
 /* 下面是搜索结果的样式 */
 .resultPage {
@@ -307,24 +326,24 @@ export default {
   overflow: hidden;
 }
 
-.collapse /deep/ .el-collapse-item__header {
+.collapse >>> .el-collapse-item__header {
   text-indent: 45px;
   font-size: 16px;
   color: #004ea2;
   background-color: transparent;
   border-bottom: 1px solid #eaeaec;
 }
-.collapse /deep/ .el-collapse-item__arrow,
+.collapse >>> .el-collapse-item__arrow,
 .el-icon-arrow-right,
 .is-active {
   text-indent: 0px;
   /* height: 1px;
 */
 }
-.collapse /deep/ .el-collapse-item__wrap {
+.collapse >>> .el-collapse-item__wrap {
   background-color: transparent;
 }
-.collapse /deep/ .el-collapse-item__content{
+.collapse >>> .el-collapse-item__content {
   position: relative;
 }
 /* 以下是表格 */

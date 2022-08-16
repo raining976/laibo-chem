@@ -29,30 +29,39 @@
           class="verfiBox"
         >
           <el-input type="text" v-model="ruleForm.verfiCode"></el-input>
-          <div class="getVerfiBtn">{{$t('base.get') + $t('register.verfiCode')}}</div>
+          <div
+            class="getVerfiBtn"
+            @click="getVerfiCode()"
+            v-show="!waitTimerShow"
+          >
+            {{ $t("base.get") + $t("register.verfiCode") }}
+          </div>
+          <div class="getVerfiBtn" v-show="waitTimerShow">
+            {{ waitTimer }}
+          </div>
         </el-form-item>
         <!-- /验证码 -->
         <!-- 登录密码 -->
-        <el-form-item :label="$t('register.pass')" prop="pass">
+        <el-form-item :label="$t('register.pass')" prop="password">
           <el-input
             type="password"
-            v-model="ruleForm.pass"
+            v-model="ruleForm.password"
             autocomplete="off"
           ></el-input>
         </el-form-item>
         <!-- /登录密码 -->
         <!-- 确认密码 -->
-        <el-form-item :label="$t('register.checkPass')" prop="checkPass">
+        <el-form-item :label="$t('register.checkPass')" prop="password1">
           <el-input
             type="password"
-            v-model="ruleForm.checkPass"
+            v-model="ruleForm.password1"
             autocomplete="off"
           ></el-input>
         </el-form-item>
         <!-- /确认密码 -->
         <!-- 电话号码 -->
-        <el-form-item :label="$t('register.phone')" prop="phoneNum">
-          <el-input type="text" v-model="ruleForm.phoneNum"></el-input>
+        <el-form-item :label="$t('register.phone')" prop="phone">
+          <el-input type="text" v-model="ruleForm.phone"></el-input>
         </el-form-item>
         <!-- /电话号码 -->
         <!-- 机构名称 -->
@@ -103,8 +112,8 @@ export default {
       if (value === "") {
         callback(new Error(this.$t("base.pass") + this.$t("base.noEmpty")));
       } else {
-        if (this.ruleForm.checkPass !== "") {
-          this.$refs.ruleForm.validateField("checkPass");
+        if (this.ruleForm.password1 !== "") {
+          this.$refs.ruleForm.validateField("password1");
         }
         callback();
       }
@@ -112,7 +121,7 @@ export default {
     var validatePass2 = (rule, value, callback) => {
       if (value === "") {
         callback(new Error(this.$t("register.passAgain")));
-      } else if (value !== this.ruleForm.pass) {
+      } else if (value !== this.ruleForm.password) {
         callback(new Error(this.$t("register.checkError")));
       } else {
         callback();
@@ -135,19 +144,24 @@ export default {
     };
 
     return {
+      waitTimer: "", // 倒计时为120秒
+      myTimer: null, // 倒计时
+      waitTimerShow: false, // 是否显示倒计时
       ruleForm: {
         name: "",
         email: "",
-        pass: "",
-        checkPass: "",
-        phoneNum: "",
+        password: "",
+        password1: "",
+        phone: "",
         teamName: "",
         verfiCode: "",
         tcp: false,
       },
       rules: {
-        pass: [{ required: true, validator: validatePass, trigger: "blur" }],
-        checkPass: [
+        password: [
+          { required: true, validator: validatePass, trigger: "blur" },
+        ],
+        password1: [
           { required: true, validator: validatePass2, trigger: "blur" },
         ],
         email: [{ required: true, validator: checkEmail, trigger: "blur" }],
@@ -159,7 +173,7 @@ export default {
           },
         ],
         name: [{ required: true, validator: checkName, trigger: "blur" }],
-        phoneNum: [
+        phone: [
           { required: true, validator: checkPhoneNum, trigger: "blur" },
         ],
         teamName: [
@@ -180,8 +194,10 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.$http.post("/register", this.ruleForm).then((res) => {
+            if (res.data.code == 20000) {
+              this.bouncedMsg();
+            }
             console.log("res.data.msg", res.data.msg);
-            this.bouncedMsg();
           });
         } else {
           console.log("error submit!!");
@@ -197,10 +213,45 @@ export default {
         confirmButtonText: "确定",
         // 进入主页路由
         // callback: (action) => {
-
         // },
       });
     },
+    // 获取验证码
+    getVerfiCode() {
+      if (this.ruleForm.email == "") return;
+      let rule = {
+        email: this.ruleForm.email,
+        type: "register",
+      };
+      this.$http.post("/verificationCode", rule).then((res) => {
+        if (res.data.code == 20000) {
+          alert("res.data.msg");
+          this.verfi_timer();
+        }
+      });
+    },
+    // 发送验证码倒计时
+    verfi_timer() {
+      const TIME_COUNT = 10;
+      this.waitTimer = TIME_COUNT;
+      this.waitTimerShow = true;
+      this.myTimer = setInterval(() => {
+        if (this.waitTimer > 0 && this.waitTimerShow) {
+          this.waitTimer--;
+        } else {
+          clearInterval(this.myTimer);
+          this.myTimer = null;
+          console.log("倒计时已清除");
+          this.waitTimerShow = false;
+        }
+      }, 1000);
+    },
+  },
+  unmounted() {
+    if (this.myTimer) {
+      clearInterval(this.myTimer);
+      this.myTimer = null;
+    }
   },
 };
 </script>

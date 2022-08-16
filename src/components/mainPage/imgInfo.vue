@@ -14,8 +14,10 @@ export default {
   data() {
     return {
       imgList: [
-        { pic: require("../../assets/93390700.png") ,href: "https://www.bilibili.com/"},
-        { pic: require("../../assets/93390700.png") ,href: "https://www.bilibili.com/"},
+        { pic: require("../../assets/93390700.png") ,href: "####"},
+        { pic: require("../../assets/93390700.png") ,href: "####"},
+        { pic: require("../../assets/93390700.png") ,href: "####"},
+        { pic: require("../../assets/93390700.png") ,href: "####"},
       ],
     };
   },
