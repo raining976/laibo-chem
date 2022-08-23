@@ -23,9 +23,7 @@ export default {
         dele: "Delete",
         user: "User",
         order: "Order",
-        get:"Get",
-
-
+        get: "Get",
     },
     // 表单
     form: {
@@ -38,7 +36,8 @@ export default {
         myOrder: "MyOrder",
         cart: "Cart",
         logIn: "Sign in",
-        register: "Sign up"
+        register: "Sign up",
+        hello: "Hi,"
     },
     // 主页
     home: {
@@ -86,7 +85,7 @@ export default {
         userRegister: "Sign In",
         name: "Name",
         email: "Email",
-        verfiCode:"VerfiCode",
+        verfiCode: "VerfiCode",
         pass: "Password",
         checkPass: "Verify Password",
         phone: "Tel No",
@@ -158,30 +157,30 @@ export default {
         itemNo: "Product code",
         casNum: "The CAS number",
     },
-     // 购物车
-     cart:{
-        total:"Total",
-        allCheck:"Check all",
-        submitOwn:"Submitted to the individual bills",
-        addUp:"Aggregate (excluding freight)",
-        settlement:"settle accounts",
-        to:"To ",
-        fright:"Fright",
-        weChat:"Wechat",
-        paypal:"PayPal",
-        payment:"Payment",
-        bills:"Upload documents",
-        person:"(Personal)",
-        firm:"(Corp)",
-        payType:"SELECT YOUR PAYMENT TYPE",
+    // 购物车
+    cart: {
+        total: "Total",
+        allCheck: "Check all",
+        submitOwn: "Submitted to the individual bills",
+        addUp: "Aggregate (excluding freight)",
+        settlement: "settle accounts",
+        to: "To ",
+        fright: "Fright",
+        weChat: "Wechat",
+        paypal: "PayPal",
+        payment: "Payment",
+        bills: "Upload documents",
+        person: "(Personal)",
+        firm: "(Corp)",
+        payType: "SELECT YOUR PAYMENT TYPE",
     },
-     // 搜索
-     search: {
-        sort:"More product categories",
-        price:"Price",
-        stock:"Stock",
-        add:"Add to cart",
-        
+    // 搜索
+    search: {
+        sort: "More product categories",
+        price: "Price",
+        stock: "Stock",
+        add: "Add to cart",
+
     }
 
 }

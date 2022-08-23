@@ -1,6 +1,6 @@
 
 <template>
-  <appNav />
+  <appNav :key="key" />
   <router-view name="search"></router-view>
   <router-view name="table"></router-view>
   <router-view name="textPage"></router-view>
@@ -27,6 +27,7 @@ export default {
   data() {
     return {
       isShowLogIn: false, // 是否显示登录
+      key: 1, // 用于强制刷新nav组件
     };
   },
   methods: {

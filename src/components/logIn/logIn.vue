@@ -68,7 +68,7 @@ export default {
       pageCode: 1, // 1为验证码登录,2为密码登录,3为忘记密码页,默认为 1
       isLogIn: true, // t显示登录页 f显示忘记密码页
       isEmail: false, //邮箱是否合法,
-      isVerfiCode: false, //验证码是否为空
+      isVeerifyCode: false, //验证码是否为空
       isPsdLogin: false, //是否为密码登录,默认为验证码登录
       timer: null, // 定时器
       count: "", // 倒计时
@@ -79,17 +79,19 @@ export default {
     pageCode: {
       handler(newCode) {
         switch (newCode) {
+          // 更改为验证码登录
           case 1:
             this.clearTimer();
             this.isTimer = false;
             this.$refs.logInWay.innerHTML = this.$t("logIn.passLogIn");
-            this.isPsdLogin = true;
+            this.isPsdLogin = false;
             this.inputVerification = this.$t("logIn.verifyTip");
             this.$refs.psd_verification.type = "text";
             break;
+          // 更改为密码登录
           case 2:
             this.$refs.logInWay.innerHTML = this.$t("logIn.verifyLogIn");
-            this.isPsdLogin = false;
+            this.isPsdLogin = true;
             this.inputVerification = this.$t("logIn.passTip");
             this.$refs.psd_verification.type = "password";
             break;
@@ -150,10 +152,11 @@ export default {
     checkVerification(e) {
       let a = e.path[1]; // 获取带有after伪元素的父盒子
       if (this.logInForm.email == "") {
-        a.setAttribute("data-after", "验证码不能为空");
+        if (this.pageCode == 1) a.setAttribute("data-after", "验证码不能为空");
+        if (this.pageCode == 2) a.setAttribute("data-after", "密码不能为空");
       } else {
         a.setAttribute("data-after", "");
-        this.isVerfiCode = true;
+        this.isVerifyCode = true;
       }
     },
 
@@ -171,15 +174,54 @@ export default {
       switch (this.pageCode) {
         // 验证码登录时
         case 1:
-          if (this.isEmail && this.isVerfiCode) {
+          if (this.isEmail && this.isVerifyCode) {
             let rule = {
               email: this.logInForm.email,
               code: this.logInForm.psd,
               type: "code",
             };
-            this.$http.post("/login/", rule).then((res) => {
-              console.log("res", res.data);
-            });
+            this.$http
+              .post("/login/", rule)
+              .then((res) => {
+                if (res.data.code == 20000) {
+                  let token = res.data.data.access;
+                  let refresh = res.data.data.refresh;
+                  this.afterLogin(token, refresh);
+                  // 查看过期时间:
+                  console.log("token", localStorage.getItem("token_exp"));
+                  console.log("refresh", localStorage.getItem("refresh_exp"));
+                }
+              })
+              .catch((err) => {
+                console.log("login_err", err);
+              });
+          }
+          break;
+        // 密码登录
+        case 2:
+          if (this.isEmail && this.isVerifyCode) {
+            let rule = {
+              email: this.logInForm.email,
+              password: this.logInForm.psd,
+              type: "password",
+            };
+            this.$http
+              .post("/login/", rule)
+              .then((res) => {
+                if (res) {
+                  if (res.data.code == 20000) {
+                    let token = res.data.data.access;
+                    let refresh = res.data.data.refresh;
+                    this.afterLogin(token, refresh);
+                    // 查看过期时间:
+                    console.log("token", localStorage.getItem("token_exp"));
+                    console.log("refresh", localStorage.getItem("refresh_exp"));
+                  }
+                }
+              })
+              .catch((err) => {
+                console.log("login_err", err);
+              });
           }
           break;
         default:
@@ -189,19 +231,26 @@ export default {
 
     // 获取验证码
     getCode() {
-      this.timerInterval();
-      // if (this.isEmail) {
-      //   let rule = {
-      //     email: this.logInForm.email,
-      //     type: "login",
-      //   };
-      //   this.$http.post("/verificationCode", rule).then((res) => {
-      //     if(res.data.code == 20000){
-      //       alert("发送成功")
-      //       this.timerInterval()
-      //     }
-      //   });
-      // }
+      if (this.isEmail) {
+        let rule = {
+          email: this.logInForm.email,
+          type: "login",
+        };
+        this.$http
+          .post("/verificationCode", rule)
+          .then((res) => {
+            if (res.data.code == 20000) {
+              this.$message({
+                message: "发送成功",
+                type: "success",
+              });
+              this.timerInterval();
+            }
+          })
+          .catch((err) => {
+            console.log("get_code_err", err);
+          });
+      }
     },
 
     // 获取验证码倒计时
@@ -217,7 +266,6 @@ export default {
           this.isTimer = false;
           this.isPsdLogin = false;
           this.clearTimer();
-          console.log("已清除");
         }
       }, 1000);
     },
@@ -227,6 +275,33 @@ export default {
         clearInterval(this.timer);
         this.timer = null;
       }
+    },
+
+    // 处理token
+    handler_token(token) {
+      let index = token.indexOf(".");
+      let last_index = token.lastIndexOf(".");
+      token = token.slice(index + 1, last_index); // 切出包含过期信息的部分,也可用split()方法处理
+      let token_object = JSON.parse(this.$Base64.decode(token)); // base64解密
+      // console.log("token_object.exp", token_object.exp);
+      return token_object.exp;
+    },
+
+    // 登录成功后的回调
+    afterLogin(token, refresh) {
+      // 反馈信息,更改显示状态
+      this.$message({
+        message: "登录成功!",
+        type: "success",
+      });
+      this.$parent.isShowLogIn = false;
+      this.$parent.key++;
+      // 保存access和refresh
+      localStorage.setItem("token", token);
+      localStorage.setItem("refresh", refresh);
+      // 保存过期时间
+      localStorage.setItem("token_exp", this.handler_token(token));
+      localStorage.setItem("refresh_exp", this.handler_token(refresh));
     },
   },
   unmounted() {

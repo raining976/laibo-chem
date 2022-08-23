@@ -12,7 +12,7 @@
             {{ item.menuName }}
           </li>
         </ul>
-        <div class="btnBox">
+        <div class="btnBox" v-if="!isLogin">
           <span class="btn logIn" @click="showLogIn()">{{
             $t("nav.logIn")
           }}</span>
@@ -20,6 +20,12 @@
             $t("nav.register")
           }}</span>
         </div>
+        <!-- 你好客户 -->
+        <div class="btnBox hello" v-if="isLogin" @click="toUserInfo()">
+          你好,{{ name }}!
+        </div>
+        <div class="sonMenu" @click="exit()">退出登录</div>
+        <!-- /你好客户 -->
         <div class="zh_enBox">
           <span
             class="zh language"
@@ -46,14 +52,17 @@ export default {
   data() {
     return {
       menuLists: [
-        { menuName: this.$t('nav.home') },
-        { menuName: this.$t('nav.myOrder')},
-        { menuName: this.$t('nav.cart') },
+        { menuName: this.$t("nav.home") },
+        { menuName: this.$t("nav.myOrder") },
+        { menuName: this.$t("nav.cart") },
         // { menuName: "私人订制" },
       ],
       register: "注册",
       isActive: true, // 当前语言是否为中文
       currentIndex: 0, // 当前选中的菜单索引
+      isLogin: false, // 是否为登录状态
+      name: "", // 用户姓名
+      isMenuShow: false, // 是否展示子菜单
     };
   },
   created() {
@@ -67,6 +76,14 @@ export default {
         break;
       default:
         break;
+    }
+    if (localStorage.getItem("token")) {
+      console.log("存在token");
+      this.isLogin = true;
+      this.$http.get("/userInfo").then((res) => {
+        console.log("nav_res", res);
+        this.name = res.data.data.name;
+      });
     }
   },
   watch: {
@@ -123,6 +140,20 @@ export default {
         window.location.reload();
       }
     },
+    toUserInfo() {
+      this.$router.push("/info");
+    },
+    // 下拉菜单
+    handleCommand(command) {
+      this.$message("click on item " + command);
+    },
+    // 退出登录
+    exit(){
+      localStorage.removeItem("token")
+      localStorage.removeItem("refresh")
+      this.$parent.key++
+
+    }
   },
 };
 </script>
@@ -163,6 +194,7 @@ export default {
   /* box-model */
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 .btnBox {
   display: flex;
@@ -198,6 +230,8 @@ export default {
   color: #ed6c00;
 }
 .menu li {
+  display: flex;
+  align-items: center;
   cursor: pointer;
   padding-bottom: 8px;
   margin-right: 50px;
@@ -207,5 +241,13 @@ export default {
   padding-bottom: 5px;
   border-bottom: 3px solid #ed6c00;
   transition: border 0.4s;
+}
+.nav .hello {
+  position: relative;
+  cursor: pointer;
+}
+.nav .hello .sonMenu {
+  position: absolute;
+  bottom: -20px;
 }
 </style>

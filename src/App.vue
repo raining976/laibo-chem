@@ -6,10 +6,20 @@
 export default {
   name: "App",
   components: {},
-  unmounted(){
-    window.localStorage.removeItem('lang')
-    console.log("已移除")
-  }
+  created() {
+    let nowTime = new Date().getTime() / 1000;
+    if (localStorage.getItem("refresh_exp") - nowTime < 60) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("refresh");
+    }
+    // 测试用,开始先清除token
+    // localStorage.removeItem("token");
+    // localStorage.removeItem("refresh")
+  },
+  unmounted() {
+    window.localStorage.removeItem("lang");
+    console.log("已移除");
+  },
 };
 </script>
 
@@ -39,5 +49,4 @@ input,
 textarea {
   resize: none;
 }
-
 </style>

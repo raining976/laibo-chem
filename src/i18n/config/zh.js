@@ -38,7 +38,8 @@ export default {
         myOrder: "我的订单",
         cart: "购物车",
         logIn: "登录",
-        register: "注册"
+        register: "注册",
+        hello:"你好,"
     },
     // 主页
     home: {
