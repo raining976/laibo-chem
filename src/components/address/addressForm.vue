@@ -198,7 +198,8 @@ export default {
     // 关闭表单
     closeForm(e) {
       let form = this.$refs.addressForm;
-      if (!e.path.includes(form)) {
+      let select = document.getElementsByClassName('el-cascader__dropdown')[0]
+      if (!e.path.includes(form)&&!e.path.includes(select)) {
         this.$parent.formIsShow = false;
       } else this.$parent.formIsShow = true;
     },

@@ -24,7 +24,7 @@
         <div class="btnBox hello" v-if="isLogin" @click="toUserInfo()">
           你好,{{ name }}!
         </div>
-        <div class="sonMenu" @click="exit()">退出登录</div>
+        <div class="sonMenu" @click="exit()" v-if="isLogin">退出登录</div>
         <!-- /你好客户 -->
         <div class="zh_enBox">
           <span

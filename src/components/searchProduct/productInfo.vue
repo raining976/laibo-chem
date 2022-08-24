@@ -6,8 +6,8 @@
         <div class="productPic"><img :src="pic" alt="" /></div>
         <div class="info">
           <!-- 化学名 -->
-          <div class="productName_zh">{{ name }}</div>
-          <div class="productName_en">{{ name }}</div>
+          <div class="productName_zh">{{ name_zh }}</div>
+          <div class="productName_en">{{ name_en }}</div>
           <!-- 浓度 -->
           <div class="concentration">{{ concentration }}</div>
           <div class="solidLine2"></div>
@@ -99,7 +99,11 @@
                     <td class="count">
                       <!-- 计数器 -->
                       <div class="countBtnBox">
-                       <el-input-number v-model="item.num" @change="handleChange" :min="0"  ></el-input-number>
+                        <el-input-number
+                          v-model="item.num"
+                          @change="handleChange"
+                          :min="0"
+                        ></el-input-number>
                       </div>
                     </td>
                   </tr>
@@ -129,35 +133,29 @@ export default {
   data() {
     return {
       isShow: false, // 私人订制是否显示
-      pic: require("../../assets/p11.png"),
-      name: "T826255 2-(三丁基锡)-5-三氟甲基吡啶",
+      pic: "http://attachments.macklin.cn/img/item/000/83/97537500.gif",
+      name_zh: "B835581 双(异硫氰酸)(2,2'-二吡啶基-4,4'-二甲酸)",
+      name_en:
+        " Bis(isothiocyanato)(2,2'-bipyridyl-4,4'-dicarboxylato)(4,4'-dinonyl-2,2'-bipyridyl)ruthenium(II)酸)",
       concentration: ">95%",
+      casCode: "502693-09-6 ",
+      fenzishi:"	C42H52N6O4RuS2 ",
+      fenziliang:"	870.11 ",
+      mdlCode:'	MFCD12546029 ',
+      fusionPoint:"196 °C ",
+      storageCondition:"干燥",
       productData: [
         {
-          huohao: "2016-05-03",
-          size: "Tom",
-          rmb: "California",
+          huohao: "B835581-25mg",
+          size: "	95%,NMR",
+          rmb: "220.00",
           store: "Los Angeles",
           num: 0,
         },
         {
-          huohao: "2016-05-02",
-          size: "Tom",
-          rmb: "California",
-          store: "Los Angeles",
-          num: 0,
-        },
-        {
-          huohao: "2016-05-04",
-          size: "Tom",
-          rmb: "California",
-          store: "Los Angeles",
-          num: 0,
-        },
-        {
-          huohao: "2016-05-04",
-          size: "Tom",
-          rmb: "California",
+          huohao: "B835581-100mg",
+          size: "95%,NMR",
+          rmb: "539",
           store: "Los Angeles",
           num: 0,
         },
@@ -170,12 +168,11 @@ export default {
   },
   methods: {
     //商品数量调节
-        //商品数量调节
+    //商品数量调节
     handleChange(value) {
-        console.log(value);
-      },
-    
-  }
+      console.log(value);
+    },
+  },
 };
 </script>
 <style scoped>
@@ -230,7 +227,7 @@ export default {
 }
 .productName_zh {
   width: 100%;
-  height: 49.92px;
+
   font-size: 48px;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
@@ -240,7 +237,7 @@ export default {
 }
 .productName_en {
   width: 100%;
-  height: 32px;
+
   font-size: 30px;
   line-height: 32px;
   font-family: Microsoft YaHei UI;
@@ -376,9 +373,8 @@ table tbody tr {
   line-height: 30px;
 }
 .countBtnBox >>> .el-input-number__decrease, .count >>>.el-input-number__increase {
-
   width: 30px;
-  height: 30px;  
+  height: 30px;
   line-height: 30px;
   border-radius: 2px;
   background: #eaebed;
@@ -403,7 +399,6 @@ left: 31px;
   padding: 0;
   /* background: #eaebed; */
 }
-
 
 /* ---- */
 .btn {

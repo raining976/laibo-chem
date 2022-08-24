@@ -16,6 +16,6 @@ app.config.globalProperties.getToken = function () {
     localStorage.getItem('token')
 }
 
-axios.defaults.baseURL = 'https://hnxnb.tk/';
+axios.defaults.baseURL = 'http://47.93.245.62:8099/';
 
 app.use(router).use(installElementPlus).use(VueI18n).use(interceptor).mount("#app");

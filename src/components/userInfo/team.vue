@@ -19,7 +19,7 @@
           effect="light"
           popper-class="editTip"
         >
-          <el-badge :value="100" :max="99">
+          <el-badge :value="0" :max="99">
             <i
               class="el-icon-bell notice set"
               @click="isNoticeShow = !isNoticeShow"

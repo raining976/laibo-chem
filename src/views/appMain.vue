@@ -7,6 +7,7 @@
   <appFooter />
   <copyRight />
   <!-- 登录模态框 -->
+   
   <log-in v-if="isShowLogIn" />
 </template>
 

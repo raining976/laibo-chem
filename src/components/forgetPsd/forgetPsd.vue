@@ -8,6 +8,8 @@
           type="text"
           class="eachInput"
           :placeholder="$t('logIn.emailTip')"
+          v-model="submitForm.email"
+          @blur="checkEmail($event)"
         />
       </div>
       <div class="inputBox verificationBox">
@@ -15,26 +17,37 @@
           type="text"
           class="verification eachInput"
           :placeholder="$t('logIn.verifyTip')"
+          v-model="submitForm.verfiCode"
+          @blur="checkVerification($event)"
         />
-        <span class="getCodeBtn" ref="getCodeBtn">{{
-          $t("logIn.verifyBtn")
-        }}</span>
+        <span
+          class="getCodeBtn"
+          ref="getCodeBtn"
+          v-show="!isTimer"
+          @click="getCode()"
+          >{{ $t("logIn.verifyBtn") }}</span
+        >
+        <span class="getCodeBtn" v-show="isTimer">{{ count }}</span>
       </div>
       <div class="inputBox">
         <input
-          type="text"
+          type="password"
           class="eachInput"
           :placeholder="$t('logIn.newPassTip')"
+          v-model="submitForm.newPassword"
+          @blur="passEmpty($event)"
         />
       </div>
       <div class="inputBox">
         <input
-          type="text"
+          type="password"
           class="eachInput"
           :placeholder="$t('logIn.checkPassTip')"
+          v-model="checkPass"
+          @blur="checkPassFunc($event)"
         />
       </div>
-      <div class="submit">{{ $t("logIn.submit") }}</div>
+      <div class="submit" @click="submit()">{{ $t("logIn.submit") }}</div>
       <div class="returnLogIn" @click="returnLogIn()">
         {{ $t("logIn.back") }}
       </div>
@@ -44,9 +57,166 @@
 <script>
 export default {
   name: "forgetPsd",
+  data() {
+    return {
+      submitForm: {
+        email: "",
+        verfiCode: "",
+        newPassword: "",
+      },
+      checkPass: "", // 确认密码
+      timer: null, // 定时器
+      count: "", // 倒计时
+      isTimer: false, // 是否进入倒计时
+      isEmail: false, //邮箱是否合法,
+      isVerifyCode: false, //验证码是否为空
+      isPass: false, // 密码是否合理
+      isCheck: false, // 确认密码是否合理
+    };
+  },
   methods: {
+    // 返回登录
     returnLogIn() {
       this.$parent.isLogIn = true;
+    },
+
+    // 邮箱验证
+    checkVerification(e) {
+      let a = e.path[1]; // 获取带有after伪元素的父盒子
+      if (this.submitForm.email == "") {
+        a.setAttribute("data-after", "验证码不能为空");
+        this.isVerifyCode = false;
+      } else {
+        a.setAttribute("data-after", "");
+        this.isVerifyCode = true;
+      }
+    },
+
+    // 获取验证码
+    getCode() {
+      if (this.isEmail) {
+        let rule = {
+          email: this.submitForm.email,
+          type: "forgotPassword",
+        };
+        this.$http
+          .post("/verificationCode", rule)
+          .then((res) => {
+            let msg;
+            if (res.data.code == 20000) {
+              msg = "发送成功";
+              this.timerInterval();
+            }
+            this.$message({
+              message: msg,
+              type: "success",
+            });
+          })
+          .catch((err) => {
+            console.log("get_code_err", err);
+          });
+      }
+    },
+
+    // 提交修改
+    submit() {
+      if (this.isEmail && this.isVerifyCode && this.isPass && this.isCheck) {
+        this.$http
+          .post("/forgotPassword", this.submitForm)
+          .then((res) => {
+            if (res.data.code == 20000) {
+              this.$message({
+                message: "修改成功!",
+                type: "success",
+              });
+              this.returnLogIn();
+            } else {
+              this.$message({
+                message: res.data.msg,
+                type: "error",
+              });
+            }
+          })
+          .catch((err) => {
+            console.log("forgetPass err", err);
+            this.$message({
+              message: "未知错误!",
+              type: "error",
+            });
+          });
+      }
+    },
+
+    // 获取验证码倒计时
+    timerInterval() {
+      const TIME_COUNT = 10;
+      this.count = TIME_COUNT;
+      this.isTimer = true; // 打开倒计时
+      this.isPsdLogin = true; // 关闭对应发送验证码的按钮
+      this.timer = setInterval(() => {
+        if (this.count > 0) {
+          this.count--;
+        } else {
+          this.isTimer = false;
+          this.isPsdLogin = false;
+          this.clearTimer();
+        }
+      }, 1000);
+    },
+
+    // 清除定时器
+    clearTimer() {
+      if (this.timer) {
+        clearInterval(this.timer);
+        this.timer = null;
+      }
+    },
+
+    // 验证邮箱合法性
+    checkEmail(e) {
+      let a = e.path[1]; // 获取带有after伪元素的父盒子
+      if (this.submitForm.email == "") {
+        a.setAttribute("data-after", "邮箱不能为空");
+        this.isEmail = false;
+        return;
+      }
+      let pattern = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+      if (!pattern.test(this.submitForm.email)) {
+        a.setAttribute("data-after", "邮箱格式不正确");
+        this.isEmail = false;
+      } else {
+        a.setAttribute("data-after", "");
+        this.isEmail = true;
+      }
+    },
+
+    // 密码不能为空
+    passEmpty(e) {
+      let a = e.path[1];
+      if (this.submitForm.newPassword == "") {
+        a.setAttribute("data-after", "请输入您的新密码");
+        this.isPass = false;
+      } else {
+        a.setAttribute("data-after", "");
+        this.isPass = true;
+      }
+    },
+
+    // check pass
+    checkPassFunc(e) {
+      let a = e.path[1];
+      if (this.checkPass == "") {
+        a.setAttribute("data-after", "请输入确认密码");
+        this.isCheck = false;
+        return;
+      }
+      if (this.checkPass != this.submitForm.newPassword) {
+        a.setAttribute("data-after", "确认密码与新密码不一致");
+        this.isCheck = false;
+      } else {
+        a.setAttribute("data-after", "");
+        this.isCheck = true;
+      }
     },
   },
 };
@@ -71,10 +241,20 @@ export default {
   color: var(--color);
 }
 .inputBox {
+  position: relative;
   width: 395px;
   height: 64px;
   background: #f4f4f4;
   border-radius: 5px;
+}
+.inputBox:after {
+  content: attr(data-after);
+  position: absolute;
+  bottom: -18px;
+  left: 20px;
+  font-size: 12px;
+  color: rgb(191, 23, 23);
+  z-index: 999;
 }
 input {
   font-size: 18px;
@@ -109,6 +289,8 @@ input::-webkit-input-placeholder {
 .getCodeBtn {
   position: absolute;
   top: 16px;
+  min-width: 103px;
+  text-align: center;
   right: 22px;
   display: inline-block;
   height: 33px;

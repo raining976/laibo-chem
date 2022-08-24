@@ -188,8 +188,13 @@ export default {
                   let refresh = res.data.data.refresh;
                   this.afterLogin(token, refresh);
                   // 查看过期时间:
-                  console.log("token", localStorage.getItem("token_exp"));
-                  console.log("refresh", localStorage.getItem("refresh_exp"));
+                  // console.log("token", localStorage.getItem("token_exp"));
+                  // console.log("refresh", localStorage.getItem("refresh_exp"));
+                } else {
+                  this.$message({
+                    message: res.data.msg,
+                    type: "error",
+                  });
                 }
               })
               .catch((err) => {
@@ -208,15 +213,18 @@ export default {
             this.$http
               .post("/login/", rule)
               .then((res) => {
-                if (res) {
-                  if (res.data.code == 20000) {
-                    let token = res.data.data.access;
-                    let refresh = res.data.data.refresh;
-                    this.afterLogin(token, refresh);
-                    // 查看过期时间:
-                    console.log("token", localStorage.getItem("token_exp"));
-                    console.log("refresh", localStorage.getItem("refresh_exp"));
-                  }
+                if (res.data.code == 20000) {
+                  let token = res.data.data.access;
+                  let refresh = res.data.data.refresh;
+                  this.afterLogin(token, refresh);
+                  // 查看过期时间:
+                  // console.log("token", localStorage.getItem("token_exp"));
+                  // console.log("refresh", localStorage.getItem("refresh_exp"));
+                } else {
+                  this.$message({
+                    message: res.data.msg,
+                    type: "error",
+                  });
                 }
               })
               .catch((err) => {

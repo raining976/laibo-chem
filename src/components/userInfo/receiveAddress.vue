@@ -28,8 +28,8 @@
             <p class="phone">{{$t('base.phone')}}&nbsp;:&nbsp;{{ address.phone }}</p>
             <p class="address">{{$t('base.address')}}&nbsp;:&nbsp;{{ address.address }}</p>
             <div class="btnBox">
-              <div class="deleBtn">删除地址</div>
-              <div class="editBtn" @click="editAddress()">修改地址</div>
+              <div class="deleBtn"><i class="el-icon-delete"></i></div>
+              <div class="editBtn" @click="editAddress()"><i class="el-icon-edit"></i></div>
             </div>
           </li>
         </ul>

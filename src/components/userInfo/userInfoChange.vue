@@ -2,7 +2,7 @@
 //createDate:2022-07-17
 <template>
   <div class="userInfoChange">
-    <div class="title">{{$t('userMenu.info')}}</div>
+    <div class="title">{{ $t("userMenu.info") }}</div>
     <div class="content">
       <el-form
         :model="ruleForm"
@@ -85,11 +85,15 @@ export default {
       },
     };
   },
+  mounted() {
+    // 请求个人信息并添加到表单等待修改
+    this.getUserInfo();
+  },
   methods: {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert("submit!");
+          this.postUserInfo();
         } else {
           console.log("error submit!!");
           return false;
@@ -98,6 +102,39 @@ export default {
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
+    },
+
+    // getUserInfo
+    getUserInfo() {
+      this.$http.get("/userInfo").then((res) => {
+        this.ruleForm = res.data.data;
+      });
+    },
+
+    // postUserInfo
+    postUserInfo() {
+      this.$http
+        .post("/userInfo", this.ruleForm)
+        .then((res) => {
+          if (res.data.code == 20000) {
+            this.$message({
+              message: "修改成功",
+              type: "success",
+            });
+            this.$root.key++
+          }else{
+            this.$message({
+              message: res.data.msg,
+              type: "success",
+            });
+          }
+        })
+        .catch(() => {
+          this.$message({
+            message: "意外错误!",
+            type: "error ",
+          });
+        });
     },
   },
 };
