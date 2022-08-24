@@ -1,16 +1,43 @@
 <template>
-  <router-view></router-view>
+  <appNav :key="key" />
+  <router-view name="search"></router-view>
+  <router-view name="table"></router-view>
+  <router-view name="textPage"></router-view>
+  <appFooter />
+  <copyRight />
+  <!-- 登录模态框 -->
+
+  <log-in v-if="isShowLogIn" />
 </template>
 
+
 <script>
+import appNav from "./components/main/appNav.vue";
+import appFooter from "./components/main/appFooter.vue";
+import copyRight from "./components/main/copyRight.vue";
+import logIn from "./components/logIn/logIn.vue";
 export default {
   name: "App",
-  components: {},
+  components: {
+    appNav,
+    appFooter,
+    copyRight,
+    logIn,
+  },
+  data() {
+    return {
+      isShowLogIn: false, // 是否显示登录
+      key: 1, // 用于强制刷新nav组件
+    };
+  },
   created() {
     let nowTime = new Date().getTime() / 1000;
-    if (localStorage.getItem("refresh_exp") - nowTime < 60) {
+    let refresh_exp = localStorage.getItem("refresh_exp");
+    if (refresh_exp - nowTime < 60 && refresh_exp) {
       localStorage.removeItem("token");
       localStorage.removeItem("refresh");
+      localStorage.removeItem("refresh_refresh");
+      localStorage.removeItem("token_exp");
     }
     // 测试用,开始先清除token
     // localStorage.removeItem("token");
@@ -19,6 +46,12 @@ export default {
   unmounted() {
     window.localStorage.removeItem("lang");
     console.log("已移除");
+  },
+  methods: {
+    // 更改登录页面的显示与否
+    changeLogIn() {
+      this.isShowLogIn = !this.isShowLogIn;
+    },
   },
 };
 </script>

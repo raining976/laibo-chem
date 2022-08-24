@@ -13,17 +13,17 @@
       >
         <el-form-item
           :label="$t('editPass.old') + $t('base.pass')"
-          prop="oldPass"
+          prop="oldPassword"
         >
-          <el-input v-model="ruleForm.oldPass"></el-input>
+          <el-input v-model="ruleForm.oldPassword"></el-input>
         </el-form-item>
         <el-form-item
           :label="$t('editPass.new') + $t('base.pass')"
-          prop="newPass"
+          prop="newPassword"
         >
           <el-input
             type="password"
-            v-model="ruleForm.newPass"
+            v-model="ruleForm.newPassword"
             autocomplete="off"
           ></el-input>
         </el-form-item>
@@ -72,21 +72,21 @@ export default {
     };
     var validatePass2 = (rule, value, callback) => {
       if (value === "") {
-        callback(new Error(this.$t('register.passAgain')));
-      } else if (value !== this.ruleForm.newPass) {
-        callback(new Error(this.$t('register.checkError')));
+        callback(new Error(this.$t("register.passAgain")));
+      } else if (value !== this.ruleForm.newPassword) {
+        callback(new Error(this.$t("register.checkError")));
       } else {
         callback();
       }
     };
     return {
       ruleForm: {
-        oldPass: "",
-        newPass: "",
+        oldPassword: "",
+        newPassword: "",
         checkPass: "",
       },
       rules: {
-        oldPass: [
+        oldPassword: [
           {
             required: true,
             message:
@@ -96,7 +96,9 @@ export default {
             trigger: "blur",
           },
         ],
-        newPass: [{ required: true, validator: validatePass, trigger: "blur" }],
+        newPassword: [
+          { required: true, validator: validatePass, trigger: "blur" },
+        ],
         checkPass: [
           { required: true, validator: validatePass2, trigger: "blur" },
         ],
@@ -107,7 +109,7 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert("submit!");
+          this.postChange();
         } else {
           console.log("error submit!!");
           return false;
@@ -116,6 +118,32 @@ export default {
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
+    },
+
+    // 提交修改密码
+    postChange() {
+      let form = {
+        oldPassword: this.ruleForm.oldPassword,
+        newPassword: this.ruleForm.newPassword,
+      };
+      this.$http.post("/changePassword", form).then((res) => {
+        if (res.data.code == 20000) {
+          this.$message({
+            message: "修改成功!",
+            type: "success",
+          });
+          this.ruleForm = {
+            oldPassword: "",
+            newPassword: "",
+            checkPass: "",
+          };
+        }else{
+          this.$message({
+            message:res.data.msg,
+            type: "error",
+          });
+        }
+      });
     },
   },
 };

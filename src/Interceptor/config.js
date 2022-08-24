@@ -7,9 +7,9 @@ let Base64 = require('js-base64').Base64;
 // 判断token是否过期, 如果过期(即将过期) 返回 true
 const isTokenExpired = () => {
     let expiredTime = localStorage.getItem("token_exp")
+    console.log('expiredTime',expiredTime)
     if (expiredTime) {
         let nowTime = parseInt(new Date().getTime() / 1000)
-        console.log('nowTime', nowTime)
         let willExpired = (expiredTime - nowTime) < 10
         return willExpired
     }
@@ -37,9 +37,13 @@ function addSubscriber(callback) {
 // 请求 拦截器
 axios.interceptors.request.use(config => {
     ElLoading.service({ fullscreen: true })
-    if (config.url.includes('login')) {
-        return config
-    }
+    // if (config.url.includes('/login')) {
+    //     // localStorage.removeItem("token_exp")
+    //     // localStorage.removeItem("refresh_exp")
+    //     // localStorage.removeItem("token")
+    //     // localStorage.removeItem("refresh")
+    //     return config
+    // }
     let token = localStorage.getItem("token")
     if (token) {
         config.headers.Authorization = "Bearer " + token
@@ -96,7 +100,7 @@ axios.interceptors.response.use(response => {
     ElLoading.service({ fullscreen: true }).close()
     if ('40002' === response.data.code) {
         router.replace({
-            path: '/logIn',
+            path: '/mainPage',
             query: { redirect: router.currentRoute.fullPath }
         })
     }

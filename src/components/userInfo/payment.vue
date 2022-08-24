@@ -169,7 +169,7 @@ export default {
       zhifubao: false,
       geren: false,
       gongsi: false,
-      freight: 120, //运费
+      freight: 0, //运费
       allmoney: 0, //总计
       addresses: [
         {
@@ -200,40 +200,22 @@ export default {
       ],
 
       commodityList: [
-        {
-          name: "1",
-          huohao: "2",
-          shopCart_id: 3,
-          guige: "95%",
-          num: 2,
-          price: 5,
+         {
+          name: "S915939 碳化硅, 99.9% metals basis,100目",
+          huohao: "S915939-5g",
+          shopCart_id: 409 - 21 - 2,
+          guige: "99.9% metals basis,100目",
+          num: 1,
+          price: 39,
           payment: 666,
         },
         {
-          name: "1",
-          huohao: "2",
-          shopCart_id: 3,
-          guige: "%",
-          num: 2,
-          price: 50,
-          payment: 666,
-        },
-        {
-          name: "1",
-          huohao: "2",
-          shopCart_id: 3,
-          guige: "%",
-          num: 2,
-          price: 15,
-          payment: 666,
-        },
-        {
-          name: "1",
-          huohao: "2",
-          shopCart_id: 3,
-          guige: "%",
-          num: 2,
-          price: 25,
+          name: "B835581 双(异硫氰酸)(2,2'-二吡啶基-4,4'-二甲酸)",
+          huohao: "B835581-100mg",
+          shopCart_id: "502693-09-6 ",
+          guige: "95%,NMR",
+          num: 1,
+          price: 539.0,
           payment: 666,
         },
       ],

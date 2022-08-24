@@ -1,6 +1,7 @@
+
 import { createRouter, createWebHashHistory } from "vue-router";
 // 路由懒加载
-const main = () => import("../views/appMain.vue");
+// const main = () => import("../views/appMain.vue");
 const adminLogIn = () => import("../views/admin/adminLogIn.vue");
 const searchHead = () => import("../components/main/search.vue");
 const register = () => import("../components/register/register.vue");
@@ -31,132 +32,140 @@ const moreNewsArticle = () => import("../views/toMoreNewsArticle/moreNewsArtcle.
 
 const routes = [
   {
-    path: "/",
-    component: main,
-    redirect: "/mainPage",
+    path: "/register",
+    components: {
+      table: register,
+    }
+  },
+  {
+    path: "/searchHead",
+    components: {
+      search: searchHead,
+    }
+  },
+  {
+    name: 'mainPage',
+    path: "/mainPage",
+    components: {
+      table: mainPage,
+      search: searchHead,
+    }
+  },
+  {
+    path: "/searchResult",
+    name: "searchResult",
+    components: {
+      table: searchResult,
+      search: searchHead,
+    }
+  },
+  {
+    path: "/productInfo",
+    name: "productInfo",
+    components: {
+      table: productInfo,
+      search: searchHead,
+    }
+  },
+  {
+    path: "/moreNewsArticle",
+    name: "moreNewsArticle",
+    components: {
+      table: moreNewsArticle,
+      search: searchHead,
+    }
+  },
+  {
+    path: "/userInfo",
+    components: {
+      table: userInfo,
+    },
+    meta: { requiresAuth: true },
+    redirect: "/cart",
     children: [
       {
-        path: "/register",
-        components: {
-          table: register,
-        }
+        path: '/cart',
+        name: 'cart',
+        component: cart,
+        meta: { requiresAuth: true },
+
       },
       {
-        path: "/searchHead",
-        components: {
-          search: searchHead,
-        }
+        path: '/payment',
+        name: 'payment',
+        component: payment,
+        meta: { requiresAuth: true },
       },
       {
-        name: 'mainPage',
-        path: "/mainPage",
-        components: {
-          table: mainPage,
-          search: searchHead,
-        }
+        path: '/order',
+        name: 'order',
+        component: order,
+        meta: { requiresAuth: true },
       },
       {
-        path: "searchResult",
-        name: "searchResult",
-        components: {
-          table: searchResult,
-          search: searchHead,
-        }
+        path: '/orderInfo',
+        name: 'orderInfo',
+        component: orderInfo,
+        meta: { requiresAuth: true },
       },
       {
-        path: "productInfo",
-        name: "productInfo",
-        components: {
-          table: productInfo,
-          search: searchHead,
-        }
-      },
-      {
-        path: "moreNewsArticle",
-        name: "moreNewsArticle",
-        components: {
-          table: moreNewsArticle,
-          search: searchHead,
-        }
-      },
-      {
-        path: "/userInfo",
-        components: {
-          table: userInfo,
-        },
-        redirect: "/cart",
+        path: '/team',
+        name: 'team',
+        redirect: "/teamBlank",
+        component: team,
+        meta: { requiresAuth: true },
         children: [
           {
-            path: '/cart',
-            name: 'cart',
-            component: cart,
+            path: '/teamBlank',
+            name: 'teamBlank',
+            component: teamBlank,
+            meta: { requiresAuth: true },
           },
           {
-            path: '/payment',
-            name: 'payment',
-            component: payment,
+            path: '/joinTeam',
+            name: 'joinTeam',
+            component: joinTeam,
+            meta: { requiresAuth: true },
           },
           {
-            path: '/order',
-            name: 'order',
-            component: order,
+            path: '/createTeam',
+            name: 'createTeam',
+            component: createTeam,
+            meta: { requiresAuth: true },
           },
           {
-            path: '/orderInfo',
-            name: 'orderInfo',
-            component: orderInfo,
+            path: '/editTeam',
+            name: 'editTeam',
+            component: editTeam,
+            meta: { requiresAuth: true },
           },
           {
-            path: '/team',
-            name: 'team',
-            redirect:"/teamBlank",
-            component: team,
-            children: [
-              {
-                path: '/teamBlank',
-                name: 'teamBlank',
-                component: teamBlank,
-              },
-              {
-                path: '/joinTeam',
-                name: 'joinTeam',
-                component: joinTeam,
-              },
-              {
-                path: '/createTeam',
-                name: 'createTeam',
-                component: createTeam,
-              },
-              {
-                path: '/editTeam',
-                name: 'editTeam',
-                component: editTeam,
-              },
-              {
-                path: '/searchMember',
-                name: 'searchMember',
-                component: searchMember,
-              },
-            ],
-          },
-          {
-            path: '/address',
-            name: 'address',
-            component: address,
-          },
-          {
-            path: '/info',
-            name: 'info',
-            component: info,
-          },
-          {
-            path: '/changePsd',
-            name: 'changePsd',
-            component: changePsd,
+            path: '/searchMember',
+            name: 'searchMember',
+            component: searchMember,
+            meta: { requiresAuth: true },
           },
         ],
       },
-    ]
+      {
+        path: '/address',
+        name: 'address',
+        component: address,
+        meta: { requiresAuth: true },
+      },
+      {
+        path: '/info',
+        name: 'info',
+        component: info,
+        meta: { requiresAuth: true },
+      },
+      {
+        path: '/changePsd',
+        name: 'changePsd',
+        component: changePsd,
+        meta: { requiresAuth: true },
+      },
+    ],
   },
   {
     path: "/adminLogIn",
@@ -171,5 +180,28 @@ const router = createRouter({
   history: createWebHashHistory(),
   routes,
 });
+
+
+
+
+// 路由拦截器
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    let token = localStorage.getItem("token")
+    if (!token) {  // 没登录
+      // this.$root.key++
+      // this.$root.isShowLogIn = true
+      alert("请先登录!")
+      next({
+        path: '/mainPage',
+        query: { redirect: to.fullPath }
+      })
+    } else {
+      next()  // 确保一定要调用 next()
+    }
+  } else {
+    next() // 确保一定要调用 next()
+  }
+})
 
 export default router;
