@@ -23,12 +23,12 @@
         >
           <!-- 内容 -->
           <div class="news">
-            <div class="newsTitle">{{ item1.newsTitle }}</div>
-            <div class="pubdate">{{ item1.pubdate }}</div>
+            <div class="newsTitle" :title = "item1.title">{{ item1.title }}</div>
+            <div class="pubdate">{{ item1.update }}</div>
           </div>
           <div class="dashedLine"></div>
         </div>
-        <div class="newsMore" @click="toMoreNewsArticle()">查看更多&nbsp;></div>
+        <div class="newsMore" @click="toMoreNewsArticle(item.type)">查看更多&nbsp;></div>
       </div>
     </div>
   </div>
@@ -59,7 +59,7 @@ export default {
           ],
         },
                 {
-          type: "公司新闻",
+          type: "技术文章",
           pic: require("../../assets/p7.png"),
           newsList: [
             {
@@ -79,10 +79,47 @@ export default {
       ],
     };
   },
+  created() {
+      this.$http
+        .get("/news", {
+          params: {
+           page: 1,
+           limit: 3,
+          },
+        })
+        //回调函数
+        .then((res) => {
+
+          this.$data.newsBox[0].newsList = res.data.data;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+        // 
+              this.$http
+        .get("/article", {
+          params: {
+             page: 1,
+           limit: 3,
+          },
+        })
+        //回调函数
+        .then((res) => {
+
+          this.$data.newsBox[1].newsList = res.data.data;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+        
+  },
   methods:{
-    toMoreNewsArticle() {
+    toMoreNewsArticle(name) {
       this.$router.push({
         path: "/moreNewsArticle",
+        query: {
+          type: name,
+        },
         // 传参
       });
     },
@@ -137,7 +174,7 @@ export default {
   height: 36.1px;
   display: flex;
   align-items: center;
-  margin: 36.1px 14.98px 18.05px 0;
+  margin: 36.1px 14.98px 18px 0;
 }
 .sign {
   width: 36px;
@@ -184,42 +221,47 @@ export default {
 }
 .newsContent {
   width: 580.03px;
-  overflow: hidden;
 }
 .news {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 580.03px;
-  height: 18.05px;
-  font-size: 18.05px;
+  height: 36px;
+
   font-family: Microsoft YaHei UI;
   font-weight: bold;
   color: #323333;
-  line-height: 18.05px;
-  margin: 19.97px 0 13.06px;
+  
+
 }
 .newsTitle {
     cursor: pointer;
-  height: 18.05px;
-  font-size: 18.05px;
+/* width: 350px; */
+  /* height: 36px; */
+  line-height: 18px;
+  font-size: 18px;
   font-family: Microsoft YaHei UI;
   font-weight: bold;
   color: #323333;
-  line-height: 18.05px;
+
   transition: 0.8s;
 }
 .newsTitle:hover {
-  color:blue;
+  color:#004ea2;
 }
 .pubdate {
-  /* width: 42px; */
-  height: 15.94px;
-  font-size: 15.94px;
+  width: 120px;
+  /* height: 36px; */
+  line-height: 16px;
+  font-size: 16px;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #323333;
-  line-height: 15.94px;
+  text-align: right; /*文本向右对齐*/
+  /* word-break:break-all; */
+  word-wrap: break-word;
+overflow: hidden;
 }
 .newsMore {
     cursor: pointer;
@@ -227,12 +269,12 @@ export default {
   bottom: 24px;
   right: 38.02px;
   /* width: 75px; */
-  height: 15.94px;
-  font-size: 15.94px;
+  height: 18px;
+  font-size: 16px;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #004ea2;
-  line-height: 15.94px;
+  line-height: 18px;
   margin-left: auto;
   /* 让盒子要右靠 */
   /* transition: 1s; */

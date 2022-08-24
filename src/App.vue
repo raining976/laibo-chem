@@ -1,11 +1,30 @@
 <template>
-  <router-view></router-view>
+  <router-view v-if="isReloadData"></router-view>
 </template>
 
 <script>
 export default {
   name: "App",
   components: {},
+  provide() {
+    return {
+      reload: this.reload,
+    }
+  },
+  data() {
+      return {
+        isReloadData: true, //控制全局刷新
+      }
+  },
+  methods: {
+        // 全局刷新
+    reload() {
+      this.$data.isReloadData = false;
+      this.$nextTick(() => {
+        this.$data.isReloadData = true;
+      });
+    },
+  },
   unmounted(){
     window.localStorage.removeItem('lang')
     console.log("已移除")

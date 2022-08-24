@@ -1,37 +1,42 @@
 <template>
   <router-view name="textPage"></router-view>
-  <div class="solidLine"></div>
-  <div class="siteNav">
-    <div class="mainPage">&lt;返回首页&nbsp;</div>
-    <div class="news">/公司新闻&nbsp;</div>
-    <div class="article">/技术文章</div>
-  </div>
-  <div class="bg">
-    <div class="allTitles">
-      <!-- v-for -->
-      <div
-        class="titleBox"
-        v-for="(item, index) in titleBox.slice(
-          (currentPage - 1) * pagesize,
-          currentPage * pagesize
-        )"
-        :key="index"
-      >
-        <div class="title" @click="toTextPage()">{{ item.title }}</div>
-        <div class="time">{{ item.time }}</div>
-      </div>
+  <div>
+    <div class="solidLine"></div>
+    <div class="siteNav">
+      &lt;
+      <div class="mainPage" @click="toMainPage()">返回首页&nbsp;</div>
+      /
+      <div class="news" @click="toNews()">公司新闻&nbsp;</div>
+      /
+      <div class="article" @click="toArticle()">技术文章</div>
     </div>
-    <div class="pagination">
-      <el-pagination
-        background="#004ea2"
-        layout="prev,pager,next"
-        :total="titleBox.length"
-        :page-size="pagesize"
-        :current-page="currentPage"
-        @current-change="handleCurrentChange"
-        @size-change="handleSizeChange"
-      >
-      </el-pagination>
+    <div class="bg" >
+      <div class="allTitles">
+        <!-- v-for -->
+        <div
+          class="titleBox"
+          v-for="(item, index) in titleBox.slice(
+            (currentPage - 1) * pagesize,
+            currentPage * pagesize
+          )"
+          :key="index"
+        >
+          <div class="title" @click="toTextPage()">{{ item.title }}</div>
+          <div class="time">{{ item.update }}</div>
+        </div>
+      </div>
+      <div class="pagination">
+        <el-pagination
+          background="#004ea2"
+          layout="prev,pager,next"
+          :total="titleBox.length"
+          :page-size="pagesize"
+          :current-page="currentPage"
+          @current-change="handleCurrentChange"
+          @size-change="handleSizeChange"
+        >
+        </el-pagination>
+      </div>
     </div>
   </div>
 </template> 
@@ -39,60 +44,84 @@
 export default {
   name: "",
   components: "",
+  inject:['reload'],
   data() {
     return {
+      news: false, //
+      article: false, //
       pagesize: 8, // 每页显示多少条
       currentPage: 1, // 当前页数
       titleBox: [
-        {
-          title: "莱博斯威2022春节发货通知莱博斯威2022春节发货通知",
-          time: "[2022-01-20]",
-        },
-        {
-          title: "莱博斯威2022春节发货通知莱博斯威2022春节发货通知",
-          time: "[2022-01-20]",
-        },
-        {
-          title: "莱博斯威2022春节发货通知莱博斯威2022春节发货通知",
-          time: "[2022-01-20]",
-        },
-        {
-          title: "莱博斯威2022春节发货通知莱博斯威2022春节发货通知",
-          time: "[2022-01-20]",
-        },
-        {
-          title: "莱博斯威2022春节发货通知莱博斯威2022春节发货通知",
-          time: "[2022-01-20]",
-        },
-        {
-          title: "莱博斯威2022春节发货通知莱博斯威2022春节发货通知",
-          time: "[2022-01-20]",
-        },
-        {
-          title: "莱博斯威2022春节发货通知莱博斯威2022春节发货通知",
-          time: "[2022-01-20]",
-        },
-        {
-          title: "莱博斯威2022春节发货通知莱博斯威2022春节发货通知",
-          time: "[2022-01-20]",
-        },
-        {
-          title: "莱博斯威2022春节发货通知莱博斯威2022春节发货通知",
-          time: "[2022-01-21]",
-        },
-        {
-          title: "莱博斯威2022春节发货通知莱博斯威2022春节发货通知",
-          time: "[2022-01-20]",
-        },
-        {
-          title: "莱博斯威2022春节发货通知莱博斯威2022春节发货通知",
-          time: "[2022-01-21]",
-        },
+        // {
+        //   title: "莱博斯威2022春节发货通知莱博斯威2022春节发货通知",
+        //   time: "[2022-01-21]",
+        // },
       ],
     };
   },
+  created() {
+    if (this.$route.query.type === "公司新闻") {
+      this.$data.news = true;
+      this.getNews();
+    } //
+    else if (this.$route.query.type === "技术文章") {
+      this.$data.article = true;
+      this.getArticle();
+    }
+  },
   methods: {
     // 跳转文章详情页（需传参）
+    getNews() {
+      this.$http
+        .get("/news", {
+          params: {
+            page: 1,
+            limit: 20,
+          },
+        })
+        //回调函数
+        .then((res) => {
+          this.$data.titleBox = res.data.data;
+          console.log("ceshi", this.$data.titleBox);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    getArticle() {
+      this.$http
+        .get("/article", {
+          params: {
+            page: 1,
+            limit: 20,
+          },
+        })
+        //回调函数
+        .then((res) => {
+          this.$data.titleBox = res.data.data;
+          console.log("ceshi", this.$data.titleBox);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    toMainPage() {
+      this.$router.push({
+        path: "/mainPage",
+      });
+    },
+    toNews() {
+      this.$data.news = true;
+      this.$data.article = false;
+      this.reload();
+      this.getNews();
+    },
+    toArticle() {
+      this.$data.news = false;
+      this.$data.article = true;
+      this.reload();
+      this.getArticle();
+    },
     toTextPage() {
       this.$router.push({
         path: "",
@@ -125,8 +154,10 @@ export default {
   line-height: 18px;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
-  color: #004ea2;
   margin: 14px auto 0;
+}
+.siteNav div:hover {
+  text-decoration: underline;
 }
 .mainPage,
 .news,
@@ -139,6 +170,7 @@ export default {
   font-weight: 400;
   color: #004ea2;
 }
+/* .chooseBtn  */
 .bg {
   position: relative;
   width: 100%;

@@ -43,11 +43,6 @@
       </div>
       <div class="allCommodity">
         <!-- 以下v-for一个商品 -->
-
-        <!-- <el-checkbox-group
-          v-model="checkedCommodities"
-          @change="handleCheckedCommoditiesChange"
-        > -->
         <div
           v-for="(item0, index) in commodityList.slice(
             (currentPage - 1) * pagesize,
@@ -99,7 +94,6 @@
             <div class="payment">{{ item0.price * item0.num }}</div>
           </div>
         </div>
-        <!-- </el-checkbox-group> -->
       </div>
       <div class="pagination">
         <el-pagination

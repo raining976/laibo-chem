@@ -164,6 +164,10 @@ export default {
       ],
     };
   },
+    mounted() {
+    // 
+    window.scrollTo(0, 0);
+  },
   methods: {
     //商品数量调节
         //商品数量调节

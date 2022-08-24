@@ -9,7 +9,7 @@
     <div class="hotProductBox">
       <div
         class="hotProduct"
-        v-for="(item, index) in productList"
+        v-for="(item, index) in productList.slice(0,5)"
         :key="index"
         @click="toProductInfo()"
       >
@@ -50,9 +50,7 @@ export default {
         })
         //回调函数
         .then((res) => {
-
           this.$data.productList = res.data.data;
-          console.log("ceshi", this.$data.productList);
         })
         .catch((err) => {
           console.log(err);
@@ -93,7 +91,8 @@ export default {
   margin-left: 10px;
 }
 .hotProductBox {
-  width: 1920px;
+  max-width: 1920px;
+  width:100%;
   height: 702.91px;
   display: flex;
   flex-direction: column;
@@ -106,6 +105,7 @@ export default {
 /* 大图片 */
 .hotProduct:nth-of-type(1) {
   width: 958.08px;
+  /* width: 50%; */
   height: 702.72px;
 }
 .hotProduct:nth-of-type(1) .hotProductPic {
