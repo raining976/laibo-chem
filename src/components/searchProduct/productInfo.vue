@@ -370,12 +370,12 @@ table tbody tr {
   align-items: center;
   justify-content: center;
 }
-.countBtnBox /deep/ .el-input-number {
+.countBtnBox >>> .el-input-number {
   width: 90%;
   height: 30px;
   line-height: 30px;
 }
-.countBtnBox /deep/ .el-input-number__decrease, .count /deep/.el-input-number__increase {
+.countBtnBox >>> .el-input-number__decrease, .count >>>.el-input-number__increase {
 
   width: 30px;
   height: 30px;  
@@ -383,19 +383,22 @@ table tbody tr {
   border-radius: 2px;
   background: #eaebed;
 }
-.countBtnBox /deep/ .el-input-number__decrease {
+.count >>> [class*=" el-icon-"], [class^=el-icon-]  {
+  font-weight: 600;
+}
+.countBtnBox >>> .el-input-number__decrease {
   left: 0;
 }
-.countBtnBox /deep/.el-input-number__increase {
+.countBtnBox >>>.el-input-number__increase {
   right: 0;
 }
-.countBtnBox /deep/ .el-input__inner {
+.countBtnBox >>> .el-input__inner {
   position: absolute;
   top: 2px;
-  left: 30px;
- width: calc(100% - 60px);
-  height: 29px;
-  line-height: 29px;
+left: 31px;
+  width: calc(100% - 62px);
+  height: 29.5px;
+  line-height: 29.5px;
   border: 2px solid #eaebed;
   padding: 0;
   /* background: #eaebed; */

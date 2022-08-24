@@ -186,20 +186,20 @@ export default {
     };
   },
   created() {
-    // this.$http
-    // .get("/cart", {
-    //   params: {
+    this.$http
+    .get("/cart", {
+      params: {
 
-    //   },
-    // })
-    // //回调函数
-    // .then((res) => {
-    //   this.$data.commodityList = res.data.productList;
-    //   console.log("ceshi", this.$data.commodityList);
-    // })
-    // .catch((err) => {
-    //   console.log(err);
-    // });
+      },
+    })
+    //回调函数
+    .then((res) => {
+      this.$data.commodityList = res.data.productList;
+      console.log("ceshi", this.$data.commodityList);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
     this.addChecked();
   },
   // beforeUpdate() {
@@ -451,6 +451,7 @@ export default {
   overflow: hidden;
 }
 .checkOne {
+  cursor: pointer;
   width: 18px;
   height: 18px;
   border: 1px solid #999;
@@ -535,32 +536,36 @@ export default {
   align-items: center;
   margin: 0 5px;
 }
-.count /deep/ .el-input-number {
+.count >>> .el-input-number {
   width: 90%;
   height: 30px;
   line-height: 30px;
 }
-.count /deep/ .el-input-number__decrease,
-.count /deep/.el-input-number__increase {
+.count >>> .el-input-number__decrease,
+.count >>>.el-input-number__increase {
   width: 30px;
   height: 30px;
   line-height: 30px;
+  font-weight: 600;
   border-radius: 2px;
   background: #eaebed;
 }
-.count /deep/ .el-input-number__decrease {
+.count >>> [class*=" el-icon-"], [class^=el-icon-]  {
+  font-weight: 600;
+}
+.count >>> .el-input-number__decrease {
   left: 0;
 }
-.count /deep/.el-input-number__increase {
+.count >>>.el-input-number__increase {
   right: 0;
 }
-.count /deep/ .el-input__inner {
+.count >>> .el-input__inner {
   position: absolute;
   top: 2px;
-  left: 30px;
-  width: calc(100% - 60px);
-  height: 29px;
-  line-height: 29px;
+  left: 31px;
+  width: calc(100% - 62px);
+  height: 29.5px;
+  line-height: 29.5px;
   border: 2px solid #eaebed;
   padding: 0;
   /* background: #eaebed; */
@@ -577,20 +582,20 @@ export default {
   margin: 20px 0 0 36%;
   overflow: hidden;
 }
-.shopCart /deep/ .el-pagination {
+.shopCart >>> .el-pagination {
   --el-pagination-button-height: 40px;
   --el-pagination-font-size: 16px;
 }
 .shopCart >>> .el-pagination.is-background .el-pager li:not(.disabled).active {
   background-color: #004ea2;
 }
-.shopCart /deep/.el-pagination.is-background .btn-next,
-.shopCart /deep/.el-pagination.is-background .btn-prev,
-.shopCart /deep/.el-pagination.is-background .el-pager li {
+.shopCart >>>.el-pagination.is-background .btn-next,
+.shopCart >>>.el-pagination.is-background .btn-prev,
+.shopCart >>>.el-pagination.is-background .el-pager li {
   min-width: 40px;
   border-radius: 5px;
 }
-.shopCart /deep/ .el-icon {
+.shopCart >>> .el-icon {
   margin: 0 auto;
 }
 /* 以下为底部 */
