@@ -54,6 +54,8 @@ export default {
         map: "企业覆盖地图",
         news: "新闻",
         center: "中心",
+        companyNews: "公司新闻",
+        technicalArticle: "技术文章",
     },
     // 用户菜单栏
     userMenu: {

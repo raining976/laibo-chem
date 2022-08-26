@@ -31,7 +31,7 @@ export default {
         //回调函数
         .then((res) => {
           this.$data.imgList = res.data.data;
-          console.log("ceshi", res.data.data);
+          console.log("ceshi", res.data);
         })
         .catch((err) => {
           console.log(err);

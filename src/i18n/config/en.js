@@ -52,6 +52,9 @@ export default {
         map: "Business coverage map",
         news: "News",
         center: "Center",
+        companyNews: "company news",
+        technicalArticle: "technical article",
+
     },
     // 用户菜单栏
     userMenu: {

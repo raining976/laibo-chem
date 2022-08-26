@@ -3,65 +3,65 @@
     <div class="solidLine1"></div>
     <div class="productInfo">
       <div class="productInfoBox">
-        <div class="productPic"><img :src="pic" alt="" /></div>
+        <div class="productPic"><img :src="productData.pic_url" alt="" /></div>
         <div class="info">
           <!-- 化学名 -->
-          <div class="productName_zh">{{ name_zh }}</div>
-          <div class="productName_en">{{ name_en }}</div>
+          <div class="productName_zh">{{ productData.name }}</div>
+          <div class="productName_en">{{ productData.enName }}</div>
           <!-- 浓度 -->
-          <div class="concentration">{{ concentration }}</div>
+          <div class="concentration">{{ productData.concentration }}</div>
           <div class="solidLine2"></div>
           <!-- 详细信息 -->
           <div class="details">
             <!-- 以下为 不是-->
             <div class="oneDetail">
               <div class="detailName">CAS编号:</div>
-              <div class="detailContent">{{ casCode }}</div>
+              <div class="detailContent">{{ productData.cas }}</div>
             </div>
 
             <div class="oneDetail">
               <div class="detailName">分子式:</div>
-              <div class="detailContent">{{ fenzishi }}</div>
+              <div class="detailContent">{{ productData.fenzishi }}</div>
             </div>
 
             <div class="oneDetail">
               <div class="detailName">分子量:</div>
-              <div class="detailContent">{{ fenziliang }}</div>
+              <div class="detailContent">{{ productData.fenziliang }}</div>
             </div>
 
             <div class="oneDetail">
               <div class="detailName">EINECS编号:</div>
-              <div class="detailContent">{{ einecsCode }}</div>
+              <div class="detailContent">{{ productData.EINECS }}</div>
             </div>
 
             <div class="oneDetail">
               <div class="detailName">MDL:</div>
-              <div class="detailContent">{{ mdlCode }}</div>
+              <div class="detailContent">{{ productData.mdl }}</div>
             </div>
 
             <div class="oneDetail">
               <div class="detailName">物化性质:</div>
-              <div class="detailContent">{{ property }}</div>
+              <div class="detailContent">{{ productData.properties }}</div>
             </div>
 
             <div class="oneDetail">
               <div class="detailName">熔点:</div>
-              <div class="detailContent">{{ fusionPoint }}</div>
+              <div class="detailContent">{{ productData.melting }}</div>
             </div>
 
             <div class="oneDetail">
               <div class="detailName">沸点:</div>
-              <div class="detailContent">{{ boilingPoint }}</div>
+              <div class="detailContent">{{ productData.boiling }}</div>
             </div>
 
             <div class="oneDetail">
               <div class="detailName">密度:</div>
-              <div class="detailContent">{{ midu }}</div>
+              <div class="detailContent">{{ productData.midu }}</div>
             </div>
 
             <div class="oneDetail">
               <div class="detailName">储存条件:</div>
-              <div class="detailContent">{{ storageCondition }}</div>
+              <div class="detailContent">{{ productData.storage }}</div>
             </div>
           </div>
           <!-- 价格表格 -->
@@ -80,27 +80,27 @@
                 <tbody>
                   <tr
                     class="tableContent"
-                    v-for="(item, index) in productData"
+                    v-for="(item, index) in productData.params"
                     :key="index"
                   >
                     <td class="huohao">
-                      <div>{{ item.huohao }}</div>
+                      <div>{{ item.weight }}</div>
                     </td>
                     <td class="size">
-                      <div>{{ item.size }}</div>
+                      <div>{{ item.guige }}</div>
                     </td>
 
                     <td class="store">
-                      <div>{{ item.store }}</div>
+                      <div>111{{store }}</div>
                     </td>
                     <td class="rmb">
-                      <div>{{ item.rmb }}</div>
+                      <div>{{ item.price }}</div>
                     </td>
                     <td class="count">
                       <!-- 计数器 -->
                       <div class="countBtnBox">
                         <el-input-number
-                          v-model="item.num"
+                          v-model="num"
                           @change="handleChange"
                           :min="0"
                         ></el-input-number>
@@ -114,8 +114,8 @@
         </div>
       </div>
       <div class="btn">
-        <div class="addCart">加入购物车</div>
-        <div class="toBuy">购买</div>
+        <div class="addCart" @click="addCart()">加入购物车</div>
+        <div class="toBuy" @click="toBuy()">购买</div>
       </div>
 
       <div class="toCustomize" @click="isShow = !isShow">联系客服私人订制></div>
@@ -133,6 +133,7 @@ export default {
   data() {
     return {
       isShow: false, // 私人订制是否显示
+      num: 0,
       pic: "http://attachments.macklin.cn/img/item/000/83/97537500.gif",
       name_zh: "B835581 双(异硫氰酸)(2,2'-二吡啶基-4,4'-二甲酸)",
       name_en:
@@ -145,28 +146,61 @@ export default {
       fusionPoint:"196 °C ",
       storageCondition:"干燥",
       productData: [
-        {
-          huohao: "B835581-25mg",
-          size: "	95%,NMR",
-          rmb: "220.00",
-          store: "Los Angeles",
-          num: 0,
-        },
-        {
-          huohao: "B835581-100mg",
-          size: "95%,NMR",
-          rmb: "539",
-          store: "Los Angeles",
-          num: 0,
-        },
+        // {
+        //   huohao: "B835581-25mg",
+        //   size: "	95%,NMR",
+        //   rmb: "220.00",
+        //   store: "Los Angeles",
+        //   num: 0,
+        // },
+        // {
+        //   huohao: "B835581-100mg",
+        //   size: "95%,NMR",
+        //   rmb: "539",
+        //   store: "Los Angeles",
+        //   num: 0,
+        // },
       ],
     };
+  },
+   created() {
+      this.$http
+        .get("/product/detail", {
+          params: {
+            id: this.$route.query.id,
+          },
+        })
+        //回调函数
+        .then((res) => {
+          console.log("ceshi",res.data.data);
+          this.$data.productData = res.data.data;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
   },
     mounted() {
     // 
     window.scrollTo(0, 0);
   },
   methods: {
+    addCart() {
+      // this.$http
+      //   .push("/cart", {
+      //     params: {
+
+      //     },
+      //   })
+      //   //回调函数
+      //   .then((res) => {
+      //      this.$data.productList = res.data.data;
+      //   })
+      //   .catch((err) => {
+      //     console.log(err);
+      //   });
+
+    },
     //商品数量调节
     //商品数量调节
     handleChange(value) {
@@ -201,12 +235,14 @@ export default {
 }
 .productInfoBox {
   width: 1410px;
-  height: 556px;
+  min-height: 556px;
+  overflow: hidden;
   display: flex;
 }
 .productPic {
   width: 505px;
-  height: 542.02px;
+  /* min-height: 542.02px; */
+height: 98%;
   margin: 0 27.07px 0 0;
   border: 0.96px solid #999999;
   border-radius: 4.99px;
@@ -222,7 +258,7 @@ export default {
 }
 .info {
   width: 874.94px;
-  height: 542.02px;
+  min-height: 542.02px;
   overflow: hidden;
 }
 .productName_zh {
@@ -369,8 +405,8 @@ table tbody tr {
 }
 .countBtnBox >>> .el-input-number {
   width: 90%;
-  height: 30px;
-  line-height: 30px;
+  height: 31.5px;
+  line-height: 31.5px;
 }
 .countBtnBox >>> .el-input-number__decrease, .count >>>.el-input-number__increase {
   width: 30px;
@@ -390,7 +426,7 @@ table tbody tr {
 }
 .countBtnBox >>> .el-input__inner {
   position: absolute;
-  top: 2px;
+  top: 1px;
 left: 31px;
   width: calc(100% - 62px);
   height: 29.5px;
@@ -417,7 +453,7 @@ left: 31px;
   text-align: center;
   background: #e0f3fe;
   border-radius: 5px;
-  transition: all 0.4s;
+  transition: all 0.2s;
 }
 .addCart {
   margin: 0 16px 0 0;

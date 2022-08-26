@@ -69,6 +69,10 @@ export default {
       this.getArticle();
     }
   },
+  mounted() {
+    // 
+    window.scrollTo(0, 0);
+  },
   methods: {
     // 跳转文章详情页（需传参）
     getNews() {

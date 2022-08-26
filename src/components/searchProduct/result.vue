@@ -121,7 +121,7 @@ export default {
   data() {
     return {
       // 分页器
-      pagesize: 3, // 每页显示多少条
+      pagesize: 4, // 每页显示多少条
       currentPage: 1, // 当前页数
       resultBigBox: [
         {

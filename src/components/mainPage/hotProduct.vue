@@ -11,7 +11,7 @@
         class="hotProduct"
         v-for="(item, index) in productList.slice(0,5)"
         :key="index"
-        @click="toProductInfo()"
+        @click="toProductInfo(item.id)"
       >
         <div class="hotProductPic">
           <img :src="item.pic_url" alt="" />
@@ -57,9 +57,12 @@ export default {
         });
   },
   methods: {
-    toProductInfo() {
+    toProductInfo(code) {
       this.$router.push({
         path: "/productInfo",
+        query: {
+          id: code,
+        },
       });
     },
   },
@@ -182,7 +185,7 @@ export default {
   border: 1.92px solid #004ea2;
   border-radius: 4.99px;
   cursor: pointer;
-  transition: all 0.8s;
+  transition: all 0.2s;
 }
 .aboutIt:hover {
   background-color: #004ea2;
