@@ -2,7 +2,10 @@
 <template>
   <div class="createTeam">
     <div class="backBtn">
-      <router-link to="/teamBlank">{{ $t("base.back") }}</router-link>
+      <!-- 返回上一级 -->
+      <router-link to @click="$router.back(-1)">{{
+        $t("base.back")
+      }}</router-link>
     </div>
     <div class="content">
       <el-form
@@ -22,7 +25,11 @@
         <el-form-item :label="$t('base.phone')" prop="phone">
           <el-input v-model="ruleForm.phone"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('base.country')" prop="countryCode" class="countrySelect">
+        <el-form-item
+          :label="$t('base.country')"
+          prop="countryCode"
+          class="countrySelect"
+        >
           <vue3-country-intl
             v-model="ruleForm.countryCode"
             :showAreaCode="false"
@@ -100,7 +107,7 @@ export default {
         countryCode: "86",
         selectedOptions: [],
         order_check: 0,
-        address:"", // 详细地址
+        address: "", // 详细地址
       },
       rules: {
         name: [
@@ -138,7 +145,7 @@ export default {
             trigger: "blur",
           },
         ],
-         address: [
+        address: [
           {
             required: true,
             message: this.$t("address.full") + this.$t("base.noEmpty"),
@@ -148,6 +155,12 @@ export default {
         check: [{ required: true, message: "请选择订单权限", trigger: "blur" }],
       },
     };
+  },
+  mounted(){
+    let isEdit = this.$$parent.isEdit;
+    if(isEdit){
+
+    }
   },
   methods: {
     submitForm(formName) {
@@ -168,24 +181,21 @@ export default {
       if (code != 86) {
         this.isChina = false;
       } else this.isChina = true;
-      console.log('code',code)
+      console.log("code", code);
     },
     // 地址改变时
-    addressChange(arr) {
-      console.log(CodeToText[arr[0]], CodeToText[arr[1]], CodeToText[arr[2]]);
-      console.log('this.ruleForm.selectedOptions[2]',this.ruleForm.selectedOptions[2])
-    },
+    addressChange() {},
 
     // postForm
     postForm() {
       let form = {
-        name:this.ruleForm.name,
-        email:this.ruleForm.email,
-        phone:this.ruleForm.phone,
-        order_check:this.ruleForm.order_check,
-        gj:Number(this.ruleForm.countryCode),
-        sx:Number(this.ruleForm.selectedOptions[2]),
-        dz:this.ruleForm.address
+        name: this.ruleForm.name,
+        email: this.ruleForm.email,
+        phone: this.ruleForm.phone,
+        order_check: this.ruleForm.order_check,
+        gj: Number(this.ruleForm.countryCode),
+        sx: Number(this.ruleForm.selectedOptions[2]),
+        dz: this.ruleForm.address,
       };
       this.$http.post("/team", form).then((res) => {
         if (res.data.code == 20000) {
@@ -203,6 +213,9 @@ export default {
         }
       });
     },
+
+    // 获取团队信息做修改
+    
   },
 };
 </script>
@@ -274,14 +287,13 @@ export default {
 .createTeam >>> .el-input__inner:hover {
   border-color: var(--color);
 }
-.createTeam >>> .country-intl-label{
+.createTeam >>> .country-intl-label {
   display: flex;
   align-items: center;
-    border: #999999 2px solid;
+  border: #999999 2px solid;
 }
 .createTeam >>> .country-intl-label:focus,
-.createTeam >>> .country-intl-label:hover{
+.createTeam >>> .country-intl-label:hover {
   border-color: var(--color);
 }
-
 </style>

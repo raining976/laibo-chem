@@ -77,7 +77,12 @@ export default {
   },
   methods: {
     toEditTeam() {
-      this.$router.push("/editTeam");
+      this.$router.push({
+        name:"editTeam",
+        query:{
+          isEdit:true,
+        }
+      });
     },
     closeNotice(e) {
       let notice = document.getElementsByClassName("noticeBox")[0]; // 目标元素

@@ -11,6 +11,15 @@ export default {
   components: {
     createTeam,
   },
+  data(){
+    return{
+      isEdit:true,
+    }
+  },
+  created(){
+    
+    // console.log('this.$route.query',this.$route.query.isEdit)
+  }
 };
 </script>
 <style scoped>

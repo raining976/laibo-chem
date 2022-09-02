@@ -40,7 +40,6 @@ axios.interceptors.request.use(config => {
     if(url.includes('/search')||url.includes('/detail')||url.includes('/banner')||url.includes('/hotProducts')||url.includes('/news')||url.includes('/article')||url.includes('/banner')){
         return config
     }
-    console.log('config',config)
     ElLoading.service({ fullscreen: true })
     // if (config.url.includes('/login')) {
     //     // localStorage.removeItem("token_exp")

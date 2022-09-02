@@ -36,7 +36,7 @@
               :placeholder="$t('address.chooseTip')"
             ></el-cascader>
           </el-form-item>
-          <el-form-item
+          <!-- <el-form-item
             :label="$t('base.address')"
             class="addressInfo"
             v-show="!isChina"
@@ -48,7 +48,7 @@
             ></el-input>
             <el-input v-model="ruleForm.city" class="city"></el-input>
             <el-input v-model="ruleForm.district" class="district"></el-input>
-          </el-form-item>
+          </el-form-item> -->
           <el-form-item
             :label="$t('address.full')"
             prop="address"
@@ -105,7 +105,6 @@ export default {
     // };
     return {
       options: regionData,
-
       countryCode: "86",
       isChina: true, // 是否为中国大陆
       // 地址表单
@@ -186,6 +185,22 @@ export default {
         this.isChina = false;
       } else this.isChina = true;
     },
+    // 修改或者添加地址的判断
+    editOrAdd() {
+      switch (this.$parent.flag) {
+        // 增加
+        case 1:
+          console.log("增加");
+          this.postAddAddress();
+          break;
+        // 修改
+        case 2:
+          console.log("修改");
+          break;
+        default:
+          break;
+      }
+    },
     // 提交表单
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
@@ -203,50 +218,27 @@ export default {
     },
     // 地址改变时
     addressChange(arr) {
-      console.log(CodeToText[arr[0]], CodeToText[arr[1]], CodeToText[arr[2]]);
+      // console.log(CodeToText[arr[0]], CodeToText[arr[1]], CodeToText[arr[2]]);
     },
-    // 关闭表单
-    closeForm(e) {
-      let form = this.$refs.addressForm;
-      let select = document.getElementsByClassName("el-cascader__dropdown")[0];
-      if (!e.path.includes(form) && !e.path.includes(select)) {
-        this.$parent.formIsShow = false;
-      } else this.$parent.formIsShow = true;
-    },
-
-    // 修改或者添加地址
-    editOrAdd() {
-      switch (this.$parent.flag) {
-        // 增加
-        case 1:
-          console.log("增加");
-          this.postAddAddress();
-          break;
-        // 修改
-        case 2:
-          console.log("修改");
-          break;
-        default:
-          break;
-      }
-    },
-
+    // 提交地址
     postAddAddress() {
-      let form = {
+      let addressForm = {
         name: this.ruleForm.name,
-        phone: this.ruleForm.phone,
-        gj: this.countryCode,
-        sx: this.selectedOptions[2],
+        phone: Number(this.ruleForm.phone),
+        gj: Number(this.countryCode),
+        sx: Number(this.ruleForm.selectedOptions[2]),
         dz: this.ruleForm.address,
       };
       this.$http
-        .post("/address", form)
+        .post("/address", addressForm)
         .then((res) => {
           if (res.data.code == 20000) {
             this.$message({
               message: "添加成功!",
               type: "success",
             });
+            this.$parent.formIsShow = false
+            this.$parent.isReloadAddress = true
           } else {
             this.$message({
               message: res.data.msg,
@@ -257,6 +249,14 @@ export default {
         .catch((err) => {
           console.log("err", err);
         });
+    },
+    // 关闭表单
+    closeForm(e) {
+      let form = this.$refs.addressForm;
+      let select = document.getElementsByClassName("el-cascader__dropdown")[0];
+      if (!e.path.includes(form) && !e.path.includes(select)) {
+        this.$parent.formIsShow = false;
+      } else this.$parent.formIsShow = true;
     },
   },
 };

@@ -43,27 +43,9 @@
                 >
                   <i
                     class="el-icon-delete-solid"
-                    @click="centerDialogVisible = true"
+                    @click="(centerDialogVisible = true), (curIdx = index)"
                   ></i>
                 </el-tooltip>
-                <el-dialog
-                  title="确认删除?"
-                  v-model="centerDialogVisible"
-                  :modal="false"
-                  width="30%"
-                  center
-                >
-                  <span slot="footer" class="dialog-footer">
-                    <el-button @click="centerDialogVisible = false"
-                      >取 消</el-button
-                    >
-                    <el-button
-                      type="primary"
-                      @click="centerDialogVisible = false"
-                      >确 定</el-button
-                    >
-                  </span>
-                </el-dialog>
               </div>
               <div class="editBtn icon_btn" @click="editAddress()">
                 <el-tooltip
@@ -80,10 +62,23 @@
         </ul>
       </div>
     </div>
+    <el-dialog
+      title="确认删除?"
+      v-model="centerDialogVisible"
+      :modal="false"
+      width="30%"
+      center
+    >
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="centerDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="delAddress()">确 定</el-button>
+      </span>
+    </el-dialog>
     <address-form v-if="formIsShow" />
   </div>
 </template>
 <script>
+import province from "../address/province.json";
 import addressForm from "../address/addressForm.vue";
 export default {
   name: "receiveAddress",
@@ -92,45 +87,111 @@ export default {
   },
   data() {
     return {
+      curIdx: -1, // 当前选中要删除的索引
       flag: 0, // 1为增加地址,2为修改地址
       formIsShow: false, // 地址表单是否展示
       centerDialogVisible: false, // 显示是否删除的模态框
-      addresses: [
-        {
-          name: "张三",
-          phone: "10086100861",
-          address: "山东省青岛市高新区同顺路8号青岛网谷合心园2号楼902A",
-        },
-        {
-          name: "张三",
-          phone: "10086100861",
-          address: "山东省青岛市高新区同顺路8号青岛网谷合心园2号楼902A",
-        },
-        {
-          name: "张三",
-          phone: "10086100861",
-          address: "山东省青岛市高新区同顺路8号青岛网谷合心园2号楼902A",
-        },
-        {
-          name: "张三",
-          phone: "10086100861",
-          address: "山东省青岛市高新区同顺路8号青岛网谷合心园2号楼902A",
-        },
-        {
-          name: "张三",
-          phone: "10086100861",
-          address: "山东省青岛市高新区同顺路8号青岛网谷合心园2号楼902A",
-        },
-      ],
+      isReloadAddress: false, // 是否刷新地址
+      addresses: [], // 地址列表
     };
+  },
+  mounted() {
+    this.getAddress();
+  },
+  watch: {
+    isReloadAddress(val) {
+      if (val) {
+        this.getAddress();
+        this.isReloadAddress = false;
+      }
+    },
   },
   methods: {
     // 修改地址方法
     editAddress() {},
-    addAddress(){
-      this.formIsShow = !this.formIsShow
+    addAddress() {
+      this.formIsShow = !this.formIsShow;
       this.flag = 1;
-    }
+    },
+
+    // 获取地址方法
+    getAddress() {
+      this.$http.get("/address").then((res) => {
+        if (res.data.code == 20000) {
+          this.addresses = this.handlerAddress(res.data.data);
+        }
+      });
+    },
+
+    // 处理地址 将区号转化成字符串
+    handlerAddress(array) {
+      array.forEach((item) => {
+        let codeString = String(item.sx);
+        let addressCode = [];
+        var address = "";
+        addressCode.push(codeString.slice(0, 2) + "0000");
+        addressCode.push(codeString.slice(0, 4) + "00");
+        addressCode.push(codeString);
+        for (let i = 0; i < province.length; i++) {
+          // 确定省
+          if (province[i].code == addressCode[0]) {
+            address = province[i].name;
+            break;
+          }
+          for (let j = 0; j < province[i].cityList.length; j++) {
+            // 确定市
+            if (province[i].cityList.length > 1) {
+              if (province[i].cityList[j].code == addressCode[1]) {
+                address += province[i].cityList[j].name;
+                break;
+              }
+            } else {
+              address += province[i].cityList.name;
+              break;
+            }
+
+            for (let k = 0; k < province[i].cityList[j].areaList.length; k++) {
+              if (province[i].cityList[j].areaList[k].code == addressCode[2]) {
+                address += province[i].cityList[j].areaList[k].name;
+                break;
+              }
+            }
+          }
+        }
+        // console.log("address", address);
+        item.sx = address;
+      });
+
+      return array;
+    },
+    delAddress() {
+      this.centerDialogVisible = false;
+      this.$http
+        .post("/delAddress", {
+          id: this.addresses[this.curIdx].id,
+        })
+        .then((res) => {
+          if (res.data.code == 20000) {
+            this.$message({
+              message: "删除成功",
+              type: "success",
+            });
+            this.isReloadAddress = true;
+          } else {
+            this.$message({
+              message: res.data.msg,
+              type: "error",
+            });
+          }
+        })
+        .catch((err) => {
+          this.$message({
+            message: "未知错误!",
+            type: "error",
+          });
+          console.log("err", err);
+        });
+    },
   },
 };
 </script>
