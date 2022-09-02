@@ -71,27 +71,27 @@
               </div>
               <div class="infoBox">
                 <div class="name_zh" @click="toProductInfo()">
-                  {{ item0.name }}
+                  {{ item0.orders.name }}
                 </div>
                 <div class="infoWord">
-                  {{ $t("order.itemNo") + "：" }}{{ item0.huohao }}
+                  {{ $t("order.itemNo") + "：" }}{{ item0.orders.huohao }}
                 </div>
                 <div class="infoWord">
-                  {{ $t("order.casNum") + "：" }}{{ item0.shopCart_id }}
+                  {{ $t("order.casNum") + "：" }}{{ item0.orders.shopCart_id }}
                 </div>
               </div>
             </div>
-            <div class="size">{{ item0.guige }}</div>
-            <div class="price">{{ item0.price }}</div>
+            <div class="size">{{ item0.orders.guige }}</div>
+            <div class="price">{{ item0.orders.price }}</div>
             <div class="count">
               <el-input-number
-                v-model="item0.num"
+                v-model="item0.count"
                 @change="handleChange"
                 :min="0"
               ></el-input-number>
             </div>
             <!-- 关于金额的计算方式 -->
-            <div class="payment">{{ item0.price * item0.num }}</div>
+            <div class="payment">{{ item0.orders.price * item0.count }}</div>
           </div>
         </div>
       </div>
@@ -139,31 +139,31 @@ export default {
       currentPage: 1, // 当前页数
       pagerCount: 5, //五个以上加省略号
       isSubmitMy: false, //判断是否提交个人订单
-      num: 1, //计数器
+      num: 0, //计数器
       //
       checkall: false,
       checkedCommodities: [], //复选框有关
       money: 578,
       commodityBox: [], //v-for get
       commodityList: [
-        {
-          name: "S915939 碳化硅, 99.9% metals basis,100目",
-          huohao: "S915939-5g",
-          shopCart_id: 409 - 21 - 2,
-          guige: "99.9% metals basis,100目",
-          num: 0,
-          price: 39,
-          payment: 666,
-        },
-        {
-          name: "B835581 双(异硫氰酸)(2,2'-二吡啶基-4,4'-二甲酸)",
-          huohao: "B835581-100mg",
-          shopCart_id: "502693-09-6 ",
-          guige: "95%,NMR",
-          num: 0,
-          price: 539.0,
-          payment: 666,
-        },
+        // {
+        //   name: "S915939 碳化硅, 99.9% metals basis,100目",
+        //   huohao: "S915939-5g",
+        //   shopCart_id: 409 - 21 - 2,
+        //   guige: "99.9% metals basis,100目",
+        //   num: 0,
+        //   price: 39,
+        //   payment: 666,
+        // },
+        // {
+        //   name: "B835581 双(异硫氰酸)(2,2'-二吡啶基-4,4'-二甲酸)",
+        //   huohao: "B835581-100mg",
+        //   shopCart_id: "502693-09-6 ",
+        //   guige: "95%,NMR",
+        //   num: 0,
+        //   price: 539.0,
+        //   payment: 666,
+        // },
       ],
     };
   },
@@ -176,8 +176,8 @@ export default {
     })
     //回调函数
     .then((res) => {
-      this.$data.commodityList = res.data.productList;
-      console.log("ceshi", this.$data.commodityList);
+      this.$data.commodityList = res.data.data;
+      console.log("ceshi", res.data.data);
     })
     .catch((err) => {
       console.log(err);

@@ -41,7 +41,7 @@ export default {
     return {
       newsBox: [
         {
-          type: "公司新闻",
+          type: this.$t('home.companyNews'),
           pic: require("../../assets/p7.png"),
           newsList: [
             {
@@ -59,7 +59,7 @@ export default {
           ],
         },
                 {
-          type: "技术文章",
+          type: this.$t('home.technicalArticle'),
           pic: require("../../assets/p7.png"),
           newsList: [
             {
@@ -185,8 +185,8 @@ export default {
   margin: 0 14.98px 0 0;
 }
 .sign > img {
-  width: 36.1px;
-  height: 36.1px;
+  width: 36px;
+  height: 36px;
   object-fit: cover;
 }
 .type {

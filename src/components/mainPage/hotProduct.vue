@@ -17,7 +17,7 @@
           <img :src="item.pic_url" alt="" />
           <div class="shadow"></div>
         </div>
-        <div class="hotProductName">{{ item.name }}</div>
+        <div class="hotProductName"><div>{{ item.name }}</div></div>
       </div>
     </div>
     <div class="aboutIt">
@@ -44,13 +44,14 @@ export default {
   created() {
       this.$http
         .get("/hotProducts", {
-          params: {
+          // params: {
 
-          },
+          // },
         })
         //回调函数
         .then((res) => {
           this.$data.productList = res.data.data;
+          console.log(res.data.data)
         })
         .catch((err) => {
           console.log(err);
@@ -95,8 +96,9 @@ export default {
 }
 .hotProductBox {
   max-width: 1920px;
+  min-width: 1396px;
   width:100%;
-  height: 702.91px;
+  height: 703px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -107,47 +109,62 @@ export default {
 }
 /* 大图片 */
 .hotProduct:nth-of-type(1) {
-  width: 958.08px;
-  /* width: 50%; */
-  height: 702.72px;
+  /* width: 958.08px; */
+  width: 49.6%;
+  /* height: 702.72px; */
+  height: 99.5%;
 }
 .hotProduct:nth-of-type(1) .hotProductPic {
-  width: 958.08px;
-  height: 604.03px;
+  /* width: 958.08px; */
+  width: 100%;
+  /* height: 604.03px; */
+   height: 80%;
 }
 .hotProduct:nth-of-type(1) .hotProductPic > img {
-  width: 958.08px;
-  height: 604.03px;
+  /* width: 958.08px;
+  height: 604.03px; */
+   width: 100%;
+  height: 80%;
+  object-fit: contain;
 }
 .hotProduct:nth-of-type(1) .hotProductName {
-  width: 958.08px;
-  height: 96px;
-  line-height: 96px;
-  font-size: 46.08px;
+  /* width: 958.08px; */
+  width: 100%;
+  height: 20%;
+    display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
   background-color: #2867b4;
   color: #fff;
   text-align: center;
 }
 .hotProduct {
-  width: 478.08px;
-  height: 350.02px;
+  /* width: 478.08px; */
+  width: 24.8%;
+  /* height: 350.02px; */
+  height: 49.7%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 0.96px 1.92px 0 0;
+  margin: 0.03% 0.05% 0 0;
   overflow: hidden;
 }
 .hotProductPic {
   position: relative;
-  width: 478.08px;
-  height: 302.02px;
+  /* width: 478.08px; */
+  width: 100%;
+  /* height: 302.02px; */
+  height:80%;
   overflow: hidden;
   cursor: pointer;
   /* ?? */
 }
 .hotProductPic > img {
-  width: 478.08px;
-  height: 302.02px;
+  /* width: 478.08px; */
+  width: 100%;
+  /* height: 302.02px; */
+  height: 80%;
   object-fit: contain;
 }
 .shadow {
@@ -167,12 +184,17 @@ export default {
 }
 .hotProductName {
   width: 100%;
-  height: 48px;
-  font-size: 23.04px;
-  line-height: 48px;
+  /* height: 48px; */
+  height: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  /* line-height: 48px; */
   background-color: #2867b4;
   color: #fff;
-  text-align: center;
+  cursor: pointer;
+  /* text-align: center; */
 }
 .aboutIt {
   position: relative;

@@ -29,14 +29,14 @@ export default {
 
   provide() {
     return {
-      reload: this.reload,
-      isShowLogIn: false, // 是否显示登录
-      key: 1, // 用于强制刷新nav组件
+      reload: this.reload,     
     }
   },
   data() {
       return {
         isReloadData: true, //控制全局刷新
+        isShowLogIn: false, // 是否显示登录
+        key: 1, // 用于强制刷新nav组件
       }
   },
   methods: {

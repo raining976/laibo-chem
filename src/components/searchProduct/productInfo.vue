@@ -172,7 +172,7 @@ export default {
         })
         //回调函数
         .then((res) => {
-          console.log("ceshi",res.data.data);
+          console.log("ceshi",res.data);
           this.$data.productData = res.data.data;
         })
         .catch((err) => {
