@@ -1,4 +1,4 @@
-import { Message } from "element-plus"
+
 import { createRouter, createWebHashHistory } from "vue-router";
 // 路由懒加载
 // const main = () => import("../views/appMain.vue");

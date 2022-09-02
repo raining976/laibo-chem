@@ -36,6 +36,11 @@ function addSubscriber(callback) {
 
 // 请求 拦截器
 axios.interceptors.request.use(config => {
+    let url = config.url
+    if(url.includes('/search')||url.includes('/detail')||url.includes('/banner')||url.includes('/hotProducts')||url.includes('/news')||url.includes('/article')||url.includes('/banner')){
+        return config
+    }
+    console.log('config',config)
     ElLoading.service({ fullscreen: true })
     // if (config.url.includes('/login')) {
     //     // localStorage.removeItem("token_exp")
