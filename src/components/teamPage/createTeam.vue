@@ -22,7 +22,31 @@
         <el-form-item :label="$t('base.phone')" prop="phone">
           <el-input v-model="ruleForm.phone"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('team.Privilege')" prop="check">
+        <el-form-item :label="$t('base.country')" prop="countryCode" class="countrySelect">
+          <vue3-country-intl
+            v-model="ruleForm.countryCode"
+            :showAreaCode="false"
+            :onchange="countryChange(ruleForm.countryCode)"
+          >
+          </vue3-country-intl>
+        </el-form-item>
+        <el-form-item
+          class="addressSelect"
+          :label="$t('base.teamAddress')"
+          prop="selectedOptions"
+        >
+          <el-cascader
+            size="large"
+            :options="options"
+            v-model="ruleForm.selectedOptions"
+            @change="addressChange"
+            :placeholder="$t('address.chooseTip')"
+          ></el-cascader>
+        </el-form-item>
+        <el-form-item :label="$t('address.full')" prop="address">
+          <el-input v-model="ruleForm.address"></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('team.privilege')" prop="check">
           <el-radio-group v-model="ruleForm.check">
             <el-radio :label="0">{{ $t("team.need") }}</el-radio>
             <el-radio :label="1">{{ $t("team.noNeed") }}</el-radio>
@@ -41,8 +65,14 @@
   </div>
 </template>
 <script>
+import vue3CountryIntl from "vue3-country-intl";
+import "vue3-country-intl/lib/vue3-country-intl.css";
+import { regionData, CodeToText } from "element-china-area-data";
 export default {
   name: "createTeam",
+  components: {
+    vue3CountryIntl,
+  },
   data() {
     // var checkAge = (rule, value, callback) => {
     //   if (!value) {
@@ -62,11 +92,15 @@ export default {
     // };
 
     return {
+      options: regionData, // 选择器的data
       ruleForm: {
         name: "",
         email: "",
         phone: "",
-        check: 0,
+        countryCode: "86",
+        selectedOptions: [],
+        order_check: 0,
+        address:"", // 详细地址
       },
       rules: {
         name: [
@@ -90,6 +124,27 @@ export default {
             trigger: "blur",
           },
         ],
+        countryCode: [
+          {
+            required: true,
+            message: this.$t("base.country") + this.$t("base.noEmpty"),
+            trigger: "blur",
+          },
+        ],
+        selectedOptions: [
+          {
+            required: true,
+            message: this.$t("base.teamAddress") + this.$t("base.noEmpty"),
+            trigger: "blur",
+          },
+        ],
+         address: [
+          {
+            required: true,
+            message: this.$t("address.full") + this.$t("base.noEmpty"),
+            trigger: "blur",
+          },
+        ],
         check: [{ required: true, message: "请选择订单权限", trigger: "blur" }],
       },
     };
@@ -98,7 +153,7 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert("submit!");
+          this.postForm();
         } else {
           console.log("error submit!!");
           return false;
@@ -107,6 +162,46 @@ export default {
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
+    },
+
+    countryChange(code) {
+      if (code != 86) {
+        this.isChina = false;
+      } else this.isChina = true;
+      console.log('code',code)
+    },
+    // 地址改变时
+    addressChange(arr) {
+      console.log(CodeToText[arr[0]], CodeToText[arr[1]], CodeToText[arr[2]]);
+      console.log('this.ruleForm.selectedOptions[2]',this.ruleForm.selectedOptions[2])
+    },
+
+    // postForm
+    postForm() {
+      let form = {
+        name:this.ruleForm.name,
+        email:this.ruleForm.email,
+        phone:this.ruleForm.phone,
+        order_check:this.ruleForm.order_check,
+        gj:Number(this.ruleForm.countryCode),
+        sx:Number(this.ruleForm.selectedOptions[2]),
+        dz:this.ruleForm.address
+      };
+      this.$http.post("/team", form).then((res) => {
+        if (res.data.code == 20000) {
+          this.$message({
+            message: "创建成功",
+            type: "success",
+          });
+          this.$router.push("/searchMember");
+          this.$parent.refreshKey++;
+        } else {
+          this.$message({
+            message: res.data.msg,
+            type: "error",
+          });
+        }
+      });
     },
   },
 };
@@ -172,4 +267,21 @@ export default {
 .content {
   width: 600px;
 }
+.createTeam >>> .el-cascader--large {
+  width: 100%;
+}
+.createTeam >>> .el-input__inner:focus,
+.createTeam >>> .el-input__inner:hover {
+  border-color: var(--color);
+}
+.createTeam >>> .country-intl-label{
+  display: flex;
+  align-items: center;
+    border: #999999 2px solid;
+}
+.createTeam >>> .country-intl-label:focus,
+.createTeam >>> .country-intl-label:hover{
+  border-color: var(--color);
+}
+
 </style>

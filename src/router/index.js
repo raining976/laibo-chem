@@ -1,4 +1,4 @@
-
+import { Message } from "element-plus"
 import { createRouter, createWebHashHistory } from "vue-router";
 // 路由懒加载
 // const main = () => import("../views/appMain.vue");
@@ -31,6 +31,7 @@ const moreNewsArticle = () => import("../views/toMoreNewsArticle/moreNewsArtcle.
 
 
 const routes = [
+
   {
     path: "/register",
     components: {
@@ -42,6 +43,11 @@ const routes = [
     components: {
       search: searchHead,
     }
+  },
+  // 重定向
+  {
+    path: "/",
+    redirect:"/mainPage"
   },
   {
     name: 'mainPage',
@@ -191,10 +197,9 @@ router.beforeEach((to, from, next) => {
     if (!token) {  // 没登录
       // this.$root.key++
       // this.$root.isShowLogIn = true
-      alert("请先登录!")
+      alert("请先登录!");
       next({
-        path: '/mainPage',
-        query: { redirect: to.fullPath }
+        path: '/',
       })
     } else {
       next()  // 确保一定要调用 next()
@@ -203,5 +208,6 @@ router.beforeEach((to, from, next) => {
     next() // 确保一定要调用 next()
   }
 })
+
 
 export default router;

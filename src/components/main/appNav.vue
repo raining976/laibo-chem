@@ -21,10 +21,23 @@
           }}</span>
         </div>
         <!-- 你好客户 -->
-        <div class="btnBox hello" v-if="isLogin" @click="toUserInfo()">
+        <div
+          class="hello"
+          v-if="isLogin"
+          @click="toUserInfo()"
+          @mouseenter="isShowMenu = true"
+          @mouseleave="isShowMenu = false"
+        >
           你好,{{ name }}!
+          <div
+            class="menuBox"
+            v-show="isShowMenu"
+            @mouseenter="isShowMenu = true"
+          >
+            <span class="sonMenu" @click="exit()">退出登录</span>
+          </div>
         </div>
-        <div class="sonMenu" @click="exit()" v-if="isLogin">退出登录</div>
+
         <!-- /你好客户 -->
         <div class="zh_enBox">
           <span
@@ -62,7 +75,7 @@ export default {
       currentIndex: 0, // 当前选中的菜单索引
       isLogin: false, // 是否为登录状态
       name: "", // 用户姓名
-      isMenuShow: false, // 是否展示子菜单
+      isShowMenu: false, // 是否展示子菜单
     };
   },
   created() {
@@ -78,10 +91,8 @@ export default {
         break;
     }
     if (localStorage.getItem("token")) {
-      console.log("存在token");
       this.isLogin = true;
       this.$http.get("/userInfo").then((res) => {
-        console.log("nav_res", res);
         this.name = res.data.data.name;
       });
     }
@@ -111,7 +122,7 @@ export default {
   },
   methods: {
     showLogIn() {
-      this.$parent.isShowLogIn = !this.$parent.isShowLogIn;
+      this.$root.isShowLogIn = !this.$root.isShowLogIn;
     },
     toRegister() {
       this.$router.push("/register");
@@ -143,17 +154,14 @@ export default {
     toUserInfo() {
       this.$router.push("/info");
     },
-    // 下拉菜单
-    handleCommand(command) {
-      this.$message("click on item " + command);
-    },
     // 退出登录
-    exit(){
-      localStorage.removeItem("token")
-      localStorage.removeItem("refresh")
-      this.$parent.key++
-
-    }
+    exit() {
+      localStorage.removeItem("token");
+      localStorage.removeItem("refresh");
+      this.$message("退出登录成功");
+      this.$router.push("/mainPage");
+      this.$parent.key++;
+    },
   },
 };
 </script>
@@ -233,7 +241,7 @@ export default {
   display: flex;
   align-items: center;
   cursor: pointer;
-  padding-bottom: 8px;
+
   margin-right: 50px;
 }
 /* 被选中菜单按钮的样式 */
@@ -245,9 +253,17 @@ export default {
 .nav .hello {
   position: relative;
   cursor: pointer;
+  margin-right: 77px;
 }
-.nav .hello .sonMenu {
+.nav .hello .menuBox {
   position: absolute;
-  bottom: -20px;
+  bottom: -40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  background: #eaf3f8;
 }
 </style>

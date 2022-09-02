@@ -12,7 +12,7 @@
       >
         <i
           class="el-icon-circle-plus-outline addAddress"
-          @click="formIsShow = !formIsShow"
+          @click="addAddress()"
         ></i>
       </el-tooltip>
     </div>
@@ -24,12 +24,57 @@
             v-for="(address, index) in addresses"
             :key="index"
           >
-            <p class="name">{{$t('address.name')}}&nbsp;:&nbsp;{{ address.name }}</p>
-            <p class="phone">{{$t('base.phone')}}&nbsp;:&nbsp;{{ address.phone }}</p>
-            <p class="address">{{$t('base.address')}}&nbsp;:&nbsp;{{ address.address }}</p>
+            <p class="name">
+              {{ $t("address.name") }}&nbsp;:&nbsp;{{ address.name }}
+            </p>
+            <p class="phone">
+              {{ $t("base.phone") }}&nbsp;:&nbsp;{{ address.phone }}
+            </p>
+            <p class="address">
+              {{ $t("base.address") }}&nbsp;:&nbsp;{{ address.address }}
+            </p>
             <div class="btnBox">
-              <div class="deleBtn"><i class="el-icon-delete"></i></div>
-              <div class="editBtn" @click="editAddress()"><i class="el-icon-edit"></i></div>
+              <div class="deleBtn icon_btn">
+                <el-tooltip
+                  class="item"
+                  effect="light"
+                  content="删除地址"
+                  placement="top"
+                >
+                  <i
+                    class="el-icon-delete-solid"
+                    @click="centerDialogVisible = true"
+                  ></i>
+                </el-tooltip>
+                <el-dialog
+                  title="确认删除?"
+                  v-model="centerDialogVisible"
+                  :modal="false"
+                  width="30%"
+                  center
+                >
+                  <span slot="footer" class="dialog-footer">
+                    <el-button @click="centerDialogVisible = false"
+                      >取 消</el-button
+                    >
+                    <el-button
+                      type="primary"
+                      @click="centerDialogVisible = false"
+                      >确 定</el-button
+                    >
+                  </span>
+                </el-dialog>
+              </div>
+              <div class="editBtn icon_btn" @click="editAddress()">
+                <el-tooltip
+                  class="item"
+                  effect="light"
+                  content="修改地址"
+                  placement="top"
+                >
+                  <i class="el-icon-edit"></i>
+                </el-tooltip>
+              </div>
             </div>
           </li>
         </ul>
@@ -47,7 +92,9 @@ export default {
   },
   data() {
     return {
+      flag: 0, // 1为增加地址,2为修改地址
       formIsShow: false, // 地址表单是否展示
+      centerDialogVisible: false, // 显示是否删除的模态框
       addresses: [
         {
           name: "张三",
@@ -80,10 +127,21 @@ export default {
   methods: {
     // 修改地址方法
     editAddress() {},
+    addAddress(){
+      this.formIsShow = !this.formIsShow
+      this.flag = 1;
+    }
   },
 };
 </script>
-
+<style>
+.el-dialog--center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+</style>
 <style scoped>
 .receiveAddress {
   position: relative;
@@ -150,7 +208,7 @@ export default {
   background: #f7f7f7;
   border: 2px solid #f7f7f7;
   border-radius: 10px;
-  padding: 27px 48px ;
+  padding: 27px 48px;
   margin-bottom: 50px;
   margin-right: 50px;
 }
@@ -204,5 +262,8 @@ export default {
   box-shadow: 0px 17px 29px -11px #c7c7c9;
   --webkit-box-shadow: 0px 17px 29px -11px #c7c7c9;
   --moz-box-shadow: 0px 17px 29px -11px #c7c7c9;
+}
+.icon_btn >>> i {
+  transform: scale(1.5);
 }
 </style>

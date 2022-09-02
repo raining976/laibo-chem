@@ -7,7 +7,7 @@ let Base64 = require('js-base64').Base64;
 // 判断token是否过期, 如果过期(即将过期) 返回 true
 const isTokenExpired = () => {
     let expiredTime = localStorage.getItem("token_exp")
-    console.log('expiredTime',expiredTime)
+    // console.log('expiredTime',expiredTime)
     if (expiredTime) {
         let nowTime = parseInt(new Date().getTime() / 1000)
         let willExpired = (expiredTime - nowTime) < 10

@@ -24,6 +24,8 @@ export default {
         user: "User",
         order: "Order",
         get: "Get",
+        country:"Country",
+        teamAddress:"Team Address",
     },
     // 表单
     form: {

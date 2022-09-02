@@ -3,8 +3,8 @@
 <template>
   <div class="team">
     <div class="topBox">
-      <h3 class="title">{{$t('userMenu.team')}}</h3>
-      <div class="setBox">
+      <h3 class="title">{{ $t("userMenu.team") }}</h3>
+      <div class="setBox" v-if="isAdmin">
         <el-tooltip
           :content="$t('team.edit')"
           placement="top"
@@ -31,7 +31,7 @@
       </div>
     </div>
     <div class="content">
-      <router-view></router-view>
+      <router-view :key="refreshKey"></router-view>
     </div>
   </div>
 </template>
@@ -44,8 +44,24 @@ export default {
   },
   data() {
     return {
+      team: "", // 团队名称
+      in_team: -1, //是否在团队里
+      privilege: -1, // 权限
       isNoticeShow: false,
+      isAdmin: true, // 是否为管理员,默认是
+      refreshKey:0, // 刷新key
     };
+  },
+  mounted() {
+    this.$http.get("/userInfo").then((res) => {
+      if (res.data.code == 20000) {
+        this.team = res.data.data.team;
+        this.in_team = res.data.data.in_team;
+        this.privilege = res.data.data.privilege;
+        this.isAdminHandler(this.privilege);
+        this.isInTeam(this.in_team)
+      }
+    });
   },
   watch: {
     isNoticeShow: {
@@ -67,6 +83,34 @@ export default {
       let notice = document.getElementsByClassName("noticeBox")[0]; // 目标元素
       if (!e.path.includes(notice)) {
         this.isNoticeShow = false;
+      }
+    },
+
+    // 处理是否位于团队的方法
+    isInTeam(flag) {
+      switch (flag) {
+        case 0:
+          this.$router.push("/teamBlank");
+          break;
+        case 1:
+          this.$router.push("/searchMember");
+          break;
+        default:
+          break;
+      }
+    },
+
+    // 处理是否为管理员
+    isAdminHandler(flag) {
+      switch (flag) {
+        case 0:
+          this.isAdmin = false;
+          break;
+        case 1:
+          this.isAdmin = true;
+          break;
+        default:
+          break;
       }
     },
   },

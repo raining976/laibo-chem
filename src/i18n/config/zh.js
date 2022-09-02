@@ -26,6 +26,8 @@ export default {
         user: "用户",
         order: "订单",
         get:"获取",
+        country:"国家",
+        teamAddress:"团队所在地",
     },
     // 表单
     form: {

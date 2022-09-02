@@ -16,9 +16,9 @@
           <el-input v-model="ruleForm.name"></el-input>
         </el-form-item>
         <el-form-item :label="$t('base.email')" prop="email">
-          <el-input v-model="ruleForm.email"></el-input>
+          <el-input v-model="ruleForm.email" :disabled="true"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('phone')" prop="phone">
+        <el-form-item :label="$t('base.phone')" prop="phone">
           <el-input v-model="ruleForm.phone"></el-input>
         </el-form-item>
         <el-form-item :label="$t('base.sex')">
@@ -68,13 +68,7 @@ export default {
             trigger: "blur",
           },
         ],
-        email: [
-          {
-            required: true,
-            message: this.$t("form.enter") + this.$t("base.email"),
-            trigger: "blur",
-          },
-        ],
+     
         phone: [
           {
             required: true,
@@ -121,11 +115,11 @@ export default {
               message: "修改成功",
               type: "success",
             });
-            this.$root.key++
-          }else{
+            this.$root.key++;
+          } else {
             this.$message({
               message: res.data.msg,
-              type: "success",
+              type: "error",
             });
           }
         })

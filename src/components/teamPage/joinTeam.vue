@@ -114,6 +114,7 @@ input:focus {
   color: #ffffff;
   line-height: 41px;
   text-align: center;
+  cursor: pointer;
 }
 .listTitle {
   font-size: 20px;

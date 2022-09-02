@@ -105,18 +105,16 @@ export default {
     // };
     return {
       options: regionData,
-      selectedOptions: [],
+
       countryCode: "86",
       isChina: true, // 是否为中国大陆
       // 地址表单
       ruleForm: {
-        state: "", // 省级
-        city: "", // 市级
-        district: "", // 区级
+        selectedOptions: [],
         address: "", //详细地址
         name: "", // 收货人
         phone: "", // 联系电话
-        selectedOptions: [],
+        // address: [], // 地址列表
       },
       // 判断绑定
       rules: {
@@ -162,6 +160,22 @@ export default {
   },
   mounted() {
     window.addEventListener("mousedown", this.closeForm);
+    // flag 为 1 : 增加地址
+    // flag 为 2 :修改地址
+    switch (this.$parent.flag) {
+      // 增加地址
+      case 1:
+        break;
+      // 修改地址
+      case 2:
+        this.$http.get("/address").then((res) => {
+          console.log("res.data.data", res.data.data);
+        });
+        break;
+
+      default:
+        break;
+    }
   },
   unmounted() {
     window.removeEventListener("mousedown", this.closeForm);
@@ -171,13 +185,12 @@ export default {
       if (code != 86) {
         this.isChina = false;
       } else this.isChina = true;
-      console.log("code", code);
     },
     // 提交表单
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert("submit!");
+          this.editOrAdd();
         } else {
           console.log("error submit!!");
           return false;
@@ -191,17 +204,59 @@ export default {
     // 地址改变时
     addressChange(arr) {
       console.log(CodeToText[arr[0]], CodeToText[arr[1]], CodeToText[arr[2]]);
-      this.ruleForm.state = arr[0];
-      this.ruleForm.city = arr[1];
-      this.ruleForm.district = arr[2];
     },
     // 关闭表单
     closeForm(e) {
       let form = this.$refs.addressForm;
-      let select = document.getElementsByClassName('el-cascader__dropdown')[0]
-      if (!e.path.includes(form)&&!e.path.includes(select)) {
+      let select = document.getElementsByClassName("el-cascader__dropdown")[0];
+      if (!e.path.includes(form) && !e.path.includes(select)) {
         this.$parent.formIsShow = false;
       } else this.$parent.formIsShow = true;
+    },
+
+    // 修改或者添加地址
+    editOrAdd() {
+      switch (this.$parent.flag) {
+        // 增加
+        case 1:
+          console.log("增加");
+          this.postAddAddress();
+          break;
+        // 修改
+        case 2:
+          console.log("修改");
+          break;
+        default:
+          break;
+      }
+    },
+
+    postAddAddress() {
+      let form = {
+        name: this.ruleForm.name,
+        phone: this.ruleForm.phone,
+        gj: this.countryCode,
+        sx: this.selectedOptions[2],
+        dz: this.ruleForm.address,
+      };
+      this.$http
+        .post("/address", form)
+        .then((res) => {
+          if (res.data.code == 20000) {
+            this.$message({
+              message: "添加成功!",
+              type: "success",
+            });
+          } else {
+            this.$message({
+              message: res.data.msg,
+              type: "error",
+            });
+          }
+        })
+        .catch((err) => {
+          console.log("err", err);
+        });
     },
   },
 };

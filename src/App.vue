@@ -1,5 +1,4 @@
 <template>
-
   <appNav :key="key" />
   <router-view name="search"></router-view>
   <router-view name="table"></router-view>
@@ -7,9 +6,7 @@
   <appFooter />
   <copyRight />
   <!-- 登录模态框 -->
-
   <log-in v-if="isShowLogIn" />
-
 </template>
 
 
@@ -26,21 +23,20 @@ export default {
     copyRight,
     logIn,
   },
-
   provide() {
     return {
       reload: this.reload,
-      isShowLogIn: false, // 是否显示登录
-      key: 1, // 用于强制刷新nav组件
-    }
+    };
   },
   data() {
-      return {
-        isReloadData: true, //控制全局刷新
-      }
+    return {
+      isShowLogIn: false, // 是否显示登录
+      key: 1, // 用于强制刷新nav组件
+      isReloadData: true, //控制全局刷新
+    };
   },
   methods: {
-        // 全局刷新
+    // 全局刷新
     reload() {
       this.$data.isReloadData = false;
       this.$nextTick(() => {
@@ -99,5 +95,10 @@ li {
 input,
 textarea {
   resize: none;
+}
+.in-active-path>span,
+.el-cascader-node.is-active >span
+{
+  color: var(--color);
 }
 </style>

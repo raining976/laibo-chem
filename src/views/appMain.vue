@@ -35,6 +35,7 @@ export default {
     // 更改登录页面的显示与否
     changeLogIn() {
       this.isShowLogIn = !this.isShowLogIn;
+    
     },
   },
 };

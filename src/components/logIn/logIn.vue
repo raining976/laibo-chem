@@ -78,6 +78,7 @@ export default {
   watch: {
     pageCode: {
       handler(newCode) {
+        this.logInForm.psd = "";
         switch (newCode) {
           // 更改为验证码登录
           case 1:
@@ -87,6 +88,7 @@ export default {
             this.isPsdLogin = false;
             this.inputVerification = this.$t("logIn.verifyTip");
             this.$refs.psd_verification.type = "text";
+
             break;
           // 更改为密码登录
           case 2:
@@ -94,6 +96,7 @@ export default {
             this.isPsdLogin = true;
             this.inputVerification = this.$t("logIn.passTip");
             this.$refs.psd_verification.type = "password";
+
             break;
           case 3:
             break;
@@ -109,6 +112,7 @@ export default {
   },
   unmounted() {
     window.removeEventListener("mousedown", this.closeLogIn);
+    this.clearTimer();
   },
   methods: {
     toRegister() {
@@ -311,9 +315,6 @@ export default {
       localStorage.setItem("token_exp", this.handler_token(token));
       localStorage.setItem("refresh_exp", this.handler_token(refresh));
     },
-  },
-  unmounted() {
-    this.clearTimer();
   },
 };
 </script>
