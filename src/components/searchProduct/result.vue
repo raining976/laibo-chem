@@ -118,7 +118,9 @@
 export default {
   name: "result",
   props: {
-     resultBox: Array,
+     resultBox:{
+      type:Array,
+     } ,
   },
   components: "",
   data() {
