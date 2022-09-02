@@ -12,14 +12,15 @@
           <input
             type="text"
             :placeholder="$t('home.searchTip')"
+            v-model="inputValue"
           />
         </div>
-        <div class="searchBtn" @click="toSearchResult()">
+        <div class="searchBtn" @click="getSearchResult()">
           <img src="../../assets/sousuo.png" alt="" />
         </div>
       </div>
       <div class="toILabPlus">
-        {{ $t('home.toILaiBoPlus') }}
+        {{ $t("home.toILaiBoPlus") }}
       </div>
     </div>
   </div>
@@ -28,11 +29,52 @@
 <script>
 export default {
   name: "search",
+  data() {
+    return {
+      inputValue: "",
+      code: 0,
+      retultBox: [],
+    };
+  },
+  watch: {
+    code: {
+      handler() {
+        this.toSearchResult();
+        this.$data.code = 0;
+      },
+      immediate: true,
+      deep: true,
+    },
+  },
   methods: {
+    getSearchResult() {
+      this.$http
+        .get("/search", {
+          params: {
+            s: this.$data.inputValue,
+          },
+        })
+        //回调函数
+        .then((res) => {
+          this.$data.retultBox = res.data.data;
+          // console.log(res.data);
+          this.$data.code = res.data.code;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
     toSearchResult() {
-      this.$router.push({
-        path: "/searchResult",
-      });
+      console.log(this.$data.code, this.$data.inputValue, "ceshi");
+      if (this.$data.inputValue !== "" && this.$data.code !== 0) {
+        console.log(JSON.stringify(this.$data.retultBox),"ceshi2")
+        this.$router.push({
+          path: "/searchResult",
+          query: {
+            retult: JSON.stringify(this.$data.retultBox),
+          },
+        });
+      }
     },
   },
 };

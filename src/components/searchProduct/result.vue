@@ -5,7 +5,7 @@
       <!-- v-for模块 -->
       <div
         class="resultBox"
-        v-for="(item, index) in resultBigBox.slice(
+        v-for="(item, index) in resultBox.slice(
           (currentPage - 1) * pagesize,
           currentPage * pagesize
         )"
@@ -117,6 +117,11 @@
 <script>
 export default {
   name: "result",
+  props: {
+     resultBox:{
+      type:Array,
+     } ,
+  },
   components: "",
   data() {
     return {
@@ -124,81 +129,84 @@ export default {
       pagesize: 4, // 每页显示多少条
       currentPage: 1, // 当前页数
       resultBigBox: [
-        {
-          pic: require("../../assets/p22.png"),
-          name_zh: "2-(三丁基锡)-5-三氟甲基吡啶",
-          name_en: "2-(tributylstannyl)-5-(trifluoromethyl)pyridine",
-          huohao: "",
-          jiegoushi: "",
-          casCode: "",
-          mdlCode: "",
-        },
-        {
-          pic: require("../../assets/p22.png"),
-          name_zh: "2-(三丁基锡)-5-三氟甲基吡啶",
-          name_en: "2-(tributylstannyl)-5-(trifluoromethyl)pyridine",
-          huohao: "",
-          jiegoushi: "",
-          casCode: "",
-          mdlCode: "",
-        },
-        {
-          pic: require("../../assets/p22.png"),
-          name_zh: "2-(三丁基锡)-5-三氟甲基吡啶",
-          name_en: "2-(tributylstannyl)-5-(trifluoromethyl)pyridine",
-          huohao: "",
-          jiegoushi: "",
-          casCode: "",
-          mdlCode: "",
-        },
-        {
-          pic: require("../../assets/p22.png"),
-          name_zh: "2-(三丁基锡)-5-三氟甲基吡啶",
-          name_en: "2-(tributylstannyl)-5-(trifluoromethyl)pyridine",
-          huohao: "",
-          jiegoushi: "",
-          casCode: "",
-          mdlCode: "",
-        },
+        // {
+        //   pic: require("../../assets/p22.png"),
+        //   name_zh: "2-(三丁基锡)-5-三氟甲基吡啶",
+        //   name_en: "2-(tributylstannyl)-5-(trifluoromethyl)pyridine",
+        //   huohao: "",
+        //   jiegoushi: "",
+        //   casCode: "",
+        //   mdlCode: "",
+        // },
+        // {
+        //   pic: require("../../assets/p22.png"),
+        //   name_zh: "2-(三丁基锡)-5-三氟甲基吡啶",
+        //   name_en: "2-(tributylstannyl)-5-(trifluoromethyl)pyridine",
+        //   huohao: "",
+        //   jiegoushi: "",
+        //   casCode: "",
+        //   mdlCode: "",
+        // },
+        // {
+        //   pic: require("../../assets/p22.png"),
+        //   name_zh: "2-(三丁基锡)-5-三氟甲基吡啶",
+        //   name_en: "2-(tributylstannyl)-5-(trifluoromethyl)pyridine",
+        //   huohao: "",
+        //   jiegoushi: "",
+        //   casCode: "",
+        //   mdlCode: "",
+        // },
+        // {
+        //   pic: require("../../assets/p22.png"),
+        //   name_zh: "2-(三丁基锡)-5-三氟甲基吡啶",
+        //   name_en: "2-(tributylstannyl)-5-(trifluoromethyl)pyridine",
+        //   huohao: "",
+        //   jiegoushi: "",
+        //   casCode: "",
+        //   mdlCode: "",
+        // },
       ],
       productData: [
-        {
-          huohao: "2016-05-03",
-          size: "Tom",
-          rmb: "California",
-          store: "Los Angeles",
-          num: 0,
-        },
-        {
-          huohao: "2016-05-02",
-          size: "Tom",
-          rmb: "California",
-          store: "Los Angeles",
-          num: 0,
-        },
-        {
-          huohao: "2016-05-04",
-          size: "Tom",
-          rmb: "California",
-          store: "Los Angeles",
-          num: 0,
-        },
-        {
-          huohao: "2016-05-04",
-          size: "Tom",
-          rmb: "California",
-          store: "Los Angeles",
-          num: 0,
-        },
+        // {
+        //   huohao: "2016-05-03",
+        //   size: "Tom",
+        //   rmb: "California",
+        //   store: "Los Angeles",
+        //   num: 0,
+        // },
+        // {
+        //   huohao: "2016-05-02",
+        //   size: "Tom",
+        //   rmb: "California",
+        //   store: "Los Angeles",
+        //   num: 0,
+        // },
+        // {
+        //   huohao: "2016-05-04",
+        //   size: "Tom",
+        //   rmb: "California",
+        //   store: "Los Angeles",
+        //   num: 0,
+        // },
+        // {
+        //   huohao: "2016-05-04",
+        //   size: "Tom",
+        //   rmb: "California",
+        //   store: "Los Angeles",
+        //   num: 0,
+        // },
       ],
     };
   },
   methods: {
-    toProductInfo() {
+    toProductInfo(code) {
       this.$router.push({
         path: "/productInfo",
+        query: {
+          // id: code,
+        },
       });
-    },
+  },
     // 分页
     handleSizeChange(val) {
       this.$data.pagesize = val;

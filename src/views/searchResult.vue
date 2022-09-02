@@ -19,7 +19,7 @@
       </div>
     </div>
     <div>
-        <component :is = "res" />
+        <component :is = "res" :resultBox = "resultBox"/>
     </div>
     
   </div>
@@ -38,6 +38,7 @@ export default {
         res: "result",
         type: "中间品", //需要判断
       typeList: ["中间品", "低值易耗品", "染料"],
+      resultBox: [],
     };
   },
   methods:{
@@ -47,7 +48,19 @@ export default {
       });
     },
     // js判断页面未写
-  }
+    toResultShow() {
+      console.log(JSON.parse(this.$route.query.result),"ceshi3");
+      this.$data.resultBox = JSON.parse(this.$route.query.result);
+      if(tthis.$data.resultBox !== []) {
+        this.$data.res = "result";
+      } else {
+        this.$data.res = "noResult";
+      }
+    },
+  },
+  created() {
+     this.toResultShow();
+  },
 };
 </script>
 <style scoped>
