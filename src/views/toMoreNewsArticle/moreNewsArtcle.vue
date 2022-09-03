@@ -1,6 +1,6 @@
 <template>
   <router-view name="textPage"></router-view>
-  <div>
+  <div >
     <div class="solidLine"></div>
     <div class="siteNav">
       &lt;
@@ -10,7 +10,7 @@
       /
       <div class="article" @click="toArticle()">技术文章</div>
     </div>
-    <div class="bg" >
+    <div class="bg" :key = "reload">
       <div class="allTitles">
         <!-- v-for -->
         <div
@@ -44,11 +44,11 @@
 export default {
   name: "",
   components: "",
-  inject:['reload'],
   data() {
     return {
       news: false, //
       article: false, //
+      reload: 0, //控制全局刷新
       pagesize: 8, // 每页显示多少条
       currentPage: 1, // 当前页数
       titleBox: [
@@ -74,6 +74,7 @@ export default {
     window.scrollTo(0, 0);
   },
   methods: {
+
     // 跳转文章详情页（需传参）
     getNews() {
       this.$http
@@ -117,14 +118,16 @@ export default {
     toNews() {
       this.$data.news = true;
       this.$data.article = false;
-      this.reload();
       this.getNews();
+      this.$data.reload += 1;  //无用
+      this.$data.currentPage = 1;
     },
     toArticle() {
       this.$data.news = false;
       this.$data.article = true;
-      this.reload();
       this.getArticle();
+      this.$data.reload += 1;  //无用
+      this.$data.currentPage = 1;
     },
     toTextPage() {
       this.$router.push({

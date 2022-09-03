@@ -3,7 +3,7 @@
   <div class="search">
     <div class="h">
       <div class="logoBox">
-        <router-link to="/mainPage"
+        <router-link to="/mainPage" 
           ><img src="../../assets/logo1.png" alt=""
         /></router-link>
       </div>
@@ -29,18 +29,23 @@
 <script>
 export default {
   name: "search",
+    // inject:['reload'],
   data() {
     return {
       inputValue: "",
       code: 0,
-      retultBox: [],
+      isSearch: false,
+      resultBox: [],
     };
   },
   watch: {
+    //监听返回code的变化
     code: {
       handler() {
+        if(this.$data.isSearch === true)
         this.toSearchResult();
         this.$data.code = 0;
+        this.$data.isSearch = false;
       },
       immediate: true,
       deep: true,
@@ -48,6 +53,8 @@ export default {
   },
   methods: {
     getSearchResult() {
+      if(this.$data.inputValue !== "") {
+      this.$data.isSearch = true;
       this.$http
         .get("/search", {
           params: {
@@ -56,25 +63,22 @@ export default {
         })
         //回调函数
         .then((res) => {
-          this.$data.retultBox = res.data.data;
-          // console.log(res.data);
+          this.$data.resultBox = res.data.data;
           this.$data.code = res.data.code;
         })
         .catch((err) => {
           console.log(err);
         });
+     }
     },
     toSearchResult() {
-      console.log(this.$data.code, this.$data.inputValue, "ceshi");
-      if (this.$data.inputValue !== "" && this.$data.code !== 0) {
-        console.log(JSON.stringify(this.$data.retultBox),"ceshi2")
         this.$router.push({
           path: "/searchResult",
           query: {
-            retult: JSON.stringify(this.$data.retultBox),
+            result: JSON.stringify(this.$data.resultBox),
           },
         });
-      }
+
     },
   },
 };

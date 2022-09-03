@@ -19,48 +19,57 @@
       </div>
     </div>
     <div>
-        <component :is = "res" :resultBox = "resultBox"/>
+      <component :is="res" :resultBox="resultBox" />
     </div>
-    
   </div>
 </template>
 <script>
 import result from "../components/searchProduct/result.vue";
 import noResult from "../components/searchProduct/noResult.vue";
 export default {
-  name: "",
+  name: "", 
   components: {
     result,
-    noResult
+    noResult,
   },
   data() {
     return {
-        res: "result",
-        type: "中间品", //需要判断
+      res: "noResult",
+      type: "中间品", //需要判断
       typeList: ["中间品", "低值易耗品", "染料"],
       resultBox: [],
     };
   },
-  methods:{
-         toMainPage() {
+  watch: {
+    "$route.query.result": {
+      handler() {
+        // 对路由变化作出响应...
+        this.toResultShow();
+      },
+      immediate: true,
+      deep: true,
+    
+  }
+  },
+  methods: {
+    toMainPage() {
       this.$router.push({
-        path: "/",
+        path: "/mainPage",
       });
     },
-    // js判断页面未写
+    // js判断页面
     toResultShow() {
-      console.log(JSON.parse(this.$route.query.result),"ceshi3");
+      // console.log(JSON.parse(this.$route.query.result), "ceshi3");
       this.$data.resultBox = JSON.parse(this.$route.query.result);
-      if(tthis.$data.resultBox !== []) {
+      if (this.$data.resultBox !== []) {
         this.$data.res = "result";
       } else {
         this.$data.res = "noResult";
       }
+      
     },
   },
-  created() {
-     this.toResultShow();
-  },
+  
 };
 </script>
 <style scoped>
@@ -95,7 +104,7 @@ export default {
   font-weight: 600;
 }
 .nowPosi {
-   cursor: pointer;
+  cursor: pointer;
   height: 18px;
   font-size: 16px;
   line-height: 18px;

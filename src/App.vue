@@ -1,8 +1,8 @@
 <template>
   <appNav :key="key" />
-  <router-view name="search"></router-view>
+  <router-view name="search" ></router-view>
   <router-view name="table"></router-view>
-  <router-view name="textPage"></router-view>
+  <router-view name="textPage" ></router-view>
   <appFooter />
   <copyRight />
   <!-- 登录模态框 -->
@@ -23,26 +23,15 @@ export default {
     copyRight,
     logIn,
   },
-  provide() {
-    return {
-      reload: this.reload,
-    };
-  },
+
   data() {
     return {
       isShowLogIn: false, // 是否显示登录
       key: 1, // 用于强制刷新nav组件
-      isReloadData: true, //控制全局刷新
     };
   },
   methods: {
-    // 全局刷新
-    reload() {
-      this.$data.isReloadData = false;
-      this.$nextTick(() => {
-        this.$data.isReloadData = true;
-      });
-    },
+
   },
   created() {
     let nowTime = new Date().getTime() / 1000;
