@@ -77,14 +77,18 @@
                 </tr>
               </thead>
               <el-scrollbar max-height="132px">
-                <tbody>
+                <tbody >
+                  <!--一行 -->
                   <tr
                     class="tableContent"
                     v-for="(item, index) in productData.params"
+                    
                     :key="index"
                   >
+                  <!-- 遮罩 -->
+                  <td class="shadow" :ref="info"><div ></div></td>
                     <td class="huohao">
-                      <div>{{ item.weight }}</div>
+                      <div>{{ productData.id + '-' + item.weight }}</div>
                     </td>
                     <td class="size">
                       <div>{{ item.guige }}</div>
@@ -102,6 +106,7 @@
                         <el-input-number
                           v-model="item.num"
                           @change="handleChange"
+                          @click="chooce(index)"
                           :min="0"
                         ></el-input-number>
                       </div>
@@ -134,7 +139,7 @@ export default {
     return {
       isShow: false, // 私人订制是否显示
       num: 0,
-
+      infoBox:[],
       productData: [
         // {
         //   huohao: "B835581-25mg",
@@ -172,6 +177,7 @@ export default {
     mounted() {
     // 
     window.scrollTo(0, 0);
+
   },
   watch: {
     productData: {
@@ -182,7 +188,18 @@ export default {
       }
     }
   },
+
   methods: {
+    //ref数组
+    info(el) {
+         this.infoBox.push(el)
+        //  console.log("ces",this.infoBox);
+    },
+    // 设定只能选一个 
+    chooce(id) {
+          this.infos[id] 
+    },
+    //
     addCart() {
       this.$http
         .post("/cart", {
@@ -200,7 +217,6 @@ export default {
         });
 
     },
-    //商品数量调节
     //商品数量调节
     handleChange(value) {
       console.log(value);
@@ -372,7 +388,20 @@ table tbody tr {
   font-size: 16px;
   text-align: center;
 }
-
+.tableContent {
+    position: relative;
+}
+.shadow {
+  display: none;
+  position: absolute;
+  pointer-events: auto;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background-color: #eaebed;
+  opacity: 0.3;
+  z-index: 999;
+}
 .huohao {
   width: 145px;
   color: #004ea2;
