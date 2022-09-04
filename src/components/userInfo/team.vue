@@ -79,9 +79,6 @@ export default {
     toEditTeam() {
       this.$router.push({
         name:"editTeam",
-        query:{
-          isEdit:true,
-        }
       });
     },
     closeNotice(e) {

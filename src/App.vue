@@ -90,4 +90,8 @@ textarea {
 {
   color: var(--color);
 }
+
+.el-message{
+  transform: scale(1.5);
+}
 </style>

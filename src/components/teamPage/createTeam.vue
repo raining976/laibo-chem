@@ -16,6 +16,9 @@
         label-width="130px"
         class="demo-ruleForm"
       >
+        <el-form-item :label="$t('team.teamId')" v-show="isEdit">
+          <el-input v-model="teamId" :disabled="true"></el-input>
+        </el-form-item>
         <el-form-item :label="$t('team.name')" prop="name">
           <el-input v-model="ruleForm.name"></el-input>
         </el-form-item>
@@ -47,16 +50,16 @@
             :options="options"
             v-model="ruleForm.selectedOptions"
             @change="addressChange"
-            :placeholder="$t('address.chooseTip')"
+            :placeholder="$t('base.teamAddress')"
           ></el-cascader>
         </el-form-item>
         <el-form-item :label="$t('address.full')" prop="address">
           <el-input v-model="ruleForm.address"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('team.privilege')" prop="check">
-          <el-radio-group v-model="ruleForm.check">
-            <el-radio :label="0">{{ $t("team.need") }}</el-radio>
-            <el-radio :label="1">{{ $t("team.noNeed") }}</el-radio>
+        <el-form-item :label="$t('team.privilege')" prop="order_check">
+          <el-radio-group v-model="ruleForm.order_check">
+            <el-radio :label="1">{{ $t("team.need") }}</el-radio>
+            <el-radio :label="0">{{ $t("team.noNeed") }}</el-radio>
           </el-radio-group></el-form-item
         >
         <el-form-item>
@@ -72,6 +75,7 @@
   </div>
 </template>
 <script>
+import handleSingleCode from "../../js/handleSingleCode";
 import vue3CountryIntl from "vue3-country-intl";
 import "vue3-country-intl/lib/vue3-country-intl.css";
 import { regionData, CodeToText } from "element-china-area-data";
@@ -100,13 +104,15 @@ export default {
 
     return {
       options: regionData, // 选择器的data
+      teamId: "", // 团队id
+      isEdit: false, // 是否为编辑团队信息页
       ruleForm: {
         name: "",
         email: "",
         phone: "",
         countryCode: "86",
         selectedOptions: [],
-        order_check: 0,
+        order_check: 1,
         address: "", // 详细地址
       },
       rules: {
@@ -152,15 +158,15 @@ export default {
             trigger: "blur",
           },
         ],
-        check: [{ required: true, message: "请选择订单权限", trigger: "blur" }],
+        order_check: [{ required: true, message: "请选择订单权限", trigger: "blur" }],
       },
     };
   },
-  mounted(){
-    let isEdit = this.$$parent.isEdit;
-    if(isEdit){
-
-    }
+  mounted() {
+    if (this.$parent.isEdit) {
+      this.isEdit = true;
+      this.getTeamInfo();
+    } else this.isEdit = false;
   },
   methods: {
     submitForm(formName) {
@@ -197,25 +203,82 @@ export default {
         sx: Number(this.ruleForm.selectedOptions[2]),
         dz: this.ruleForm.address,
       };
-      this.$http.post("/team", form).then((res) => {
-        if (res.data.code == 20000) {
-          this.$message({
-            message: "创建成功",
-            type: "success",
+
+      if (this.isEdit) {
+        form.id = this.teamId
+        this.$http
+          .post("/editTeam", form)
+          .then((res) => {
+            if (res.data.code == 20000) {
+              this.$message({
+                message: "修改团队信息成功",
+                type: "success",
+              });
+              this.$parent.refreshKey++;
+            } else {
+              this.$message({
+                message: res.data.msg,
+                type: "error",
+              });
+            }
+          })
+          .catch((err) => {
+            console.log("post_team_err", err);
           });
-          this.$router.push("/searchMember");
-          this.$parent.refreshKey++;
-        } else {
+      } else {
+        this.$http
+          .post("/team", form)
+          .then((res) => {
+            if (res.data.code == 20000) {
+              this.$message({
+                message: "创建成功",
+                type: "success",
+              });
+              this.$router.push("/searchMember");
+              this.$parent.refreshKey++;
+            } else {
+              this.$message({
+                message: res.data.msg,
+                type: "error",
+              });
+            }
+          })
+          .catch((err) => {
+            console.log("post_team_err", err);
+          });
+      }
+    },
+    getTeamInfo() {
+      this.$http
+        .get("/teamInfo")
+        .then((res) => {
+          if (res.data.code == 20000) {
+            let response = res.data.data;
+            this.teamId = response.id;
+            this.ruleForm.name = response.name;
+            this.ruleForm.phone = response.phone;
+            this.ruleForm.email = response.email;
+            this.ruleForm.countryCode = response.gj;
+            this.ruleForm.selectedOptions = handleSingleCode(response.sx);
+            this.ruleForm.address = response.dz;
+            if (Response.order_check) {
+              this.ruleForm.order_check = 1;
+            } else this.ruleForm.order_check = 0;
+          } else {
+            this.$message({
+              message: res.data.msg,
+              type: "error",
+            });
+          }
+        })
+        .catch((err) => {
           this.$message({
-            message: res.data.msg,
+            message: "未知错误",
             type: "error",
           });
-        }
-      });
+          console.log("err", err);
+        });
     },
-
-    // 获取团队信息做修改
-    
   },
 };
 </script>
@@ -286,6 +349,10 @@ export default {
 .createTeam >>> .el-input__inner:focus,
 .createTeam >>> .el-input__inner:hover {
   border-color: var(--color);
+}
+.createTeam >>> .is-disabled .el-input__inner:focus,
+.createTeam >>> .is-disabled .el-input__inner:hover {
+  border-color: #e4e7ed;
 }
 .createTeam >>> .country-intl-label {
   display: flex;
