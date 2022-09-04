@@ -43,8 +43,11 @@ export default {
   watch: {
     "$route.query.result": {
       handler() {
-        // 对路由变化作出响应...
-        this.toResultShow();
+        // 此判断用于解决路由不跳转
+        if(this.$route.query.isUse !== undefined) {
+            // 对路由变化作出响应...
+        this.toResultShow();      
+        }
       },
       immediate: true,
       deep: true,
@@ -53,13 +56,13 @@ export default {
   },
   methods: {
     toMainPage() {
-      this.$router.push({
+      this.$router.replace({
         path: "/mainPage",
       });
+      // this.$router.back()
     },
     // js判断页面
     toResultShow() {
-      // console.log(JSON.parse(this.$route.query.result), "ceshi3");
       this.$data.resultBox = JSON.parse(this.$route.query.result);
       if (this.$data.resultBox !== []) {
         this.$data.res = "result";

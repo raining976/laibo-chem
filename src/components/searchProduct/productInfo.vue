@@ -100,7 +100,7 @@
                       <!-- 计数器 -->
                       <div class="countBtnBox">
                         <el-input-number
-                          v-model="num"
+                          v-model="item.num"
                           @change="handleChange"
                           :min="0"
                         ></el-input-number>
@@ -134,17 +134,7 @@ export default {
     return {
       isShow: false, // 私人订制是否显示
       num: 0,
-      pic: "http://attachments.macklin.cn/img/item/000/83/97537500.gif",
-      name_zh: "B835581 双(异硫氰酸)(2,2'-二吡啶基-4,4'-二甲酸)",
-      name_en:
-        " Bis(isothiocyanato)(2,2'-bipyridyl-4,4'-dicarboxylato)(4,4'-dinonyl-2,2'-bipyridyl)ruthenium(II)酸)",
-      concentration: ">95%",
-      casCode: "502693-09-6 ",
-      fenzishi:"	C42H52N6O4RuS2 ",
-      fenziliang:"	870.11 ",
-      mdlCode:'	MFCD12546029 ',
-      fusionPoint:"196 °C ",
-      storageCondition:"干燥",
+
       productData: [
         // {
         //   huohao: "B835581-25mg",
@@ -172,7 +162,6 @@ export default {
         })
         //回调函数
         .then((res) => {
-          console.log("ceshi",res.data);
           this.$data.productData = res.data.data;
         })
         .catch((err) => {
@@ -184,21 +173,31 @@ export default {
     // 
     window.scrollTo(0, 0);
   },
+  watch: {
+    productData: {
+      handler() {
+        this.$data.productData.params.forEach((item) => {
+          Object.assign(item, {num: 0});
+        })
+      }
+    }
+  },
   methods: {
     addCart() {
-      // this.$http
-      //   .push("/cart", {
-      //     params: {
-
-      //     },
-      //   })
-      //   //回调函数
-      //   .then((res) => {
-      //      this.$data.productList = res.data.data;
-      //   })
-      //   .catch((err) => {
-      //     console.log(err);
-      //   });
+      this.$http
+        .post("/cart", {
+          params: {
+              product_params_id: this.$route.query.id,
+              // count: this.$data.num,
+          },
+        })
+        //回调函数
+        .then((res) => {
+           alert("添加成功",res)
+        })
+        .catch((err) => {
+          console.log(err);
+        });
 
     },
     //商品数量调节
