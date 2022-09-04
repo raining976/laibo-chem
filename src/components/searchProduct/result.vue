@@ -12,10 +12,10 @@
         :key="index"
       >
         <div class="result">
-          <div class="resultPic"><img :src="item.pic" alt="" /></div>
+          <div class="resultPic"><img :src="item.pic_url" alt="" /></div>
           <div class="resultInfo">
             <div class="resultName_zh" @click="toProductInfo()">
-              <span>{{ item.name_zh }}</span>
+              <span>{{ item.name }}</span>
             </div>
             <div class="resultName_en">英文名：{{ item.name_en }}</div>
             <div class="resultDetail">
@@ -24,11 +24,11 @@
               <div class="huohao _data">
                 {{ $t("order.itemNo") + "：" }}{{ item.huohao }}
               </div>
-              <div class="jiegoushi _data">结构式：{{ item.jiegoushi }}</div>
+              <div class="jiegoushi _data" >结构式：<span v-html="item.linear_formula"></span></div>
               <div class="CAScode _data">
-                {{ $t("order.casNum") + "：" }}{{ item.casCode }}
+                {{ $t("order.casNum") + "：" }}{{ item.cas }}
               </div>
-              <div class="MDLcode _data">MDL号：{{ item.mdlCode }}</div>
+              <div class="MDLcode _data">MDL号：{{ item.mdl }}</div>
             </div>
           </div>
         </div>
@@ -104,7 +104,7 @@
       <el-pagination
         background="#004ea2"
         layout="prev,pager,next"
-        :total="resultBigBox.length"
+        :total="resultBox.length"
         :page-size="pagesize"
         :current-page="currentPage"
         @current-change="handleCurrentChange"
@@ -323,6 +323,9 @@ export default {
   font-weight: 400;
   color: #333333;
   line-height: 15px;
+}
+.jiegoushi {
+  width: 330px;
 }
 /* 可折叠列表 */
 .collapse {
