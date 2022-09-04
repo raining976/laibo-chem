@@ -14,7 +14,7 @@
         <div class="result">
           <div class="resultPic"><img :src="item.pic_url" alt="" /></div>
           <div class="resultInfo">
-            <div class="resultName_zh" @click="toProductInfo()">
+            <div class="resultName_zh" @click="toProductInfo(item.id)">
               <span>{{ item.name }}</span>
             </div>
             <div class="resultName_en">英文名：{{ item.name_en }}</div>
@@ -199,11 +199,29 @@ export default {
     };
   },
   methods: {
+    // 获取英文名，货号等等（无语-.-）
+    getDetail() {
+       this.$http
+        .get("/product/detail", {
+          params: {
+            id: this.$route.query.id,
+          },
+        })
+        //回调函数
+        .then((res) => {
+          console.log("ceshi",res.data);
+          this.$data.productData = res.data.data;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    //
     toProductInfo(code) {
       this.$router.push({
         path: "/productInfo",
         query: {
-          // id: code,
+          id: code,
         },
       });
   },

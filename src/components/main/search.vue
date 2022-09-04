@@ -76,6 +76,7 @@ export default {
           path: "/searchResult",
           query: {
             result: JSON.stringify(this.$data.resultBox),
+            isUse: 1,
           },
         });
 
