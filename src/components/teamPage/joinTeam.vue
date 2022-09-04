@@ -7,9 +7,13 @@
     <div class="searchBox">
       <div class="tag">{{ $t("team.name") }}</div>
       <div class="inputBox">
-        <input type="text" :placeholder="$t('form.enter') + $t('team.name')" />
+        <input
+          type="text"
+          :placeholder="$t('form.enter') + $t('team.name')"
+          v-model="keywords"
+        />
       </div>
-      <div class="btn">{{ $t("base.query") }}</div>
+      <div class="btn" @click="searchTeam()">{{ $t("base.query") }}</div>
     </div>
     <div class="searchListBox">
       <h3 class="listTitle">{{ $t("base.query") + " " + $t("base.list") }}</h3>
@@ -19,7 +23,7 @@
           <span>{{ $t("team.admin") }}</span>
           <span>{{ $t("base.phone") }}</span>
           <span>{{ $t("base.email") }}</span>
-          <span>{{$t('base.action')}}</span>
+          <span>{{ $t("base.action") }}</span>
         </li>
         <li class="eachLi" v-for="(item, index) in searchList" :key="index">
           <span>{{ item.name }}</span>
@@ -27,9 +31,9 @@
           <span>{{ item.phone }}</span>
           <span>{{ item.email }}</span>
           <span>
-            <router-link to="/searchMember"
-              ><a class="joinBtn">{{$t('team.apply')}}</a></router-link
-            >
+            <a class="joinBtn" @click="joinTeam(index)">{{
+              $t("team.apply")
+            }}</a>
           </span>
         </li>
       </ul>
@@ -41,27 +45,66 @@ export default {
   name: "joinTeam",
   data() {
     return {
-      searchList: [
-        {
-          name: "张三的团队",
-          email: "11111111@163.com",
-          admin: "张三",
-          phone: "1008610086",
-        },
-        {
-          name: "张三的团队",
-          email: "11111111@163.com",
-          admin: "张三",
-          phone: "1008610086",
-        },
-        {
-          name: "张三的团队",
-          email: "11111111@163.com",
-          admin: "张三",
-          phone: "1008610086",
-        },
-      ],
+      keywords: "", // 搜索关键字
+      searchList: [], // 查询团队结果列表
     };
+  },
+  methods: {
+    searchTeam() {
+      if (this.keywords != "") {
+        this.$http
+          .post("/searchTeam", {
+            team_id: this.keywords,
+          })
+          .then((res) => {
+            if (res.data.code == 20000) {
+              this.$message({
+                message: "查询成功",
+                type: "success",
+              });
+              this.searchList = res.data.data;
+            } else {
+              this.$message({
+                message: res.data.msg,
+                type: "error",
+              });
+            }
+          })
+          .catch((err) => {
+            this.$message({
+              message: "未知错误",
+              type: "error",
+            });
+            console.log("err", err);
+          });
+      }
+    },
+    // 加入团队
+    joinTeam(idx) {
+      this.$http
+        .post("/joinTeam", {
+          team_id: this.searchList[idx].id,
+        })
+        .then((res) => {
+          if (res.data.code == 20000) {
+            this.$message({
+              message: "申请成功!请等待管理员同意",
+              type: "success",
+            });
+          } else {
+            this.$message({
+              message: res.data.msg,
+              type: "error",
+            });
+          }
+        })
+        .catch(() => {
+          this.$message({
+            message: "未知错误",
+            type: "error",
+          });
+        });
+    },
   },
 };
 </script>
