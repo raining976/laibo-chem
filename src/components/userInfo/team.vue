@@ -19,7 +19,7 @@
           effect="light"
           popper-class="editTip"
         >
-          <el-badge :value="0" :max="99">
+          <el-badge :value="notices.length" :max="9">
             <i
               class="el-icon-bell notice set"
               @click="isNoticeShow = !isNoticeShow"
@@ -27,7 +27,7 @@
           </el-badge>
         </el-tooltip>
         <!-- 通知模态框 -->
-        <notice v-show="isNoticeShow" ref="notice" />
+        <notice v-show="isNoticeShow" ref="notice" :notices="notices" />
       </div>
     </div>
     <div class="content">
@@ -49,19 +49,13 @@ export default {
       privilege: -1, // 权限
       isNoticeShow: false,
       isAdmin: true, // 是否为管理员,默认是
-      refreshKey:0, // 刷新key
+      refreshKey: 0, // 刷新key
+      notices: [], // 申请加入团队的通知列表
     };
   },
   mounted() {
-    this.$http.get("/userInfo").then((res) => {
-      if (res.data.code == 20000) {
-        this.team = res.data.data.team;
-        this.in_team = res.data.data.in_team;
-        this.privilege = res.data.data.privilege;
-        this.isAdminHandler(this.privilege);
-        this.isInTeam(this.in_team)
-      }
-    });
+    this.getUserInfo();
+    this.getNotice();
   },
   watch: {
     isNoticeShow: {
@@ -78,7 +72,7 @@ export default {
   methods: {
     toEditTeam() {
       this.$router.push({
-        name:"editTeam",
+        name: "editTeam",
       });
     },
     closeNotice(e) {
@@ -113,6 +107,29 @@ export default {
           break;
         default:
           break;
+      }
+    },
+    // 获取用户信息,判断权限问题
+    getUserInfo() {
+      this.$http.get("/userInfo").then((res) => {
+        if (res.data.code == 20000) {
+          this.team = res.data.data.team;
+          this.in_team = res.data.data.in_team;
+          this.privilege = res.data.data.privilege;
+          this.isAdminHandler(this.privilege);
+          this.isInTeam(this.in_team);
+        }
+      });
+    },
+
+    // 管理员界面获取申请加入团队的通知
+    getNotice() {
+      if (this.isAdmin) {
+        this.$http.get("/team").then((res) => {
+          if (res.data.code == 20000) {
+            this.notices = res.data.data.acceptList;
+          }
+        });
       }
     },
   },

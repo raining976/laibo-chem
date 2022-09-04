@@ -1,9 +1,9 @@
 //createDate:2022-08-05
 <template>
-  <div class="noticeBox"  >
+  <div class="noticeBox">
     <div class="titleBox">
-      <div class="title">{{$t('team.message')}}</div>
-      <div class="btn" @click="allRead()">{{$t('team.read')}}</div>
+      <div class="title">{{ $t("team.message") }}</div>
+      <div class="btn" @click="allRead()">{{ $t("team.read") }}</div>
     </div>
     <ul class="noticeList">
       <li class="eachNotice" v-for="(notice, index) in notices" :key="index">
@@ -14,14 +14,24 @@
             ></el-badge>
           </div>
           <div class="infoContent">
-            <span>{{ notice.name }}{{ " " +$t('base.user')}}</span>
-            <span>{{ notice.content }}</span>
-            <span class="time">{{ notice.time }}</span>
+            <span>{{ notice.name }}{{ " " + $t("base.user") }}</span>
+            <!-- <span>{{ notice.content }}</span> -->
+            <span class="time">{{ notice.applicationTime }}</span>
           </div>
         </div>
         <div class="btnBox">
-          <div class="btn ignore">{{$t('team.refuse')}}</div>
-          <div class="btn agree">{{$t('team.agree')}}</div>
+          <div
+            class="btn ignore"
+            @click="handleApplication(0,index)"
+          >
+            {{ $t("team.refuse") }}
+          </div>
+          <div
+            class="btn agree"
+            @click="handleApplication(1,index)"
+          >
+            {{ $t("team.agree") }}
+          </div>
         </div>
       </li>
     </ul>
@@ -30,57 +40,73 @@
 <script>
 export default {
   name: "notice",
+  props: {
+    notices: Array,
+  },
   data() {
     return {
-      notices: [
-        {
-          name: "张三",
-          content: "申请加入团队",
-          time: "2022.8.5",
-          isDot:true,
-        },
-        {
-          name: "张三",
-          content: "申请加入团队",
-          time: "2022年八月五日",
-          isDot:false,
-        },
-        {
-          name: "张三",
-          content: "申请加入团队",
-          time: "2022年八月五日",
-          isDot:true,
-        },
-        {
-          name: "张三",
-          content: "申请加入团队",
-          time: "2022年八月五日",
-          isDot:false,
-        },
-        {
-          name: "张三",
-          content: "申请加入团队",
-          time: "2022年八月五日",
-          isDot:true,
-        },
-        {
-          name: "张三",
-          content: "申请加入团队",
-          time: "2022年八月五日",
-          isDot:true
-        },
-      ],
+      curIndex: -1, // 当前选中的索引
     };
-
   },
-  methods:{
-    allRead(){
-        console.log("我执行了")
-        for (let i = 0;i < this.notices.length;i++ ){
-            this.notices[i].isDot = false
-        }
-    }
-  }
+  methods: {
+    allRead() {
+      for (let i = 0; i < this.notices.length; i++) {
+        this.notices[i].isDot = false;
+      }
+    },
+    // 处理申请加入团队
+    handleApplication(flag,idx) {
+      if (flag == 0) {
+        this.warningTip(idx);
+      } else {
+        this.handleFun(flag,idx);
+      }
+    },
+    handleFun(flag,idx) {
+      this.$http
+        .post("/teamApplication", {
+          id: this.notices[idx].id,
+          status:flag,
+        })
+        .then((res) => {
+          if (res.data.code == 20000) {
+            this.$message({
+              message: "处理成功",
+              type: "success",
+            });
+          } else {
+            this.$message({
+              message: res.data.msg,
+              type: "error",
+            });
+          }
+        })
+        .catch((err) => {
+          console.log("err", err);
+          this.$message({
+            message: "未知错误!",
+            type: "error",
+          });
+        });
+    },
+    // 确认提示
+    warningTip(index) {
+      this.$confirm("是否拒绝该成员的申请,该处理不可撤销", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(() => {
+          this.handleFun(0,index);
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消操作",
+          });
+        });
+    },
+  },
 };
 </script>
 <style scoped>
