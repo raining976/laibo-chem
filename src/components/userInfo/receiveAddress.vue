@@ -43,7 +43,7 @@
                 >
                   <i
                     class="el-icon-delete-solid"
-                    @click="(centerDialogVisible = true), (curIdx = index)"
+                    @click="(curIdx = index),bounceMsg()"
                   ></i>
                 </el-tooltip>
               </div>
@@ -62,23 +62,11 @@
         </ul>
       </div>
     </div>
-    <el-dialog
-      title="确认删除?"
-      v-model="centerDialogVisible"
-      :modal="false"
-      width="30%"
-      center
-    >
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="centerDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="delAddress()">确 定</el-button>
-      </span>
-    </el-dialog>
     <address-form v-if="formIsShow" />
   </div>
 </template>
 <script>
-import handleAddress from "../../js/handlerAddress"
+import handleAddress from "../../js/handlerAddress";
 import addressForm from "../address/addressForm.vue";
 export default {
   name: "receiveAddress",
@@ -90,11 +78,9 @@ export default {
       curIdx: -1, // 当前选中要删除的索引
       flag: 0, // 1为增加地址,2为修改地址
       formIsShow: false, // 地址表单是否展示
-      centerDialogVisible: false, // 显示是否删除的模态框
       isReloadAddress: false, // 是否刷新地址
       addresses: [], // 地址列表
-      curAddress:{}, // 当前地址对象
-
+      curAddress: {}, // 当前地址对象
     };
   },
   mounted() {
@@ -111,10 +97,10 @@ export default {
   methods: {
     // 修改地址方法
     editAddress(idx) {
-      this.flag = 2
-      this.curAddress = this.addresses[idx]
-      console.log('this.curAddress',this.curAddress)
-      this.formIsShow = true
+      this.flag = 2;
+      this.curAddress = this.addresses[idx];
+      console.log("this.curAddress", this.curAddress);
+      this.formIsShow = true;
     },
     addAddress() {
       this.formIsShow = !this.formIsShow;
@@ -129,7 +115,23 @@ export default {
         }
       });
     },
-
+    bounceMsg() {
+      this.$confirm("此操作将永久删除该地址, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+        center: true,
+      })
+        .then(() => {
+          this.delAddress()
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除",
+          });
+        });
+    },
     // // 处理地址 将区号转化成字符串
     // handleAddress(array) {
     //   array.forEach((item) => {
@@ -145,7 +147,6 @@ export default {
     //   return array;
     // },
     delAddress() {
-      this.centerDialogVisible = false;
       this.$http
         .post("/delAddress", {
           id: this.addresses[this.curIdx].id,
