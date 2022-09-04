@@ -140,6 +140,7 @@ export default {
         refuse: "Refuse",
         agree: "Agree",
         edit: "The editorial team information",
+        teamId:"Team ID"
     },
     // 订单
     order: {

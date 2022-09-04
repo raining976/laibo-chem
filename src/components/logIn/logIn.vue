@@ -314,6 +314,7 @@ export default {
       // 保存过期时间
       localStorage.setItem("token_exp", this.handler_token(token));
       localStorage.setItem("refresh_exp", this.handler_token(refresh));
+      this.$router.push("/mainPage")
     },
   },
 };

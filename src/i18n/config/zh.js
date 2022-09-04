@@ -142,6 +142,7 @@ export default {
         refuse: "拒绝",
         agree: "同意",
         edit: "编辑团队信息",
+        teamId:"团队ID"
     },
     // 订单
     order: {

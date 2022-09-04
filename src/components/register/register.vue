@@ -70,11 +70,11 @@
         </el-form-item>
         <!-- /机构名称 -->
         <!-- 隐私单选框 -->
-        <el-form-item prop="tcp" class="tcp">
+        <el-form-item class="tcp">
           <el-checkbox
             :label="$t('register.deal')"
-            name="tcp"
             v-model="ruleForm.tcp"
+            :change="checkedChange()"
           />
         </el-form-item>
         <!-- /隐私单选框 -->
@@ -173,32 +173,45 @@ export default {
           },
         ],
         name: [{ required: true, validator: checkName, trigger: "blur" }],
-        phone: [
-          { required: true, validator: checkPhoneNum, trigger: "blur" },
-        ],
+        phone: [{ required: true, validator: checkPhoneNum, trigger: "blur" }],
         teamName: [
           { required: true, validator: checkTeamName, trigger: "blur" },
-        ],
-        tcp: [
-          {
-            required: true,
-            message: "请先勾选同意协议",
-            trigger: "change",
-          },
         ],
       },
     };
   },
+
+  mounted() {},
   methods: {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.$http.post("/register", this.ruleForm).then((res) => {
-            if (res.data.code == 20000) {
-              this.bouncedMsg();
-            }
-            console.log("res.data.msg", res.data.msg);
-          });
+          if (this.ruleForm.tcp) {
+            this.$http
+              .post("/register", this.ruleForm)
+              .then((res) => {
+                if (res.data.code == 20000) {
+                  this.bouncedMsg();
+                } else {
+                  this.$message({
+                    message: res.data.msg,
+                    type: "error",
+                  });
+                }
+              })
+              .catch((err) => {
+                this.$message({
+                  message: "未知错误!",
+                  type: "error",
+                });
+                console.log("err", err);
+              });
+          } else {
+            this.$message({
+              message: "请先同意并勾选隐私协议",
+              type: "warning",
+            });
+          }
         } else {
           console.log("error submit!!");
           return false;
@@ -212,8 +225,9 @@ export default {
       this.$alert("即将进入主页...", "注册成功!", {
         confirmButtonText: "确定",
         // 进入主页路由
-        // callback: (action) => {
-        // },
+        callback: () => {
+          this.$router.push("mainPage")
+        },
       });
     },
     // 获取验证码
@@ -223,12 +237,29 @@ export default {
         email: this.ruleForm.email,
         type: "register",
       };
-      this.$http.post("/verificationCode", rule).then((res) => {
-        if (res.data.code == 20000) {
-          alert("res.data.msg");
-          this.verfi_timer();
-        }
-      });
+      this.$http
+        .post("/verificationCode", rule)
+        .then((res) => {
+          if (res.data.code == 20000) {
+            this.$message({
+              message: "发送成功",
+              type: "success",
+            });
+            this.verfi_timer();
+          } else {
+            this.$message({
+              message: res.data.msg,
+              type: "error",
+            });
+          }
+        })
+        .catch((err) => {
+          this.$message({
+            message: "未知错误!",
+            type: "error",
+          });
+          console.log("err", err);
+        });
     },
     // 发送验证码倒计时
     verfi_timer() {
@@ -246,6 +277,10 @@ export default {
         }
       }, 1000);
     },
+    // 勾选或取消协议
+    checkedChange() {
+      console.log("val", this.ruleForm.tcp);
+    },
   },
   unmounted() {
     if (this.myTimer) {
@@ -256,6 +291,12 @@ export default {
 };
 </script>
 <style>
+.is-message-box {
+  transform: scale(1.5);
+}
+.is-message-box .el-button--primary {
+  background: var(--color);
+}
 .registerBox .el-button {
   width: 130px;
   height: 49px;

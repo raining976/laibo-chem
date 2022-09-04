@@ -21,23 +21,12 @@
           }}</span>
         </div>
         <!-- 你好客户 -->
-        <div
-          class="hello"
-          v-if="isLogin"
-          @click="toUserInfo()"
-          @mouseenter="isShowMenu = true"
-          @mouseleave="isShowMenu = false"
-        >
+        <div class="hello" v-if="isLogin" @click="toUserInfo()">
           你好,{{ name }}!
-          <div
-            class="menuBox"
-            v-show="isShowMenu"
-            @mouseenter="isShowMenu = true"
-          >
+          <div class="menuBox" style="display:none">
             <span class="sonMenu" @click="exit()">退出登录</span>
           </div>
         </div>
-
         <!-- /你好客户 -->
         <div class="zh_enBox">
           <span
@@ -75,7 +64,6 @@ export default {
       currentIndex: 0, // 当前选中的菜单索引
       isLogin: false, // 是否为登录状态
       name: "", // 用户姓名
-      isShowMenu: false, // 是否展示子菜单
     };
   },
   created() {
@@ -254,6 +242,9 @@ export default {
   position: relative;
   cursor: pointer;
   margin-right: 77px;
+}
+.nav .hello:hover .menuBox{
+  display: flex !important;
 }
 .nav .hello .menuBox {
   position: absolute;
