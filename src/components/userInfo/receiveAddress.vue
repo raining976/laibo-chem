@@ -47,14 +47,14 @@
                   ></i>
                 </el-tooltip>
               </div>
-              <div class="editBtn icon_btn" @click="editAddress()">
+              <div class="editBtn icon_btn">
                 <el-tooltip
                   class="item"
                   effect="light"
                   content="修改地址"
                   placement="top"
                 >
-                  <i class="el-icon-edit"></i>
+                  <i class="el-icon-edit" @click="editAddress(index)"></i>
                 </el-tooltip>
               </div>
             </div>
@@ -78,7 +78,7 @@
   </div>
 </template>
 <script>
-import province from "../address/province.json";
+import handleAddress from "../../js/handlerAddress"
 import addressForm from "../address/addressForm.vue";
 export default {
   name: "receiveAddress",
@@ -93,6 +93,8 @@ export default {
       centerDialogVisible: false, // 显示是否删除的模态框
       isReloadAddress: false, // 是否刷新地址
       addresses: [], // 地址列表
+      curAddress:{}, // 当前地址对象
+
     };
   },
   mounted() {
@@ -108,7 +110,12 @@ export default {
   },
   methods: {
     // 修改地址方法
-    editAddress() {},
+    editAddress(idx) {
+      this.flag = 2
+      this.curAddress = this.addresses[idx]
+      console.log('this.curAddress',this.curAddress)
+      this.formIsShow = true
+    },
     addAddress() {
       this.formIsShow = !this.formIsShow;
       this.flag = 1;
@@ -118,52 +125,25 @@ export default {
     getAddress() {
       this.$http.get("/address").then((res) => {
         if (res.data.code == 20000) {
-          this.addresses = this.handlerAddress(res.data.data);
+          this.addresses = handleAddress(res.data.data);
         }
       });
     },
 
-    // 处理地址 将区号转化成字符串
-    handlerAddress(array) {
-      array.forEach((item) => {
-        let codeString = String(item.sx);
-        let addressCode = [];
-        var address = "";
-        addressCode.push(codeString.slice(0, 2) + "0000");
-        addressCode.push(codeString.slice(0, 4) + "00");
-        addressCode.push(codeString);
-        for (let i = 0; i < province.length; i++) {
-          // 确定省
-          if (province[i].code == addressCode[0]) {
-            address = province[i].name;
-            break;
-          }
-          for (let j = 0; j < province[i].cityList.length; j++) {
-            // 确定市
-            if (province[i].cityList.length > 1) {
-              if (province[i].cityList[j].code == addressCode[1]) {
-                address += province[i].cityList[j].name;
-                break;
-              }
-            } else {
-              address += province[i].cityList.name;
-              break;
-            }
-
-            for (let k = 0; k < province[i].cityList[j].areaList.length; k++) {
-              if (province[i].cityList[j].areaList[k].code == addressCode[2]) {
-                address += province[i].cityList[j].areaList[k].name;
-                break;
-              }
-            }
-          }
-        }
-        // console.log("address", address);
-        item.sx = address;
-      });
-
-      return array;
-    },
+    // // 处理地址 将区号转化成字符串
+    // handleAddress(array) {
+    //   array.forEach((item) => {
+    //     let codeString = String(item.sx);
+    //     let addressCode = [];
+    //     var address = "";
+    //     addressCode.push(codeString.slice(0, 2) + "0000");
+    //     addressCode.push(codeString.slice(0, 4) + "00");
+    //     addressCode.push(codeString);
+    //     address = CodeToText[addressCode[0]] + CodeToText[addressCode[1]] + CodeToText[addressCode[2]] + item.dz
+    //     item.address = address
+    //   });
+    //   return array;
+    // },
     delAddress() {
       this.centerDialogVisible = false;
       this.$http

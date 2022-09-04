@@ -36,19 +36,6 @@
               :placeholder="$t('address.chooseTip')"
             ></el-cascader>
           </el-form-item>
-          <!-- <el-form-item
-            :label="$t('base.address')"
-            class="addressInfo"
-            v-show="!isChina"
-          >
-            <el-input
-              v-model="ruleForm.state"
-              class="state"
-              prop="state"
-            ></el-input>
-            <el-input v-model="ruleForm.city" class="city"></el-input>
-            <el-input v-model="ruleForm.district" class="district"></el-input>
-          </el-form-item> -->
           <el-form-item
             :label="$t('address.full')"
             prop="address"
@@ -167,11 +154,18 @@ export default {
         break;
       // 修改地址
       case 2:
-        this.$http.get("/address").then((res) => {
-          console.log("res.data.data", res.data.data);
-        });
+        let addressForm = this.$parent.curAddress;
+        let codeString = String(addressForm.sx);
+        let addressCode = [];
+        addressCode.push(codeString.slice(0, 2) + "0000");
+        addressCode.push(codeString.slice(0, 4) + "00");
+        addressCode.push(codeString);
+        this.ruleForm.selectedOptions = addressCode;
+        this.countryCode = addressForm.gj;
+        this.ruleForm.name = addressForm.name;
+        this.ruleForm.address = addressForm.dz;
+        this.ruleForm.phone = addressForm.phone;
         break;
-
       default:
         break;
     }
@@ -190,12 +184,12 @@ export default {
       switch (this.$parent.flag) {
         // 增加
         case 1:
-          console.log("增加");
+          // console.log("增加");
           this.postAddAddress();
           break;
         // 修改
         case 2:
-          console.log("修改");
+          this.postEditAddress();
           break;
         default:
           break;
@@ -237,8 +231,8 @@ export default {
               message: "添加成功!",
               type: "success",
             });
-            this.$parent.formIsShow = false
-            this.$parent.isReloadAddress = true
+            this.$parent.formIsShow = false;
+            this.$parent.isReloadAddress = true;
           } else {
             this.$message({
               message: res.data.msg,
@@ -248,6 +242,40 @@ export default {
         })
         .catch((err) => {
           console.log("err", err);
+        });
+    },
+    postEditAddress() {
+      let addressForm = {
+        name: this.ruleForm.name,
+        phone: Number(this.ruleForm.phone),
+        gj: Number(this.countryCode),
+        sx: Number(this.ruleForm.selectedOptions[2]),
+        dz: this.ruleForm.address,
+        id: Number(this.$parent.curAddress.id),
+      };
+      this.$http
+        .post("/editAddress", addressForm)
+        .then((res) => {
+          if (res.data.code == 20000) {
+            this.$message({
+              message: "修改成功!",
+              type: "success",
+            });
+            this.$parent.formIsShow = false;
+            this.$parent.isReloadAddress = true;
+          } else {
+            this.$message({
+              message: res.data.msg,
+              type: "error",
+            });
+          }
+        })
+        .catch((err) => {
+          this.$message({
+            message: "未知错误!",
+            type: "error",
+          });
+          console.log("editAddressErr", err);
         });
     },
     // 关闭表单
