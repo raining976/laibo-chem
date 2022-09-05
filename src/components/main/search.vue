@@ -15,7 +15,7 @@
             v-model="inputValue"
           />
         </div>
-        <div class="searchBtn" @click="getSearchResult()">
+        <div class="searchBtn" @click="toSearchResult()">
           <img src="../../assets/sousuo.png" alt="" />
         </div>
       </div>
@@ -29,57 +29,40 @@
 <script>
 export default {
   name: "search",
-    // inject:['reload'],
   data() {
     return {
       inputValue: "",
       code: 0,
-      isSearch: false,
+      isSearch: 0,
       resultBox: [],
     };
   },
   watch: {
-    //监听返回code的变化
-    code: {
-      handler() {
-        if(this.$data.isSearch === true)
-        this.toSearchResult();
-        this.$data.code = 0;
-        this.$data.isSearch = false;
-      },
-      immediate: true,
-      deep: true,
-    },
+
   },
   methods: {
-    getSearchResult() {
-      if(this.$data.inputValue !== "") {
-      this.$data.isSearch = true;
-      this.$http
-        .get("/search", {
-          params: {
-            s: this.$data.inputValue,
-          },
-        })
-        //回调函数
-        .then((res) => {
-          this.$data.resultBox = res.data.data;
-          this.$data.code = res.data.code;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-     }
-    },
+   
     toSearchResult() {
+      if(this.$data.inputValue !== "") {
+        this.$data.isSearch ++;
+        if(this.$route.path !== "/searchResult") {
         this.$router.push({
           path: "/searchResult",
           query: {
-            result: JSON.stringify(this.$data.resultBox),
-            isUse: 1,
+            inputValue: this.$data.inputValue,
           },
         });
-
+      } else if(this.$route.path === "/searchResult") {
+          this.$router.push({
+          path: "/searchResult",
+          query: {
+            inputValue: this.$data.inputValue,
+            isSearch: this.$data.isSearch
+          },
+        });
+      }
+      }
+      
     },
   },
 };

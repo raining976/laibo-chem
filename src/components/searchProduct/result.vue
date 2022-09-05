@@ -34,7 +34,7 @@
         </div>
         <!-- 价格表格 -->
         <div class="collapse">
-          <el-collapse v-model="activeName" accordion>
+          <el-collapse v-model="activeName" accordion @click="getTable(item.id)">
             <el-collapse-item name="1">
               <template #title>
                 <span class="textBox">价格与库存&nbsp;</span
@@ -65,17 +65,17 @@
                         :key="index"
                       >
                         <td class="huohao">
-                          <div>{{ item1.huohao }}</div>
+                          <div>{{ item.id + '-' + item1.weight }}</div>
                         </td>
                         <td class="size">
-                          <div>{{ item1.size }}</div>
+                          <div>{{ item1.guige }}</div>
                         </td>
 
                         <td class="store">
-                          <div>{{ item1.store }}</div>
+                          <div>0{{ store }}</div>
                         </td>
                         <td class="rmb">
-                          <div>{{ item1.rmb }}</div>
+                          <div>{{ item1.price }}</div>
                         </td>
                         <td class="count">
                           <div class="countBtnBox">
@@ -128,6 +128,7 @@ export default {
       // 分页器
       pagesize: 4, // 每页显示多少条
       currentPage: 1, // 当前页数
+      pastId: 0, // 记录产品id
       resultBigBox: [
         // {
         //   pic: require("../../assets/p22.png"),
@@ -198,23 +199,35 @@ export default {
       ],
     };
   },
+  watch: {
+productData: {
+      handler() {
+        this.$data.productData.forEach((item) => {
+          Object.assign(item, {num: 0});
+        })
+      }
+    }
+  },
   methods: {
-    // 获取英文名，货号等等（无语-.-）
-    getDetail() {
-       this.$http
+    getTable(code) {  
+      if(this.$data.pastId !== code)
+      {
+        this.$http
         .get("/product/detail", {
           params: {
-            id: this.$route.query.id,
+            id: code,
           },
         })
         //回调函数
         .then((res) => {
-          console.log("ceshi",res.data);
-          this.$data.productData = res.data.data;
+
+          this.$data.productData = res.data.data.params;
         })
         .catch((err) => {
           console.log(err);
         });
+      }
+       this.$data.pastId = code;
     },
     //
     toProductInfo(code) {

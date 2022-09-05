@@ -40,13 +40,17 @@ export default {
       resultBox: [],
     };
   },
+  created() {
+      this.getSearchResult()
+  },
   watch: {
-    "$route.query.result": {
+    "$route.query.isSearch": {
       handler() {
         // 此判断用于解决路由不跳转
-        if(this.$route.query.isUse !== undefined) {
-            // 对路由变化作出响应...
-        this.toResultShow();      
+        // console.log(this.$route.query.isSearch,"ccccc")
+        if(this.$route.query.isSearch !== undefined) {
+            // 对路由变化作出响应....
+        this.getSearchResult()     
         }
       },
       immediate: true,
@@ -61,15 +65,35 @@ export default {
       });
       // this.$router.back()
     },
+    //获取搜索结果
+        getSearchResult() {
+      if(this.$route.query.inputValue !== "") {
+      this.$http
+        .get("/search", {
+          params: {
+            s: this.$route.query.inputValue,
+          },
+        })
+        //回调函数
+        .then((res) => {
+          this.$data.resultBox = res.data.data;
+          this.toResultShow(); 
+          // this.$data.code = res.data.code;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+     }
+    },
+  
     // js判断页面
     toResultShow() {
-      this.$data.resultBox = JSON.parse(this.$route.query.result);
-      if (this.$data.resultBox !== []) {
+      //用&&原因是因为数据未能完全覆盖导致条件判断错误
+      if (this.$data.resultBox !== []&&this.$data.resultBox !== undefined) {
         this.$data.res = "result";
       } else {
         this.$data.res = "noResult";
       }
-      
     },
   },
   
