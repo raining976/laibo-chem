@@ -43,7 +43,7 @@
                 >
                   <i
                     class="el-icon-delete-solid"
-                    @click="(curIdx = index),bounceMsg()"
+                    @click="(curIdx = index), bounceMsg()"
                   ></i>
                 </el-tooltip>
               </div>
@@ -111,7 +111,9 @@ export default {
     getAddress() {
       this.$http.get("/address").then((res) => {
         if (res.data.code == 20000) {
-          this.addresses = handleAddress(res.data.data);
+          if (!res.data.data) {
+            this.addresses = [];
+          } else this.addresses = handleAddress(res.data.data);
         }
       });
     },
@@ -123,7 +125,7 @@ export default {
         center: true,
       })
         .then(() => {
-          this.delAddress()
+          this.delAddress();
         })
         .catch(() => {
           this.$message({
