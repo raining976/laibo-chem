@@ -107,8 +107,14 @@ export default {
 
     // postUserInfo
     postUserInfo() {
+      let form = {
+        email:this.ruleForm.email,
+        name:this.ruleForm.name,
+        phone:this.ruleForm.phone,
+        gender:this.ruleForm.gender
+      } 
       this.$http
-        .post("/userInfo", this.ruleForm)
+        .post("/userInfo", form)
         .then((res) => {
           if (res.data.code == 20000) {
             this.$message({
