@@ -4,7 +4,7 @@
   <div class="team">
     <div class="topBox">
       <h3 class="title">{{ $t("userMenu.team") }}</h3>
-      <div class="setBox" v-if="isAdmin">
+      <div class="setBox">
         <el-tooltip
           :content="$t('team.edit')"
           placement="top"
@@ -14,6 +14,7 @@
           <i class="el-icon-edit-outline edit set" @click="toEditTeam()"></i>
         </el-tooltip>
         <el-tooltip
+          v-if="isAdmin"
           :content="$t('team.message')"
           placement="top"
           effect="light"
@@ -53,7 +54,7 @@ export default {
       in_team: -1, //是否在团队里
       privilege: -1, // 权限
       isNoticeShow: false,
-      isAdmin: true, // 是否为管理员,默认是
+      isAdmin: false, // 是否为管理员,默认是
       refreshKey: 0, // 刷新key
       noticeKey: 0, // notice刷新key
       notices: [], // 申请加入团队的通知列表
@@ -104,16 +105,8 @@ export default {
 
     // 处理是否为管理员
     isAdminHandler(flag) {
-      switch (flag) {
-        case 0:
-          this.isAdmin = false;
-          break;
-        case 1:
-          this.isAdmin = true;
-          break;
-        default:
-          break;
-      }
+      if (flag) this.isAdmin = true;
+      else this.isAdmin = false;
     },
     // 获取用户信息,判断权限问题
     getUserInfo() {
@@ -122,7 +115,7 @@ export default {
           this.team = res.data.data.team;
           this.in_team = res.data.data.in_team;
           this.privilege = res.data.data.privilege;
-          this.isAdminHandler(this.privilege);
+          this.isAdminHandler(res.data.data.privilege);
           this.isInTeam(this.in_team);
         }
       });

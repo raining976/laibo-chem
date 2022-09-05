@@ -20,13 +20,13 @@
           <el-input v-model="teamId" :disabled="true"></el-input>
         </el-form-item>
         <el-form-item :label="$t('team.name')" prop="name">
-          <el-input v-model="ruleForm.name"></el-input>
+          <el-input v-model="ruleForm.name" :disabled="!isAdmin"></el-input>
         </el-form-item>
         <el-form-item :label="$t('base.email')" prop="email">
-          <el-input v-model="ruleForm.email"></el-input>
+          <el-input v-model="ruleForm.email" :disabled="!isAdmin"></el-input>
         </el-form-item>
         <el-form-item :label="$t('base.phone')" prop="phone">
-          <el-input v-model="ruleForm.phone"></el-input>
+          <el-input v-model="ruleForm.phone" :disabled="!isAdmin"></el-input>
         </el-form-item>
         <el-form-item
           :label="$t('base.country')"
@@ -37,6 +37,7 @@
             v-model="ruleForm.countryCode"
             :showAreaCode="false"
             :onchange="countryChange(ruleForm.countryCode)"
+            :disabled="!isAdmin"
           >
           </vue3-country-intl>
         </el-form-item>
@@ -51,18 +52,19 @@
             v-model="ruleForm.selectedOptions"
             @change="addressChange"
             :placeholder="$t('base.teamAddress')"
+            :disabled="!isAdmin"
           ></el-cascader>
         </el-form-item>
         <el-form-item :label="$t('address.full')" prop="address">
-          <el-input v-model="ruleForm.address"></el-input>
+          <el-input v-model="ruleForm.address" :disabled="!isAdmin"></el-input>
         </el-form-item>
         <el-form-item :label="$t('team.privilege')" prop="order_check">
-          <el-radio-group v-model="ruleForm.order_check">
-            <el-radio :label="1">{{ $t("team.need") }}</el-radio>
+          <el-radio-group v-model="ruleForm.order_check" :disabled="!isAdmin">
             <el-radio :label="0">{{ $t("team.noNeed") }}</el-radio>
+            <el-radio :label="1">{{ $t("team.need") }}</el-radio>
           </el-radio-group></el-form-item
         >
-        <el-form-item>
+        <el-form-item v-if="isAdmin">
           <el-button type="primary" @click="submitForm('ruleForm')">{{
             $t("base.submit")
           }}</el-button>
@@ -84,6 +86,9 @@ export default {
   components: {
     vue3CountryIntl,
   },
+  props:{
+    isAdmin:Boolean,
+  },
   data() {
     // var checkAge = (rule, value, callback) => {
     //   if (!value) {
@@ -101,7 +106,6 @@ export default {
     //     }
     //   }, 1000);
     // };
-
     return {
       options: regionData, // 选择器的data
       teamId: "", // 团队id
@@ -114,6 +118,7 @@ export default {
         selectedOptions: [],
         order_check: 1,
         address: "", // 详细地址
+        
       },
       rules: {
         name: [
@@ -158,7 +163,9 @@ export default {
             trigger: "blur",
           },
         ],
-        order_check: [{ required: true, message: "请选择订单权限", trigger: "blur" }],
+        order_check: [
+          { required: true, message: "请选择订单权限", trigger: "blur" },
+        ],
       },
     };
   },
@@ -203,9 +210,8 @@ export default {
         sx: Number(this.ruleForm.selectedOptions[2]),
         dz: this.ruleForm.address,
       };
-
       if (this.isEdit) {
-        form.id = this.teamId
+        form.id = this.teamId;
         this.$http
           .post("/editTeam", form)
           .then((res) => {
@@ -261,7 +267,7 @@ export default {
             this.ruleForm.countryCode = response.gj;
             this.ruleForm.selectedOptions = handleSingleCode(response.sx);
             this.ruleForm.address = response.dz;
-            if (Response.order_check) {
+            if (response.order_check) {
               this.ruleForm.order_check = 1;
             } else this.ruleForm.order_check = 0;
           } else {

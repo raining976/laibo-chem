@@ -1,7 +1,7 @@
 //createDate:2022-08-05
 <template>
   <div class="editTeam">
-    <create-team />
+    <create-team :isAdmin="isAdmin" />
   </div>
 </template>
 <script>
@@ -11,15 +11,23 @@ export default {
   components: {
     createTeam,
   },
-  data(){
-    return{
-      isEdit:true,
-    }
+  data() {
+    return {
+      isEdit: true,
+      isAdmin: false,
+    };
   },
-  created(){
-    
-    // console.log('this.$route.query',this.$route.query.isEdit)
-  }
+  beforeMount() {
+    this.$http.get("/userInfo").then((res) => {
+      if (res.data.code == 20000) {
+        let _isAdmin = res.data.data.privilege;
+        if(_isAdmin){
+          this.isAdmin = true
+        }else this.isAdmin = false
+
+      }
+    });
+  },
 };
 </script>
 <style scoped>
