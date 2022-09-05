@@ -20,16 +20,10 @@
           </div>
         </div>
         <div class="btnBox">
-          <div
-            class="btn ignore"
-            @click="handleApplication(0,index)"
-          >
+          <div class="btn ignore" @click="handleApplication(0, index)">
             {{ $t("team.refuse") }}
           </div>
-          <div
-            class="btn agree"
-            @click="handleApplication(1,index)"
-          >
+          <div class="btn agree" @click="handleApplication(1, index)">
             {{ $t("team.agree") }}
           </div>
         </div>
@@ -55,18 +49,18 @@ export default {
       }
     },
     // 处理申请加入团队
-    handleApplication(flag,idx) {
+    handleApplication(flag, idx) {
       if (flag == 0) {
         this.warningTip(idx);
       } else {
-        this.handleFun(flag,idx);
+        this.handleFun(flag, idx);
       }
     },
-    handleFun(flag,idx) {
+    handleFun(flag, idx) {
       this.$http
         .post("/teamApplication", {
           id: this.notices[idx].id,
-          status:flag,
+          status: String(flag), // num格式 string测试用 
         })
         .then((res) => {
           if (res.data.code == 20000) {
@@ -74,6 +68,8 @@ export default {
               message: "处理成功",
               type: "success",
             });
+            this.$parent.refreshKey++;
+            this.$parent.noticeKey++;
           } else {
             this.$message({
               message: res.data.msg,
@@ -97,7 +93,7 @@ export default {
         type: "warning",
       })
         .then(() => {
-          this.handleFun(0,index);
+          this.handleFun(0, index);
         })
         .catch(() => {
           this.$message({

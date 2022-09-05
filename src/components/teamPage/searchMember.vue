@@ -7,9 +7,12 @@
         <input
           type="text"
           :placeholder="$t('base.enter') + $t('team.member')"
+          v-model="keywords"
         />
       </div>
-      <div class="searchBtn">{{ $t("base.query") }}</div>
+      <div class="searchBtn" @click="searchTeammate()">
+        {{ $t("base.query") }}
+      </div>
     </div>
     <div class="listBox">
       <h3 class="listTitle">{{ $t("team.teamMember") }}</h3>
@@ -33,7 +36,7 @@
           <span class="email">{{ item.email }}</span>
           <span class="phone">{{ item.phone }}</span>
           <span class="privilege">{{ item.privilege }}</span>
-          <span class="operation">{{$t('base.dele')}}</span>
+          <span class="operation">{{ $t("base.dele") }}</span>
         </li>
       </ul>
       <div class="layPage">
@@ -58,93 +61,12 @@ export default {
     return {
       currentPage: 1, // 当前页数
       pageSize: 10, // 每页条数
-      memberList: [
-        {
-          name: "张三",
-          email: "123456789@163.com",
-          phone: "1008610086",
-          privilege: "负责人",
-        },
-        {
-          name: "张三",
-          email: "123456789@163.com",
-          phone: "1008610086",
-          privilege: "成员",
-        },
-        {
-          name: "张三",
-          email: "123456789@163.com",
-          phone: "1008610086",
-          privilege: "成员",
-        },
-        {
-          name: "张三",
-          email: "123456789@163.com",
-          phone: "1008610086",
-          privilege: "成员",
-        },
-        {
-          name: "张三",
-          email: "123456789@163.com",
-          phone: "1008610086",
-          privilege: "成员",
-        },
-        {
-          name: "张三",
-          email: "123456789@163.com",
-          phone: "1008610086",
-          privilege: "成员",
-        },
-        {
-          name: "张三",
-          email: "123456789@163.com",
-          phone: "1008610086",
-          privilege: "成员",
-        },
-        {
-          name: "张三",
-          email: "123456789@163.com",
-          phone: "1008610086",
-          privilege: "成员",
-        },
-        {
-          name: "张三",
-          email: "123456789@163.com",
-          phone: "1008610086",
-          privilege: "成员",
-        },
-        {
-          name: "张三",
-          email: "123456789@163.com",
-          phone: "1008610086",
-          privilege: "成员",
-        },
-        {
-          name: "张三",
-          email: "123456789@163.com",
-          phone: "1008610086",
-          privilege: "成员",
-        },
-        {
-          name: "张三",
-          email: "123456789@163.com",
-          phone: "1008610086",
-          privilege: "成员",
-        },
-        {
-          name: "张三",
-          email: "123456789@163.com",
-          phone: "1008610086",
-          privilege: "成员",
-        },
-        {
-          name: "张三",
-          email: "123456789@163.com",
-          phone: "1008610086",
-          privilege: "成员",
-        },
-      ],
+      memberList: [],
+      keywords: "", // 搜索成员关键字
     };
+  },
+  mounted() {
+    this.getTeamMember();
   },
   methods: {
     // 页面给改变时
@@ -153,6 +75,79 @@ export default {
     },
     handleSizeChange(val) {
       this.pageSize = val;
+    },
+
+    // 获取团队成员
+    getTeamMember() {
+      this.$http
+        .get("/team")
+        .then((res) => {
+          if (res.data.code == 20000) {
+            this.memberList = this.handlePrivilege(res.data.data.memberList);
+          } else {
+            this.$message({
+              message: res.data.msg,
+              type: "error",
+            });
+          }
+        })
+        .catch((err) => {
+          console.log("err", err);
+          this.$message({
+            message: "未知错误!",
+            type: "error",
+          });
+        });
+    },
+    // 搜索团队成员
+    searchTeammate() {
+      if (this.keywords != "") {
+        this.$http
+          .post("/searchTeammate", {
+            name: this.keywords,
+            phone: "",
+          })
+          .then((res) => {
+            if (res.data.code == 20000) {
+              let message;
+              if (!res.data.data) {
+                message = ",空空如也~";
+                this.memberList = []
+              } else {
+                this.memberList = this.handlePrivilege(
+                  res.data.data.memberList
+                );
+                message = "";
+              }
+              this.$message({
+                message: "查询成功" + message,
+                type: "success",
+              });
+            } else {
+              this.$message({
+                message: res.data.msg,
+                type: "error",
+              });
+            }
+          })
+          .catch((err) => {
+            console.log("err", err);
+            this.$message({
+              message: "未知错误!",
+              type: "error",
+            });
+          });
+      }
+    },
+
+    // 将数字或bool转化成文字
+    handlePrivilege(array) {
+      array.forEach((item) => {
+        if (item.privilege) {
+          item.privilege = "管理员";
+        } else item.privilege = "成员";
+      });
+      return array;
     },
   },
 };

@@ -27,7 +27,12 @@
           </el-badge>
         </el-tooltip>
         <!-- 通知模态框 -->
-        <notice v-show="isNoticeShow" ref="notice" :notices="notices" />
+        <notice
+          v-show="isNoticeShow"
+          ref="notice"
+          :notices="notices"
+          :key="noticeKey"
+        />
       </div>
     </div>
     <div class="content">
@@ -50,6 +55,7 @@ export default {
       isNoticeShow: false,
       isAdmin: true, // 是否为管理员,默认是
       refreshKey: 0, // 刷新key
+      noticeKey: 0, // notice刷新key
       notices: [], // 申请加入团队的通知列表
     };
   },
@@ -127,7 +133,9 @@ export default {
       if (this.isAdmin) {
         this.$http.get("/team").then((res) => {
           if (res.data.code == 20000) {
-            this.notices = res.data.data.acceptList;
+            if (res.data.data) {
+              this.notices = res.data.data.acceptList;
+            } else this.notices = [];
           }
         });
       }
