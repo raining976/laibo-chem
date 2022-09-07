@@ -6,7 +6,6 @@ import axios from 'axios';
 import VueI18n from './i18n/index'
 import interceptor from "./Interceptor/config"
 
-
 const app = createApp(App);
 app.config.globalProperties.$http = axios;
 // 挂载js-base64

@@ -1,16 +1,11 @@
 // 购物车
 //createDate:2022-07-17
 <template>
-  <div>
+  <div :key = "updata">
     <div class="top">
       <div class="title">
         {{
-          $t("userMenu.cart") +
-          "( " +
-          $t("cart.total") +
-          " : " +
-          allProducts +
-          ")"
+          $t("userMenu.cart") + "( " + $t("cart.total") + " : " + count + ")"
         }}
       </div>
       <div class="deleteBtn" @click="delProduct()">{{ $t("base.dele") }}</div>
@@ -28,12 +23,6 @@
             @change="checkAll()"
           />
           <label class="word" for="checkAll">{{ $t("cart.allCheck") }} </label>
-          <!-- <el-checkbox
-            v-model="checkAll"
-            :indeterminate="isIndeterminate"
-            @change="handleCheckAllChange"
-            >全选
-          </el-checkbox> -->
         </div>
         <div class="_productInfo word">{{ $t("order.productInfo") }}</div>
         <div class="_size word">{{ $t("order.size") }}</div>
@@ -71,18 +60,18 @@
               </div>
               <div class="infoBox">
                 <div class="name_zh" @click="toProductInfo()">
-                  {{ item0.orders.name }}
+                  {{ item0.name }}
                 </div>
                 <div class="infoWord">
-                  {{ $t("order.itemNo") + "：" }}{{ item0.orders.huohao }}
+                  {{ $t("order.itemNo") + "：" }}{{ item0.huohao }}
                 </div>
                 <div class="infoWord">
-                  {{ $t("order.casNum") + "：" }}{{ item0.orders.shopCart_id }}
+                  {{ $t("order.casNum") + "：" }}{{ item0.id }}
                 </div>
               </div>
             </div>
-            <div class="size">{{ item0.orders.guige }}</div>
-            <div class="price">{{ item0.orders.price }}</div>
+            <div class="size">{{ item0.guige }}</div>
+            <div class="price">{{ item0.price }}</div>
             <div class="count">
               <el-input-number
                 v-model="item0.count"
@@ -91,7 +80,7 @@
               ></el-input-number>
             </div>
             <!-- 关于金额的计算方式 -->
-            <div class="payment">{{ item0.orders.price * item0.count }}</div>
+            <div class="payment">{{ item0.price * item0.count }}</div>
           </div>
         </div>
       </div>
@@ -120,7 +109,7 @@
       </div>
       <div class="allMoney">
         {{ $t("cart.addUp") }}&nbsp;&nbsp;
-        <div>{{ money }}</div>
+        <div>{{ _money }}</div>
       </div>
       <div class="toPay" @click="toPay()">
         {{ $t("cart.to") + $t("cart.settlement") }}
@@ -141,10 +130,12 @@ export default {
       isSubmitMy: false, //判断是否提交个人订单
       num: 0, //计数器
       //
+      updata: 0, // 更新页面
       checkall: false,
-      checkedCommodities: [], //复选框有关
-      money: 578,
-      commodityBox: [], //v-for get
+      checkedCommodities: [], //复选框有关 存放选择商品
+      _money: 0,
+      count: 0,
+      // commodityBox: [], //v-for get
       commodityList: [
         // {
         //   name: "S915939 碳化硅, 99.9% metals basis,100目",
@@ -167,23 +158,27 @@ export default {
       ],
     };
   },
-  created() {
-    this.$http
-    .get("/cart", {
-      params: {
-
-      },
-    })
-    //回调函数
-    .then((res) => {
-      this.$data.commodityList = res.data.data;
-      console.log("ceshi", res.data.data);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-    this.addChecked();
+ async created() {
+    await this.getCart();
+    await this.addChecked();
   },
+  // created() {
+  //   Promise.all([
+  //     new Promise((resolve, reject) => {
+  //       this.getCart();
+  //       resolve("data1")
+  //     }),
+  //     new Promise((resolve, reject) => {
+  //       this.addChecked();
+  //       resolve("data2")
+  //     }),
+  //   ]).then((res) => {
+  //     console.log(res);
+  //     // 返回 = ['这个数据获取需要1秒', '这个数据获取需要5秒']
+  //     //此时在去执行渲染页面，就可以保证数据的获取
+  //     console.log("下面开始渲染表格等内容....");
+  //   })
+  // },
   // beforeUpdate() {
   //   this.commodityBox = [];
   // },
@@ -192,16 +187,19 @@ export default {
   // },
   computed: {
     // 购物车件数
-    allProducts() {
-      return this.$data.commodityList.length;
-    },
+    // allProducts() {
+    //   return this.$data.commodityList.length;
+    // },
     // 总计
-    money() {
-      let _money = this.$data.money;
-      this.$data.checkedCommodities.forEach((item) => {
-        _money += item.num * item.price;
-      });
-      this.$data.money = _money;
+    _money() {
+      let _money = this.$data._money;
+      if (this.$data.checkedCommodities.length !== 0) {
+        console.log("cehsijjjj", this.$data.checkedCommodities);
+        this.$data.checkedCommodities.forEach((item) => {
+          _money += item.count * item.price;
+        });
+        this.$data._money = _money;
+      }
       return _money; //return 回去的新值不会赋给data里的money ,因为html代码里的money相当于函数作为变量？
     },
   },
@@ -211,6 +209,23 @@ export default {
     //     this.commodityBox.push(el);
     //   }
     // },
+    // 获取购物车
+    async getCart() {
+      await this.$http
+        .get("/cart", {})
+        //回调函数
+        .then((res) => {
+          this.$data.count = res.data.data.count;
+          this.$data.commodityList = res.data.data.orders;
+          console.log("ceshi", this.$data.count);
+          console.log("ceshi", res.data.data);
+          console.log("ceshi,shuzu ", this.$data.commodityList);
+          // 后尝试改为监听数组变化
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
     // 跳转产品详情页（需传参）
     toProductInfo() {
       this.$router.push({
@@ -218,23 +233,119 @@ export default {
       });
     },
     toPay() {
-      if (this.$data.money > 0) {
+      if (this.$data._money > 0) {
+        
         this.$router.push({
           path: "/payment",
+          query: {
+            checkBox: this.$Base64.encode(JSON.stringify(this.$data.checkedCommodities)),
+          }
         });
       }
     },
-    //删除按钮
-    delProduct() {
+    //删除按钮--本地直接修改
+    delProduct0() {
       this.$data.checkall = false;
       this.$data.checkedCommodities = [];
       this.$data.commodityList = this.$data.commodityList.filter((item) => {
         return item.checked === false;
       });
     },
+    // 远端修改，后重新获取
+  async delProduct() {
+         if(this.$data.checkedCommodities.length !== 0) {
+           this.$data.checkall = false;
+          this.$data.checkedCommodities = [];
+          this.$data.commodityList.forEach(async(item) => {
+          if (item.checked === true) {
+            await this.$http
+                .post("/delCartProduct", {
+                  id: item.id,
+                })
+                //回调函数
+                .then((res) => {
+                  if (res.data.code == 20000) {
+                    this.$message({
+                      message: "删除成功",
+                      type: "success",
+                    });
+                  } else {
+                    this.$message({
+                      message: res.data.msg,
+                      type: "error",
+                    });
+                  }
+                })
+                .catch((err) => {
+                  this.$message({
+                    message: "未知错误!",
+                    type: "error",
+                  });
+                  console.log("err", err);
+                });
+            }
+          }); 
+        await this.getCart();
+        await this.addChecked();
+      }
+      this.$data.updata ++;
+    },
+    delProduct1() {
+      
+      //为什么this.$data.checkedCommodities ！== [] 失效
+      if(this.$data.checkedCommodities.length !== 0) {
+      Promise.all([
+        new Promise((resolve, reject) => {
+          this.$data.checkall = false;
+          this.$data.checkedCommodities = [];
+          this.$data.commodityList.forEach((item) => {
+            if (item.checked === true) {
+              this.$http
+                .post("/delCartProduct", {
+                  id: item.id,
+                })
+                //回调函数
+                .then((res) => {
+                  if (res.data.code == 20000) {
+                    this.$message({
+                      message: "删除成功",
+                      type: "success",
+                    });
+                  } else {
+                    this.$message({
+                      message: res.data.msg,
+                      type: "error",
+                    });
+                  }
+                })
+                .catch((err) => {
+                  this.$message({
+                    message: "未知错误!",
+                    type: "error",
+                  });
+                  console.log("err", err);
+                });
+            }
+          });
+        }),
+        new Promise((resolve, reject) => {
+          this.getCart();
+        }),
+        new Promise((resolve, reject) => {
+          this.addChecked();
+          console.log("fre")
+        }),
+      ]).then((res) => {
+        console.log(res);
+        // 返回 = ['这个数据获取需要1秒', '这个数据获取需要5秒']
+        //此时在去执行渲染页面，就可以保证数据的获取
+        console.log("下面开始渲染表格等内容....");
+      })
+    }
+    },
     //复选框相关
-    addChecked() {
-      //  function(){}
+    // 添加 checked属性
+  async addChecked() {
       this.$data.commodityList.forEach((item) => {
         Object.assign(item, { checked: false });
       });
@@ -288,7 +399,7 @@ export default {
     },
 
     //商品数量调节
-    handleChange(value) {
+    handleChange() {
       // console.log(value);
     },
     // 分页
@@ -472,11 +583,13 @@ export default {
   object-fit: contain;
 }
 .infoBox {
+  width: calc(100% - 198px);
   height: 165px;
+  overflow: hidden;
 }
 .name_zh {
   cursor: pointer;
-  height: 20px;
+  min-height: 20px;
   font-size: 18px;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
@@ -490,7 +603,7 @@ export default {
   text-decoration: underline;
 }
 .infoWord {
-  height: 18px;
+  min-height: 18px;
   font-size: 18px;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
@@ -524,7 +637,7 @@ export default {
   line-height: 30px;
 }
 .count >>> .el-input-number__decrease,
-.count >>>.el-input-number__increase {
+.count >>> .el-input-number__increase {
   width: 30px;
   height: 30px;
   line-height: 30px;
@@ -532,13 +645,14 @@ export default {
   border-radius: 2px;
   background: #eaebed;
 }
-.count >>> [class*=" el-icon-"], [class^=el-icon-]  {
+.count >>> [class*=" el-icon-"],
+[class^="el-icon-"] {
   font-weight: 600;
 }
 .count >>> .el-input-number__decrease {
   left: 0;
 }
-.count >>>.el-input-number__increase {
+.count >>> .el-input-number__increase {
   right: 0;
 }
 .count >>> .el-input__inner {
@@ -571,9 +685,9 @@ export default {
 .shopCart >>> .el-pagination.is-background .el-pager li:not(.disabled).active {
   background-color: #004ea2;
 }
-.shopCart >>>.el-pagination.is-background .btn-next,
-.shopCart >>>.el-pagination.is-background .btn-prev,
-.shopCart >>>.el-pagination.is-background .el-pager li {
+.shopCart >>> .el-pagination.is-background .btn-next,
+.shopCart >>> .el-pagination.is-background .btn-prev,
+.shopCart >>> .el-pagination.is-background .el-pager li {
   min-width: 40px;
   border-radius: 5px;
 }
