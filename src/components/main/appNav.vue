@@ -22,8 +22,8 @@
         </div>
         <!-- 你好客户 -->
         <div class="hello" v-if="isLogin" @click="toUserInfo()">
-          你好,{{ name }}!
-          <div class="menuBox" style="display:none">
+          {{ name }}
+          <div class="menuBox" style="display: none">
             <span class="sonMenu" @click="exit()">退出登录</span>
           </div>
         </div>
@@ -144,10 +144,10 @@ export default {
     },
     // 退出登录
     exit() {
+      this.$router.push("/mainPage");
       localStorage.removeItem("token");
       localStorage.removeItem("refresh");
       this.$message("退出登录成功");
-      this.$router.push("/mainPage");
       this.$parent.key++;
     },
   },
@@ -243,7 +243,7 @@ export default {
   cursor: pointer;
   margin-right: 77px;
 }
-.nav .hello:hover .menuBox{
+.nav .hello:hover .menuBox {
   display: flex !important;
 }
 .nav .hello .menuBox {

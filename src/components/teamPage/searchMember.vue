@@ -35,8 +35,22 @@
           <span class="name">{{ item.name }}</span>
           <span class="email">{{ item.email }}</span>
           <span class="phone">{{ item.phone }}</span>
-          <span class="privilege">{{ item.privilege }}</span>
-          <span class="operation">{{ $t("base.dele") }}</span>
+          <span class="privilege">{{ item.privilegeText }}</span>
+          <!-- <span class="operation">{{ $t("base.dele") }}</span> -->
+          <span class="operation">
+            <a-dropdown trigger="hover">
+              <a-button :disabled="item.privilege == 1 || !isAdmin">处理</a-button>
+              <template #content>
+                <a-doption
+                  :disabled="item.privilege == 1"
+                  @click="setAdmin(index)"
+                  >设为为管理员</a-doption
+                >
+                <a-doption>降为普通成员</a-doption>
+                <a-doption>删除成员</a-doption>
+              </template>
+            </a-dropdown></span
+          >
         </li>
       </ul>
       <div class="layPage">
@@ -55,6 +69,7 @@
   </div>
 </template>
 <script>
+
 export default {
   name: "searchMember",
   data() {
@@ -112,7 +127,7 @@ export default {
               let message;
               if (!res.data.data) {
                 message = ",空空如也~";
-                this.memberList = []
+                this.memberList = [];
               } else {
                 this.memberList = this.handlePrivilege(
                   res.data.data.memberList
@@ -144,10 +159,38 @@ export default {
     handlePrivilege(array) {
       array.forEach((item) => {
         if (item.privilege) {
-          item.privilege = "管理员";
-        } else item.privilege = "成员";
+          item.privilegeText = "管理员";
+        } else item.privilegeText = "成员";
       });
       return array;
+    },
+
+    // 提拔管理员
+    setAdmin(idx) {
+      this.$http
+        .post("/teamAdmin", {
+          id: this.memberList[idx].id,
+        })
+        .then((res) => {
+          if (res.data.code == 20000) {
+            this.$message({
+              message: "成功设置为管理员!",
+              type: "success",
+            });
+          } else {
+            this.$message({
+              message: res.data.msg,
+              type: "error",
+            });
+          }
+        })
+        .catch((err) => {
+          console.log("err", err);
+          this.$message({
+            message: "未知错误!",
+            type: "error",
+          });
+        });
     },
   },
 };

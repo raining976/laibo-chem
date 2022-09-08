@@ -94,4 +94,11 @@ textarea {
 .el-message{
   transform: scale(1.5);
 }
+body >>> .is-message-box {
+  transform: scale(1.5);
+}
+body >>> .is-message-box .el-button--primary {
+  background: var(--color);
+}
+
 </style>

@@ -5,6 +5,8 @@ import installElementPlus from './plugins/element'
 import axios from 'axios';
 import VueI18n from './i18n/index'
 import interceptor from "./Interceptor/config"
+// import ArcoVue from '@arco-design/web-vue';
+// import '@arco-design/web-vue/dist/arco.css';
 
 
 const app = createApp(App);
