@@ -90,7 +90,7 @@
                     </tbody>
                   </el-scrollbar>
                 </table>
-                <div class="addCart">
+                <div class="addCart" @click="addCart()">
                   {{ $t("search.add")
                   }}<img src="../../assets/gouwuche.png" alt="" />
                 </div>
@@ -139,33 +139,7 @@ export default {
         //   casCode: "",
         //   mdlCode: "",
         // },
-        // {
-        //   pic: require("../../assets/p22.png"),
-        //   name_zh: "2-(三丁基锡)-5-三氟甲基吡啶",
-        //   name_en: "2-(tributylstannyl)-5-(trifluoromethyl)pyridine",
-        //   huohao: "",
-        //   jiegoushi: "",
-        //   casCode: "",
-        //   mdlCode: "",
-        // },
-        // {
-        //   pic: require("../../assets/p22.png"),
-        //   name_zh: "2-(三丁基锡)-5-三氟甲基吡啶",
-        //   name_en: "2-(tributylstannyl)-5-(trifluoromethyl)pyridine",
-        //   huohao: "",
-        //   jiegoushi: "",
-        //   casCode: "",
-        //   mdlCode: "",
-        // },
-        // {
-        //   pic: require("../../assets/p22.png"),
-        //   name_zh: "2-(三丁基锡)-5-三氟甲基吡啶",
-        //   name_en: "2-(tributylstannyl)-5-(trifluoromethyl)pyridine",
-        //   huohao: "",
-        //   jiegoushi: "",
-        //   casCode: "",
-        //   mdlCode: "",
-        // },
+        
       ],
       productData: [
         // {
@@ -177,20 +151,6 @@ export default {
         // },
         // {
         //   huohao: "2016-05-02",
-        //   size: "Tom",
-        //   rmb: "California",
-        //   store: "Los Angeles",
-        //   num: 0,
-        // },
-        // {
-        //   huohao: "2016-05-04",
-        //   size: "Tom",
-        //   rmb: "California",
-        //   store: "Los Angeles",
-        //   num: 0,
-        // },
-        // {
-        //   huohao: "2016-05-04",
         //   size: "Tom",
         //   rmb: "California",
         //   store: "Los Angeles",
@@ -238,6 +198,39 @@ productData: {
         },
       });
   },
+  // 加入购物车
+  addCart() {
+      this.$data.productData.forEach((item) => {
+        if (item.num !== 0) {
+          this.$http
+            .post("/cart", {
+              product_params_id: item.id,
+              count: item.num,
+            })
+            //回调函数
+            .then((res) => {
+              if (res.data.code == 20000) {
+                this.$message({
+                  message: "添加成功",
+                  type: "success",
+                });
+              } else {
+                this.$message({
+                  message: res.data.msg,
+                  type: "error",
+                });
+              }
+            })
+            .catch((err) => {
+              this.$message({
+                message: "未知错误!",
+                type: "error",
+              });
+              console.log("err", err);
+            });
+        }
+      });
+    },
     // 分页
     handleSizeChange(val) {
       this.$data.pagesize = val;

@@ -75,10 +75,10 @@
           <div class="size">{{ item0.guige }}</div>
           <div class="price">{{ item0.price }}</div>
           <div class="count">
-            <div class="num">{{ item0.num }}</div>
+            <div class="num">{{ item0.count }}</div>
           </div>
           <!-- 关于金额的计算方式 -->
-          <div class="payment">{{ item0.num * item0.price }}</div>
+          <div class="payment">{{ item0.count * item0.price }}</div>
         </div>
       </div>
       <div class="pagination">
@@ -221,12 +221,16 @@ export default {
       ],
     };
   },
+  created() {
+    this.$data.commodityList = JSON.parse(this.$Base64.decode(this.$route.query.checkBox));
+    console.log(this.$data.commodityList,"cessss")
+  },
   computed: {
     allmoney() {
       let _allmoney = this.$data.allmoney;
       _allmoney += this.$data.freight;
       this.$data.commodityList.forEach((item) => {
-        _allmoney += item.num * item.price;
+        _allmoney += item.count * item.price;
       });
       this.$data.allmoney = _allmoney;
       return _allmoney;

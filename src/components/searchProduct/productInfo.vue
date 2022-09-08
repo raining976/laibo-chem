@@ -77,25 +77,24 @@
                 </tr>
               </thead>
               <el-scrollbar max-height="132px">
-                <tbody >
+                <tbody>
                   <!--一行 -->
                   <tr
                     class="tableContent"
                     v-for="(item, index) in productData.params"
-                    
                     :key="index"
                   >
-                  <!-- 遮罩 -->
-                  <td class="shadow" :ref="info"><div ></div></td>
+                    <!-- 遮罩 -->
+                    <td class="shadow" :ref="info"><div></div></td>
                     <td class="huohao">
-                      <div>{{ productData.id + '-' + item.weight }}</div>
+                      <div>{{ productData.id + "-" + item.weight }}</div>
                     </td>
                     <td class="size">
                       <div>{{ item.guige }}</div>
                     </td>
 
                     <td class="store">
-                      <div>111{{store }}</div>
+                      <div>111{{ store }}</div>
                     </td>
                     <td class="rmb">
                       <div>{{ item.price }}</div>
@@ -139,7 +138,7 @@ export default {
     return {
       isShow: false, // 私人订制是否显示
       num: 0,
-      infoBox:[],
+      infoBox: [],
       productData: [
         // {
         //   huohao: "B835581-25mg",
@@ -158,64 +157,77 @@ export default {
       ],
     };
   },
-   created() {
-      this.$http
-        .get("/product/detail", {
-          params: {
-            id: this.$route.query.id,
-          },
-        })
-        //回调函数
-        .then((res) => {
-          this.$data.productData = res.data.data;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-
+  created() {
+    this.$http
+      .get("/product/detail", {
+        params: {
+          id: this.$route.query.id,
+        },
+      })
+      //回调函数
+      .then((res) => {
+        this.$data.productData = res.data.data;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   },
-    mounted() {
-    // 
+  mounted() {
+    //
     window.scrollTo(0, 0);
-
   },
   watch: {
     productData: {
       handler() {
         this.$data.productData.params.forEach((item) => {
-          Object.assign(item, {num: 0});
-        })
-      }
-    }
+          Object.assign(item, { num: 0 });
+        });
+      },
+    },
   },
 
   methods: {
     //ref数组
     info(el) {
-         this.infoBox.push(el)
-        //  console.log("ces",this.infoBox);
+      this.infoBox.push(el);
+      //  console.log("ces",this.infoBox);
     },
-    // 设定只能选一个 
+    // 设定只能选一个
     chooce(id) {
-          this.infos[id] 
+      this.infos[id];
     },
     //
     addCart() {
-      this.$http
-        .post("/cart", {
-          params: {
-              product_params_id: this.$route.query.id,
-              // count: this.$data.num,
-          },
-        })
-        //回调函数
-        .then((res) => {
-           alert("添加成功",res)
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-
+      this.$data.productData.params.forEach((item) => {
+        if (item.num !== 0) {
+          this.$http
+            .post("/cart", {
+              product_params_id: item.id,
+              count: item.num,
+            })
+            //回调函数
+            .then((res) => {
+              if (res.data.code == 20000) {
+                this.$message({
+                  message: "添加成功",
+                  type: "success",
+                });
+              } else {
+                this.$message({
+                  message: res.data.msg,
+                  type: "error",
+                });
+              }
+            })
+            .catch((err) => {
+              this.$message({
+                message: "未知错误!",
+                type: "error",
+              });
+              console.log("err", err);
+            });
+        }
+      });
     },
     //商品数量调节
     handleChange(value) {
@@ -240,12 +252,12 @@ export default {
 }
 .productInfo {
   width: 1410px;
-  height: 749.95px;
-  margin: 76.99px 0 0 0;
+  min-height: 749.95px;
+  margin: 77px 0 20px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* overflow: hidden; */
+  overflow: hidden;
   position: relative;
 }
 .productInfoBox {
@@ -257,7 +269,7 @@ export default {
 .productPic {
   width: 505px;
   /* min-height: 542.02px; */
-height: 98%;
+  height: 98%;
   margin: 0 27.07px 0 0;
   border: 0.96px solid #999999;
   border-radius: 4.99px;
@@ -389,7 +401,7 @@ table tbody tr {
   text-align: center;
 }
 .tableContent {
-    position: relative;
+  position: relative;
 }
 .shadow {
   display: none;
@@ -436,26 +448,28 @@ table tbody tr {
   height: 31.5px;
   line-height: 31.5px;
 }
-.countBtnBox >>> .el-input-number__decrease, .count >>>.el-input-number__increase {
+.countBtnBox >>> .el-input-number__decrease,
+.count >>> .el-input-number__increase {
   width: 30px;
   height: 30px;
   line-height: 30px;
   border-radius: 2px;
   background: #eaebed;
 }
-.count >>> [class*=" el-icon-"], [class^=el-icon-]  {
+.count >>> [class*=" el-icon-"],
+[class^="el-icon-"] {
   font-weight: 600;
 }
 .countBtnBox >>> .el-input-number__decrease {
   left: 0;
 }
-.countBtnBox >>>.el-input-number__increase {
+.countBtnBox >>> .el-input-number__increase {
   right: 0;
 }
 .countBtnBox >>> .el-input__inner {
   position: absolute;
   top: 1px;
-left: 31px;
+  left: 31px;
   width: calc(100% - 62px);
   height: 29.5px;
   line-height: 29.5px;
