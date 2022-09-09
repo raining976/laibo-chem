@@ -1,4 +1,4 @@
-
+import { ElMessage } from 'element-plus'
 import { createRouter, createWebHashHistory } from "vue-router";
 // 路由懒加载
 // const main = () => import("../views/appMain.vue");
@@ -47,7 +47,7 @@ const routes = [
   // 重定向
   {
     path: "/",
-    redirect:"/mainPage"
+    redirect: "/mainPage"
   },
   {
     name: 'mainPage',
@@ -197,7 +197,8 @@ router.beforeEach((to, from, next) => {
     if (!token) {  // 没登录
       // this.$root.key++
       // this.$root.isShowLogIn = true
-      alert("请先登录!");
+      // alert("请先登录!");
+      ElMessage("请先登录!")
       next({
         path: '/',
       })

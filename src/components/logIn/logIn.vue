@@ -218,10 +218,6 @@ export default {
               .post("/login/", rule)
               .then((res) => {
                 if (res.data.code == 20000) {
-                  this.$message({
-                    message:"登录成功",
-                    type:"success"
-                  })
                   let token = res.data.data.access;
                   let refresh = res.data.data.refresh;
                   this.afterLogin(token, refresh);
