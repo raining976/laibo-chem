@@ -52,7 +52,7 @@ axios.interceptors.request.use(config => {
     if (token) {
         config.headers.Authorization = "Bearer " + token
     }
-    if (isTokenExpired() && !config.url.includes('/refresh')) {
+    if (isTokenExpired() && !config.url.includes('/refresh') && !config.url.includes("login")) {
         let formData = {}
         if (!isRefreshing) {
             isRefreshing = true
