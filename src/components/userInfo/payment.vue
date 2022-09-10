@@ -7,32 +7,57 @@
         <div class="title">{{ $t("cart.settlement") }}</div>
         <div class="returnBtn" @click="toShopCart()">{{ $t("base.back") }}</div>
       </div>
-      <div class="addressBox">
-        <ul class="addressList">
-          <!-- 以下v-for -->
-          <li
-            class="eachAddress"
-            v-for="(address, index) in addresses"
-            :key="index"
-            :class="{ border: index == flag }"
-            @click="chooseAddress(index)"
-          >
-            <p class="name">
-              {{ $t("address.name") }}&nbsp;:&nbsp;{{ address.name }}
-            </p>
-            <p class="phone">
-              {{ $t("base.phone") }}&nbsp;:&nbsp;{{ address.phone }}
-            </p>
-            <p class="address">
-              {{ $t("base.address") }}&nbsp;:&nbsp;{{ address.address }}
-            </p>
-            <div class="btnBox">
-              <div class="deleBtn" @click="deleteAddress()">删除地址</div>
-              <div class="editBtn" @click="editAddress()">修改地址</div>
-            </div>
-          </li>
-        </ul>
+
+      <div class="content">
+        <div class="addressBox">
+          <ul class="addressList">
+            <!-- v-for -->
+            <li
+              class="eachAddress"
+              v-for="(address, index) in addresses"
+              :key="index"
+              :class="{ border: index == isBorder }"
+              @click="chooseAddress(index, address.id)"
+            >
+              <p class="name">
+                {{ $t("address.name") }}&nbsp;:&nbsp;{{ address.name }}
+              </p>
+              <p class="phone">
+                {{ $t("base.phone") }}&nbsp;:&nbsp;{{ address.phone }}
+              </p>
+              <p class="address">
+                {{ $t("base.address") }}&nbsp;:&nbsp;{{ address.address }}
+              </p>
+              <div class="btnBox">
+                <div class="deleBtn icon_btn">
+                  <el-tooltip
+                    class="item"
+                    effect="light"
+                    content="删除地址"
+                    placement="top"
+                  >
+                    <i
+                      class="el-icon-delete-solid"
+                      @click="(curIdx = index), bounceMsg()"
+                    ></i>
+                  </el-tooltip>
+                </div>
+                <div class="editBtn icon_btn">
+                  <el-tooltip
+                    class="item"
+                    effect="light"
+                    content="修改地址"
+                    placement="top"
+                  >
+                    <i class="el-icon-edit" @click="editAddress(index)"></i>
+                  </el-tooltip>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
+
       <div class="freight">
         {{ $t("cart.fright") + "：" }}<strong>{{ freight }}</strong>
       </div>
@@ -95,6 +120,7 @@
         </el-pagination>
       </div>
     </div>
+    <address-form v-if="formIsShow" />
     <!-- 以下为支付方式-------------->
     <div class="payType">
       <div class="typeTitle">{{ $t("cart.payType") }}</div>
@@ -102,7 +128,7 @@
         <div
           class="type"
           :class="{ type_checked: wechar == true }"
-          @click="payType('wechar')"
+          @click="payType('wx')"
         >
           <div class="typeSign">
             <img src="../../assets/weixinzhifu.png" alt="" />
@@ -114,7 +140,7 @@
         <div
           class="type"
           :class="{ type_checked: zhifubao == true }"
-          @click="payType('zhifubao')"
+          @click="payType('alipay')"
         >
           <div class="typeSign">
             <img src="../../assets/zhifubao.png" alt="" />
@@ -151,26 +177,43 @@
         {{ $t("cart.total") }}&nbsp;&nbsp;&nbsp;
         <div>{{ allmoney }}</div>
       </div>
-      <div class="pay" @click="toPay()">{{ $t("cart.settlement") }}</div>
+      <div class="pay" @click="createOrder()">{{ $t("cart.settlement") }}</div>
     </div>
   </div>
 </template>
 <script>
+import handleAddress from "../../js/handlerAddress";
+import addressForm from "../address/addressForm.vue";
 export default {
-  name: "myOrder",
-  components: "",
+  name: "payment",
+  components: {
+    addressForm,
+  },
   data() {
     return {
       pagesize: 2, // 每页显示多少条
       currentPage: 1, // 当前页数
       pagerCount: 5, //五个以上加省略号
-      flag: 0, //用于地址框加边框
+
+      formIsShow: false, // 地址表单是否展示
+      curIdx: -1, // 当前选中要删除的索引
+      flag: 0, // 1为增加地址,2为修改地址
+      isReloadAddress: false, // 是否刷新地址
+      isBorder: -1, //用于地址框加边框
       wechar: false,
       zhifubao: false,
       geren: false,
       gongsi: false,
+      payWay: "",
+      addressId: 0, // 地址id
       freight: 0, //运费
       allmoney: 0, //总计
+      curAddress: {}, // 当前地址对象
+      pushProduct: {
+              product_params_id: 0,
+              count: 0,
+            },  //单个货物
+      orderBox: [], //订单汇总传参
       addresses: [
         {
           name: "张三",
@@ -187,43 +230,63 @@ export default {
           phone: "10086100861",
           address: "山东省青岛市高新区同顺路8号青岛网谷合心园2号楼902A",
         },
-        {
-          name: "张三",
-          phone: "10086100861",
-          address: "山东省青岛市高新区同顺路8号青岛网谷合心园2号楼902A",
-        },
-        {
-          name: "张三",
-          phone: "10086100861",
-          address: "山东省青岛市高新区同顺路8号青岛网谷合心园2号楼902A",
-        },
-      ],
+      ], // 地址列表
 
       commodityList: [
-         {
-          name: "S915939 碳化硅, 99.9% metals basis,100目",
-          huohao: "S915939-5g",
-          shopCart_id: 409 - 21 - 2,
-          guige: "99.9% metals basis,100目",
-          num: 1,
-          price: 39,
-          payment: 666,
-        },
-        {
-          name: "B835581 双(异硫氰酸)(2,2'-二吡啶基-4,4'-二甲酸)",
-          huohao: "B835581-100mg",
-          shopCart_id: "502693-09-6 ",
-          guige: "95%,NMR",
-          num: 1,
-          price: 539.0,
-          payment: 666,
-        },
+        // {
+        //   name: "S915939 碳化硅, 99.9% metals basis,100目",
+        //   huohao: "S915939-5g",
+        //   shopCart_id: 409 - 21 - 2,
+        //   guige: "99.9% metals basis,100目",
+        //   num: 1,
+        //   price: 39,
+        //   payment: 666,
+        // },
       ],
     };
   },
   created() {
-    this.$data.commodityList = JSON.parse(this.$Base64.decode(this.$route.query.checkBox));
-    console.log(this.$data.commodityList,"cessss")
+    this.getAddress();
+    this.$data.commodityList = JSON.parse(
+      localStorage.getItem("checkBox")
+    );
+    // this.$data.commodityList.forEach((item) => {
+
+    //            this.$data.pushProduct.product_params_id = item.id;
+    //            this.$data.pushProduct.count = item.count;
+    //            this.$data.orderBox.push(this.$data.pushProduct); //一个一个存
+    //            this.$data.pushProduct.product_params_id = 0;
+    //            this.$data.pushProduct.count = 0;
+    //            console.log(this.$data.orderBox,"ceshi1111");
+    //       })
+
+  },
+  watch: {
+    isReloadAddress(val) {
+      if (val) {
+        this.getAddress();
+        this.isReloadAddress = false;
+      }
+    },
+    commodityList:{
+        handler() {
+           this.$nextTick(() => {
+          let obj;
+          this.$data.commodityList.forEach((item) => {
+
+               this.$data.pushProduct.product_params_id = item.id;
+               this.$data.pushProduct.count = item.count;
+               obj = JSON.stringify(this.$data.pushProduct);    //深拷贝
+              //  console.log(JSON.parse(obj),"ccccc")
+               this.$data.orderBox.push(JSON.parse(obj)); //一个一个存
+              //  console.log(this.$data.orderBox,"ceshi1111");
+               this.$data.pushProduct.product_params_id = 0;
+               this.$data.pushProduct.count = 0;
+               
+          })
+       })   
+        }
+    }
   },
   computed: {
     allmoney() {
@@ -237,6 +300,17 @@ export default {
     },
   },
   methods: {
+    getAddress() {
+      this.$http.get("/address").then((res) => {
+        if (res.data.code == 20000) {
+          if (!res.data.data) {
+            this.addresses = [];
+          } else {
+            this.addresses = handleAddress(res.data.data);
+          }
+        }
+      });
+    },
     toShopCart() {
       this.$router.push({
         path: "cart",
@@ -247,10 +321,62 @@ export default {
         path: "/productInfo",
       });
     },
-    // 修改地址
-    editAddress() {},
-    // 修改地址
-    deleteAddress() {},
+    // 修改地址------------------
+    editAddress(idx) {
+      this.flag = 2;
+      this.curAddress = this.addresses[idx];
+      console.log("this.curAddress", this.curAddress);
+      this.formIsShow = true;
+    },
+    // 删除地址
+    bounceMsg() {
+      this.$confirm("此操作将永久删除该地址, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+        center: true,
+      })
+        .then(() => {
+          this.delAddress();
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除",
+          });
+        });
+    },
+    delAddress() {
+      this.$http
+        .post("/delAddress", {
+          id: this.addresses[this.curIdx].id,
+        })
+        .then((res) => {
+          if (res.data.code == 20000) {
+            this.$message({
+              message: "删除成功",
+              type: "success",
+            });
+            this.isReloadAddress = true;
+          } else {
+            this.$message({
+              message: res.data.msg,
+              type: "error",
+            });
+          }
+        })
+        .catch((err) => {
+          this.$message({
+            message: "未知错误!",
+            type: "error",
+          });
+          console.log("err", err);
+        });
+    },
+    chooseAddress(id,code) {
+      this.$data.isBorder = id;
+       this.$data.addressId = code;
+    },
     // 分页---
     handleSizeChange(val) {
       this.$data.pagesize = val;
@@ -260,18 +386,17 @@ export default {
       this.$data.currentPage = val;
       // console.log(`当前页: ${val}`);
     },
-    chooseAddress(id) {
-      this.$data.flag = id;
-    },
+
     payType(str) {
+      this.$data.payWay = str;
       switch (str) {
-        case "wechar":
+        case "wx":
           this.$data.wechar = true;
           this.$data.zhifubao = false;
           this.$data.geren = false;
           this.$data.gongsi = false;
           break;
-        case "zhifubao":
+        case "alipay":
           this.$data.wechar = false;
           this.$data.zhifubao = true;
           this.$data.geren = false;
@@ -291,11 +416,91 @@ export default {
           break;
       }
     },
-    toPay() {},
+    toPay() {
+      // 判断是否选择支付方式
+      if(!this.$data.payWay) {
+        this.$message({
+                message: "尚未选择支付类型",
+                type: "error",
+              });
+      }
+      else if (this.$data.payWay) {
+        this.$http
+          .get("/pay", {
+            order_no: 0,
+            type: this.$data.payWay,
+          })
+          .then((res) => {
+            if (res.data.code == 20000) {
+              this.$message({
+                message: "支付成功",
+                type: "success",
+              });
+              // 创建订单
+              this.createOrder(); 
+            } else {
+              this.$message({
+                message: res.data.msg,
+                type: "error",
+              });
+            }
+          })
+          .catch((err) => {
+            this.$message({
+              message: "未知错误!",
+              type: "error",
+            });
+            console.log("err", err);
+          });
+      }
+    },
+    createOrder() {
+      if(this.$data.addressId === -1) {
+        this.$message({
+                message: "尚未选择收货地址",
+                type: "error",
+              });
+      }
+      else  {
+        this.$http
+          .post("/createOrder", {
+            // products: {
+            //   product_params_id: item.id,
+            //   count: item.count,
+            // },
+            products: this.$data.orderBox,
+            type: JSON.parse(localStorage.getItem("isSubmitMy")),
+            address: this.$data.addressId,
+          })
+          .then((res) => {
+            if (res.data.code == 20000) {
+              this.$message({
+                message: "创建订单成功",
+                type: "success",
+              });
+            } else {
+              this.$message({
+                message: res.data.msg,
+                type: "error",
+              });
+            }
+          })
+          .catch((err) => {
+            this.$message({
+              message: "未知错误!",
+              type: "error",
+            });
+            console.log("err", err);
+          });
+      }
+    },
   },
 };
 </script>
 <style scoped>
+.paymentPage {
+  position: relative;
+}
 .top {
   width: 100%;
   margin-bottom: 20px;
@@ -384,6 +589,32 @@ export default {
 }
 .deleBtn {
   color: rgb(164, 72, 72);
+}
+.detailedAddress {
+  width: 494px;
+  height: 163px;
+  border: 2px solid #999999;
+  border-radius: 5px;
+}
+
+.addAddress {
+  margin-left: 10px;
+  transform: scale(1.5);
+  transform-origin: center;
+  cursor: pointer;
+  transition: 0.3s;
+  background-color: #e3f5ff;
+  border-radius: 10px;
+}
+.addAddress:hover {
+  transform: scale(1.7);
+  color: var(--color);
+  box-shadow: 0px 17px 29px -11px #c7c7c9;
+  --webkit-box-shadow: 0px 17px 29px -11px #c7c7c9;
+  --moz-box-shadow: 0px 17px 29px -11px #c7c7c9;
+}
+.icon_btn >>> i {
+  transform: scale(1.5);
 }
 .freight {
   /* width: 142px; */
@@ -491,11 +722,13 @@ export default {
   object-fit: contain;
 }
 .infoBox {
+  width: calc(100% - 198px);
   height: 165px;
+  overflow: hidden;
 }
 .name_zh {
   cursor: pointer;
-  height: 20px;
+  min-height: 20px;
   font-size: 18px;
   font-family: Microsoft YaHei UI;
   font-weight: 400;

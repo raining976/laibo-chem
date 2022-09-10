@@ -27,7 +27,7 @@ const searchMember = () => import("../components/teamPage/searchMember.vue");
 
 // 新闻/文章页
 const moreNewsArticle = () => import("../views/toMoreNewsArticle/moreNewsArtcle.vue")
-
+const content = () => import("../views/toMoreNewsArticle/content.vue");
 
 
 const routes = [
@@ -78,6 +78,17 @@ const routes = [
     name: "moreNewsArticle",
     components: {
       table: moreNewsArticle,
+      search: searchHead,
+    },
+    meta: {
+      keepAlive: true,
+    }
+  },
+  {
+    path: "/content/:id",
+    name: "content",
+    components: {
+      table: content,
       search: searchHead,
     }
   },

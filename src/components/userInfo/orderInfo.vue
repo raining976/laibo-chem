@@ -126,46 +126,52 @@ export default {
         },
       ],
       commodityList: [
-        {
-          name: "1",
-          huohao: "2",
-          shopCart_id: 3,
-          guige: "95%",
-          num: 2,
-          price: 5,
-          payment: 666,
-        },
-        {
-          name: "1",
-          huohao: "2",
-          shopCart_id: 3,
-          guige: "%",
-          num: 2,
-          price: 10,
-          payment: 666,
-        },
-        {
-          name: "1",
-          huohao: "2",
-          shopCart_id: 3,
-          guige: "%",
-          num: 2,
-          price: 50,
-          payment: 666,
-        },
-        {
-          name: "1",
-          huohao: "2",
-          shopCart_id: 3,
-          guige: "%",
-          num: 2,
-          price: 55,
-          payment: 666,
-        },
+        // {
+        //   name: "1",
+        //   huohao: "2",
+        //   shopCart_id: 3,
+        //   guige: "95%",
+        //   num: 2,
+        //   price: 5,
+        //   payment: 666,
+        // },
+        // {
+        //   name: "1",
+        //   huohao: "2",
+        //   shopCart_id: 3,
+        //   guige: "%",
+        //   num: 2,
+        //   price: 10,
+        //   payment: 666,
+        // },
       ],
     };
   },
+  created() {
+      this.getOrderInfo();
+ },
  methods: {
+     getOrderInfo() {
+        this.$http
+        .get("/cart", {
+          order_id: 0, // 暂定
+        })
+        //回调函数
+        .then((res) => {
+           if(!res.data.data){
+             this.$data.commodityList = [];
+          }
+          else {
+ // 应该获取对象？
+          this.$data.commodityList = res.data.data;
+          console.log("ceshi", res.data.data);
+          console.log("ceshi,shuzu ", this.$data.commodityList);
+          }     
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+     },
      toMyOrder() {
       this.$router.push({
         path: "/order",

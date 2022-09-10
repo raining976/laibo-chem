@@ -44,36 +44,20 @@ export default {
           type: this.$t('home.companyNews'),
           pic: require("../../assets/p7.png"),
           newsList: [
-            {
-              newsTitle: "莱博斯威2022春节发货通知",
-              pubdate: "01-20",
-            },
-            {
-              newsTitle: "莱博斯威2022春节发货通知",
-              pubdate: "01-20",
-            },
-            {
-              newsTitle: "莱博斯威2022春节发货通知",
-              pubdate: "01-20",
-            },
+            // {
+            //   newsTitle: "莱博斯威2022春节发货通知",
+            //   pubdate: "01-20",
+            // },
           ],
         },
                 {
           type: this.$t('home.technicalArticle'),
           pic: require("../../assets/p7.png"),
           newsList: [
-            {
-              newsTitle: "莱博斯威2022春节发货通知",
-              pubdate: "01-20",
-            },
-            {
-              newsTitle: "莱博斯威2022春节发货通知",
-              pubdate: "01-20",
-            },
-            {
-              newsTitle: "莱博斯威2022春节发货通知",
-              pubdate: "01-20",
-            },
+            // {
+            //   newsTitle: "莱博斯威2022春节发货通知",
+            //   pubdate: "01-20",
+            // },
           ],
         },
       ],
@@ -115,11 +99,9 @@ export default {
   },
   methods:{
     toMoreNewsArticle(name) {
+      localStorage.setItem("type",name);
       this.$router.push({
         path: "/moreNewsArticle",
-        query: {
-          type: name,
-        },
         // 传参
       });
     },

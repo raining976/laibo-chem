@@ -75,7 +75,8 @@
             <div class="count">
               <el-input-number
                 v-model="item0.count"
-                @change="handleChange"
+                @click="numChange(item0)"
+                
                 :min="0"
               ></el-input-number>
             </div>
@@ -100,10 +101,10 @@
     </div>
     <!-- 底部购买 -->
     <div class="footer">
-      <div class="submitMy" @click="submitMy()">
+      <div class="submitMy" @click="isSubmitMy()">
         <div
           class="submitMyBtn"
-          :class="{ agree_submitMy: isSubmitMy == true }"
+          :class="{ agree_submitMy: submitMy == 0 }"
         ></div>
         {{ $t("cart.submitOwn") }}
       </div>
@@ -127,7 +128,7 @@ export default {
       pagesize: 3, // 每页显示多少条
       currentPage: 1, // 当前页数
       pagerCount: 5, //五个以上加省略号
-      isSubmitMy: false, //判断是否提交个人订单
+      submitMy: 1, //判断是否提交个人订单
       num: 0, //计数器
       //
       updata: 0, // 更新页面
@@ -146,15 +147,6 @@ export default {
         //   price: 39,
         //   payment: 666,
         // },
-        // {
-        //   name: "B835581 双(异硫氰酸)(2,2'-二吡啶基-4,4'-二甲酸)",
-        //   huohao: "B835581-100mg",
-        //   shopCart_id: "502693-09-6 ",
-        //   guige: "95%,NMR",
-        //   num: 0,
-        //   price: 539.0,
-        //   payment: 666,
-        // },
       ],
     };
   },
@@ -162,23 +154,6 @@ export default {
     await this.getCart();
     await this.addChecked();
   },
-  // created() {
-  //   Promise.all([
-  //     new Promise((resolve, reject) => {
-  //       this.getCart();
-  //       resolve("data1")
-  //     }),
-  //     new Promise((resolve, reject) => {
-  //       this.addChecked();
-  //       resolve("data2")
-  //     }),
-  //   ]).then((res) => {
-  //     console.log(res);
-  //     // 返回 = ['这个数据获取需要1秒', '这个数据获取需要5秒']
-  //     //此时在去执行渲染页面，就可以保证数据的获取
-  //     console.log("下面开始渲染表格等内容....");
-  //   })
-  // },
   // beforeUpdate() {
   //   this.commodityBox = [];
   // },
@@ -192,7 +167,7 @@ export default {
     // },
     // 总计
     _money() {
-      let _money = this.$data._money;
+      let _money = 0;
       if (this.$data.checkedCommodities.length !== 0) {
         console.log("cehsijjjj", this.$data.checkedCommodities);
         this.$data.checkedCommodities.forEach((item) => {
@@ -220,7 +195,6 @@ export default {
           console.log("ceshi", this.$data.count);
           console.log("ceshi", res.data.data);
           console.log("ceshi,shuzu ", this.$data.commodityList);
-          // 后尝试改为监听数组变化
         })
         .catch((err) => {
           console.log(err);
@@ -234,22 +208,23 @@ export default {
     },
     toPay() {
       if (this.$data._money > 0) {
-        
+        localStorage.setItem("checkBox",JSON.stringify(this.$data.checkedCommodities));
+        localStorage.setItem("isSubmitMy", JSON.stringify(this.$data.submitMy));
         this.$router.push({
           path: "/payment",
-          query: {
-            checkBox: this.$Base64.encode(JSON.stringify(this.$data.checkedCommodities)),
-          }
+          // query: {
+            // checkBox: this.$Base64.encode(JSON.stringify(this.$data.checkedCommodities)),
+          // }
         });
       }
-    },
-    //删除按钮--本地直接修改
-    delProduct0() {
-      this.$data.checkall = false;
-      this.$data.checkedCommodities = [];
-      this.$data.commodityList = this.$data.commodityList.filter((item) => {
-        return item.checked === false;
-      });
+    }, 
+   //提交到个人订单
+    isSubmitMy() {
+      if (this.$data.submitMy === 1) {
+        this.$data.submitMy = 0; // 个人
+      } else if (this.$data.submitMy === 0) {
+        this.$data.submitMy = 1; // 集体
+      }
     },
     // 远端修改，后重新获取
   async delProduct() {
@@ -289,59 +264,6 @@ export default {
         await this.addChecked();
       }
       this.$data.updata ++;
-    },
-    delProduct1() {
-      
-      //为什么this.$data.checkedCommodities ！== [] 失效
-      if(this.$data.checkedCommodities.length !== 0) {
-      Promise.all([
-        new Promise((resolve, reject) => {
-          this.$data.checkall = false;
-          this.$data.checkedCommodities = [];
-          this.$data.commodityList.forEach((item) => {
-            if (item.checked === true) {
-              this.$http
-                .post("/delCartProduct", {
-                  id: item.id,
-                })
-                //回调函数
-                .then((res) => {
-                  if (res.data.code == 20000) {
-                    this.$message({
-                      message: "删除成功",
-                      type: "success",
-                    });
-                  } else {
-                    this.$message({
-                      message: res.data.msg,
-                      type: "error",
-                    });
-                  }
-                })
-                .catch((err) => {
-                  this.$message({
-                    message: "未知错误!",
-                    type: "error",
-                  });
-                  console.log("err", err);
-                });
-            }
-          });
-        }),
-        new Promise((resolve, reject) => {
-          this.getCart();
-        }),
-        new Promise((resolve, reject) => {
-          this.addChecked();
-          console.log("fre")
-        }),
-      ]).then((res) => {
-        console.log(res);
-        // 返回 = ['这个数据获取需要1秒', '这个数据获取需要5秒']
-        //此时在去执行渲染页面，就可以保证数据的获取
-        console.log("下面开始渲染表格等内容....");
-      })
-    }
     },
     //复选框相关
     // 添加 checked属性
@@ -398,9 +320,18 @@ export default {
       }
     },
 
-    //商品数量调节
-    handleChange() {
-      // console.log(value);
+    //商品数量调节---点击的话两个数组都会更改，但为防止意外做补充：选中后在更改数目
+    // handleChange() {
+
+    // },
+    numChange(handler) {
+         if (handler.checked === true) {
+        this.$data.checkedCommodities.forEach((item)=> {
+            if(item.name === handler.name)
+            item.count = handler.count;
+        });
+      }
+
     },
     // 分页
     handleSizeChange(val) {
@@ -411,14 +342,7 @@ export default {
       this.$data.currentPage = val;
       // console.log(`当前页: ${val}`);
     },
-    //提交到个人订单
-    submitMy() {
-      if (this.$data.isSubmitMy == false) {
-        this.$data.isSubmitMy = true;
-      } else if (this.$data.isSubmitMy == true) {
-        this.$data.isSubmitMy = false;
-      }
-    },
+
   },
 };
 </script>

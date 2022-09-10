@@ -95,7 +95,33 @@ export default {
       ],
     };
   },
+  created() {
+   this.getORders();
+
+  },
   methods: {
+    // 获取订单
+    getOrders() {
+       this.$http
+        .get("/order", {
+          page: 3,
+        })
+        //回调函数
+        .then((res) => {
+          if(!res.data.data){
+             this.$data.orderList = [];
+          }
+          // this.$data.count = res.data.data.count;
+          else {
+            this.$data.orderList = res.data.data.orderList;
+          console.log("ceshi", res.data.data);
+          console.log("ceshi,shuzu ", this.$data.orderList); 
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
     // 分页
     handleSizeChange(val) {
       this.$data.pagesize = val;
