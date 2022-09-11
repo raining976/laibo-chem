@@ -24,81 +24,87 @@
           <span class="privilege">{{ $t("team.privilege") }}</span>
           <span class="operation">{{ $t("base.action") }}</span>
         </li>
-        <li
-          class="eachLi"
-          v-for="(item, index) in memberList.slice(
-            (currentPage - 1) * pageSize,
-            currentPage * pageSize
-          )"
-          :key="index"
-        >
+        <li class="eachLi" v-for="(item, index) in memberList" :key="index">
           <span class="name">{{ item.name }}</span>
           <span class="email">{{ item.email }}</span>
           <span class="phone">{{ item.phone }}</span>
           <span class="privilege">{{ item.privilegeText }}</span>
           <!-- <span class="operation">{{ $t("base.dele") }}</span> -->
           <span class="operation">
-            <a-dropdown trigger="hover">
-              <a-button :disabled="item.privilege == 1 || !isAdmin">处理</a-button>
-              <template #content>
-                <a-doption
-                  :disabled="item.privilege == 1"
-                  @click="setAdmin(index)"
-                  >设为为管理员</a-doption
-                >
-                <a-doption>降为普通成员</a-doption>
-                <a-doption>删除成员</a-doption>
+            <el-dropdown>
+              <el-button :disabled="item.privilege == 1 || isAdmin">
+                处理
+              </el-button>
+              <template #dropdown>
+                <el-dropdown-menu>
+                  <el-dropdown-item
+                    :disabled="item.privilege == 1"
+                    @click="setAdminOpen(index)"
+                    >提拔为管理员</el-dropdown-item
+                  >
+                  <el-dropdown-item :disabled="item.privilege == 0"
+                    >降为普通成员</el-dropdown-item
+                  >
+                  <el-dropdown-item
+                    divided
+                    style="color: #bf0300"
+                    @click="delOpen(index)"
+                    >删除该成员</el-dropdown-item
+                  >
+                </el-dropdown-menu>
               </template>
-            </a-dropdown></span
-          >
+            </el-dropdown>
+          </span>
         </li>
       </ul>
       <div class="layPage">
         <el-pagination
           background
           layout="prev, pager, next"
-          :total="memberList.length"
-          :page-size="pageSize"
+          :page-count="totalPages"
           :current-page="currentPage"
           :hide-on-single-page="true"
           @current-change="handleCurrentChange"
-          @size-change="handleSizeChange"
         />
       </div>
     </div>
   </div>
 </template>
 <script>
-
+import { h } from "vue";
 export default {
   name: "searchMember",
   data() {
     return {
+      totalPages: 1, // 总页码数
       currentPage: 1, // 当前页数
-      pageSize: 10, // 每页条数
       memberList: [],
       keywords: "", // 搜索成员关键字
     };
   },
   mounted() {
-    this.getTeamMember();
+    this.getTeamMember(1);
   },
   methods: {
     // 页面给改变时
     handleCurrentChange(val) {
-      this.currentPage = val;
-    },
-    handleSizeChange(val) {
-      this.pageSize = val;
+      this.getTeamMember(val);
     },
 
     // 获取团队成员
-    getTeamMember() {
+    getTeamMember(page) {
       this.$http
-        .get("/team")
+        .get("/team", {
+          params: {
+            page: page,
+            size: "7",
+          },
+        })
         .then((res) => {
           if (res.data.code == 20000) {
             this.memberList = this.handlePrivilege(res.data.data.memberList);
+            this.totalPages = res.data.data.totalPages;
+            this.currentPage = res.data.data.pageNum;
           } else {
             this.$message({
               message: res.data.msg,
@@ -177,6 +183,8 @@ export default {
               message: "成功设置为管理员!",
               type: "success",
             });
+            this.$parent.refreshKey++; // 刷新
+            this.setAdminNotice(idx);
           } else {
             this.$message({
               message: res.data.msg,
@@ -189,6 +197,94 @@ export default {
           this.$message({
             message: "未知错误!",
             type: "error",
+          });
+        });
+    },
+    // 设置管理员通知
+    setAdminNotice(idx) {
+      this.$notify({
+        title: "通知",
+        message: h("i", this.memberList[idx].name + "已成为管理员"),
+      });
+    },
+    // 设置管理员提示
+    setAdminOpen(idx) {
+      this.$confirm(
+        "是否确定将" + this.memberList[idx].name + "设置为管理员",
+        "提示",
+        {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning",
+        }
+      )
+        .then(() => {
+          this.setAdmin(idx);
+        })
+        .catch((err) => {
+          console.log("err", err);
+          this.$message({
+            type: "info",
+            message: "已取消设置",
+          });
+        });
+    },
+    // 薅掉管理员
+    delAdmin(idx) {},
+    // 薅掉管理员提示
+    delAdminOpen(idx) {
+      this.$confirm(
+        "此操作会将" + this.memberList[idx].name + "降级为普通成员, 是否继续?",
+        "提示",
+        {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning",
+        }
+      )
+        .then(() => {
+          this.delAdmin(idx);
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消降级",
+          });
+        });
+    },
+    // 薅掉管理员通知
+    delAdminNotice(idx) {
+      this.$notify({
+        title: "通知",
+        message: h("i", "您已将" + this.memberList[idx].name + "降为普通成员"),
+      });
+    },
+    // 删除团队成员
+    delMember(idx) {},
+    // 删除成员的提醒
+    delMemberNotice(idx) {
+      this.$notify({
+        title: "通知",
+        message: h("i", "您已将" + this.memberList[idx].name + "删除"),
+      });
+    },
+    delOpen(idx) {
+      this.$confirm(
+        "此操作将永久删除成员" + this.memberList[idx].name + ", 是否继续?",
+        "提示",
+        {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning",
+        }
+      )
+        .then(() => {
+          this.delMember(idx);
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除",
           });
         });
     },
@@ -243,7 +339,7 @@ input {
   margin: 40px 0 30px 0;
 }
 .memberList {
-  height: 630px;
+  min-height: 530px;
 }
 .eachLi {
   display: flex;
