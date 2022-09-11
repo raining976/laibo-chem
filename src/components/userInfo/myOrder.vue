@@ -23,24 +23,22 @@
           :key="index"
         >
           <div class="shopId">
-            {{ item0.shopId }}
+            {{ item0.id }}
           </div>
           <div class="product">
             <div
               class="productName"
               title=""
-              v-for="(item1, index) in item0.name"
-              :key="index"
             >
-              {{ item1 }}&nbsp;
+              {{ name }}1111&nbsp;
             </div>
           </div>
           <div class="type">{{ item0.type }}</div>
-          <div class="unit">{{ item0.unit }}</div>
+          <div class="unit">{{ item0.team }}</div>
           <div class="orderStatus">{{item0.status}}</div>
           <!-- 关于金额的计算方式 ？-->
           <div class="payment">{{ item0.payment }}</div>
-          <div class="toOrderInfo" @click="toOrderInfo()">{{$t('order.checkDetail')}}></div>
+          <div class="toOrderInfo" @click="toOrderInfo(item0.id)">{{$t('order.checkDetail')}}></div>
         </div>
       </div>
       <div class="pagination">
@@ -96,7 +94,7 @@ export default {
     };
   },
   created() {
-   this.getORders();
+   this.getOrders();
 
   },
   methods: {
@@ -104,7 +102,7 @@ export default {
     getOrders() {
        this.$http
         .get("/order", {
-          page: 3,
+          page: 1,
         })
         //回调函数
         .then((res) => {
@@ -113,7 +111,7 @@ export default {
           }
           // this.$data.count = res.data.data.count;
           else {
-            this.$data.orderList = res.data.data.orderList;
+            this.$data.orderList = res.data.data.orders;
           console.log("ceshi", res.data.data);
           console.log("ceshi,shuzu ", this.$data.orderList); 
           }
@@ -131,9 +129,9 @@ export default {
       this.$data.currentPage = val;
       // console.log(`当前页: ${val}`);
     },
-    toOrderInfo() {
+    toOrderInfo(id) {
       this.$router.push({
-        path: "/orderInfo",
+        path: "/orderInfo/" + id,
       })
     }
   },

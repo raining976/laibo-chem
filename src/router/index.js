@@ -120,7 +120,7 @@ const routes = [
         meta: { requiresAuth: true },
       },
       {
-        path: '/orderInfo',
+        path: '/orderInfo/:id',
         name: 'orderInfo',
         component: orderInfo,
         meta: { requiresAuth: true },

@@ -56,7 +56,7 @@ export default {
         center: "Center",
         companyNews: "company news",
         technicalArticle: "technical article",
-
+        readMore: "readMore"
     },
     // 用户菜单栏
     userMenu: {
@@ -179,6 +179,27 @@ export default {
         person: "(Personal)",
         firm: "(Corp)",
         payType: "SELECT YOUR PAYMENT TYPE",
+    },
+    // 产品详情
+    product: {
+        size: "Size",
+        price: "Price",
+        count: "Count",
+        stock: "stock",
+        itemNo: "Product code",
+        casNum: "The CAS number",
+        fenzishi: "molecular formula",
+        fenziliang: "molecular weight",
+        einecsCode: "einecs",
+        mdl: "MDL",
+        wuhuaxingzhi: "physico-chemical property",
+        meltingPoint: "melting point",
+        boilingPoint: "boiling point",
+        midu: "density",
+        storageCondition: "storage condition",
+        add: "Add to cart",
+        buy: "purchase",
+        personalTailor: "personal tailor",
     },
     // 搜索
     search: {

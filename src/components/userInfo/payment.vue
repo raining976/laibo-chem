@@ -250,15 +250,6 @@ export default {
     this.$data.commodityList = JSON.parse(
       localStorage.getItem("checkBox")
     );
-    // this.$data.commodityList.forEach((item) => {
-
-    //            this.$data.pushProduct.product_params_id = item.id;
-    //            this.$data.pushProduct.count = item.count;
-    //            this.$data.orderBox.push(this.$data.pushProduct); //一个一个存
-    //            this.$data.pushProduct.product_params_id = 0;
-    //            this.$data.pushProduct.count = 0;
-    //            console.log(this.$data.orderBox,"ceshi1111");
-    //       })
 
   },
   watch: {
@@ -462,6 +453,7 @@ export default {
               });
       }
       else  {
+
         this.$http
           .post("/createOrder", {
             // products: {

@@ -15,52 +15,52 @@
           <div class="details">
             <!-- 以下为 不是-->
             <div class="oneDetail">
-              <div class="detailName">CAS编号:</div>
+              <div class="detailName">{{$t('product.casNum')}}</div>:&nbsp;
               <div class="detailContent">{{ productData.cas }}</div>
             </div>
 
             <div class="oneDetail">
-              <div class="detailName">分子式:</div>
-              <div class="detailContent">{{ productData.fenzishi }}</div>
-            </div>
-
-            <div class="oneDetail">
-              <div class="detailName">分子量:</div>
-              <div class="detailContent">{{ productData.fenziliang }}</div>
-            </div>
-
-            <div class="oneDetail">
-              <div class="detailName">EINECS编号:</div>
-              <div class="detailContent">{{ productData.EINECS }}</div>
-            </div>
-
-            <div class="oneDetail">
-              <div class="detailName">MDL:</div>
-              <div class="detailContent">{{ productData.mdl }}</div>
-            </div>
-
-            <div class="oneDetail">
-              <div class="detailName">物化性质:</div>
+              <div class="detailName">{{$t('product.wuhuaxingzhi')}}</div>:&nbsp;
               <div class="detailContent">{{ productData.properties }}</div>
             </div>
 
             <div class="oneDetail">
-              <div class="detailName">熔点:</div>
+              <div class="detailName">{{$t('product.fenzishi')}}</div>:&nbsp;
+              <div class="detailContent">{{ productData.fenzishi }}</div>
+            </div>
+
+            <div class="oneDetail">
+              <div class="detailName">{{$t('product.meltingPoint')}}</div>:&nbsp;
               <div class="detailContent">{{ productData.melting }}</div>
             </div>
 
             <div class="oneDetail">
-              <div class="detailName">沸点:</div>
+              <div class="detailName">{{$t('product.fenziliang')}}</div>:&nbsp;
+              <div class="detailContent">{{ productData.fenziliang }}</div>
+            </div>
+
+            <div class="oneDetail">
+              <div class="detailName">{{$t('product.boilingPoint')}}</div>:&nbsp;
               <div class="detailContent">{{ productData.boiling }}</div>
             </div>
 
             <div class="oneDetail">
-              <div class="detailName">密度:</div>
+              <div class="detailName">{{$t('product.einecsCode')}}</div>:&nbsp;
+              <div class="detailContent">{{ productData.EINECS }}</div>
+            </div>
+
+            <div class="oneDetail">
+              <div class="detailName">{{$t('product.midu')}}</div>:&nbsp;
               <div class="detailContent">{{ productData.midu }}</div>
             </div>
 
             <div class="oneDetail">
-              <div class="detailName">储存条件:</div>
+              <div class="detailName">{{$t('product.mdl')}}</div>:&nbsp;
+              <div class="detailContent">{{ productData.mdl }}</div>
+            </div>
+
+            <div class="oneDetail">
+              <div class="detailName">{{$t('product.storageCondition')}}</div>:&nbsp;
               <div class="detailContent">{{ productData.storage }}</div>
             </div>
           </div>
@@ -69,11 +69,11 @@
             <table border="0" cellspacing="0">
               <thead>
                 <tr class="tableHead">
-                  <th style="width: 145px">货号</th>
-                  <th style="width: 140px">规格</th>
-                  <th style="width: 215px">库存</th>
-                  <th style="width: 170px">售价（RMB）</th>
-                  <th style="width: 200px">数量</th>
+                  <th style="width: 145px">{{$t('product.itemNo')}}</th>
+                  <th style="width: 140px">{{$t('product.size')}}</th>
+                  <th style="width: 215px">{{$t('product.stock')}}</th>
+                  <th style="width: 170px">{{$t('product.price')}}</th>
+                  <th style="width: 200px">{{$t('product.count')}}</th>
                 </tr>
               </thead>
               <el-scrollbar max-height="132px">
@@ -84,8 +84,6 @@
                     v-for="(item, index) in productData.params"
                     :key="index"
                   >
-                    <!-- 遮罩 -->
-                    <td class="shadow" :ref="info"><div></div></td>
                     <td class="huohao">
                       <div>{{ productData.id + "-" + item.weight }}</div>
                     </td>
@@ -118,11 +116,11 @@
         </div>
       </div>
       <div class="btn">
-        <div class="addCart" @click="addCart()">加入购物车</div>
-        <div class="toBuy" @click="toBuy()">购买</div>
+        <div class="addCart" @click="addCart()">{{$t('product.add')}}</div>
+        <div class="toBuy" @click="toBuy()">{{$t('product.buy')}}</div>
       </div>
 
-      <div class="toCustomize" @click="isShow = !isShow">联系客服私人订制></div>
+      <div class="toCustomize" @click="isShow = !isShow">{{$t('product.personalTailor')}}></div>
     </div>
     <private-order v-if="isShow" />
   </div>
@@ -246,8 +244,8 @@ export default {
 }
 .solidLine1 {
   width: 1410.05px;
-  height: 0.96px;
-  border-bottom: 0.96px solid #999999;
+  height: 1px;
+  border-bottom: 1px solid #999999;
   margin: 0 auto;
 }
 .productInfo {
@@ -271,8 +269,8 @@ export default {
   /* min-height: 542.02px; */
   height: 98%;
   margin: 0 27.07px 0 0;
-  border: 0.96px solid #999999;
-  border-radius: 4.99px;
+  border: 1px solid #999999;
+  border-radius: 5px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -310,7 +308,7 @@ export default {
 .concentration {
   width: 100%;
   height: 24px;
-  margin: 12.1px 0 0 4.99px;
+  margin: 12.1px 0 0 5px;
   font-size: 24px;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
@@ -319,50 +317,51 @@ export default {
 }
 .solidLine2 {
   width: 874.94px;
-  height: 0.96px;
+  height: 1px;
   margin: 28.03px 0 14.02px;
-  border-bottom: 0.96px solid #999999;
+  border-bottom: 1px solid #999999;
 }
 .details {
   width: 100%;
-  height: 190.08px;
+  min-height: 190.08px;
   /* margin: 0 0 12px 0; */
   overflow: hidden;
   display: flex;
-  flex-direction: column;
   flex-wrap: wrap;
 }
 .oneDetail {
-  width: 436.99px;
-  height: 18.05px;
-  margin: 9.98px 0;
+  width: 437px;
+  min-height: 18px;
+  margin: 10px 0;
   display: flex;
 }
 .detailName {
   width: 157.06px;
-  height: 18.05px;
-  font-size: 18.05px;
+  min-height: 18px;
+  font-size: 18px;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #333333;
-  line-height: 18.05px;
+  line-height: 18px;
+  word-break: normal;
 }
 .detailContent {
   /* width: ; */
-  height: 18.05px;
-  font-size: 18.05px;
+  min-height: 18px;
+  font-size: 18px;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #333333;
-  line-height: 18.05px;
+  line-height: 18px;
+  word-break: break-all;
 }
 
 /* 以下是表格 */
 .prize {
   width: 99.5%;
   height: 174px;
-  border: 0.96px solid #999999;
-  border-radius: 4.99px;
+  border: 1px solid #999999;
+  border-radius: 5px;
   overflow: hidden;
 }
 table {
@@ -403,7 +402,7 @@ table tbody tr {
 .tableContent {
   position: relative;
 }
-.shadow {
+/* .shadow {
   display: none;
   position: absolute;
   pointer-events: auto;
@@ -413,7 +412,7 @@ table tbody tr {
   background-color: #eaebed;
   opacity: 0.3;
   z-index: 999;
-}
+} */
 .huohao {
   width: 145px;
   color: #004ea2;

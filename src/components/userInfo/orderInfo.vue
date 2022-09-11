@@ -152,9 +152,10 @@ export default {
  },
  methods: {
      getOrderInfo() {
+      console.log("cehsi",this.$route.params.id)
         this.$http
-        .get("/cart", {
-          order_id: 0, // 暂定
+        .get("/order/detail", {
+          order_id: this.$route.params.id, // 暂定
         })
         //回调函数
         .then((res) => {
@@ -162,10 +163,9 @@ export default {
              this.$data.commodityList = [];
           }
           else {
- // 应该获取对象？
           this.$data.commodityList = res.data.data;
           console.log("ceshi", res.data.data);
-          console.log("ceshi,shuzu ", this.$data.commodityList);
+          // console.log("ceshi,shuzu ", this.$data.commodityList);
           }     
         })
         .catch((err) => {
@@ -173,9 +173,7 @@ export default {
         });
      },
      toMyOrder() {
-      this.$router.push({
-        path: "/order",
-      })
+      this.$router.go(-1);
      },
      toProductInfo() {
       this.$router.push({

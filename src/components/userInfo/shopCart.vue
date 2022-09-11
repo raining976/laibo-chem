@@ -104,7 +104,7 @@
       <div class="submitMy" @click="isSubmitMy()">
         <div
           class="submitMyBtn"
-          :class="{ agree_submitMy: submitMy == 0 }"
+          :class="{ agree_submitMy: submitMy == 1 }"
         ></div>
         {{ $t("cart.submitOwn") }}
       </div>
@@ -128,7 +128,7 @@ export default {
       pagesize: 3, // 每页显示多少条
       currentPage: 1, // 当前页数
       pagerCount: 5, //五个以上加省略号
-      submitMy: 1, //判断是否提交个人订单
+      submitMy: 0, //判断是否提交个人订单 0集体 1个人
       num: 0, //计数器
       //
       updata: 0, // 更新页面
