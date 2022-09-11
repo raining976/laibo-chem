@@ -28,7 +28,7 @@
           </div>
           <div class="dashedLine"></div>
         </div>
-        <div class="newsMore" @click="toMoreNewsArticle(item.type)">查看更多&nbsp;></div>
+        <div class="newsMore" @click="toMoreNewsArticle(item.type)">{{$t('home.readMore')}}&nbsp;></div>
       </div>
     </div>
   </div>
@@ -44,36 +44,20 @@ export default {
           type: this.$t('home.companyNews'),
           pic: require("../../assets/p7.png"),
           newsList: [
-            {
-              newsTitle: "莱博斯威2022春节发货通知",
-              pubdate: "01-20",
-            },
-            {
-              newsTitle: "莱博斯威2022春节发货通知",
-              pubdate: "01-20",
-            },
-            {
-              newsTitle: "莱博斯威2022春节发货通知",
-              pubdate: "01-20",
-            },
+            // {
+            //   newsTitle: "莱博斯威2022春节发货通知",
+            //   pubdate: "01-20",
+            // },
           ],
         },
                 {
           type: this.$t('home.technicalArticle'),
           pic: require("../../assets/p7.png"),
           newsList: [
-            {
-              newsTitle: "莱博斯威2022春节发货通知",
-              pubdate: "01-20",
-            },
-            {
-              newsTitle: "莱博斯威2022春节发货通知",
-              pubdate: "01-20",
-            },
-            {
-              newsTitle: "莱博斯威2022春节发货通知",
-              pubdate: "01-20",
-            },
+            // {
+            //   newsTitle: "莱博斯威2022春节发货通知",
+            //   pubdate: "01-20",
+            // },
           ],
         },
       ],
@@ -115,11 +99,14 @@ export default {
   },
   methods:{
     toMoreNewsArticle(name) {
+      if(name === "company news") {
+        name = "公司新闻"
+      }else if(name === "technical article") {
+        name = "技术文章"
+      }
+      localStorage.setItem("type",name);
       this.$router.push({
         path: "/moreNewsArticle",
-        query: {
-          type: name,
-        },
         // 传参
       });
     },
@@ -270,6 +257,7 @@ overflow: hidden;
   right: 38.02px;
   /* width: 75px; */
   height: 18px;
+  line-height: 18px;
   font-size: 16px;
   font-family: Microsoft YaHei UI;
   font-weight: 400;

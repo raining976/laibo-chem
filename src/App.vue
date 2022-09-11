@@ -1,8 +1,11 @@
 <template>
   <appNav :key="key" />
-  <router-view name="search" ></router-view>
-  <router-view name="table"></router-view>
-  <router-view name="textPage" ></router-view>
+  <router-view name="search"></router-view>
+  <keep-alive>
+    <router-view name="table" v-if="$route.meta.keepAlive"></router-view>
+    </keep-alive>
+  <router-view name="table" v-if="!$route.meta.keepAlive"></router-view>
+  <router-view name="textPage"></router-view>
   <appFooter />
   <copyRight />
   <!-- 登录模态框 -->
@@ -30,9 +33,7 @@ export default {
       key: 1, // 用于强制刷新nav组件
     };
   },
-  methods: {
-
-  },
+  methods: {},
   created() {
     let nowTime = new Date().getTime() / 1000;
     let refresh_exp = localStorage.getItem("refresh_exp");
@@ -81,13 +82,12 @@ input,
 textarea {
   resize: none;
 }
-.in-active-path>span,
-.el-cascader-node.is-active >span
-{
+.in-active-path > span,
+.el-cascader-node.is-active > span {
   color: var(--color);
 }
 
-.el-message{
+.el-message {
   transform: scale(1.5);
 }
 body >>> .is-message-box {

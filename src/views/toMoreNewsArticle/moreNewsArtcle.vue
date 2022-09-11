@@ -3,12 +3,11 @@
   <div >
     <div class="solidLine"></div>
     <div class="siteNav">
-      &lt;
-      <div class="mainPage" @click="toMainPage()">返回首页&nbsp;</div>
-      /
-      <div class="news" @click="toNews()">公司新闻&nbsp;</div>
-      /
-      <div class="article" @click="toArticle()">技术文章</div>
+      <div class="mainPage" @click="toMainPage()">首页</div>
+      &nbsp;&nbsp;&gt;&nbsp;&nbsp;
+      <div class="news" :class="{isClick: news == true}" @click="toNews()">公司新闻</div>
+      &nbsp;&nbsp;|&nbsp;&nbsp;
+      <div class="article" :class="{isClick: article == true}" @click="toArticle()">技术文章</div>
     </div>
     <div class="bg" :key = "reload">
       <div class="allTitles">
@@ -21,7 +20,7 @@
           )"
           :key="index"
         >
-          <div class="title" @click="toTextPage()">{{ item.title }}</div>
+          <div class="title" @click="toTextPage(item.id)">{{ item.title }}</div>
           <div class="time">{{ item.update }}</div>
         </div>
       </div>
@@ -48,6 +47,7 @@ export default {
     return {
       news: false, //
       article: false, //
+      type: "",
       reload: 0, //控制全局刷新
       pagesize: 8, // 每页显示多少条
       currentPage: 1, // 当前页数
@@ -60,11 +60,12 @@ export default {
     };
   },
   created() {
-    if (this.$route.query.type === "公司新闻") {
+     this.$data.type = localStorage.getItem("type");
+    if (this.$data.type === "公司新闻") {
       this.$data.news = true;
       this.getNews();
     } //
-    else if (this.$route.query.type === "技术文章") {
+    else if (this.$data.type === "技术文章") {
       this.$data.article = true;
       this.getArticle();
     }
@@ -118,6 +119,7 @@ export default {
     toNews() {
       this.$data.news = true;
       this.$data.article = false;
+      this.$data.type = "公司新闻"
       this.getNews();
       this.$data.reload += 1;  //无用
       this.$data.currentPage = 1;
@@ -125,13 +127,15 @@ export default {
     toArticle() {
       this.$data.news = false;
       this.$data.article = true;
+      this.$data.type = "技术文章"
       this.getArticle();
       this.$data.reload += 1;  //无用
       this.$data.currentPage = 1;
     },
-    toTextPage() {
+    toTextPage(code) {
+      localStorage.setItem("type",this.$data.type);
       this.$router.push({
-        path: "",
+        path: "/content/" + code,
       });
     },
     // 分页
@@ -148,7 +152,7 @@ export default {
 </script>
 <style scoped>
 .solidLine {
-  width: 1410px;
+  width: 80%;
   height: 0.96px;
   border-bottom: 0.96px solid #999999;
   margin: 0 auto;
@@ -156,9 +160,9 @@ export default {
 .siteNav {
   display: flex;
   width: 1410px;
-  height: 18px;
-  font-size: 16px;
-  line-height: 18px;
+  height: 24px;
+  font-size: 22px;
+  line-height: 24px;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   margin: 14px auto 0;
@@ -170,12 +174,16 @@ export default {
 .news,
 .article {
   cursor: pointer;
-  height: 18px;
-  font-size: 16px;
-  line-height: 18px;
+  height: 24px;
+  font-size: 22px;
+  line-height: 24px;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #004ea2;
+}
+/* 标题选中效果 */
+.isClick {
+   font-weight: 600;
 }
 /* .chooseBtn  */
 .bg {
@@ -203,7 +211,7 @@ export default {
   font-size: 20px;
   font-family: Microsoft YaHei UI;
   font-weight: 600;
-  color: #323333;
+  color: #474949;
   line-height: 22px;
 }
 .title:hover {

@@ -58,6 +58,7 @@ export default {
         center: "中心",
         companyNews: "公司新闻",
         technicalArticle: "技术文章",
+        readMore: "查看更多"
     },
     // 用户菜单栏
     userMenu: {
@@ -182,6 +183,27 @@ export default {
         firm: "(公司)",
         payType: "支付类型",
 
+    },
+    // 产品详情
+    product: {
+        size: "规格",
+        price: "单价",
+        count: "数量",
+        stock: "库存",
+        itemNo: "货号",
+        casNum: "CAS编号",//
+        fenzishi: "分子式",
+        fenziliang: "分子量",
+        einecsCode: "EINECS编号",
+        mdl: "MDL",
+        wuhuaxingzhi: "物化性质",
+        meltingPoint: "熔点",
+        boilingPoint: "沸点",
+        midu: "密度",
+        storageCondition: "储存条件",
+        add: "加入购物车",
+        buy: "购买",
+        personalTailor: "联系客服私人定制",
     },
     // 搜索
     search: {
