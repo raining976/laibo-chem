@@ -2,7 +2,9 @@
   <div class="carouselBox">
     <el-carousel trigger="click">
       <el-carousel-item v-for="(item, index) in imgList" :key="index">
-        <div class="imgBox"><a :href="item.href"><img :src="item.pic" alt="" /></a></div>
+        <div class="imgBox">
+          <a :href="item.href"><img :src="item.pic_url" alt="" /></a>
+        </div>
       </el-carousel-item>
     </el-carousel>
   </div>
@@ -13,29 +15,29 @@ export default {
   components: "",
   data() {
     return {
-      imgList: [
-        { pic: require("../../assets/93390700.png") ,href: "####"},
-        { pic: require("../../assets/93390700.png") ,href: "####"},
-        { pic: require("../../assets/93390700.png") ,href: "####"},
-        { pic: require("../../assets/93390700.png") ,href: "####"},
-      ],
+      imgList: [],
     };
   },
-  created() {
-      this.$http
-        .get("/banner", {
-          params: {
-
-          },
-        })
-        //回调函数
-        .then((res) => {
-          this.$data.imgList = res.data.data;
-          console.log("ceshi", res.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+  mounted() {
+    this.$http
+      .get("/banner", {
+        params: {},
+      })
+      //回调函数
+      .then((res) => {
+        this.$data.imgList = this.handleUrl(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },
+  methods: {
+    handleUrl(array) {
+      array.forEach((item) => {
+        item.pic_url = "media" + item.pic_url;
+      });
+      return array;
+    },
   },
 };
 </script>
