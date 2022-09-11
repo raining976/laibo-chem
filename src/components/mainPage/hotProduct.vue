@@ -20,7 +20,7 @@
         <div class="hotProductName"><div>{{ item.name }}</div></div>
       </div>
     </div>
-    <div class="aboutIt">
+    <div class="aboutIt" @click="toLearnMore()">
       <div class="aboutMore">{{ $t("home.learnMore") }}&nbsp;&nbsp;</div>
       <div class="aboutArrow">></div>
     </div>
@@ -33,11 +33,6 @@ export default {
   data() {
     return {
       productList: [
-        { pic_url: require("../../assets/p3.png"), name: "染料" },
-        { pic_url: require("../../assets/p3.png"), name: "染料" },
-        { pic_url: require("../../assets/p3.png"), name: "染料" },
-        { pic_url: require("../../assets/p3.png"), name: "染料" },
-        { pic_url: require("../../assets/p3.png"), name: "染料" },
       ],
     };
   },
@@ -65,6 +60,14 @@ export default {
         },
       });
     },
+    toLearnMore() {
+      this.$router.push({
+        path: "/searchResult",
+        query: {
+          isLearnMore: true,
+        },
+      });
+    }
   },
 };
 </script>

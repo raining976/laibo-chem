@@ -44,9 +44,31 @@ export default {
     };
   },
   async created() {
+    if(this.$route.query.inputValue !== undefined) {
       this.$data.inputValue = this.$route.query.inputValue
       await this.getSearchResult()
-
+    }else 
+    if(this.$route.query.isLearnMore) {
+      console.log("cefe")
+      this.$data.type = "热门产品";
+      await this.$http
+        .get("/hotProducts", {
+          // params: {
+          // },
+        })
+        //回调函数
+        .then((res) => {
+          this.$data.resultBox = res.data.data;
+          this.toResultShow();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  },
+    mounted() {
+    // 
+    window.scrollTo(0, 0);
   },
   watch: {
     "$route.query.isSearch": {
