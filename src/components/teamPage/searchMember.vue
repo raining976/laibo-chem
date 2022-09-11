@@ -35,9 +35,7 @@
           <!-- <span class="operation">{{ $t("base.dele") }}</span> -->
           <span class="operation">
             <el-dropdown>
-              <el-button :disabled="item.privilege == 1 || isAdmin">
-                处理
-              </el-button>
+              <el-button :disabled="item.privilege == 2"> 处理 </el-button>
               <template #dropdown>
                 <el-dropdown-menu>
                   <el-dropdown-item
@@ -45,7 +43,9 @@
                     @click="setAdminOpen(index)"
                     >提拔为管理员</el-dropdown-item
                   >
-                  <el-dropdown-item :disabled="item.privilege == 0"
+                  <el-dropdown-item
+                    :disabled="item.privilege == 0"
+                    @click="delAdminOpen(index)"
                     >降为普通成员</el-dropdown-item
                   >
                   <el-dropdown-item
@@ -194,8 +194,10 @@ export default {
         return array;
       }
       array.forEach((item) => {
-        if (item.privilege) {
+        if (item.privilege == 1) {
           item.privilegeText = "管理员";
+        } else if (item.privilege == 2) {
+          item.privilegeText = "团队拥有者";
         } else item.privilegeText = "成员";
       });
       return array;
@@ -260,7 +262,34 @@ export default {
         });
     },
     // 薅掉管理员
-    delAdmin(idx) {},
+    delAdmin(idx) {
+      this.$http
+        .post("/delTeamAdmin", {
+          id: this.memberList[idx].id,
+        })
+        .then((res) => {
+          if (res.data.code == 20000) {
+            this.$message({
+              message: "降级成功!",
+              type: "success",
+            });
+            this.$parent.refreshKey++;
+            this.delAdminNotice(idx);
+          } else {
+            this.$message({
+              message: res.data.msg,
+              type: "error",
+            });
+          }
+        })
+        .catch((err) => {
+          console.log("err", err);
+          this.$message({
+            message: "未知错误!",
+            type: "error",
+          });
+        });
+    },
     // 薅掉管理员提示
     delAdminOpen(idx) {
       this.$confirm(
