@@ -55,6 +55,7 @@ export default {
         // console.log(this.$route.query.isSearch,"ccccc")
         if(this.$route.query.isSearch !== undefined) {
             // 对路由变化作出响应....
+        this.$data.inputValue = this.$route.query.inputValue;
         this.getSearchResult()     
         }
       },
