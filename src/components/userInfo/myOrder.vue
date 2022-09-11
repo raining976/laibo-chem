@@ -102,7 +102,9 @@ export default {
     getOrders() {
        this.$http
         .get("/order", {
-          page: 1,
+          params: {
+            page: 1,
+          }     
         })
         //回调函数
         .then((res) => {

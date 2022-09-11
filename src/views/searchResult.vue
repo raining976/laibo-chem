@@ -4,7 +4,8 @@
     <div class="searchNav">
       <div class="sitePosi">
         <div class="returnBtn" @click="toMainPage()">&lt;返回首页</div>
-        <div class="nowPosi">/{{ type }}</div>
+        /&nbsp;
+        <div class="nowPosi">{{ type }}</div>
       </div>
       <div class="typeList">
         <div style="margin-bottom: 10px">更多产品分类：</div>
@@ -12,7 +13,7 @@
           class="type"
           v-for="(item1, index) in typeList"
           :key="index"
-          @click="fun()"
+          @click="searchType(item1)"
         >
           {{ item1 }}
         </div>
@@ -35,13 +36,17 @@ export default {
   data() {
     return {
       res: "noResult",
-      type: "中间品", //需要判断
+      cate: "",  // 0 1 2
+      type: "", //需要判断
+      inputValue: "",
       typeList: ["中间品", "低值易耗品", "染料"],
       resultBox: [],
     };
   },
-  created() {
-      this.getSearchResult()
+  async created() {
+      this.$data.inputValue = this.$route.query.inputValue
+      await this.getSearchResult()
+
   },
   watch: {
     "$route.query.isSearch": {
@@ -66,17 +71,18 @@ export default {
       // this.$router.back()
     },
     //获取搜索结果
-        getSearchResult() {
+      async getSearchResult() {
       if(this.$route.query.inputValue !== "") {
-      this.$http
+      await this.$http
         .get("/search", {
           params: {
-            s: this.$route.query.inputValue,
+            s: this.$data.inputValue,
+            cate: this.$data.cate, // 0 1 2
           },
         })
         //回调函数
         .then((res) => {
-          this.$data.resultBox = res.data.data;
+          this.$data.resultBox = res.data.data.products;
           this.toResultShow(); 
           // this.$data.code = res.data.code;
         })
@@ -85,13 +91,34 @@ export default {
         });
      }
     },
-  
+    // 分类
+    searchType(str) {
+     switch(str) {
+        case "中间品": 
+             this.$data.inputValue = str;
+             this.$data.type = str;
+             this.$data.cate = 0;
+             break;
+        case "低值易耗品":
+             this.$data.inputValue = str;
+             this.$data.type = str;
+             this.$data.cate = 1;
+             break;
+        case "染料":
+             this.$data.inputValue = str;
+             this.$data.type = str;
+             this.$data.cate = 2;
+             break;   
+     }  
+     this.getSearchResult();
+    },
     // js判断页面
     toResultShow() {
       //用&&原因是因为数据未能完全覆盖导致条件判断错误
-      if (this.$data.resultBox !== []&&this.$data.resultBox !== undefined) {
+      console.log("CEss",this.$data.resultBox.length)
+      if (this.$data.resultBox.length !== 0||this.$data.resultBox !== undefined) {
         this.$data.res = "result";
-      } else {
+      } else if(this.$data.resultBox.length === 0) {
         this.$data.res = "noResult";
       }
     },

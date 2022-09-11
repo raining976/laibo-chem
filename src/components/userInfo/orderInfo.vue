@@ -62,20 +62,20 @@
               <img src="" alt="" />
             </div>
             <div class="infoBox">
-              <div class="name_zh" @click="toProductInfo()">
-                {{ item0.name }}
+              <div class="name_zh" @click="toProductInfo(item0.product.id)">
+                {{ item0.product.name }}
               </div>
               <div class="infoWord">{{$t('order.itemNo')+'：'}}{{ item0.huohao }}</div>
               <div class="infoWord">{{$t('order.casNum')+'：'}}{{ item0.shopCart_id }}</div>
             </div>
           </div>
           <div class="size">{{ item0.guige }}</div>
-          <div class="price">{{ item0.price }}</div>
+          <div class="price">{{ }}</div>
           <div class="count">
-            <div class="num">{{item0.num}}</div>
+            <div class="num">{{num}}</div>
           </div>
-          <!-- 关于金额的计算方式 -->
-          <div class="payment">{{ item0.num * item0.price }}</div>
+          <!-- 关于金额的计算方式  num * price -->
+          <div class="payment">{{ item0.price }}</div>
         </div>
       </div>
       <div class="pagination">
@@ -152,10 +152,12 @@ export default {
  },
  methods: {
      getOrderInfo() {
-      console.log("cehsi",this.$route.params.id)
         this.$http
         .get("/order/detail", {
-          order_id: this.$route.params.id, // 暂定
+          params: {
+             order_id: this.$route.params.id, // 暂定
+          }
+         
         })
         //回调函数
         .then((res) => {
@@ -163,8 +165,8 @@ export default {
              this.$data.commodityList = [];
           }
           else {
-          this.$data.commodityList = res.data.data;
-          console.log("ceshi", res.data.data);
+          this.$data.commodityList = res.data.data.product_params_count;
+          // console.log("ceshi", res.data.data);
           // console.log("ceshi,shuzu ", this.$data.commodityList);
           }     
         })
@@ -175,9 +177,12 @@ export default {
      toMyOrder() {
       this.$router.go(-1);
      },
-     toProductInfo() {
+     toProductInfo(code) {
       this.$router.push({
            path: "/productInfo",
+           query: {
+            id: code,
+           }
       })
     },
     // 分页
