@@ -1,6 +1,9 @@
 <template>
   <div class="newsCenter">
-    <div class="title"><span style="color: #004ea2">{{$t('home.news')}}</span>{{$t('home.center')}}</div>
+    <div class="title">
+      <span style="color: #004ea2">{{ $t("home.news") }}</span
+      >{{ $t("home.center") }}
+    </div>
     <div class="newsBigBox">
       <!-- 下为v-for模块 -->
       <div class="newsBox" v-for="(item, index) in newsBox" :key="index">
@@ -23,12 +26,20 @@
         >
           <!-- 内容 -->
           <div class="news">
-            <div class="newsTitle" :title = "item1.title">{{ item1.title }}</div>
+            <div
+              class="newsTitle"
+              :title="item1.title"
+              @click="toContent(item1.id, item.type)"
+            >
+              {{ item1.title }}
+            </div>
             <div class="pubdate">{{ item1.update }}</div>
           </div>
           <div class="dashedLine"></div>
         </div>
-        <div class="newsMore" @click="toMoreNewsArticle(item.type)">{{$t('home.readMore')}}&nbsp;></div>
+        <div class="newsMore" @click="toMoreNewsArticle(item.type)">
+          {{ $t("home.readMore") }}&nbsp;>
+        </div>
       </div>
     </div>
   </div>
@@ -41,7 +52,7 @@ export default {
     return {
       newsBox: [
         {
-          type: this.$t('home.companyNews'),
+          type: this.$t("home.companyNews"),
           pic: require("../../assets/p7.png"),
           newsList: [
             // {
@@ -50,8 +61,8 @@ export default {
             // },
           ],
         },
-                {
-          type: this.$t('home.technicalArticle'),
+        {
+          type: this.$t("home.technicalArticle"),
           pic: require("../../assets/p7.png"),
           newsList: [
             // {
@@ -64,53 +75,57 @@ export default {
     };
   },
   created() {
-      this.$http
-        .get("/news", {
-          params: {
-           page: 1,
-           limit: 3,
-          },
-        })
-        //回调函数
-        .then((res) => {
-
-          this.$data.newsBox[0].newsList = res.data.data;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-        // 
-              this.$http
-        .get("/article", {
-          params: {
-             page: 1,
-           limit: 3,
-          },
-        })
-        //回调函数
-        .then((res) => {
-
-          this.$data.newsBox[1].newsList = res.data.data;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-        
+    this.$http
+      .get("/news", {
+        params: {
+          page: 1,
+          limit: 3,
+        },
+      })
+      //回调函数
+      .then((res) => {
+        this.$data.newsBox[0].newsList = res.data.data;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    //
+    this.$http
+      .get("/article", {
+        params: {
+          page: 1,
+          limit: 3,
+        },
+      })
+      //回调函数
+      .then((res) => {
+        this.$data.newsBox[1].newsList = res.data.data;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   },
-  methods:{
+  methods: {
+    // 去往新闻详情页
+    toContent(code, name) {
+      localStorage.setItem("type", name);
+      this.$router.push({
+        path: "/content/" + code,
+      });
+    },
     toMoreNewsArticle(name) {
-      if(name === "company news") {
-        name = "公司新闻"
-      }else if(name === "technical article") {
-        name = "技术文章"
+      if (name === "company news") {
+        name = "公司新闻";
+      } else if (name === "technical article") {
+        name = "技术文章";
       }
-      localStorage.setItem("type",name);
+      localStorage.setItem("type", name);
       this.$router.push({
         path: "/moreNewsArticle",
         // 传参
       });
     },
-  }
+  },
 };
 </script>
 <style scoped>
@@ -134,7 +149,7 @@ export default {
   line-height: 60.1px;
   text-align: center;
 }
-.title > span{
+.title > span {
   margin-right: 10px;
 }
 .newsBigBox {
@@ -146,7 +161,7 @@ export default {
 }
 /* 单个新闻盒子的样式 */
 .newsBox {
-    position: relative;
+  position: relative;
   width: 580.03px;
   height: 624.96px;
   padding: 0 38.02px;
@@ -188,10 +203,14 @@ export default {
 .dashedLine {
   width: 580.03px;
   height: 1.92px;
-   background-image: linear-gradient(to right, #e4e4e4 70%, rgba(255,255,255,0) 0%); /* 35%设置虚线点x轴上的长度 */
-        background-position: bottom; /* top配置上边框位置的虚线 */
-        background-size: 14.98px 1.92px; /* 第一个参数设置虚线点的间距；第二个参数设置虚线点y轴上的长度 */
-        background-repeat: repeat-x;
+  background-image: linear-gradient(
+    to right,
+    #e4e4e4 70%,
+    rgba(255, 255, 255, 0) 0%
+  ); /* 35%设置虚线点x轴上的长度 */
+  background-position: bottom; /* top配置上边框位置的虚线 */
+  background-size: 14.98px 1.92px; /* 第一个参数设置虚线点的间距；第二个参数设置虚线点y轴上的长度 */
+  background-repeat: repeat-x;
 }
 .newsPic {
   width: 580.03px;
@@ -219,12 +238,10 @@ export default {
   font-family: Microsoft YaHei UI;
   font-weight: bold;
   color: #323333;
-  
-
 }
 .newsTitle {
-    cursor: pointer;
-/* width: 350px; */
+  cursor: pointer;
+  /* width: 350px; */
   /* height: 36px; */
   line-height: 18px;
   font-size: 18px;
@@ -235,7 +252,7 @@ export default {
   transition: 0.8s;
 }
 .newsTitle:hover {
-  color:#004ea2;
+  color: #004ea2;
 }
 .pubdate {
   width: 120px;
@@ -248,10 +265,10 @@ export default {
   text-align: right; /*文本向右对齐*/
   /* word-break:break-all; */
   word-wrap: break-word;
-overflow: hidden;
+  overflow: hidden;
 }
 .newsMore {
-    cursor: pointer;
+  cursor: pointer;
   position: absolute;
   bottom: 24px;
   right: 38.02px;
@@ -268,6 +285,6 @@ overflow: hidden;
   /* transition: 1s; */
 }
 .newsMore:hover {
-    font-weight: 600;
+  font-weight: 600;
 }
 </style>

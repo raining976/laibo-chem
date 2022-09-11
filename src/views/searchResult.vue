@@ -116,7 +116,7 @@ export default {
     // js判断页面
     toResultShow() {
       //用&&原因是因为数据未能完全覆盖导致条件判断错误
-      console.log("CEss",this.$data.resultBox.length)
+      // console.log("CEss",this.$data.resultBox.length)
       if (this.$data.resultBox.length !== 0&&this.$data.resultBox !== undefined) {
         this.$data.res = "result";
       } else if(this.$data.resultBox.length === 0) {
