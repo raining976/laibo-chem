@@ -55,6 +55,7 @@ export default {
         // console.log(this.$route.query.isSearch,"ccccc")
         if(this.$route.query.isSearch !== undefined) {
             // 对路由变化作出响应....
+        this.$data.inputValue = this.$route.query.inputValue;
         this.getSearchResult()     
         }
       },
@@ -116,7 +117,7 @@ export default {
     toResultShow() {
       //用&&原因是因为数据未能完全覆盖导致条件判断错误
       console.log("CEss",this.$data.resultBox.length)
-      if (this.$data.resultBox.length !== 0||this.$data.resultBox !== undefined) {
+      if (this.$data.resultBox.length !== 0&&this.$data.resultBox !== undefined) {
         this.$data.res = "result";
       } else if(this.$data.resultBox.length === 0) {
         this.$data.res = "noResult";
