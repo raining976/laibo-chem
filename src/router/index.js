@@ -1,8 +1,6 @@
 import { ElMessage } from 'element-plus'
 import { createRouter, createWebHashHistory } from "vue-router";
 // 路由懒加载
-// const main = () => import("../views/appMain.vue");
-const adminLogIn = () => import("../views/admin/adminLogIn.vue");
 const searchHead = () => import("../components/main/search.vue");
 const register = () => import("../components/register/register.vue");
 const searchResult = () => import("../views/searchResult.vue");
@@ -184,11 +182,7 @@ const routes = [
       },
     ],
   },
-  {
-    path: "/adminLogIn",
-    name: "adminLogIn",
-    component: adminLogIn,
-  },
+
 
 
 ];
