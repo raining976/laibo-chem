@@ -24,8 +24,8 @@ export default {
         user: "User",
         order: "Order",
         get: "Get",
-        country:"Country",
-        teamAddress:"Team Address",
+        country: "Country",
+        teamAddress: "Team Address",
     },
     // 表单
     form: {
@@ -140,7 +140,8 @@ export default {
         refuse: "Refuse",
         agree: "Agree",
         edit: "The editorial team information",
-        teamId:"Team ID"
+        teamId: "Team ID",
+        checkAll: "checkAll"
     },
     // 订单
     order: {

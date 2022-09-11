@@ -123,7 +123,6 @@ export default {
 
     // 管理员界面获取申请加入团队的通知
     getNotice() {
-      console.log("this.isAdmin", this.isAdmin);
       if (this.isAdmin) {
         this.$http
           .get("/team")

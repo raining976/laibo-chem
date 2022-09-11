@@ -10,8 +10,11 @@
           v-model="keywords"
         />
       </div>
-      <div class="searchBtn" @click="searchTeammate()">
+      <div class="searchBtn btn" @click="searchTeammate()">
         {{ $t("base.query") }}
+      </div>
+      <div class="searchBtn btn" @click="checkAll()">
+        {{ $t("team.checkAll") }}
       </div>
     </div>
     <div class="listBox">
@@ -80,24 +83,32 @@ export default {
       currentPage: 1, // 当前页数
       memberList: [],
       keywords: "", // 搜索成员关键字
+      isSearch: false, // 是否为搜索成员
     };
   },
   mounted() {
     this.getTeamMember(1);
   },
   methods: {
-    // 页面给改变时
+    // 页码给改变时,val是改变后的页码
     handleCurrentChange(val) {
-      this.getTeamMember(val);
+      // 判断是搜索还是默认团队列表
+      if (this.isSearch) {
+        this.searchTeammate(val);
+      } else this.getTeamMember(val);
     },
-
+    checkAll() {
+      this.getTeamMember();
+      this.keywords = "";
+    },
     // 获取团队成员
     getTeamMember(page) {
+      this.isSearch = false;
       this.$http
         .get("/team", {
           params: {
             page: page,
-            size: "7",
+            size: 6,
           },
         })
         .then((res) => {
@@ -121,13 +132,23 @@ export default {
         });
     },
     // 搜索团队成员
-    searchTeammate() {
+    searchTeammate(page) {
       if (this.keywords != "") {
+        this.isSearch = true;
         this.$http
-          .post("/searchTeammate", {
-            name: this.keywords,
-            phone: "",
-          })
+          .post(
+            "/searchTeammate",
+            {
+              name: this.keywords,
+              phone: "",
+            },
+            {
+              params: {
+                page: page,
+                size: "6",
+              },
+            }
+          )
           .then((res) => {
             if (res.data.code == 20000) {
               let message;
@@ -138,6 +159,8 @@ export default {
                 this.memberList = this.handlePrivilege(
                   res.data.data.memberList
                 );
+                this.totalPages = res.data.data.totalPages;
+                this.currentPage = res.data.data.pageNum;
                 message = "";
               }
               this.$message({
@@ -158,11 +181,18 @@ export default {
               type: "error",
             });
           });
+      } else {
+        this.$message("请输入查询关键词哦~");
       }
     },
 
     // 将数字或bool转化成文字
     handlePrivilege(array) {
+      if (array.length == 1) {
+        array.privilegeText = "成员";
+        if (array.privilege == 1) array.privilegeText = "管理员";
+        return array;
+      }
       array.forEach((item) => {
         if (item.privilege) {
           item.privilegeText = "管理员";
@@ -298,11 +328,10 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 550px;
+  width: 600px;
   padding-top: 30px;
   padding-bottom: 50px;
   margin-right: 50px;
-
   border-bottom: 2px solid #eaeaec;
 }
 .tag {

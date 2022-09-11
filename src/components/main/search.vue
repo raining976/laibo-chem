@@ -2,11 +2,7 @@
 <template>
   <div class="search">
     <div class="h">
-      <div class="logoBox">
-        <router-link to="/mainPage" 
-          ><img src="../../assets/logo1.png" alt=""
-        /></router-link>
-      </div>
+      <div class="logoBox"><img src="../../assets/logo1.png" alt="" @click="toMainPage()"/></div>
       <div class="searchBox">
         <div class="inputBox">
           <input
@@ -37,33 +33,32 @@ export default {
       resultBox: [],
     };
   },
-  watch: {
-
-  },
+  watch: {},
   methods: {
-   
     toSearchResult() {
-      if(this.$data.inputValue !== "") {
-        this.$data.isSearch ++;
-        if(this.$route.path !== "/searchResult") {
-        this.$router.push({
-          path: "/searchResult",
-          query: {
-            inputValue: this.$data.inputValue,
-          },
-        });
-      } else if(this.$route.path === "/searchResult") {
+      if (this.$data.inputValue !== "") {
+        this.$data.isSearch++;
+        if (this.$route.path !== "/searchResult") {
           this.$router.push({
-          path: "/searchResult",
-          query: {
-            inputValue: this.$data.inputValue,
-            isSearch: this.$data.isSearch
-          },
-        });
+            path: "/searchResult",
+            query: {
+              inputValue: this.$data.inputValue,
+            },
+          });
+        } else if (this.$route.path === "/searchResult") {
+          this.$router.push({
+            path: "/searchResult",
+            query: {
+              inputValue: this.$data.inputValue,
+              isSearch: this.$data.isSearch,
+            },
+          });
+        }
       }
-      }
-      
     },
+    toMainPage(){
+      this.$router.push("/mainPage")
+    }
   },
 };
 </script>
