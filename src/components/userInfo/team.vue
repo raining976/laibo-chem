@@ -75,6 +75,13 @@ export default {
       },
       immediate: false,
     },
+    privilege: {
+      handler(val) {
+        if (val) this.isAdmin = true;
+        else this.isAdmin = false;
+      },
+      immediate: true,
+    },
   },
   methods: {
     toEditTeam() {
@@ -102,12 +109,6 @@ export default {
           break;
       }
     },
-
-    // 处理是否为管理员
-    isAdminHandler(flag) {
-      if (flag) this.isAdmin = true;
-      else this.isAdmin = false;
-    },
     // 获取用户信息,判断权限问题
     getUserInfo() {
       this.$http.get("/userInfo").then((res) => {
@@ -115,7 +116,6 @@ export default {
           this.team = res.data.data.team;
           this.in_team = res.data.data.in_team;
           this.privilege = res.data.data.privilege;
-          this.isAdminHandler(res.data.data.privilege);
           this.isInTeam(this.in_team);
         }
       });
@@ -123,14 +123,23 @@ export default {
 
     // 管理员界面获取申请加入团队的通知
     getNotice() {
+      console.log("this.isAdmin", this.isAdmin);
       if (this.isAdmin) {
-        this.$http.get("/team").then((res) => {
-          if (res.data.code == 20000) {
-            if (res.data.data) {
-              this.notices = res.data.data.acceptList;
-            } else this.notices = [];
-          }
-        });
+        this.$http
+          .get("/team")
+          .then((res) => {
+            if (res.data.code == 20000) {
+              if (res.data.data.acceptList) {
+                this.notices = res.data.data.acceptList;
+                this.noticeKey++;
+              } else this.notices = [];
+            } else {
+              console.log("res.data.msg", res.data.msg);
+            }
+          })
+          .catch((err) => {
+            console.log("err", err);
+          });
       }
     },
   },
