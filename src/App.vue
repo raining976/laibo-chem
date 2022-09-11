@@ -42,13 +42,9 @@ export default {
       localStorage.removeItem("refresh_refresh");
       localStorage.removeItem("token_exp");
     }
-    // 测试用,开始先清除token
-    // localStorage.removeItem("token");
-    // localStorage.removeItem("refresh")
   },
   unmounted() {
     window.localStorage.removeItem("lang");
-    console.log("已移除");
   },
   methods: {
     // 更改登录页面的显示与否

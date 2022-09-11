@@ -68,7 +68,7 @@ export default {
               message: "处理成功",
               type: "success",
             });
-            this.$parent.refreshKey++;
+            this.$parent.getNotice();
             this.$parent.noticeKey++;
           } else {
             this.$message({
@@ -121,6 +121,7 @@ export default {
   box-shadow: 0px 10px 21px 0px rgba(7, 2, 3, 0.2);
   border-radius: 10px;
   transition: all 0.3s;
+  z-index: 999;
 }
 .titleBox {
   width: 100%;
