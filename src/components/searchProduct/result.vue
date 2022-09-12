@@ -24,7 +24,9 @@
               <div class="huohao _data">
                 {{ $t("order.itemNo") + "：" }}{{ item.huohao }}
               </div>
-              <div class="jiegoushi _data" >结构式：<span v-html="item.linear_formula"></span></div>
+              <div class="jiegoushi _data">
+                结构式：<span v-html="item.linear_formula"></span>
+              </div>
               <div class="CAScode _data">
                 {{ $t("order.casNum") + "：" }}{{ item.cas }}
               </div>
@@ -34,7 +36,11 @@
         </div>
         <!-- 价格表格 -->
         <div class="collapse">
-          <el-collapse v-model="activeName" accordion @click="getTable(item.id)">
+          <el-collapse
+            v-model="activeName"
+            accordion
+            @click="getTable(item.id)"
+          >
             <el-collapse-item name="1">
               <template #title>
                 <span class="textBox">价格与库存&nbsp;</span
@@ -65,7 +71,7 @@
                         :key="index"
                       >
                         <td class="huohao">
-                          <div>{{ item.id + '-' + item1.weight }}</div>
+                          <div>{{ item.id + "-" + item1.weight }}</div>
                         </td>
                         <td class="size">
                           <div>{{ item1.guige }}</div>
@@ -118,9 +124,9 @@
 export default {
   name: "result",
   props: {
-     resultBox:{
-      type:Array,
-     } ,
+    resultBox: {
+      type: Array,
+    },
   },
   components: "",
   data() {
@@ -139,7 +145,6 @@ export default {
         //   casCode: "",
         //   mdlCode: "",
         // },
-        
       ],
       productData: [
         // {
@@ -160,34 +165,32 @@ export default {
     };
   },
   watch: {
-productData: {
+    productData: {
       handler() {
         this.$data.productData.forEach((item) => {
-          Object.assign(item, {num: 0});
-        })
-      }
-    }
+          Object.assign(item, { num: 0 });
+        });
+      },
+    },
   },
   methods: {
-    getTable(code) {  
-      if(this.$data.pastId !== code)
-      {
+    getTable(code) {
+      if (this.$data.pastId !== code) {
         this.$http
-        .get("/product/detail", {
-          params: {
-            id: code,
-          },
-        })
-        //回调函数
-        .then((res) => {
-
-          this.$data.productData = res.data.data.params;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+          .get("/product/detail", {
+            params: {
+              id: code,
+            },
+          })
+          //回调函数
+          .then((res) => {
+            this.$data.productData = res.data.data.params;
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       }
-       this.$data.pastId = code;
+      this.$data.pastId = code;
     },
     //
     toProductInfo(code) {
@@ -197,9 +200,9 @@ productData: {
           id: code,
         },
       });
-  },
-  // 加入购物车
-  addCart() {
+    },
+    // 加入购物车
+    addCart() {
       this.$data.productData.forEach((item) => {
         if (item.num !== 0) {
           this.$http
@@ -244,10 +247,10 @@ productData: {
 };
 </script>
 <style>
-.resultPage .el-collapse-item__arrow{
+.resultPage .el-collapse-item__arrow {
   margin: 0 10px;
 }
-.resultPage .el-collapse-item__header{
+.resultPage .el-collapse-item__header {
   justify-content: flex-end;
 }
 </style>

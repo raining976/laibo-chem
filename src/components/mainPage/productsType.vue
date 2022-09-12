@@ -7,7 +7,7 @@
     </div>
     <div class="productTypeBox">
       <div class="productType" v-for="(item, index) in typeList" :key="index">
-        <div class="productTypePic">
+        <div class="productTypePic" @click="toSearchType(item.name)">
           <img :src="item.img" alt="" />
           <div class="shadow"></div>
         </div>
@@ -22,12 +22,35 @@ export default {
   components: "",
   data() {
     return {
+      // 1 0 2
+      type: "",
       typeList: [
         { img: require("../../assets/p1.png"), name: "低值易耗品" },
         { img: require("../../assets/p2.png"), name: "中间品" },
         { img: require("../../assets/p3.png"), name: "染料" },
       ],
     };
+  },
+  methods: {
+    toSearchType(str) {
+      switch (str) {
+        case "中间品":
+          this.$data.type = "0";
+          break;
+        case "低值易耗品":
+          this.$data.type = "1";
+          break;
+        case "染料":
+          this.$data.type = "2";
+          break;
+      }
+      this.$router.push({
+        path: "/searchResult",
+        query: {
+          whichType: this.$data.type,
+        }
+      })
+    },
   },
 };
 </script>
@@ -53,7 +76,7 @@ export default {
   line-height: 60.1px;
   text-align: center;
 }
-.title>span{
+.title > span {
   margin-right: 10px;
 }
 .productTypeBox {
