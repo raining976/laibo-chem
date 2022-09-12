@@ -6,6 +6,19 @@
       <h3 class="title">{{ $t("userMenu.team") }}</h3>
       <div class="setBox">
         <el-tooltip
+          content="删除团队?"
+          placement="top"
+          effect="light"
+          popper-class="editTip"
+        >
+          <i
+            class="el-icon-delete set"
+            @click="delTeamOpen()"
+            v-if="isAdmin"
+          ></i>
+        </el-tooltip>
+
+        <el-tooltip
           :content="$t('team.edit')"
           placement="top"
           effect="light"
@@ -58,11 +71,13 @@ export default {
       refreshKey: 0, // 刷新key
       noticeKey: 0, // notice刷新key
       notices: [], // 申请加入团队的通知列表
+      teamId: -1, // 团队id
     };
   },
   mounted() {
     this.getUserInfo();
     this.getNotice();
+    this.getTeamInfo();
   },
   watch: {
     isNoticeShow: {
@@ -140,6 +155,63 @@ export default {
             console.log("err", err);
           });
       }
+    },
+    // 删除团队
+    delTeam() {
+      this.$http
+        .post("/delTeam", {
+          id: this.teamId,
+        })
+        .then((res) => {
+          if (res.data.data == 20000) {
+            this.$message("删除成功!");
+          } else {
+            this.$message({
+              message: res.data.msg,
+              type: "error",
+            });
+          }
+        })
+        .catch((err) => {
+          console.log("err", err);
+          this.$message({
+            message: "未知错误!",
+            type: "error",
+          });
+        });
+    },
+    // 删除团队提示
+    delTeamOpen() {
+      this.$confirm("此操作将永久删除团队, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(() => {
+          this.delTeam();
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除",
+          });
+        });
+    },
+    getTeamInfo() {
+      this.$http
+        .get("/teamInfo")
+        .then((res) => {
+          if (res.data.code == 20000) {
+            this.teamId = res.data.data.id;
+          }
+        })
+        .catch((err) => {
+          this.$message({
+            message: "未知错误",
+            type: "error",
+          });
+          console.log("err", err);
+        });
     },
   },
 };
