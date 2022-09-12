@@ -98,8 +98,10 @@ export default {
       } else this.getTeamMember(val);
     },
     checkAll() {
-      this.getTeamMember();
-      this.keywords = "";
+      if (this.isSearch) {
+        this.getTeamMember();
+        this.keywords = "";
+      }
     },
     // 获取团队成员
     getTeamMember(page) {
@@ -152,7 +154,7 @@ export default {
           .then((res) => {
             if (res.data.code == 20000) {
               let message;
-              if (!res.data.data) {
+              if (!res.data.data.memberList.length) {
                 message = ",空空如也~";
                 this.memberList = [];
               } else {
@@ -319,7 +321,32 @@ export default {
       });
     },
     // 删除团队成员
-    delMember(idx) {},
+    delMember(idx) {
+      this.$http
+        .post("/delTeammate", {
+          id: this.memberList[idx].id,
+        })
+        .then((res) => {
+          if (res.data.code == 20000) {
+            this.$message({
+              message: "删除成功!",
+              type: "success",
+            });
+          } else {
+            this.$message({
+              message: res.data.msg,
+              type: "error",
+            });
+          }
+        })
+        .catch((err) => {
+          console.err("err", err);
+          this.$message({
+            message: "未知错误!",
+            type: "error",
+          });
+        });
+    },
     // 删除成员的提醒
     delMemberNotice(idx) {
       this.$notify({
