@@ -21,12 +21,38 @@
           }}</span>
         </div>
         <!-- 你好客户 -->
-        <div class="hello" v-if="isLogin" @click="toUserInfo()">
-          {{ name }}
-          <div class="menuBox" style="display: none">
-            <span class="sonMenu" @click="exit()">退出登录</span>
-          </div>
-        </div>
+        <el-dropdown>
+          <span>
+            {{ name }}
+          </span>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item
+                ><router-link to="/team"
+                  >团队管理</router-link
+                ></el-dropdown-item
+              >
+              <el-dropdown-item
+                ><router-link to="/address"
+                  >收货地址</router-link
+                ></el-dropdown-item
+              >
+              <el-dropdown-item
+                ><router-link to="/info"
+                  >个人信息</router-link
+                ></el-dropdown-item
+              >
+              <el-dropdown-item
+                ><router-link to="/changePsd"
+                  >修改密码</router-link
+                ></el-dropdown-item
+              >
+              <el-dropdown-item divided @click="exitOpen()"
+                >退出登录</el-dropdown-item
+              >
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
         <!-- /你好客户 -->
         <div class="zh_enBox">
           <span
@@ -142,6 +168,30 @@ export default {
     toUserInfo() {
       this.$router.push("/info");
     },
+    // 退出登录提示
+    exitOpen() {
+      this.$confirm(
+        "proxy will permanently delete the file. Continue?",
+        "Warning",
+        {
+          confirmButtonText: "OK",
+          cancelButtonText: "Cancel",
+          type: "warning",
+        }
+      )
+        .then(() => {
+          this.$message({
+            type: "success",
+            message: "Delete completed",
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "Delete canceled",
+          });
+        });
+    },
     // 退出登录
     exit() {
       this.$router.push("/mainPage");
@@ -256,5 +306,14 @@ export default {
   padding: 10px 20px;
   border-radius: 5px;
   background: #eaf3f8;
+}
+.nav >>> .el-dropdown {
+  transform: scale(1.3);
+  transform-origin: center;
+  margin-right: 30px;
+  cursor: pointer;
+}
+.nav >>> .el-message-box {
+  transform: scale(1.3);
 }
 </style>
