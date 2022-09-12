@@ -28,7 +28,7 @@
 import result from "../components/searchProduct/result.vue";
 import noResult from "../components/searchProduct/noResult.vue";
 export default {
-  name: "", 
+  name: "",
   components: {
     result,
     noResult,
@@ -36,7 +36,7 @@ export default {
   data() {
     return {
       res: "noResult",
-      cate: "",  // 0 1 2
+      cate: "", // 0 1 2
       type: "", //需要判断
       inputValue: "",
       typeList: ["中间品", "低值易耗品", "染料"],
@@ -44,12 +44,11 @@ export default {
     };
   },
   async created() {
-    if(this.$route.query.inputValue !== undefined) {
-      this.$data.inputValue = this.$route.query.inputValue
-      await this.getSearchResult()
-    }else 
-    if(this.$route.query.isLearnMore) {
-      console.log("cefe")
+    if (this.$route.query.inputValue !== undefined) {
+      this.$data.inputValue = this.$route.query.inputValue;
+      await this.getSearchResult();
+    } else if (this.$route.query.whichType === "4") {
+      // 路由传的参都是string型？
       this.$data.type = "热门产品";
       await this.$http
         .get("/hotProducts", {
@@ -64,10 +63,22 @@ export default {
         .catch((err) => {
           console.log(err);
         });
+    } else if (
+      this.$route.query.whichType !== "4" &&
+      this.$route.query.whichType !== undefined
+    ) {
+      this.$data.cate = this.$route.query.whichType;
+      if(this.$data.cate === "0") {
+          this.searchType("中间品");
+      }else  if(this.$data.cate === "1") {
+          this.searchType("低值易耗品");
+      }else  if(this.$data.cate === "2") {
+          this.searchType("染料");
+      }
     }
   },
-    mounted() {
-    // 
+  mounted() {
+    //
     window.scrollTo(0, 0);
   },
   watch: {
@@ -75,16 +86,15 @@ export default {
       handler() {
         // 此判断用于解决路由不跳转
         // console.log(this.$route.query.isSearch,"ccccc")
-        if(this.$route.query.isSearch !== undefined) {
-            // 对路由变化作出响应....
-        this.$data.inputValue = this.$route.query.inputValue;
-        this.getSearchResult()     
+        if (this.$route.query.isSearch !== undefined) {
+          // 对路由变化作出响应....
+          this.$data.inputValue = this.$route.query.inputValue;
+          this.getSearchResult();
         }
       },
       immediate: true,
       deep: true,
-    
-  }
+    },
   },
   methods: {
     toMainPage() {
@@ -94,59 +104,61 @@ export default {
       // this.$router.back()
     },
     //获取搜索结果
-      async getSearchResult() {
-      if(this.$route.query.inputValue !== "") {
-      await this.$http
-        .get("/search", {
-          params: {
-            s: this.$data.inputValue,
-            cate: this.$data.cate, // 0 1 2
-          },
-        })
-        //回调函数
-        .then((res) => {
-          this.$data.resultBox = res.data.data.products;
-          this.toResultShow(); 
-          // this.$data.code = res.data.code;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-     }
+    async getSearchResult() {
+      if (this.$route.query.inputValue !== "") {
+        await this.$http
+          .get("/search", {
+            params: {
+              s: this.$data.inputValue,
+              cate: this.$data.cate, // 0 1 2
+            },
+          })
+          //回调函数
+          .then((res) => {
+            this.$data.resultBox = res.data.data.products;
+            this.toResultShow();
+            // this.$data.code = res.data.code;
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
     },
     // 分类
     searchType(str) {
-     switch(str) {
-        case "中间品": 
-             this.$data.inputValue = str;
-             this.$data.type = str;
-             this.$data.cate = 0;
-             break;
+      switch (str) {
+        case "中间品":
+          this.$data.inputValue = str;
+          this.$data.type = str;
+          this.$data.cate = 0;
+          break;
         case "低值易耗品":
-             this.$data.inputValue = str;
-             this.$data.type = str;
-             this.$data.cate = 1;
-             break;
+          this.$data.inputValue = str;
+          this.$data.type = str;
+          this.$data.cate = 1;
+          break;
         case "染料":
-             this.$data.inputValue = str;
-             this.$data.type = str;
-             this.$data.cate = 2;
-             break;   
-     }  
-     this.getSearchResult();
+          this.$data.inputValue = str;
+          this.$data.type = str;
+          this.$data.cate = 2;
+          break;
+      }
+      this.getSearchResult();
     },
     // js判断页面
     toResultShow() {
       //用&&原因是因为数据未能完全覆盖导致条件判断错误
       // console.log("CEss",this.$data.resultBox.length)
-      if (this.$data.resultBox.length !== 0&&this.$data.resultBox !== undefined) {
+      if (
+        this.$data.resultBox.length !== 0 &&
+        this.$data.resultBox !== undefined
+      ) {
         this.$data.res = "result";
-      } else if(this.$data.resultBox.length === 0) {
+      } else if (this.$data.resultBox.length === 0) {
         this.$data.res = "noResult";
       }
     },
   },
-  
 };
 </script>
 <style scoped>

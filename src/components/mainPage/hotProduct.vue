@@ -64,7 +64,7 @@ export default {
       this.$router.push({
         path: "/searchResult",
         query: {
-          isLearnMore: true,
+          whichType: 4,
         },
       });
     }
