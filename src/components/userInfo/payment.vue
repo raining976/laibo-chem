@@ -208,6 +208,7 @@ export default {
       addressId: 0, // 地址id
       freight: 0, //运费
       allmoney: 0, //总计
+      orderId: 0,
       curAddress: {}, // 当前地址对象
       pushProduct: {
               product_params_id: 0,
@@ -403,9 +404,10 @@ export default {
       }
       else if (this.$data.payWay) {
         this.$http
-          .get("/pay", {
-            order_no: 0,
+          .post("/pay", {
+            order_no: this.$data.orderId,
             type: this.$data.payWay,
+            image: "",
           })
           .then((res) => {
             if (res.data.code == 20000) {
@@ -413,8 +415,9 @@ export default {
                 message: "支付成功",
                 type: "success",
               });
-              // 创建订单
-              this.createOrder(); 
+              this.$router.push({
+                path: "/payCompleted/" + this.$data.orderId,
+              })
             } else {
               this.$message({
                 message: res.data.msg,
@@ -439,7 +442,6 @@ export default {
               });
       }
       else  {
-
         this.$http
           .post("/createOrder", {
             // products: {
@@ -456,6 +458,8 @@ export default {
                 message: "创建订单成功",
                 type: "success",
               });
+              this.$data.orderId = res.data.data.order_no;
+              this.toPay();
             } else {
               this.$message({
                 message: res.data.msg,

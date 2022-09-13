@@ -10,6 +10,7 @@ const productInfo = () => import("../components/searchProduct/productInfo.vue");
 const userInfo = () => import("../views/userInfo.vue");
 const cart = () => import("../components/userInfo/shopCart.vue");
 const payment = () => import("../components/userInfo/payment.vue");
+const payCompleted = () => import("../components/userInfo/payCompleted.vue");
 const order = () => import("../components/userInfo/myOrder.vue");
 const orderInfo = () => import("../components/userInfo/orderInfo.vue");
 const team = () => import("../components/userInfo/team.vue");
@@ -109,6 +110,12 @@ const routes = [
         path: '/payment',
         name: 'payment',
         component: payment,
+        meta: { requiresAuth: true },
+      },
+      {
+        path: "/payCompleted/:id",
+        name: "payCompleted",
+        component: payCompleted,
         meta: { requiresAuth: true },
       },
       {
