@@ -4,20 +4,8 @@
   <div class="team">
     <div class="topBox">
       <h3 class="title">{{ $t("userMenu.team") }}</h3>
-      <div class="setBox">
-        <el-tooltip
-          content="删除团队?"
-          placement="top"
-          effect="light"
-          popper-class="editTip"
-        >
-          <i
-            class="el-icon-delete set"
-            @click="delTeamOpen()"
-            v-if="isAdmin"
-          ></i>
-        </el-tooltip>
-
+      <div class="setBox" v-if="in_team != 0">
+        <i class="el-icon-delete set" @click="delTeamOpen()" v-if="isAdmin"></i>
         <el-tooltip
           :content="$t('team.edit')"
           placement="top"
@@ -33,24 +21,16 @@
           effect="light"
           popper-class="editTip"
         >
-          <el-badge :value="notices.length" :max="9">
-            <i
-              class="el-icon-bell notice set"
-              @click="isNoticeShow = !isNoticeShow"
-            ></i>
-          </el-badge>
+          <i
+            class="el-icon-bell notice set"
+            @click="isNoticeShow = !isNoticeShow"
+          ></i>
         </el-tooltip>
-        <!-- 通知模态框 -->
-        <notice
-          v-show="isNoticeShow"
-          ref="notice"
-          :notices="notices"
-          :key="noticeKey"
-        />
+        <notice v-if="isNoticeShow" ref="notice" :key="noticeKey" />
       </div>
     </div>
     <div class="content">
-      <router-view :key="refreshKey"></router-view>
+      <router-view @update="getUserInfo()"></router-view>
     </div>
   </div>
 </template>
@@ -65,10 +45,9 @@ export default {
     return {
       team: "", // 团队名称
       in_team: -1, //是否在团队里
-      privilege: -1, // 权限
+      privilege: 0, // 权限
       isNoticeShow: false,
       isAdmin: false, // 是否为管理员,默认是
-      refreshKey: 0, // 刷新key
       noticeKey: 0, // notice刷新key
       notices: [], // 申请加入团队的通知列表
       teamId: -1, // 团队id
@@ -76,7 +55,6 @@ export default {
   },
   mounted() {
     this.getUserInfo();
-    this.getNotice();
     this.getTeamInfo();
   },
   watch: {
@@ -92,7 +70,7 @@ export default {
     },
     privilege: {
       handler(val) {
-        if (val) this.isAdmin = true;
+        if (val == 1 || val == 2) this.isAdmin = true;
         else this.isAdmin = false;
       },
       immediate: true,
@@ -101,7 +79,10 @@ export default {
   methods: {
     toEditTeam() {
       this.$router.push({
-        name: "editTeam",
+        path: "/editTeam",
+        query: {
+          flag: 0,
+        },
       });
     },
     closeNotice(e) {
@@ -135,27 +116,6 @@ export default {
         }
       });
     },
-
-    // 管理员界面获取申请加入团队的通知
-    getNotice() {
-      if (this.isAdmin) {
-        this.$http
-          .get("/team")
-          .then((res) => {
-            if (res.data.code == 20000) {
-              if (res.data.data.acceptList) {
-                this.notices = res.data.data.acceptList;
-                this.noticeKey++;
-              } else this.notices = [];
-            } else {
-              console.log("res.data.msg", res.data.msg);
-            }
-          })
-          .catch((err) => {
-            console.log("err", err);
-          });
-      }
-    },
     // 删除团队
     delTeam() {
       this.$http
@@ -163,8 +123,13 @@ export default {
           id: this.teamId,
         })
         .then((res) => {
-          if (res.data.data == 20000) {
-            this.$message("删除成功!");
+          if (res.data.code == 20000) {
+            this.$message({
+              message: "删除成功!",
+              type: "success",
+            });
+            this.in_team = 0;
+            this.$router.push("/teamBlank");
           } else {
             this.$message({
               message: res.data.msg,
@@ -198,20 +163,26 @@ export default {
         });
     },
     getTeamInfo() {
-      this.$http
-        .get("/teamInfo")
-        .then((res) => {
-          if (res.data.code == 20000) {
-            this.teamId = res.data.data.id;
-          }
-        })
-        .catch((err) => {
-          this.$message({
-            message: "未知错误",
-            type: "error",
+      if (this.in_team) {
+        this.$http
+          .get("/teamInfo")
+          .then((res) => {
+            if (res.data.code == 20000) {
+              this.teamId = res.data.data.id;
+            }
+          })
+          .catch((err) => {
+            this.$message({
+              message: "未知错误",
+              type: "error",
+            });
+            console.log("err", err);
           });
-          console.log("err", err);
-        });
+      }
+    },
+    // 强制刷新方法
+    refreshFun() {
+      this.$forceUpdate();
     },
   },
 };

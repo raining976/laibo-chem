@@ -13,18 +13,17 @@ export default {
   },
   data() {
     return {
-      isEdit: true,
       isAdmin: false,
+      isEdit: true,
     };
   },
   beforeMount() {
     this.$http.get("/userInfo").then((res) => {
       if (res.data.code == 20000) {
         let _isAdmin = res.data.data.privilege;
-        if(_isAdmin){
-          this.isAdmin = true
-        }else this.isAdmin = false
-
+        if (_isAdmin) {
+          this.isAdmin = true;
+        } else this.isAdmin = false;
       }
     });
   },

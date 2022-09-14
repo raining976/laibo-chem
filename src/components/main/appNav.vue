@@ -170,25 +170,18 @@ export default {
     },
     // 退出登录提示
     exitOpen() {
-      this.$confirm(
-        "proxy will permanently delete the file. Continue?",
-        "Warning",
-        {
-          confirmButtonText: "OK",
-          cancelButtonText: "Cancel",
-          type: "warning",
-        }
-      )
+      this.$confirm("是否确定退出登录,确定?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
         .then(() => {
-          this.$message({
-            type: "success",
-            message: "Delete completed",
-          });
+          this.exit();
         })
         .catch(() => {
           this.$message({
             type: "info",
-            message: "Delete canceled",
+            message: "已取消退出登录",
           });
         });
     },

@@ -87,6 +87,11 @@ export default {
     };
   },
   mounted() {
+    let flag = this.$route.params.flag;
+    if (flag == 1) {
+      let _that = this;
+      _that.$emit("update");
+    }
     this.getTeamMember(1);
   },
   methods: {

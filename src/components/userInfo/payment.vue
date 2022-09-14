@@ -211,13 +211,11 @@ export default {
       orderId: 0,
       curAddress: {}, // 当前地址对象
       pushProduct: {
-              product_params_id: 0,
-              count: 0,
-            },  //单个货物
+        product_params_id: 0,
+        count: 0,
+      }, //单个货物
       orderBox: [], //订单汇总传参
-      addresses: [
-        
-      ], // 地址列表
+      addresses: [], // 地址列表
 
       commodityList: [
         // {
@@ -234,10 +232,7 @@ export default {
   },
   created() {
     this.getAddress();
-    this.$data.commodityList = JSON.parse(
-      localStorage.getItem("checkBox")
-    );
-
+    this.$data.commodityList = JSON.parse(localStorage.getItem("checkBox"));
   },
   watch: {
     isReloadAddress(val) {
@@ -246,25 +241,23 @@ export default {
         this.isReloadAddress = false;
       }
     },
-    commodityList:{
-        handler() {
-           this.$nextTick(() => {
+    commodityList: {
+      handler() {
+        this.$nextTick(() => {
           let obj;
           this.$data.commodityList.forEach((item) => {
-
-               this.$data.pushProduct.product_params_id = item.id;
-               this.$data.pushProduct.count = item.count;
-               obj = JSON.stringify(this.$data.pushProduct);    //深拷贝
-              //  console.log(JSON.parse(obj),"ccccc")
-               this.$data.orderBox.push(JSON.parse(obj)); //一个一个存
-              //  console.log(this.$data.orderBox,"ceshi1111");
-               this.$data.pushProduct.product_params_id = 0;
-               this.$data.pushProduct.count = 0;
-               
-          })
-       })   
-        }
-    }
+            this.$data.pushProduct.product_params_id = item.id;
+            this.$data.pushProduct.count = item.count;
+            obj = JSON.stringify(this.$data.pushProduct); //深拷贝
+            //  console.log(JSON.parse(obj),"ccccc")
+            this.$data.orderBox.push(JSON.parse(obj)); //一个一个存
+            //  console.log(this.$data.orderBox,"ceshi1111");
+            this.$data.pushProduct.product_params_id = 0;
+            this.$data.pushProduct.count = 0;
+          });
+        });
+      },
+    },
   },
   computed: {
     allmoney() {
@@ -351,9 +344,9 @@ export default {
           console.log("err", err);
         });
     },
-    chooseAddress(id,code) {
+    chooseAddress(id, code) {
       this.$data.isBorder = id;
-       this.$data.addressId = code;
+      this.$data.addressId = code;
     },
     // 分页---
     handleSizeChange(val) {
@@ -396,13 +389,12 @@ export default {
     },
     toPay() {
       // 判断是否选择支付方式
-      if(!this.$data.payWay) {
+      if (!this.$data.payWay) {
         this.$message({
-                message: "尚未选择支付类型",
-                type: "error",
-              });
-      }
-      else if (this.$data.payWay) {
+          message: "尚未选择支付类型",
+          type: "error",
+        });
+      } else if (this.$data.payWay) {
         this.$http
           .post("/pay", {
             order_no: this.$data.orderId,
@@ -417,7 +409,7 @@ export default {
               });
               this.$router.push({
                 path: "/payCompleted/" + this.$data.orderId,
-              })
+              });
             } else {
               this.$message({
                 message: res.data.msg,
@@ -435,13 +427,12 @@ export default {
       }
     },
     createOrder() {
-      if(this.$data.addressId === -1) {
+      if (this.$data.addressId === -1) {
         this.$message({
-                message: "尚未选择收货地址",
-                type: "error",
-              });
-      }
-      else  {
+          message: "尚未选择收货地址",
+          type: "error",
+        });
+      } else {
         this.$http
           .post("/createOrder", {
             // products: {

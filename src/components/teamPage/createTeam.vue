@@ -2,7 +2,6 @@
 <template>
   <div class="createTeam">
     <div class="backBtn">
-      <!-- 返回上一级 -->
       <router-link to @click="$router.back(-1)">{{
         $t("base.back")
       }}</router-link>
@@ -15,18 +14,19 @@
         ref="ruleForm"
         label-width="130px"
         class="demo-ruleForm"
+        :disabled="!isEdit || !isAdmin"
       >
-        <el-form-item :label="$t('team.teamId')" v-show="isEdit">
+        <el-form-item :label="$t('team.teamId')" v-if="!isCreate">
           <el-input v-model="teamId" :disabled="true"></el-input>
         </el-form-item>
         <el-form-item :label="$t('team.name')" prop="name">
-          <el-input v-model="ruleForm.name" :disabled="!isAdmin"></el-input>
+          <el-input v-model="ruleForm.name"></el-input>
         </el-form-item>
         <el-form-item :label="$t('base.email')" prop="email">
-          <el-input v-model="ruleForm.email" :disabled="!isAdmin"></el-input>
+          <el-input v-model="ruleForm.email"></el-input>
         </el-form-item>
         <el-form-item :label="$t('base.phone')" prop="phone">
-          <el-input v-model="ruleForm.phone" :disabled="!isAdmin"></el-input>
+          <el-input v-model="ruleForm.phone"></el-input>
         </el-form-item>
         <el-form-item
           :label="$t('base.country')"
@@ -86,9 +86,6 @@ export default {
   components: {
     vue3CountryIntl,
   },
-  props:{
-    isAdmin:Boolean,
-  },
   data() {
     // var checkAge = (rule, value, callback) => {
     //   if (!value) {
@@ -109,7 +106,9 @@ export default {
     return {
       options: regionData, // 选择器的data
       teamId: "", // 团队id
-      isEdit: false, // 是否为编辑团队信息页
+      isEdit: true, // 是否为编辑团队信息页
+      isAdmin: false, // 是否为管理员
+      isCreate: false, // 是否为创建
       ruleForm: {
         name: "",
         email: "",
@@ -118,7 +117,6 @@ export default {
         selectedOptions: [],
         order_check: 1,
         address: "", // 详细地址
-        
       },
       rules: {
         name: [
@@ -170,10 +168,16 @@ export default {
     };
   },
   mounted() {
+    const flag = this.$route.query.flag;
+    if (flag == 0) {
+      this.isAdmin = true;
+      this.isCreate = true;
+    }
     if (this.$parent.isEdit) {
       this.isEdit = true;
+      this.isCreate = false;
       this.getTeamInfo();
-    } else this.isEdit = false;
+    }
   },
   methods: {
     submitForm(formName) {
@@ -194,7 +198,7 @@ export default {
       if (code != 86) {
         this.isChina = false;
       } else this.isChina = true;
-      console.log("code", code);
+      // console.log("code", code);
     },
     // 地址改变时
     addressChange() {},
@@ -210,7 +214,7 @@ export default {
         sx: Number(this.ruleForm.selectedOptions[2]),
         dz: this.ruleForm.address,
       };
-      if (this.isEdit) {
+      if (this.isEdit && !this.isCreate) {
         form.id = this.teamId;
         this.$http
           .post("/editTeam", form)
@@ -231,17 +235,21 @@ export default {
           .catch((err) => {
             console.log("post_team_err", err);
           });
-      } else {
+      } else if (this.isCreate) {
         this.$http
           .post("/team", form)
           .then((res) => {
             if (res.data.code == 20000) {
               this.$message({
-                message: "创建成功",
+                message: "创建团队成功",
                 type: "success",
               });
-              this.$router.push("/searchMember");
-              this.$parent.refreshKey++;
+              this.$router.push({
+                name: "searchMember",
+                params: {
+                  flag: 1,
+                },
+              });
             } else {
               this.$message({
                 message: res.data.msg,

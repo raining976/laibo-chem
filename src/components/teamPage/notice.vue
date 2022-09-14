@@ -3,7 +3,7 @@
   <div class="noticeBox">
     <div class="titleBox">
       <div class="title">{{ $t("team.message") }}</div>
-      <div class="btn" @click="allRead()">{{ $t("team.read") }}</div>
+      <!-- <div class="btn" @click="allRead()">{{ $t("team.read") }}</div> -->
     </div>
     <ul class="noticeList">
       <li class="eachNotice" v-for="(notice, index) in notices" :key="index">
@@ -34,13 +34,14 @@
 <script>
 export default {
   name: "notice",
-  props: {
-    notices: Array,
-  },
   data() {
     return {
       curIndex: -1, // 当前选中的索引
+      notices: [],
     };
+  },
+  mounted(){
+    this.getNotice()
   },
   methods: {
     allRead() {
@@ -60,7 +61,7 @@ export default {
       this.$http
         .post("/teamApplication", {
           id: this.notices[idx].id,
-          status: String(flag), // num格式 string测试用 
+          status: String(flag), // num格式 string测试用
         })
         .then((res) => {
           if (res.data.code == 20000) {
@@ -68,8 +69,7 @@ export default {
               message: "处理成功",
               type: "success",
             });
-            this.$parent.getNotice();
-            this.$parent.noticeKey++;
+            this.getNotice();
           } else {
             this.$message({
               message: res.data.msg,
@@ -100,6 +100,23 @@ export default {
             type: "info",
             message: "已取消操作",
           });
+        });
+    },
+    // 管理员界面获取申请加入团队的通知
+    getNotice() {
+      this.$http
+        .get("/team")
+        .then((res) => {
+          if (res.data.code == 20000) {
+            if (res.data.data.acceptList) {
+              this.notices = res.data.data.acceptList;
+            } else this.notices = [];
+          } else {
+            console.log("res.data.msg", res.data.msg);
+          }
+        })
+        .catch((err) => {
+          console.log("err", err);
         });
     },
   },

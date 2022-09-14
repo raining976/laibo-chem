@@ -31,14 +31,14 @@ export default {
   data() {
     return {
       menuList: [
-        { selectName: this.$t('userMenu.cart') },
-        { selectName: this.$t('userMenu.order') },
-        { selectName: this.$t('userMenu.team')  },
-        { selectName: this.$t('userMenu.address') },
-        { selectName: this.$t('userMenu.info')  },
-        { selectName: this.$t('userMenu.changePass')  },
+        { selectName: this.$t("userMenu.cart") },
+        { selectName: this.$t("userMenu.order") },
+        { selectName: this.$t("userMenu.team") },
+        { selectName: this.$t("userMenu.address") },
+        { selectName: this.$t("userMenu.info") },
+        { selectName: this.$t("userMenu.changePass") },
       ],
-      currentIdx: 0, // 当前选中的菜单选项
+      currentIdx: 0, // 当前选中的菜单选项 
     };
   },
   watch: {
