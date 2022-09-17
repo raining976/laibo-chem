@@ -3,7 +3,7 @@
   <router-view name="search"></router-view>
   <keep-alive>
     <router-view name="table" v-if="$route.meta.keepAlive"></router-view>
-    </keep-alive>
+  </keep-alive>
   <router-view name="table" v-if="!$route.meta.keepAlive"></router-view>
   <router-view name="textPage"></router-view>
   <appFooter />
@@ -96,5 +96,13 @@ body >>> .is-message-box {
 body >>> .is-message-box .el-button--primary {
   background: var(--color);
 }
-
+.el-dropdown-menu__item:hover a {
+  font-weight: 700;
+  color: var(--color);
+}
+.el-dropdown__popper .navDropdown .el-dropdown-menu__item  {
+  font-size: 18px;
+  /* 这是两个动画,我只能把我这个放大优先级调到最高 */
+  transform-origin: top;
+}
 </style>

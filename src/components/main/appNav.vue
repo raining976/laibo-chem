@@ -25,8 +25,8 @@
           <span>
             {{ name }}
           </span>
-          <template #dropdown>
-            <el-dropdown-menu>
+          <template #dropdown >
+            <el-dropdown-menu class="navDropdown">
               <el-dropdown-item
                 ><router-link to="/team"
                   >团队管理</router-link
@@ -309,4 +309,5 @@ export default {
 .nav >>> .el-message-box {
   transform: scale(1.3);
 }
+
 </style>
