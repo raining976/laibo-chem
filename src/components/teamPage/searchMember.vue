@@ -115,7 +115,7 @@ export default {
         .get("/team", {
           params: {
             page: page,
-            size: 5,
+            size: 4,
           },
         })
         .then((res) => {
@@ -152,7 +152,7 @@ export default {
             {
               params: {
                 page: page,
-                size: 5,
+                size: 4,
               },
             }
           )
@@ -324,6 +324,7 @@ export default {
     },
     // 删除团队成员
     delMember(idx) {
+      console.log("this.memberList[idx].id", this.memberList[idx].id);
       this.$http
         .post("/delTeammate", {
           id: this.memberList[idx].id,
@@ -334,6 +335,8 @@ export default {
               message: "删除成功!",
               type: "success",
             });
+            this.refreshFun(this.currentPage);
+            this.delMemberNotice(idx);
           } else {
             this.$message({
               message: res.data.msg,
