@@ -115,7 +115,7 @@ export default {
         .get("/team", {
           params: {
             page: page,
-            size: 6,
+            size: 5,
           },
         })
         .then((res) => {
@@ -152,7 +152,7 @@ export default {
             {
               params: {
                 page: page,
-                size: "6",
+                size: 5,
               },
             }
           )
@@ -194,12 +194,9 @@ export default {
     },
 
     // 将数字或bool转化成文字
+    // 可以兼容数组为一的情况
     handlePrivilege(array) {
-      if (array.length == 1) {
-        array.privilegeText = "成员";
-        if (array.privilege == 1) array.privilegeText = "管理员";
-        return array;
-      }
+      if (!array) return; // 数组为空时
       array.forEach((item) => {
         if (item.privilege == 1) {
           item.privilegeText = "管理员";
@@ -222,7 +219,7 @@ export default {
               message: "成功设置为管理员!",
               type: "success",
             });
-            this.$parent.refreshKey++; // 刷新
+            this.refreshFun(this.currentPage);
             this.setAdminNotice(idx);
           } else {
             this.$message({
@@ -280,7 +277,7 @@ export default {
               message: "降级成功!",
               type: "success",
             });
-            this.$parent.refreshKey++;
+            this.refreshFun(this.currentPage);
             this.delAdminNotice(idx);
           } else {
             this.$message({
@@ -378,6 +375,11 @@ export default {
             message: "已取消删除",
           });
         });
+    },
+    refreshFun(curPage) {
+      if (this.isSearch) {
+        this.searchTeammate(curPage);
+      } else this.getTeamMember(curPage);
     },
   },
 };
