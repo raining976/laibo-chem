@@ -65,7 +65,8 @@ export default {
         team: "Team",
         address: "Address",
         info: "Profile",
-        changePass: "Change Password"
+        changePass: "Change Password",
+        orderReview: "Order Review",
     },
     // 登录
     logIn: {

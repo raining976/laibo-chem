@@ -9,6 +9,7 @@
             type="text"
             :placeholder="$t('home.searchTip')"
             v-model="inputValue"
+            @keyup.enter="toSearchResult()"
           />
         </div>
         <div class="searchBtn" @click="toSearchResult()">

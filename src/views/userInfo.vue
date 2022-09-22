@@ -38,8 +38,17 @@ export default {
         { selectName: this.$t("userMenu.info") },
         { selectName: this.$t("userMenu.changePass") },
       ],
+      addFun: { selectName: this.$t("userMenu.orderReview") },
       currentIdx: 0, // 当前选中的菜单选项
     };
+  },
+  created() {
+    let quanxian = localStorage.getItem("privilege");
+    // 0成员 1普通管理员 2群主？
+    console.log("ddd",quanxian,localStorage.getItem("privilege"));
+    if( quanxian === "1" || quanxian === "2") {
+        this.menuList.push(this.addFun);
+    }
   },
   watch: {
     // 监听路由
@@ -72,6 +81,9 @@ export default {
           case "changePsd":
             this.currentIdx = 5;
             break;
+          case "orderReview":
+            this.currentIdx = 6;
+            break;
           default:
             this.currentIdx = -1;
             break;
@@ -103,6 +115,9 @@ export default {
           break;
         case 5:
           this.$router.push("/changePsd");
+          break;
+        case 6:
+          this.$router.push("/orderReview");
           break;
         default:
           break;

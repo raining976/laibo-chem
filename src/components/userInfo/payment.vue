@@ -450,7 +450,8 @@ export default {
                 type: "success",
               });
               this.$data.orderId = res.data.data.order_no;
-              this.toPay();
+              // this.toPay();
+              this.func();
             } else {
               this.$message({
                 message: res.data.msg,
@@ -467,6 +468,8 @@ export default {
           });
       }
     },
+    
+    
   },
 };
 </script>

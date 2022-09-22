@@ -67,7 +67,8 @@ export default {
         team: "团队管理",
         address: "收货地址",
         info: "个人信息",
-        changePass: "修改密码"
+        changePass: "修改密码",
+        orderReview: "订单审核",
     },
     // 登录
     logIn: {
