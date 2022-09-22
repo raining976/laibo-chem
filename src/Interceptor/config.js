@@ -37,7 +37,7 @@ function addSubscriber(callback) {
 // 请求 拦截器
 axios.interceptors.request.use(config => {
     let url = config.url
-    if(url == '/search'||url.includes('/product/detail')||url.includes('/banner')||url.includes('/hotProducts')||url.includes('/news')||url.includes('/article')||url.includes('/banner')||url.includes('/article/detail')||url.includes('/news/detail')){
+    if(url == '/search'||url.includes('/product/detail')||url.includes('/banner')||url.includes('/hotProducts')||url.includes('/news')||url.includes('/article')||url.includes('/banner')||url.includes('/article/detail')||url.includes('/news/detail') ||url.includes("personalTailor")){
         return config
     }
     ElLoading.service({ fullscreen: true })

@@ -99,7 +99,7 @@ export default {
     editAddress(idx) {
       this.flag = 2;
       this.curAddress = this.addresses[idx];
-      console.log("this.curAddress", this.curAddress);
+      // console.log("this.curAddress", this.curAddress);
       this.formIsShow = true;
     },
     addAddress() {

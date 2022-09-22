@@ -39,9 +39,6 @@
           <el-button type="primary" @click="submitForm('ruleForm')">{{
             $t("base.edit")
           }}</el-button>
-          <el-button @click="resetForm('ruleForm')">{{
-            $t("base.reset")
-          }}</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -53,6 +50,9 @@ export default {
   data() {
     var checkAge = (rule, value, callback) => {};
     return {
+      initName: "", // 原来的名字
+      initPhone: "", // 原来的电话
+      initGender: -1, // 原来的性别
       ruleForm: {
         email: "",
         name: "",
@@ -68,7 +68,6 @@ export default {
             trigger: "blur",
           },
         ],
-     
         phone: [
           {
             required: true,
@@ -102,17 +101,28 @@ export default {
     getUserInfo() {
       this.$http.get("/userInfo").then((res) => {
         this.ruleForm = res.data.data;
+        this.initName = res.data.data.name;
+        this.initPhone = res.data.data.phone;
+        this.initGender = res.data.data.gender;
       });
     },
 
     // postUserInfo
     postUserInfo() {
+      if (
+        this.initName == this.ruleForm.name &&
+        this.initPhone == this.ruleForm.phone &&
+        this.initGender == this.ruleForm.gender
+      ) {
+        this.$message("您还未作出修改哦~");
+        return;
+      }
       let form = {
-        email:this.ruleForm.email,
-        name:this.ruleForm.name,
-        phone:this.ruleForm.phone,
-        gender:this.ruleForm.gender
-      } 
+        email: this.ruleForm.email,
+        name: this.ruleForm.name,
+        phone: this.ruleForm.phone,
+        gender: this.ruleForm.gender,
+      };
       this.$http
         .post("/userInfo", form)
         .then((res) => {
@@ -121,7 +131,7 @@ export default {
               message: "修改成功",
               type: "success",
             });
-            this.$root.key++;
+            this.getUserInfo();
           } else {
             this.$message({
               message: res.data.msg,
