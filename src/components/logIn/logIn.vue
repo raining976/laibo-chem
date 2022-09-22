@@ -27,7 +27,7 @@
           <span class="getCodeBtn" v-show="!isPsdLogin" @click="getCode()">{{
             $t("logIn.verifyBtn")
           }}</span>
-          <span class="getCodeBtn" v-show="isTimer">{{ count + "s"}}</span>
+          <span class="getCodeBtn" v-show="isTimer">{{ count + "s" }}</span>
         </div>
         <!-- /验证码或密码部分  -->
         <!-- 切换登录方式和注册 -->
