@@ -25,12 +25,10 @@
           <span>
             {{ name }}
           </span>
-          <template #dropdown >
+          <template #dropdown>
             <el-dropdown-menu class="navDropdown">
               <el-dropdown-item
-                ><router-link to="/team"
-                  >团队管理</router-link
-                ></el-dropdown-item
+                ><span @click="toTeam()">团队管理</span></el-dropdown-item
               >
               <el-dropdown-item
                 ><router-link to="/address"
@@ -93,6 +91,16 @@ export default {
     };
   },
   created() {
+    // 个人状态
+    if (localStorage.getItem("token")) {
+      this.$http.get("/userInfo").then((res) => {
+        if (res.data.code == 20000) {
+          localStorage.setItem("privilege", res.data.data.privilege);
+          localStorage.setItem("in_team", res.data.data.in_team);
+        }
+      });
+    }
+
     let lang = localStorage.getItem("lang");
     switch (lang) {
       case "zh":
@@ -185,11 +193,17 @@ export default {
           });
         });
     },
+    toTeam() {
+      let inTeam = localStorage.getItem("in_team");
+      if (inTeam == 0) this.$router.push("/teamBlank");
+      else if (inTeam == 1) this.$router.push("/searchMember");
+    },
     // 退出登录
     exit() {
       this.$router.push("/mainPage");
-      localStorage.removeItem("token");
-      localStorage.removeItem("refresh");
+      // localStorage.removeItem("token");
+      // localStorage.removeItem("refresh");
+      localStorage.clear();
       this.$message("退出登录成功");
       this.$parent.key++;
     },
@@ -309,5 +323,4 @@ export default {
 .nav >>> .el-message-box {
   transform: scale(1.3);
 }
-
 </style>
