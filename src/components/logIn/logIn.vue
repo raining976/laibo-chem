@@ -27,7 +27,7 @@
           <span class="getCodeBtn" v-show="!isPsdLogin" @click="getCode()">{{
             $t("logIn.verifyBtn")
           }}</span>
-          <span class="getCodeBtn" v-show="isTimer">{{ count }}</span>
+          <span class="getCodeBtn" v-show="isTimer">{{ count + "s"}}</span>
         </div>
         <!-- /验证码或密码部分  -->
         <!-- 切换登录方式和注册 -->
@@ -45,7 +45,7 @@
           {{ $t("logIn.forget") }}
         </div>
       </div>
-      <forget-psd v-show="!isLogIn" />
+      <forget-psd v-if="!isLogIn" />
     </div>
   </div>
 </template>
@@ -257,6 +257,11 @@ export default {
                 type: "success",
               });
               this.timerInterval();
+            } else {
+              this.$message({
+                message: res.data.msg,
+                type: "error",
+              });
             }
           })
           .catch((err) => {
@@ -267,7 +272,7 @@ export default {
 
     // 获取验证码倒计时
     timerInterval() {
-      const TIME_COUNT = 10;
+      const TIME_COUNT = 120;
       this.count = TIME_COUNT;
       this.isTimer = true; // 打开倒计时
       this.isPsdLogin = true; // 关闭对应发送验证码的按钮
@@ -314,7 +319,7 @@ export default {
       // 保存过期时间
       localStorage.setItem("token_exp", this.handler_token(token));
       localStorage.setItem("refresh_exp", this.handler_token(refresh));
-      this.$router.push("/mainPage")
+      this.$router.push("/mainPage");
     },
   },
 };

@@ -53,7 +53,7 @@
             <el-button type="primary" @click="submitForm('ruleForm')">{{
               $t("base.submit")
             }}</el-button>
-            <el-button @click="resetForm('ruleForm')">{{
+            <el-button @click="resetForm('ruleForm')" v-show="isShowReset">{{
               $t("base.reset")
             }}</el-button>
           </el-form-item>
@@ -91,6 +91,7 @@ export default {
     //   }, 1000);
     // };
     return {
+      isShowReset: false, // 是否显示reset
       options: regionData,
       countryCode: "86",
       isChina: true, // 是否为中国大陆
@@ -151,9 +152,11 @@ export default {
     switch (this.$parent.flag) {
       // 增加地址
       case 1:
+        this.isShowReset = true;
         break;
       // 修改地址
       case 2:
+        this.isShowReset = false;
         let addressForm = this.$parent.curAddress;
         let codeString = String(addressForm.sx);
         let addressCode = [];
