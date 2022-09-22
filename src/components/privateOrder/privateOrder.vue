@@ -19,33 +19,33 @@
                 v-model="ruleForm.email"
               ></el-input>
             </el-form-item>
-            <el-form-item label="联系人" prop="contact">
+            <el-form-item label="联系人" prop="name">
               <el-input
                 placeholder="请输入联系方式"
                 type="text"
-                v-model="ruleForm.contact"
+                v-model="ruleForm.name"
               ></el-input>
             </el-form-item>
-            <el-form-item label="联系电话" prop="phoneNum">
+            <el-form-item label="联系电话" prop="phone">
               <el-input
                 placeholder="请输入联系电话"
                 type="text"
-                v-model="ruleForm.phoneNum"
+                v-model="ruleForm.phone"
               ></el-input>
             </el-form-item>
-            <el-form-item label="联系单位" prop="contactUnit">
+            <el-form-item label="联系单位" prop="company">
               <el-input
                 placeholder="请输入单位名称"
                 type="text"
-                v-model="ruleForm.contactUnit"
+                v-model="ruleForm.company"
               ></el-input>
             </el-form-item>
-            <el-form-item label="需求概述" prop="demand" class="demandBox">
+            <el-form-item label="需求概述" prop="content" class="demandBox">
               <el-input
                 class="demand"
                 placeholder="请输入产品名称，CAS号，规格，数量"
                 type="textarea"
-                v-model="ruleForm.demand"
+                v-model="ruleForm.content"
               ></el-input>
             </el-form-item>
             <p class="contactUs">联系方式&nbsp;:&nbsp;labservice@188.com</p>
@@ -77,7 +77,7 @@ export default {
       if (!pattern.test(value)) callback(new Error("邮箱格式不正确"));
       callback();
     };
-    var checkContact = (_, value, callback) => {
+    var checkName = (_, value, callback) => {
       if (!value) {
         return callback(new Error("联系人不能为空"));
       }
@@ -94,7 +94,7 @@ export default {
       }
       callback();
     };
-    var checkContactUnit = (_, value, callback) => {
+    var checkCompany = (_, value, callback) => {
       if (!value) {
         return callback(new Error("联系单位不能为空"));
       }
@@ -110,32 +110,32 @@ export default {
     return {
       ruleForm: {
         email: "",
-        contact: "",
-        phoneNum: "",
-        contactUnit: "",
-        demand: "",
+        name: "",
+        phone: "",
+        company: "",
+        content: "",
       },
       rules: {
         email: [{ validator: checkEmail, trigger: "blur" }],
-        contact: [{ validator: checkContact, trigger: "blur" }],
-        phoneNum: [{ validator: checkPhoneNum, trigger: "blur" }],
-        contactUnit: [{ validator: checkContactUnit, trigger: "blur" }],
-        demand: [{ validator: checkDemand, trigger: "blur" }],
+        name: [{ validator: checkName, trigger: "blur" }],
+        phone: [{ validator: checkPhoneNum, trigger: "blur" }],
+        company: [{ validator: checkCompany, trigger: "blur" }],
+        content: [{ validator: checkDemand, trigger: "blur" }],
       },
     };
   },
   mounted() {
-    window.addEventListener("mousedown",this.closeForm)
+    window.addEventListener("mousedown", this.closeForm);
   },
-  
-  unmounted(){
-    window.removeEventListener("mousedown",this.closeForm)
+
+  unmounted() {
+    window.removeEventListener("mousedown", this.closeForm);
   },
   methods: {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert("submit!");
+          this.postForm();
         } else {
           console.log("error submit!!");
           return false;
@@ -154,6 +154,31 @@ export default {
       if (!e.path.includes(privateOrder)) {
         this.$parent.isShow = false;
       }
+    },
+    // 上传表单
+    postForm() {
+      this.$http
+        .post("/personalTailor", this.ruleForm)
+        .then((res) => {
+          if (res.data.code == 20000) {
+            this.$message({
+              message: "提交成功!",
+              type: "success",
+            });
+          } else {
+            this.$message({
+              message: res.data.msg,
+              type: "error",
+            });
+          }
+        })
+        .catch((err) => {
+          this.$message({
+            message: "意外错误!",
+            type: "error",
+          });
+          console.error(err);
+        });
     },
   },
 };
@@ -210,17 +235,33 @@ export default {
   justify-content: center;
 }
 .privateOrderBox .orderSubmit:nth-child(1) {
+  display: flex;
+  justify-content: center;
   width: 69px;
   height: 38px;
   background: var(--color);
   border-radius: 5px;
 }
+.privateOrderBox .orderSubmit:nth-child(1) span {
+  text-align: center;
+  font-size: 18px;
+  font-family: Microsoft YaHei UI;
+  font-weight: 400;
+  color: #ffffff;
+}
 .privateOrderBox .orderReset:nth-child(2) {
+  display: flex;
+  justify-content: center;
   width: 69px;
   height: 38px;
   color: var(--color);
   border-radius: 5px;
   border-color: var(--color);
+}
+.privateOrderBox .orderReset:nth-child(2) span {
+  font-size: 18px;
+  font-family: Microsoft YaHei UI;
+  font-weight: 400;
 }
 .privateOrderBox .el-button--default:hover {
   background: #a5d0ff;
