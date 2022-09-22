@@ -38,7 +38,7 @@ export default {
         { selectName: this.$t("userMenu.info") },
         { selectName: this.$t("userMenu.changePass") },
       ],
-      currentIdx: 0, // 当前选中的菜单选项 
+      currentIdx: 0, // 当前选中的菜单选项
     };
   },
   watch: {
@@ -91,7 +91,9 @@ export default {
           this.$router.push("/order");
           break;
         case 2:
-          this.$router.push("/team");
+          let inTeam = localStorage.getItem("in_team");
+          if (inTeam == 1) this.$router.push("/searchMember");
+          else if (inTeam == 0) this.$router.push("/teamBlank");
           break;
         case 3:
           this.$router.push("/address");

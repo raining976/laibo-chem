@@ -167,16 +167,27 @@ export default {
       },
     };
   },
-  mounted() {
-    const flag = this.$route.query.flag;
-    if (flag == 0) {
-      this.isAdmin = true;
-      this.isCreate = true;
+  created() {
+    console.log("this.$parent.editFlag", this.$parent.editFlag);
+    if (this.$parent.editFlag) {
+      this.isEdit = true;
+      this.isCreate = false;
+      this.getTeamInfo();
     }
     if (this.$parent.isEdit) {
       this.isEdit = true;
       this.isCreate = false;
-      this.getTeamInfo();
+    }
+    let privilege = localStorage.getItem("privilege");
+    if (privilege == 1 || privilege == 2) {
+      this.isAdmin = true;
+    }
+    console.log("this.$parent.isAdmin", this.$parent.isAdmin);
+
+    const createFlag = this.$route.params.createFlag;
+    if (createFlag) {
+      this.isAdmin = true;
+      this.isCreate = true;
     }
   },
   methods: {
@@ -244,6 +255,11 @@ export default {
                 message: "创建团队成功",
                 type: "success",
               });
+              
+              setTimeout(() => {
+                this.getTeamInfo()
+              }, 100);
+
               this.$router.push({
                 name: "searchMember",
                 params: {
@@ -269,6 +285,7 @@ export default {
           if (res.data.code == 20000) {
             let response = res.data.data;
             this.teamId = response.id;
+            localStorage.setItem("teamId",this.teamId)
             this.ruleForm.name = response.name;
             this.ruleForm.phone = response.phone;
             this.ruleForm.email = response.email;

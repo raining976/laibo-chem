@@ -15,9 +15,11 @@ export default {
     return {
       isAdmin: false,
       isEdit: true,
+      editFlag: false,
     };
   },
-  beforeMount() {
+  created() {
+    this.editFlag = this.$route.params.editFlag;
     this.$http.get("/userInfo").then((res) => {
       if (res.data.code == 20000) {
         let _isAdmin = res.data.data.privilege;

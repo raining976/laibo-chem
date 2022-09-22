@@ -58,10 +58,14 @@ export default {
           })
           .then((res) => {
             if (res.data.code == 20000) {
-              this.$message({
-                message: "查询成功",
-                type: "success",
-              });
+              if (res.data.data) {
+                this.$message({
+                  message: "查询成功",
+                  type: "success",
+                });
+              } else {
+                this.$message("空空如也~");
+              }
               this.searchList = res.data.data;
             } else {
               this.$message({

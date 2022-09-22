@@ -35,7 +35,7 @@
           <!-- <span class="operation">{{ $t("base.dele") }}</span> -->
           <span class="operation">
             <el-dropdown>
-              <el-button :disabled="item.privilege == 2"> 处理 </el-button>
+              <el-button :disabled="item.privilege == 0 || item.privilege == 2"> 处理 </el-button>
               <template #dropdown>
                 <el-dropdown-menu>
                   <el-dropdown-item

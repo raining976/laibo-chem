@@ -55,7 +55,12 @@ export default {
   },
   mounted() {
     this.getUserInfo();
-    this.getTeamInfo();
+   
+    setTimeout(() => {
+      if (this.in_team!=0) {
+        this.getTeamInfo();
+      }
+    }, 50);
   },
   watch: {
     isNoticeShow: {
@@ -79,9 +84,9 @@ export default {
   methods: {
     toEditTeam() {
       this.$router.push({
-        path: "/editTeam",
-        query: {
-          flag: 0,
+        name: "editTeam",
+        params: {
+          editFlag: true,
         },
       });
     },
@@ -120,7 +125,7 @@ export default {
     delTeam() {
       this.$http
         .post("/delTeam", {
-          id: this.teamId,
+          id: localStorage.getItem("teamId"),
         })
         .then((res) => {
           if (res.data.code == 20000) {
@@ -169,6 +174,7 @@ export default {
           .then((res) => {
             if (res.data.code == 20000) {
               this.teamId = res.data.data.id;
+              localStorage.setItem("teamId", this.teamId);
             }
           })
           .catch((err) => {

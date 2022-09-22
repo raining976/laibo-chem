@@ -26,9 +26,9 @@ export default {
     // 创建团队
     createTeam() {
       this.$router.push({
-        path: "/createTeam",
-        query: {
-          flag: 0,
+        name: "createTeam",
+        params: {
+          createFlag:true,
         },
       });
     },
