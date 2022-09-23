@@ -25,20 +25,13 @@ export default {
       })
       //回调函数
       .then((res) => {
-        this.$data.imgList = this.handleUrl(res.data.data);
+        this.$data.imgList = res.data.data;
       })
       .catch((err) => {
         console.log(err);
       });
   },
-  methods: {
-    handleUrl(array) {
-      array.forEach((item) => {
-        item.pic_url = "media" + item.pic_url;
-      });
-      return array;
-    },
-  },
+  methods: {},
 };
 </script>
 <style scoped>
