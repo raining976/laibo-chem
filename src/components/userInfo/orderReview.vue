@@ -101,10 +101,7 @@ export default {
     // 获取订单
     getOrders() {
        this.$http
-        .get("/order", {
-          params: {
-            page: 1,
-          }     
+        .get("/teamOrder", {   
         })
         //回调函数
         .then((res) => {
@@ -113,7 +110,7 @@ export default {
           }
           // this.$data.count = res.data.data.count;
           else {
-            this.$data.orderList = res.data.data.orders;
+            this.$data.orderList = res.data.data;
           console.log("ceshi", res.data.data);
           console.log("ceshi,shuzu ", this.$data.orderList); 
           }

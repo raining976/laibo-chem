@@ -1,6 +1,6 @@
 <template>
   <div class="carouselBox">
-    <el-carousel trigger="click">
+    <el-carousel trigger="click" v-if="imgList[0]">
       <el-carousel-item v-for="(item, index) in imgList" :key="index">
         <div class="imgBox">
           <a :href="item.href"><img :src="item.pic_url" alt="" /></a>

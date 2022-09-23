@@ -59,14 +59,14 @@
                 <img src="" alt="" />
               </div>
               <div class="infoBox">
-                <div class="name_zh" @click="toProductInfo()">
+                <div class="name_zh" @click="toProductInfo(item0.order_id)">
                   {{ item0.name }}
                 </div>
                 <div class="infoWord">
                   {{ $t("order.itemNo") + "：" }}{{ item0.huohao }}
                 </div>
                 <div class="infoWord">
-                  {{ $t("order.casNum") + "：" }}{{ item0.id }}
+                  {{ $t("order.casNum") + "：" }}{{ item0.cas }}
                 </div>
               </div>
             </div>
@@ -201,9 +201,12 @@ export default {
         });
     },
     // 跳转产品详情页（需传参）
-    toProductInfo() {
+    toProductInfo(code) {
       this.$router.push({
         path: "/productInfo",
+        query: {
+            id: code,
+        },
       });
     },
     toPay() {
@@ -568,6 +571,9 @@ export default {
   font-weight: 600;
   border-radius: 2px;
   background: #eaebed;
+}
+.count >>> .el-input-number__decrease:hover, .count >>> .el-input-number__increase:hover {
+  color: var(--color, "#004ea2");
 }
 .count >>> [class*=" el-icon-"],
 [class^="el-icon-"] {

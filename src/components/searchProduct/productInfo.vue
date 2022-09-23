@@ -13,54 +13,66 @@
           <div class="solidLine2"></div>
           <!-- 详细信息 -->
           <div class="details">
-            <!-- 以下为 不是-->
+            <!-- 以下为 -->
             <div class="oneDetail">
-              <div class="detailName">{{$t('product.casNum')}}</div>:&nbsp;
-              <div class="detailContent">{{ productData.cas }}</div>
+              <div class="detailName">{{ $t("product.casNum") }}:&nbsp;</div>
+              <div class="detailContent" :title="productData.cas">{{ productData.cas }}</div>
             </div>
 
             <div class="oneDetail">
-              <div class="detailName">{{$t('product.wuhuaxingzhi')}}</div>:&nbsp;
+              <div class="detailName">
+                {{ $t("product.wuhuaxingzhi") }}:&nbsp;
+              </div>
               <div class="detailContent">{{ productData.properties }}</div>
             </div>
 
             <div class="oneDetail">
-              <div class="detailName">{{$t('product.fenzishi')}}</div>:&nbsp;
-              <div class="detailContent">{{ productData.fenzishi }}</div>
+              <div class="detailName">{{ $t("product.fenzishi") }}:&nbsp;</div>
+              <div class="detailContent" v-html="productData.linear_formula"></div>
             </div>
 
             <div class="oneDetail">
-              <div class="detailName">{{$t('product.meltingPoint')}}</div>:&nbsp;
+              <div class="detailName">
+                {{ $t("product.meltingPoint") }}:&nbsp;
+              </div>
               <div class="detailContent">{{ productData.melting }}</div>
             </div>
 
             <div class="oneDetail">
-              <div class="detailName">{{$t('product.fenziliang')}}</div>:&nbsp;
-              <div class="detailContent">{{ productData.fenziliang }}</div>
+              <div class="detailName">
+                {{ $t("product.fenziliang") }}:&nbsp;
+              </div>
+              <div class="detailContent">{{ productData.formula_weight }}</div>
             </div>
 
             <div class="oneDetail">
-              <div class="detailName">{{$t('product.boilingPoint')}}</div>:&nbsp;
+              <div class="detailName">
+                {{ $t("product.boilingPoint") }}:&nbsp;
+              </div>
               <div class="detailContent">{{ productData.boiling }}</div>
             </div>
 
             <div class="oneDetail">
-              <div class="detailName">{{$t('product.einecsCode')}}</div>:&nbsp;
+              <div class="detailName">
+                {{ $t("product.einecsCode") }}:&nbsp;
+              </div>
               <div class="detailContent">{{ productData.EINECS }}</div>
             </div>
 
             <div class="oneDetail">
-              <div class="detailName">{{$t('product.midu')}}</div>:&nbsp;
-              <div class="detailContent">{{ productData.midu }}</div>
+              <div class="detailName">{{ $t("product.midu") }}:&nbsp;</div>
+              <div class="detailContent">{{ productData.density }}</div>
             </div>
 
             <div class="oneDetail">
-              <div class="detailName">{{$t('product.mdl')}}</div>:&nbsp;
+              <div class="detailName">{{ $t("product.mdl") }}:&nbsp;</div>
               <div class="detailContent">{{ productData.mdl }}</div>
             </div>
 
             <div class="oneDetail">
-              <div class="detailName">{{$t('product.storageCondition')}}</div>:&nbsp;
+              <div class="detailName">
+                {{ $t("product.storageCondition") }}:&nbsp;
+              </div>
               <div class="detailContent">{{ productData.storage }}</div>
             </div>
           </div>
@@ -69,11 +81,11 @@
             <table border="0" cellspacing="0">
               <thead>
                 <tr class="tableHead">
-                  <th style="width: 145px">{{$t('product.itemNo')}}</th>
-                  <th style="width: 140px">{{$t('product.size')}}</th>
-                  <th style="width: 215px">{{$t('product.stock')}}</th>
-                  <th style="width: 170px">{{$t('product.price')}}</th>
-                  <th style="width: 200px">{{$t('product.count')}}</th>
+                  <th style="width: 145px">{{ $t("product.itemNo") }}</th>
+                  <th style="width: 140px">{{ $t("product.size") }}</th>
+                  <th style="width: 215px">{{ $t("product.stock") }}</th>
+                  <th style="width: 170px">{{ $t("product.price") }}</th>
+                  <th style="width: 200px">{{ $t("product.count") }}</th>
                 </tr>
               </thead>
               <el-scrollbar max-height="132px">
@@ -116,11 +128,13 @@
         </div>
       </div>
       <div class="btn">
-        <div class="addCart" @click="addCart()">{{$t('product.add')}}</div>
-        <div class="toBuy" @click="toBuy()">{{$t('product.buy')}}</div>
+        <div class="addCart" @click="addCart()">{{ $t("product.add") }}</div>
+        <div class="toBuy" @click="toBuy()">{{ $t("product.buy") }}</div>
       </div>
 
-      <div class="toCustomize" @click="isShow = !isShow">{{$t('product.personalTailor')}}></div>
+      <div class="toCustomize" @click="isShow = !isShow">
+        {{ $t("product.personalTailor") }}>
+      </div>
     </div>
     <private-order v-if="isShow" />
   </div>
@@ -336,24 +350,25 @@ export default {
   display: flex;
 }
 .detailName {
-  width: 157.06px;
-  min-height: 18px;
+  min-width: 140px;
+  height: 18px;
   font-size: 18px;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #333333;
   line-height: 18px;
-  word-break: normal;
+  /* word-break: normal; */
 }
 .detailContent {
-  /* width: ; */
-  min-height: 18px;
+  height: 18px;
   font-size: 18px;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #333333;
   line-height: 18px;
-  word-break: break-all;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  /* word-break: break-all; */
 }
 
 /* 以下是表格 */

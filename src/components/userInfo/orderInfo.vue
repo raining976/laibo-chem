@@ -16,12 +16,12 @@
       <div class="detail"><strong>{{$t('order.shipping')+'：'}}</strong>{{}}</div>
       <div class="detail"><strong>{{$t('order.receive')+'：'}}</strong>{{}}</div>
     </div>
-    <!-- 可折叠列表 -->
-    <div class="collapse">
+    <!-- 可折叠列表 物流信息--><!-- 时间线 -->
+    <!-- <div class="collapse">
       <el-collapse v-model="activeName" accordion>
         <el-collapse-item title="已签收" name="1">
           <div class="process">
-            <!-- 时间线 -->
+            
             <el-timeline>
               <el-timeline-item
                 v-for="(activity, index) in activities"
@@ -37,7 +37,7 @@
           </div>
         </el-collapse-item>
       </el-collapse>
-    </div>
+    </div> -->
     <!-- 商品统计 -->
     <div class="shopCart">
       <div class="listHead">
