@@ -78,6 +78,7 @@ export default {
 }
 .logoBox {
   flex: 1;
+  cursor: pointer;
 }
 .searchBox {
   flex: 7;
