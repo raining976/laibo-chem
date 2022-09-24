@@ -6,11 +6,17 @@
           <li
             v-for="(item, index) in menuLists"
             :key="index"
-            :class="{ chosen: index == currentIndex }"
             @click="routerTo(index)"
           >
-            {{ item.menuName }}
+            <span ref="nav_li">
+              {{ item.menuName }}
+            </span>
           </li>
+          <span
+            class="chosen"
+            :style="{ width: chosenWidth }"
+            ref="chosen"
+          ></span>
         </ul>
         <div class="btnBox" v-if="!isLogin">
           <span class="btn logIn" @click="showLogIn()">{{
@@ -88,6 +94,7 @@ export default {
       currentIndex: 0, // 当前选中的菜单索引
       isLogin: false, // 是否为登录状态
       name: "", // 用户姓名
+      chosenWidth: "", // 被选中的导航栏条的宽度
     };
   },
   created() {
@@ -119,6 +126,14 @@ export default {
       });
     }
   },
+  mounted() {
+    // console.log('this.currentIndex',this.currentIndex)
+    // console.log("this.$refs.nav_li", this.$refs.nav_li[this.currentIndex].clientWidth);
+    setTimeout(() => {
+      this.chosenWidth =
+        this.$refs.nav_li[this.currentIndex].offsetWidth + "px";
+    }, 50);
+  },
   watch: {
     // 监听路由
     $route: {
@@ -139,7 +154,14 @@ export default {
             break;
         }
       },
-      immediate: true,
+    },
+    currentIndex(val) {
+      if (this.currentIndex == -1) this.$refs.chosen.style.display = "none";
+      else {
+        this.$refs.chosen.style.display = "inline-block";
+        this.$refs.chosen.style.left = 120 * val + "px";
+        this.chosenWidth = this.$refs.nav_li[val].offsetWidth + "px";
+      }
     },
   },
   methods: {
@@ -244,10 +266,22 @@ export default {
   height: 100%;
 }
 .menu {
+  position: relative;
   /* box-model */
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
+}
+
+.menu .chosen {
+  display: inline-block;
+  width: 0px;
+  height: 3px;
+  background: #ed6c00;
+  position: absolute;
+  left: 0;
+  bottom: -7px;
+  transition: 0.5s;
 }
 .btnBox {
   display: flex;
@@ -286,14 +320,7 @@ export default {
   display: flex;
   align-items: center;
   cursor: pointer;
-
-  margin-right: 50px;
-}
-/* 被选中菜单按钮的样式 */
-.menu .chosen {
-  padding-bottom: 5px;
-  border-bottom: 3px solid #ed6c00;
-  transition: border 0.4s;
+  width: 120px;
 }
 .nav .hello {
   position: relative;
