@@ -35,7 +35,16 @@
           <!-- <span class="operation">{{ $t("base.dele") }}</span> -->
           <span class="operation">
             <el-dropdown>
-              <el-button :disabled="item.privilege == 0 || item.privilege == 2"> 处理 </el-button>
+              <el-button
+                :disabled="
+                  myPrivilege == 0 ||
+                  item.privilege == 2 ||
+                  !myPrivilege == 2 ||
+                  !myPrivilege == 1
+                "
+              >
+                处理
+              </el-button>
               <template #dropdown>
                 <el-dropdown-menu>
                   <el-dropdown-item
@@ -84,7 +93,11 @@ export default {
       memberList: [],
       keywords: "", // 搜索成员关键字
       isSearch: false, // 是否为搜索成员
+      myPrivilege: 0, // 我的权限
     };
+  },
+  created() {
+    this.myPrivilege = localStorage.getItem("privilege");
   },
   mounted() {
     let flag = this.$route.params.flag;
@@ -252,6 +265,7 @@ export default {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning",
+          customClass: "msgBox", // 自定义一个class名
         }
       )
         .then(() => {
@@ -303,6 +317,7 @@ export default {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning",
+          customClass: "msgBox", // 自定义一个class名
         }
       )
         .then(() => {
@@ -388,17 +403,27 @@ export default {
 };
 </script>
 <style>
+/* .msgBox {
+  width: 630px;
+  height: 200px;
+}
+.msgBox > div {
+  
+} */
 </style>
 <style scoped>
 .searchBox {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
-  width: 600px;
+  /* width: 700px; */
   padding-top: 30px;
   padding-bottom: 50px;
   margin-right: 50px;
   border-bottom: 2px solid #eaeaec;
+}
+.searchBox > div{
+  margin-left: 20px;
 }
 .tag {
   font-size: 18px;
