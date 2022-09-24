@@ -11,6 +11,7 @@
           type="text"
           :placeholder="$t('form.enter') + $t('team.name')"
           v-model="keywords"
+          @keydown.enter="searchTeam()"
         />
       </div>
       <div class="btn" @click="searchTeam()">{{ $t("base.query") }}</div>
@@ -54,7 +55,7 @@ export default {
       if (this.keywords != "") {
         this.$http
           .post("/searchTeam", {
-            team_id: this.keywords,
+            team_name: this.keywords,
           })
           .then((res) => {
             if (res.data.code == 20000) {

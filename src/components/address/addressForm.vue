@@ -135,13 +135,13 @@ export default {
             trigger: "blur",
           },
         ],
-        selectedOptions: [
-          {
-            required: false,
-            message: this.$t("address.chooseTip"),
-            trigger: "blur",
-          },
-        ],
+        // selectedOptions: [
+        //   {
+        //     required: false,
+        //     message: this.$t("address.chooseTip"),
+        //     trigger: "blur",
+        //   },
+        // ],
       },
     };
   },
@@ -319,7 +319,8 @@ export default {
   border: 2px solid #999999;
 }
 .setAddressBox .el-form-item__label {
-  text-align: left;
+  /* text-align: left; */
+  padding-right: 10px;
   font-size: 18px;
   font-family: Microsoft YaHei UI;
   font-weight: 400;

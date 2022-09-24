@@ -10,6 +10,7 @@
           :placeholder="$t('logIn.emailTip')"
           v-model="submitForm.email"
           @blur="checkEmail($event)"
+          @keydown.enter="submit()"
         />
       </div>
       <div class="inputBox verificationBox">
@@ -19,15 +20,17 @@
           :placeholder="$t('logIn.verifyTip')"
           v-model="submitForm.verfiCode"
           @blur="checkVerification($event)"
+          @keydown.enter="submit()"
         />
         <span
           class="getCodeBtn"
           ref="getCodeBtn"
           v-show="!isTimer"
           @click="getCode()"
+          @keydown.enter="submit()"
           >{{ $t("logIn.verifyBtn") }}</span
         >
-        <span class="getCodeBtn" v-show="isTimer">{{ count }}</span>
+        <span class="getCodeBtn" v-show="isTimer">{{ count + "s" }}</span>
       </div>
       <div class="inputBox">
         <input
@@ -36,6 +39,7 @@
           :placeholder="$t('logIn.newPassTip')"
           v-model="submitForm.newPassword"
           @blur="passEmpty($event)"
+          @keydown.enter="submit()"
         />
       </div>
       <div class="inputBox">
@@ -45,6 +49,7 @@
           :placeholder="$t('logIn.checkPassTip')"
           v-model="checkPass"
           @blur="checkPassFunc($event)"
+          @keydown.enter="submit()"
         />
       </div>
       <div class="submit" @click="submit()">{{ $t("logIn.submit") }}</div>
@@ -149,7 +154,7 @@ export default {
 
     // 获取验证码倒计时
     timerInterval() {
-      const TIME_COUNT = 10;
+      const TIME_COUNT = 120;
       this.count = TIME_COUNT;
       this.isTimer = true; // 打开倒计时
       this.isPsdLogin = true; // 关闭对应发送验证码的按钮
