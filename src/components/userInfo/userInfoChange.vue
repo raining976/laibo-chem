@@ -82,6 +82,36 @@ export default {
     // 请求个人信息并添加到表单等待修改
     this.getUserInfo();
   },
+  beforeRouteLeave(to, from, next) {
+    if (
+      this.initName != this.ruleForm.name ||
+      this.initPhone != this.ruleForm.phone ||
+      this.initGender != this.ruleForm.gender
+    ) {
+      this.$confirm(
+        "检测到未保存的内容，是否在离开页面前保存修改？",
+        "确认信息",
+        {
+          distinguishCancelAndClose: true,
+          confirmButtonText: "保存",
+          cancelButtonText: "放弃修改",
+        }
+      )
+        .then(() => {
+          this.postUserInfo();
+          next()
+        })
+        .catch((action) => {
+          this.$message({
+            type: "info",
+            message:
+              action === "cancel" ? "放弃保存并离开页面" : "停留在当前页面",
+          });
+        });
+    } else {
+      next();
+    }
+  },
   methods: {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {

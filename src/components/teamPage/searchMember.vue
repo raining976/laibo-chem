@@ -8,6 +8,7 @@
           type="text"
           :placeholder="$t('base.enter') + $t('team.member')"
           v-model="keywords"
+          @keydown.enter="searchTeammate()"
         />
       </div>
       <div class="searchBtn btn" @click="searchTeammate()">
@@ -128,7 +129,7 @@ export default {
         .get("/team", {
           params: {
             page: page,
-            size: 4,
+            size: 9,
           },
         })
         .then((res) => {
@@ -165,7 +166,7 @@ export default {
             {
               params: {
                 page: page,
-                size: 4,
+                size: 9,
               },
             }
           )
