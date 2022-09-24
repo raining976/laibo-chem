@@ -68,7 +68,7 @@
           <el-button type="primary" @click="submitForm('ruleForm')">{{
             $t("base.submit")
           }}</el-button>
-          <el-button @click="resetForm('ruleForm')">{{
+          <el-button @click="resetForm('ruleForm')" v-if="!isEdit">{{
             $t("base.reset")
           }}</el-button>
         </el-form-item>

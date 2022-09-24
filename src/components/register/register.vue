@@ -226,13 +226,16 @@ export default {
         confirmButtonText: "确定",
         // 进入主页路由
         callback: () => {
-          this.$router.push("mainPage")
+          this.$router.push("mainPage");
         },
       });
     },
     // 获取验证码
     getVerfiCode() {
-      if (this.ruleForm.email == "") return;
+      if (this.ruleForm.email == "") {
+        this.$message("请先填写邮箱!");
+        return;
+      }
       let rule = {
         email: this.ruleForm.email,
         type: "register",
@@ -272,14 +275,14 @@ export default {
         } else {
           clearInterval(this.myTimer);
           this.myTimer = null;
-          console.log("倒计时已清除");
+          // console.log("倒计时已清除");
           this.waitTimerShow = false;
         }
       }, 1000);
     },
     // 勾选或取消协议
     checkedChange() {
-      console.log("val", this.ruleForm.tcp);
+      // console.log("val", this.ruleForm.tcp);
     },
   },
   unmounted() {
@@ -374,6 +377,20 @@ export default {
   padding-left: 20px;
   display: flex;
   justify-content: flex-start;
+}
+.registerBox .el-checkbox {
+  transform: scale(1.5);
+  transform-origin: left center;
+}
+.registerBox .el-checkbox__inner:hover {
+  border-color: var(--color);
+}
+.registerBox .el-checkbox__input.is-checked .el-checkbox__inner {
+  background-color: var(--color);
+  border-color: var(--color);
+}
+.registerBox .el-checkbox__input.is-checked + .el-checkbox__label {
+  color: var(--color);
 }
 .registerBox .el-form-item__error {
   margin-left: 20px;

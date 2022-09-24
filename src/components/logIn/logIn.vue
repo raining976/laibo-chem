@@ -11,6 +11,7 @@
             :placeholder="$t('logIn.emailTip')"
             v-model="logInForm.email"
             @blur="checkEmail($event)"
+            @keydown.enter="login()"
           />
         </div>
         <!-- /邮箱表单部分 -->
@@ -23,6 +24,7 @@
             :placeholder="inputVerification"
             v-model="logInForm.psd"
             @blur="checkVerification($event)"
+            @keydown.enter="login()"
           />
           <span class="getCodeBtn" v-show="!isPsdLogin" @click="getCode()">{{
             $t("logIn.verifyBtn")
