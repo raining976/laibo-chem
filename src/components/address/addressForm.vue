@@ -93,7 +93,7 @@ export default {
     return {
       isShowReset: false, // 是否显示reset
       options: regionData,
-      countryCode: "86",
+      countryCode: 86,
       isChina: true, // 是否为中国大陆
       // 地址表单
       ruleForm: {
@@ -137,7 +137,7 @@ export default {
         ],
         selectedOptions: [
           {
-            required: true,
+            required: false,
             message: this.$t("address.chooseTip"),
             trigger: "blur",
           },
@@ -178,6 +178,7 @@ export default {
   },
   methods: {
     countryChange(code) {
+      // console.log('code',code)
       if (code != 86) {
         this.isChina = false;
       } else this.isChina = true;
@@ -385,8 +386,13 @@ export default {
 <style scoped>
 .setAddressBox {
   position: absolute;
-  top: 50px;
-  left: 300px;
+  width: 640px;
+  height: 600px;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  margin: 0 auto; 
   background: #fff;
   padding: 50px 80px;
   border-radius: 18px;
