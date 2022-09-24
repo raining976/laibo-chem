@@ -164,6 +164,8 @@ export default {
         money: "Amount",
         itemNo: "Product code",
         casNum: "The CAS number",
+        fenziliang: "molecular weight",
+        
     },
     // 购物车
     cart: {
@@ -209,7 +211,6 @@ export default {
         price: "Price",
         stock: "Stock",
         add: "Add to cart",
-
     }
 
 }

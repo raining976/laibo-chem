@@ -15,17 +15,17 @@
           <div class="resultPic"><img :src="item.pic_url" alt="" /></div>
           <div class="resultInfo">
             <div class="resultName_zh" @click="toProductInfo(item.id)">
-              <span>{{ item.name }}</span>
+              <span>{{ item.name + item.guige }}</span>
             </div>
-            <div class="resultName_en">英文名：{{ item.name_en }}</div>
+            <div class="resultName_en">英文名：{{ item.enName }}</div>
             <div class="resultDetail">
               <!-- v-for模块 -->
 
-              <div class="huohao _data">
-                {{ $t("order.itemNo") + "：" }}{{ item.huohao }}
+              <div class="fenziliang _data">
+                {{ $t("order.fenziliang") + "：" }}{{ item.formula_weight }}
               </div>
               <div class="jiegoushi _data">
-                结构式：<span v-html="item.linear_formula"></span>
+                结构式：<span v-html="item.linear_formula.replace(/(\d+)/g, '<sub>$1</sub>')"></span>
               </div>
               <div class="CAScode _data">
                 {{ $t("order.casNum") + "：" }}{{ item.cas }}
@@ -70,7 +70,7 @@
                         v-for="(item1, index) in productData"
                         :key="index"
                       >
-                        <td class="huohao">
+                        <td class="fenziliang">
                           <div>{{ item.id + "-" + item1.weight }}</div>
                         </td>
                         <td class="size">
@@ -140,7 +140,7 @@ export default {
         //   pic: require("../../assets/p22.png"),
         //   name_zh: "2-(三丁基锡)-5-三氟甲基吡啶",
         //   name_en: "2-(tributylstannyl)-5-(trifluoromethyl)pyridine",
-        //   huohao: "",
+        //   fenziliang: "",
         //   jiegoushi: "",
         //   casCode: "",
         //   mdlCode: "",
@@ -148,14 +148,14 @@ export default {
       ],
       productData: [
         // {
-        //   huohao: "2016-05-03",
+        //   fenziliang: "2016-05-03",
         //   size: "Tom",
         //   rmb: "California",
         //   store: "Los Angeles",
         //   num: 0,
         // },
         // {
-        //   huohao: "2016-05-02",
+        //   fenziliang: "2016-05-02",
         //   size: "Tom",
         //   rmb: "California",
         //   store: "Los Angeles",
@@ -430,7 +430,7 @@ table tbody tr {
   text-align: center;
 }
 
-.tableContent .huohao {
+.tableContent .fenziliang {
   width: 145px;
   color: #004ea2;
 }

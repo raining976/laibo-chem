@@ -11,9 +11,11 @@
         <div style="margin-bottom: 10px">更多产品分类：</div>
         <div
           class="type"
+          :class="{is_type: item1 == type}"
           v-for="(item1, index) in typeList"
           :key="index"
           @click="searchType(item1)"
+
         >
           {{ item1 }}
         </div>
@@ -38,6 +40,7 @@ export default {
       res: "noResult",
       cate: "", // 0 1 2
       type: "", //需要判断
+      isType: -1, // 判断字体加粗
       inputValue: "",
       typeList: ["中间品", "低值易耗品", "染料"],
       resultBox: [],
@@ -57,7 +60,7 @@ export default {
         })
         //回调函数
         .then((res) => {
-          this.$data.resultBox = res.data.data;
+          this.$data.resultBox = res.data.data.products
           this.toResultShow();
         })
         .catch((err) => {
@@ -105,7 +108,7 @@ export default {
     },
     //获取搜索结果
     async getSearchResult() {
-      if (this.$route.query.inputValue !== "") {
+      if (this.$data.inputValue !== undefined) {
         await this.$http
           .get("/search", {
             params: {
@@ -126,24 +129,29 @@ export default {
     },
     // 分类
     searchType(str) {
+      this.$data.inputValue = "";
       switch (str) {
         case "中间品":
-          this.$data.inputValue = str;
+          // this.$data.inputValue = str;
           this.$data.type = str;
           this.$data.cate = 0;
           break;
         case "低值易耗品":
-          this.$data.inputValue = str;
+          // this.$data.inputValue = str;
           this.$data.type = str;
           this.$data.cate = 1;
           break;
         case "染料":
-          this.$data.inputValue = str;
+          // this.$data.inputValue = str;
           this.$data.type = str;
           this.$data.cate = 2;
           break;
       }
       this.getSearchResult();
+    },
+    // 加粗字体
+    strongType(no) {
+      this.$data.isType = no;
     },
     // js判断页面
     toResultShow() {
@@ -221,6 +229,9 @@ export default {
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #004ea2;
+}
+.is_type {
+  font-weight: 600;
 }
 .type:hover {
   font-weight: 600;

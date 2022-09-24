@@ -9,7 +9,7 @@
           <div class="productName_zh">{{ productData.name }}</div>
           <div class="productName_en">{{ productData.enName }}</div>
           <!-- 浓度 -->
-          <div class="concentration">{{ productData.concentration }}</div>
+          <div class="concentration">{{ productData.guige }}</div>
           <div class="solidLine2"></div>
           <!-- 详细信息 -->
           <div class="details">
@@ -28,7 +28,7 @@
 
             <div class="oneDetail">
               <div class="detailName">{{ $t("product.fenzishi") }}:&nbsp;</div>
-              <div class="detailContent" v-html="productData.linear_formula"></div>
+              <div class="detailContent" v-html="productData.linear_formula.replace(/(\d+)/g, '<sub>$1</sub>')" ></div>
             </div>
 
             <div class="oneDetail">
@@ -100,7 +100,7 @@
                       <div>{{ productData.id + "-" + item.weight }}</div>
                     </td>
                     <td class="size">
-                      <div>{{ item.guige }}</div>
+                      <div>{{ productData.guige }}</div>
                     </td>
 
                     <td class="store">
@@ -332,7 +332,7 @@ export default {
 .solidLine2 {
   width: 874.94px;
   height: 1px;
-  margin: 28.03px 0 14.02px;
+  margin: 24px 0 14px;
   border-bottom: 1px solid #999999;
 }
 .details {

@@ -9,7 +9,7 @@ const productInfo = () => import("../components/searchProduct/productInfo.vue");
 // 用户信息页
 const userInfo = () => import("../views/userInfo.vue");
 const cart = () => import("../components/userInfo/shopCart.vue");
-const payment = () => import("../components/userInfo/payment.vue");
+const setOrder = () => import("../components/userInfo/setOrder.vue");
 const payCompleted = () => import("../components/userInfo/payCompleted.vue");
 const order = () => import("../components/userInfo/myOrder.vue");
 const orderInfo = () => import("../components/userInfo/orderInfo.vue");
@@ -109,9 +109,9 @@ const routes = [
 
       },
       {
-        path: '/payment',
-        name: 'payment',
-        component: payment,
+        path: '/setOrder',
+        name: 'setOrder',
+        component: setOrder,
         meta: { requiresAuth: true },
       },
       {

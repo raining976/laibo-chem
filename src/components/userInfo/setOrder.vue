@@ -1,6 +1,6 @@
 //购物车（支付部分）
 <template>
-  <div class="paymentPage">
+  <div class="setOrderPage">
     <!-- 收获地址 -->
     <div class="amount">
       <div class="top">
@@ -121,63 +121,13 @@
       </div>
     </div>
     <address-form v-if="formIsShow" />
-    <!-- 以下为支付方式-------------->
-    <div class="payType">
-      <div class="typeTitle">{{ $t("cart.payType") }}</div>
-      <div class="typeBox">
-        <div
-          class="type"
-          :class="{ type_checked: wechar == true }"
-          @click="payType('wx')"
-        >
-          <div class="typeSign">
-            <img src="../../assets/weixinzhifu.png" alt="" />
-          </div>
-          <div class="typeName">
-            {{ $t("cart.weChat") + " " + $t("cart.payment") }}
-          </div>
-        </div>
-        <div
-          class="type"
-          :class="{ type_checked: zhifubao == true }"
-          @click="payType('alipay')"
-        >
-          <div class="typeSign">
-            <img src="../../assets/zhifubao.png" alt="" />
-          </div>
-          <div class="typeName">
-            {{ $t("cart.paypal") + " " + $t("cart.payment") }}
-          </div>
-        </div>
-        <div
-          class="type"
-          :class="{ type_checked: geren == true }"
-          @click="payType('geren')"
-        >
-          <div class="typeSign">
-            <img src="../../assets/gerenzhifu.png" alt="" />
-          </div>
-          <div class="typeName">{{ $t("cart.bills") + $t("cart.person") }}</div>
-        </div>
-        <div
-          class="type"
-          :class="{ type_checked: gongsi == true }"
-          @click="payType('gongsi')"
-        >
-          <div class="typeSign">
-            <img src="../../assets/gongsi.png" alt="" />
-          </div>
-          <div class="typeName">{{ $t("cart.bills") + $t("cart.firm") }}</div>
-        </div>
-      </div>
-    </div>
     <!-- 以下为底部 -->
     <div class="footer">
       <div class="allMoney">
         {{ $t("cart.total") }}&nbsp;&nbsp;&nbsp;
         <div>{{ allmoney }}</div>
       </div>
-      <div class="pay" @click="createOrder()">{{ $t("cart.settlement") }}</div>
+      <div class="pay" @click="createOrder()">{{ $t("cart.setOrder") }}</div>
     </div>
   </div>
 </template>
@@ -266,7 +216,10 @@ export default {
       this.$data.commodityList.forEach((item) => {
         _allmoney += item.count * item.price;
       });
-      this.$data.allmoney = _allmoney;
+      
+      if(_allmoney < 200)this.$data.freight = 20;
+      _allmoney += this.$data.freight;
+       this.$data.allmoney = _allmoney;
       return _allmoney;
     },
   },
@@ -474,7 +427,7 @@ export default {
 };
 </script>
 <style scoped>
-.paymentPage {
+.setOrderPage {
   position: relative;
 }
 .top {
@@ -764,24 +717,24 @@ export default {
   margin: 20px 0 0 36%;
   overflow: hidden;
 }
-.paymentPage /deep/ .el-pagination {
+.setOrderPage /deep/ .el-pagination {
   --el-pagination-button-height: 40px;
   --el-pagination-font-size: 16px;
 }
-.paymentPage
+.setOrderPage
   /deep/
   .el-pagination.is-background
   .el-pager
   li:not(.disabled).active {
   background-color: #004ea2;
 }
-.paymentPage /deep/.el-pagination.is-background .btn-next,
-.paymentPage /deep/.el-pagination.is-background .btn-prev,
-.paymentPage /deep/.el-pagination.is-background .el-pager li {
+.setOrderPage /deep/.el-pagination.is-background .btn-next,
+.setOrderPage /deep/.el-pagination.is-background .btn-prev,
+.setOrderPage /deep/.el-pagination.is-background .el-pager li {
   min-width: 40px;
   border-radius: 5px;
 }
-.paymentPage /deep/ .el-icon {
+.setOrderPage /deep/ .el-icon {
   margin: 0 auto;
 }
 /* 以下为支付类型 */

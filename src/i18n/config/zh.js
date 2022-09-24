@@ -68,7 +68,7 @@ export default {
         address: "收货地址",
         info: "个人信息",
         changePass: "修改密码",
-        orderReview: "订单审核",
+        orderReview: "团队订单",
     },
     // 登录
     logIn: {
@@ -167,6 +167,7 @@ export default {
         money: "金额",
         itemNo: "货号",
         casNum: "CAS编号",
+        fenziliang: "分子量",
     },
     // 购物车
     cart: {
@@ -174,7 +175,7 @@ export default {
         allCheck: "全选",
         submitOwn: "提交到个人账单",
         addUp: "合计(不含运费)",
-        settlement: "结算",
+        settlement: "提交",
         to: "去",
         fright: "运费",
         weChat: "微信",
@@ -184,7 +185,7 @@ export default {
         person: "(个人)",
         firm: "(公司)",
         payType: "支付类型",
-
+        setOrder: "创建订单"
     },
     // 产品详情
     product: {

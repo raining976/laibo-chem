@@ -59,8 +59,8 @@
                 <img src="" alt="" />
               </div>
               <div class="infoBox">
-                <div class="name_zh" @click="toProductInfo(item0.order_id)">
-                  {{ item0.name }}
+                <div class="name_zh" @click="toProductInfo(item0.product_id)">
+                  {{ item0.name + item0.guige }}
                 </div>
                 <div class="infoWord">
                   {{ $t("order.itemNo") + "：" }}{{ item0.huohao }}
@@ -104,7 +104,7 @@
       <div class="submitMy" @click="isSubmitMy()">
         <div
           class="submitMyBtn"
-          :class="{ agree_submitMy: submitMy == 1 }"
+          :class="{ agree_submitMy: submitMy == 0 }"
         ></div>
         {{ $t("cart.submitOwn") }}
       </div>
@@ -128,7 +128,7 @@ export default {
       pagesize: 3, // 每页显示多少条
       currentPage: 1, // 当前页数
       pagerCount: 5, //五个以上加省略号
-      submitMy: 0, //判断是否提交个人订单 0集体 1个人
+      submitMy: 0, //判断是否提交个人订单 0个人 1集体
       num: 0, //计数器
       //
       updata: 0, // 更新页面
@@ -153,6 +153,12 @@ export default {
  async created() {
     await this.getCart();
     await this.addChecked();
+    console.log(localStorage.getItem("in_team"),"dddddd")
+    if(localStorage.getItem("in_team") === "1") {
+      this.$data.submitMy = 1;
+    }else if(localStorage.getItem("in_team") === "0") {
+      this.$data.submitMy = 0;
+    }
   },
   // beforeUpdate() {
   //   this.commodityBox = [];
@@ -178,6 +184,31 @@ export default {
       return _money; //return 回去的新值不会赋给data里的money ,因为html代码里的money相当于函数作为变量？
     },
   },
+ beforeRouteLeave(to,from,next){
+      if(1) {
+        this.$confirm("检测到未保存的内容，是否在离开页面前保存修改？", "提示", {
+        confirmButtonText: "保存",
+        cancelButtonText: "放弃修改",
+        // type: "warning",
+        center: true,
+      })
+        .then(() => {
+          this.saveChange();
+          this.$message({
+            type: "success",
+            message: "保存更改成功",
+          });
+          next()
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消保存更改",
+          });
+        });
+      }
+      
+    },
   methods: {
     // setCommodityBox(el) {
     //   if (el) {
@@ -192,9 +223,6 @@ export default {
         .then((res) => {
           this.$data.count = res.data.data.count;
           this.$data.commodityList = res.data.data.orders;
-          console.log("ceshi", this.$data.count);
-          console.log("ceshi", res.data.data);
-          console.log("ceshi,shuzu ", this.$data.commodityList);
         })
         .catch((err) => {
           console.log(err);
@@ -209,25 +237,36 @@ export default {
         },
       });
     },
+    // 交付的商品
     toPay() {
       if (this.$data._money > 0) {
         localStorage.setItem("checkBox",JSON.stringify(this.$data.checkedCommodities));
         localStorage.setItem("isSubmitMy", JSON.stringify(this.$data.submitMy));
         this.$router.push({
-          path: "/payment",
+          path: "/setOrder",
           // query: {
             // checkBox: this.$Base64.encode(JSON.stringify(this.$data.checkedCommodities)),
           // }
         });
       }
     }, 
+    saveChange() {
+
+    },
    //提交到个人订单
     isSubmitMy() {
-      if (this.$data.submitMy === 1) {
+       if(localStorage.getItem("in_team") === "0") {
+          this.$message({
+                      message: "您还未加入团队",
+                      type: "error",
+                    });
+    } else if(localStorage.getItem("in_team") === "1") { 
+            if (this.$data.submitMy === 1) {
         this.$data.submitMy = 0; // 个人
       } else if (this.$data.submitMy === 0) {
         this.$data.submitMy = 1; // 集体
       }
+    }
     },
     // 远端修改，后重新获取
   async delProduct() {

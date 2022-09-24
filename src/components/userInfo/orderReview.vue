@@ -2,15 +2,15 @@
 //createDate:2022-07-17
 <template>
   <div class="orderReview">
-    <div class="title">{{$t('base.order')}}</div>
+    <div class="title">{{ $t("base.order") }}</div>
     <div class="orderList">
       <div class="listHead">
-        <div class="_shopId word">{{$t('order.num')}}</div>
-        <div class="_product word">{{$t('order.product')}}</div>
-        <div class="_type word">{{$t('order.type')}}</div>
-        <div class="_unit word">{{$t('order.unit')}}</div>
-        <div class="_orderStatus word">{{$t('order.state')}}</div>
-        <div class="_payment word">{{$t('order.sum')}}</div>
+        <div class="_shopId word">{{ $t("order.num") }}</div>
+        <div class="_product word">{{ $t("order.product") }}</div>
+        <div class="_type word">{{ $t("order.type") }}</div>
+        <div class="_unit word">{{ $t("order.unit") }}</div>
+        <div class="_orderStatus word">{{ $t("order.state") }}</div>
+        <div class="_payment word">{{ $t("order.sum") }}</div>
       </div>
       <div class="allOrder">
         <!-- 以下v-for一个商品 -->
@@ -26,24 +26,35 @@
             {{ item0.id }}
           </div>
           <div class="product">
-            <div
-              class="productName"
-              title=""
-            >
-              {{ name }}1111&nbsp;
-            </div>
+            <div class="productName" title="">{{ name }}1111&nbsp;</div>
           </div>
           <div class="type">{{ item0.type }}</div>
           <div class="unit">{{ item0.team }}</div>
-          <div class="orderStatus">{{item0.status}}</div>
+          <div class="orderStatus">{{ item0.status }}</div>
           <!-- 关于金额的计算方式 ？-->
           <div class="payment">{{ item0.payment }}</div>
-          <div class="toOrderInfo" @click="toOrderInfo(item0.id)">{{$t('order.checkDetail')}}></div>
+          <div class="review" :class="{ showBtn: item0.status == '待审核' }">
+            <div class="agree" @click="reviewOrder('1', item0.id)">
+              <img src="../../assets/勾勾.png" alt="" title="同意" />
+            </div>
+            <div class="disagree" @click="reviewOrder('2', item0.id)">
+              <img src="../../assets/叉.png" alt="" title="拒绝" />
+            </div>
+          </div>
         </div>
       </div>
       <div class="pagination">
-<el-pagination background="#004ea2" layout="prev,pager,next" :total="orderList.length" :page-size="pagesize" :pager-count="pagerCount" :current-page="currentPage" @current-change="handleCurrentChange" @size-change="handleSizeChange">
-    </el-pagination>
+        <el-pagination
+          background="#004ea2"
+          layout="prev,pager,next"
+          :total="orderList.length"
+          :page-size="pagesize"
+          :pager-count="pagerCount"
+          :current-page="currentPage"
+          @current-change="handleCurrentChange"
+          @size-change="handleSizeChange"
+        >
+        </el-pagination>
       </div>
     </div>
   </div>
@@ -57,62 +68,43 @@ export default {
       pagesize: 3, // 每页显示多少条
       currentPage: 1, // 当前页数
       pagerCount: 5, //五个以上加省略号
+      noReview: -1,
       orderList: [
-      //   {
-      //     name: ["hh","ww","ee"],
-      //     status: "已签收",
-      //     shopId: "22222222222222",
-      //     type: "个人",
-      //     unit: "个人",
-      //     payment: 666,
-      //   },
-      //  {
-      //     name: ["hh","ww","ee"],
-      //     status: "已签收",
-      //     shopId: "22222222222222",
-      //     type: "个人",
-      //     unit: "个人",
-      //     payment: 666,
-      //   },
-      //   {
-      //     name: ["hh","ww","ee"],
-      //     status: "已签收",
-      //     shopId: "22222222222222",
-      //     type: "个人",
-      //     unit: "个人",
-      //     payment: 666,
-      //   },
-      //   {
-      //     name: ["hh","ww","ee"],
-      //     status: "已签收",
-      //     shopId: "22222222222222",
-      //     type: "个人",
-      //     unit: "个人",
-      //     payment: 666,
-      //   },
+        //   {
+        //     name: ["hh","ww","ee"],
+        //     status: "已签收",
+        //     shopId: "22222222222222",
+        //     type: "个人",
+        //     unit: "个人",
+        //     payment: 666,
+        //   },
+        //  {
+        //     name: ["hh","ww","ee"],
+        //     status: "已签收",
+        //     shopId: "22222222222222",
+        //     type: "个人",
+        //     unit: "个人",
+        //     payment: 666,
+        //   },
       ],
     };
   },
-  created() {
-   this.getOrders();
-
+  async created() {
+    await this.getOrders();
   },
   methods: {
     // 获取订单
-    getOrders() {
-       this.$http
-        .get("/teamOrder", {   
-        })
+    async getOrders() {
+      await this.$http
+        .get("/teamOrder", {})
         //回调函数
         .then((res) => {
-          if(!res.data.data){
-             this.$data.orderList = [];
+          if (!res.data.data) {
+            this.$data.orderList = [];
           }
           // this.$data.count = res.data.data.count;
           else {
             this.$data.orderList = res.data.data;
-          console.log("ceshi", res.data.data);
-          console.log("ceshi,shuzu ", this.$data.orderList); 
           }
         })
         .catch((err) => {
@@ -128,11 +120,20 @@ export default {
       this.$data.currentPage = val;
       // console.log(`当前页: ${val}`);
     },
-    toOrderInfo(id) {
-      this.$router.push({
-        path: "/orderInfo/" + id,
-      })
-    }
+    reviewOrder(isAgree, id) {
+      this.$http
+        .post("/auditOrder", {
+          agree: isAgree,
+          order_no: id,
+        })
+        //回调函数
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
   },
 };
 </script>
@@ -183,13 +184,13 @@ export default {
 }
 ._type {
   /* margin: 0 0 0 198px; */
-/* width: 145px; */
-flex: 2;
+  /* width: 145px; */
+  flex: 2;
 }
 ._unit {
   /* margin: 0 0 0 109px; */
-/* width: 85px; */
-flex: 1;
+  /* width: 85px; */
+  flex: 1;
 }
 ._orderStatus {
   /* margin: 0 0 0 100px; */
@@ -226,37 +227,36 @@ flex: 1;
 .shopId {
   /* width: 700px; */
   flex: 1.2;
-    /* margin: 0 27px 0 52px; */
-    text-align: center;
-    word-break: break-all;
+  /* margin: 0 27px 0 52px; */
+  text-align: center;
+  word-break: break-all;
   /* overflow: hidden; */
 }
 .product {
-    flex: 2;
+  flex: 2;
   /* width: 700px; */
   height: 165px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-      word-break: break-all;
-
+  word-break: break-all;
 }
 
 .type {
-    flex: 2;
+  flex: 2;
   /* width: 110px; */
   /* margin: 0 50px 0 0; */
   text-align: center;
 }
 .unit {
-    flex: 1;
+  flex: 1;
   /* width: 165px; */
   text-align: center;
   font-weight: 600;
 }
 .orderStatus {
-    flex: 1;
+  flex: 1;
   /* width: 165px; */
   display: flex;
   justify-content: center;
@@ -266,20 +266,46 @@ flex: 1;
 }
 
 .payment {
-    flex: 1;
+  flex: 1;
   /* width: 150px; */
   text-align: center;
   font-weight: 600;
 }
-.toOrderInfo {
+.review {
+  display: flex;
   cursor: pointer;
   position: absolute;
-  right: 24px;
-  bottom: 30px;
+  right: 50px;
+  bottom: 20px;
   color: #004ea2;
+  transition: all 0.6;
+  display: none;
 }
-.toOrderInfo:hover {
-  font-weight: 600;
+.agree img {
+  width: 32px;
+  height: 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.disagree img {
+  width: 22px;
+  height: 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.agree {
+  margin: 0 20px 0 0;
+}
+.agree img:hover {
+  transform: scale(1.25);
+}
+.disagree img:hover {
+  transform: scale(1.25);
+}
+.showBtn {
+  display: block;
 }
 /* 分页器 */
 .pagination {
@@ -290,7 +316,11 @@ flex: 1;
   --el-pagination-button-height: 40px;
   --el-pagination-font-type: 16px;
 }
-.orderReview /deep/ .el-pagination.is-background .el-pager li:not(.disabled).active {
+.orderReview
+  /deep/
+  .el-pagination.is-background
+  .el-pager
+  li:not(.disabled).active {
   background-color: #004ea2;
 }
 .orderReview /deep/.el-pagination.is-background .btn-next,
