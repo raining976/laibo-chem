@@ -196,7 +196,7 @@ export default {
         this.$nextTick(() => {
           let obj;
           this.$data.commodityList.forEach((item) => {
-            this.$data.pushProduct.product_params_id = item.id;
+            this.$data.pushProduct.product_params_id = item.product_params_id;
             this.$data.pushProduct.count = item.count;
             obj = JSON.stringify(this.$data.pushProduct); //深拷贝
             //  console.log(JSON.parse(obj),"ccccc")
@@ -341,7 +341,7 @@ export default {
       }
     },
     createOrder() {
-      if (this.$data.addressId === -1) {
+      if (this.$data.addressId === 0) {
         this.$message({
           message: "尚未选择收货地址",
           type: "error",

@@ -171,6 +171,32 @@
           <div class="typeName">{{ $t("cart.bills") + $t("cart.firm") }}</div>
         </div>
       </div>
+      <div>
+        <el-upload
+          class="upload-demo"
+          drag
+          action=""          
+          :multiple="false"
+          accept=".jpeg, .jpg, .png"
+          :before-upload="beforeUpload"
+          :before-remove="beforeRemove"
+          :on-exceed="handleExceed"
+          :file-list="fileList"
+          :show-file-list="true"
+          :auto-upload="false"
+          :limit="1"
+        >
+          <el-icon class="el-icon--upload"><upload-filled /></el-icon>
+          <div class="el-upload__text">
+            Drop file here or <em>click to upload</em>
+          </div>
+          <template #tip>
+            <div class="el-upload__tip">
+              jpg/png files with a size less than 500kb
+            </div>
+          </template>
+        </el-upload>
+      </div>
     </div>
     <!-- 以下为底部 -->
     <div class="footer">
@@ -215,6 +241,7 @@ export default {
         product_params_id: 0,
         count: 0,
       }, //单个货物
+      fileList: [], // 上传的图片数组
       orderBox: [], //订单汇总传参
       addresses: [], // 地址列表
       orderList: [],
@@ -295,7 +322,7 @@ export default {
         path: "/productInfo",
         query: {
           id: code,
-        }
+        },
       });
     },
     // 修改地址------------------
@@ -354,6 +381,60 @@ export default {
       this.$data.isBorder = id;
       this.$data.addressId = code;
     },
+    // 文件上传相关--------------
+     //上传之前
+       beforeUpload(file) {       
+     var FileExt = file.name.replace(/.+\./, "");       
+      if (['jpg','png'].indexOf(FileExt.toLowerCase()) === -1){            
+        this.$message({ 
+            type: 'warning', 
+            message: '请上传后缀名为jpg或png的附件！' 
+         });                
+        return false;       
+      }      
+      this.isLt2k = file.size / 1024  < 200?'1':'0';        
+    if(this.isLt2k==='0') {            
+        this.$message({                
+            message: '上传文件大小不能超过200k!',                
+            type: 'error'            
+        });        
+    }        
+     return this.isLt2k==='1'?true: false;
+},
+        // 上传成功
+        upSuccess(res) {
+            this.$message({
+                type: 'success',
+                message: '上传成功',
+                showClose: true,
+                offset: 80,
+            })
+        },
+        // 上传失败
+        upError() {
+            this.$message({
+                type: 'error',
+                message: '上传失败',
+                showClose: true,
+                offset: 80,
+            });
+        },
+       //上传的文件改变时（覆盖原来的文件）
+        upChange(file, fileList) {
+            if (fileList.length > 0) {
+                this.fileList = [fileList[fileList.length - 1]];
+            }
+        },
+        // 移除列表
+        upRemve(file) {
+            console.log(file)
+        },
+     handleExceed(files, fileList) {
+        this.$message.warning(`当前限制选择 1 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
+      },
+      beforeRemove(file, fileList) {
+        return this.$confirm(`确定移除 ${ file.name }？`);
+      },
     // 分页---
     handleSizeChange(val) {
       this.$data.pagesize = val;

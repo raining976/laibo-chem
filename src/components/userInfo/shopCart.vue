@@ -1,4 +1,6 @@
 // 购物车
+// 全局判断 1加入了团队 0个人
+// 该组件接口 0是团队 1是个人
 //createDate:2022-07-17
 <template>
   <div :key="updata">
@@ -103,7 +105,7 @@
       <div class="submitMy" @click="isSubmitMy()">
         <div
           class="submitMyBtn"
-          :class="{ agree_submitMy: submitMy == 0 }"
+          :class="{ agree_submitMy: submitMy == 1 }"
         ></div>
         {{ $t("cart.submitOwn") }}
       </div>
@@ -127,7 +129,7 @@ export default {
       pagesize: 3, // 每页显示多少条
       currentPage: 1, // 当前页数
       pagerCount: 5, //五个以上加省略号
-      submitMy: 0, //判断是否提交个人订单 0个人 1集体
+      submitMy: 0, //判断是否提交个人订单 0集体  1个人
       num: 0, //计数器
       oldList: [], // 保存刚获取的数组
       isChange: false, //是否更改
@@ -156,9 +158,11 @@ export default {
     await this.addChecked();
     this.$data.count = this.$data.commodityList.length;
     if (localStorage.getItem("in_team") === "1") {
-      this.$data.submitMy = 1;
-    } else if (localStorage.getItem("in_team") === "0") {
+      // 在团队
       this.$data.submitMy = 0;
+    } else if (localStorage.getItem("in_team") === "0") {
+      // 在个人
+      this.$data.submitMy = 1;
     }
   },
   // beforeUpdate() {
@@ -309,9 +313,9 @@ export default {
         });
       } else if (localStorage.getItem("in_team") === "1") {
         if (this.$data.submitMy === 1) {
-          this.$data.submitMy = 0; // 个人
+          this.$data.submitMy = 0; // 集体
         } else if (this.$data.submitMy === 0) {
-          this.$data.submitMy = 1; // 集体
+          this.$data.submitMy = 1; // 个人
         }
       }
     },
