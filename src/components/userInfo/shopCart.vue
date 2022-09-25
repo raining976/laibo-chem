@@ -1,7 +1,7 @@
 // 购物车
 //createDate:2022-07-17
 <template>
-  <div :key = "updata">
+  <div :key="updata">
     <div class="top">
       <div class="title">
         {{
@@ -76,8 +76,7 @@
               <el-input-number
                 v-model="item0.count"
                 @click="numChange(item0)"
-                
-                :min="0"
+                :min="1"
               ></el-input-number>
             </div>
             <!-- 关于金额的计算方式 -->
@@ -130,6 +129,8 @@ export default {
       pagerCount: 5, //五个以上加省略号
       submitMy: 0, //判断是否提交个人订单 0个人 1集体
       num: 0, //计数器
+      oldList: [], // 保存刚获取的数组
+      isChange: false, //是否更改
       //
       updata: 0, // 更新页面
       checkall: false,
@@ -150,13 +151,13 @@ export default {
       ],
     };
   },
- async created() {
+  async created() {
     await this.getCart();
     await this.addChecked();
-    console.log(localStorage.getItem("in_team"),"dddddd")
-    if(localStorage.getItem("in_team") === "1") {
+    this.$data.count = this.$data.commodityList.length;
+    if (localStorage.getItem("in_team") === "1") {
       this.$data.submitMy = 1;
-    }else if(localStorage.getItem("in_team") === "0") {
+    } else if (localStorage.getItem("in_team") === "0") {
       this.$data.submitMy = 0;
     }
   },
@@ -184,31 +185,36 @@ export default {
       return _money; //return 回去的新值不会赋给data里的money ,因为html代码里的money相当于函数作为变量？
     },
   },
- beforeRouteLeave(to,from,next){
-      if(1) {
-        this.$confirm("检测到未保存的内容，是否在离开页面前保存修改？", "提示", {
+  beforeRouteLeave(to, from, next) {
+    this.$data.commodityList.forEach(async (item, index) => {
+      if (item.checked === false) {
+        if (item.count !== this.oldList[index].count) {
+          this.$data.isChange = true;
+          return;
+        }
+      }
+    });
+    if (this.$data.isChange === true) {
+      this.$confirm("检测到未保存的内容，是否在离开页面前保存修改？", "提示", {
         confirmButtonText: "保存",
         cancelButtonText: "放弃修改",
         // type: "warning",
         center: true,
       })
         .then(() => {
-          this.saveChange();
-          this.$message({
-            type: "success",
-            message: "保存更改成功",
-          });
-          next()
+         this.saveChange();
+           next();
         })
         .catch(() => {
           this.$message({
             type: "info",
             message: "已取消保存更改",
           });
+          next();
         });
-      }
-      
-    },
+    }
+    next();
+  },
   methods: {
     // setCommodityBox(el) {
     //   if (el) {
@@ -221,8 +227,11 @@ export default {
         .get("/cart", {})
         //回调函数
         .then((res) => {
-          this.$data.count = res.data.data.count;
+          // this.$data.count = res.data.data.count;
           this.$data.commodityList = res.data.data.orders;
+          this.$data.oldList = JSON.parse(
+            JSON.stringify(this.$data.commodityList)
+          );
         })
         .catch((err) => {
           console.log(err);
@@ -233,83 +242,123 @@ export default {
       this.$router.push({
         path: "/productInfo",
         query: {
-            id: code,
+          id: code,
         },
       });
     },
     // 交付的商品
     toPay() {
       if (this.$data._money > 0) {
-        localStorage.setItem("checkBox",JSON.stringify(this.$data.checkedCommodities));
+        localStorage.setItem(
+          "checkBox",
+          JSON.stringify(this.$data.checkedCommodities)
+        );
         localStorage.setItem("isSubmitMy", JSON.stringify(this.$data.submitMy));
         this.$router.push({
           path: "/setOrder",
           // query: {
-            // checkBox: this.$Base64.encode(JSON.stringify(this.$data.checkedCommodities)),
+          // checkBox: this.$Base64.encode(JSON.stringify(this.$data.checkedCommodities)),
           // }
         });
       }
-    }, 
+    },
+    // 把未选择的保存
     saveChange() {
-
-    },
-   //提交到个人订单
-    isSubmitMy() {
-       if(localStorage.getItem("in_team") === "0") {
-          this.$message({
-                      message: "您还未加入团队",
-                      type: "error",
-                    });
-    } else if(localStorage.getItem("in_team") === "1") { 
-            if (this.$data.submitMy === 1) {
-        this.$data.submitMy = 0; // 个人
-      } else if (this.$data.submitMy === 0) {
-        this.$data.submitMy = 1; // 集体
-      }
-    }
-    },
-    // 远端修改，后重新获取
-  async delProduct() {
-         if(this.$data.checkedCommodities.length !== 0) {
-           this.$data.checkall = false;
-          this.$data.checkedCommodities = [];
-          this.$data.commodityList.forEach(async(item) => {
-          if (item.checked === true) {
-            await this.$http
-                .post("/delCartProduct", {
-                  id: item.id,
-                })
-                //回调函数
-                .then((res) => {
-                  if (res.data.code == 20000) {
-                    this.$message({
-                      message: "删除成功",
-                      type: "success",
-                    });
-                  } else {
-                    this.$message({
-                      message: res.data.msg,
-                      type: "error",
-                    });
-                  }
-                })
-                .catch((err) => {
+      // let isSuccess;
+      this.$data.commodityList.forEach((item, index) => {
+        if (item.checked === false)
+          if (item.count !== this.oldList[index].count) {
+            this.$http
+              .post("/editCartProduct", {
+                id: item.id,
+                product_params_id: item.product_params_id,
+                count: item.count,
+              })
+              //回调函数
+              .then((res) => {
+                if (res.data.code == 20000) {
                   this.$message({
-                    message: "未知错误!",
+                    type: "success",
+                    message: "保存更改成功",
+                  });
+                } else {
+                  isSuccess = false;
+                  this.$message({
+                    message: res.data.msg,
                     type: "error",
                   });
-                  console.log("err", err);
+                }
+              })
+              .catch((err) => {
+                this.$message({
+                  message: "未知错误!",
+                  type: "error",
                 });
-            }
-          }); 
+                console.log("err", err);
+              });
+          }
+      });
+      // return isSuccess;
+    },
+    //提交到个人订单
+    isSubmitMy() {
+      if (localStorage.getItem("in_team") === "0") {
+        this.$message({
+          message: "您还未加入团队",
+          type: "error",
+        });
+      } else if (localStorage.getItem("in_team") === "1") {
+        if (this.$data.submitMy === 1) {
+          this.$data.submitMy = 0; // 个人
+        } else if (this.$data.submitMy === 0) {
+          this.$data.submitMy = 1; // 集体
+        }
+      }
+    },
+    // 远端修改，后重新获取
+    async delProduct() {
+      if (this.$data.checkedCommodities.length !== 0) {
+        this.$data.checkall = false;
+        this.$data.checkedCommodities = [];
+        this.$data.commodityList.forEach(async (item) => {
+          if (item.checked === true) {
+            await this.$http
+              .post("/delCartProduct", {
+                  id: item.id,
+                           
+              })
+              //回调函数
+              .then((res) => {
+                if (res.data.code == 20000) {
+                  this.$message({
+                    message: "删除成功",
+                    type: "success",
+                  });
+                } else {
+                  this.$message({
+                    message: res.data.msg,
+                    type: "error",
+                  });
+                }
+              })
+              .catch((err) => {
+                this.$message({
+                  message: "未知错误!",
+                  type: "error",
+                });
+                console.log("err", err);
+              });
+          }
+        });
         await this.getCart();
         await this.addChecked();
       }
-      this.$data.updata ++;
+      this.$data.count = this.$data.commodityList.length;
+      this.$data.updata++;
     },
     //复选框相关
     // 添加 checked属性
-  async addChecked() {
+    async addChecked() {
       this.$data.commodityList.forEach((item) => {
         Object.assign(item, { checked: false });
       });
@@ -367,13 +416,11 @@ export default {
 
     // },
     numChange(handler) {
-         if (handler.checked === true) {
-        this.$data.checkedCommodities.forEach((item)=> {
-            if(item.name === handler.name)
-            item.count = handler.count;
+      if (handler.checked === true) {
+        this.$data.checkedCommodities.forEach((item) => {
+          if (item.name === handler.name) item.count = handler.count;
         });
       }
-
     },
     // 分页
     handleSizeChange(val) {
@@ -384,7 +431,6 @@ export default {
       this.$data.currentPage = val;
       // console.log(`当前页: ${val}`);
     },
-
   },
 };
 </script>
@@ -611,7 +657,8 @@ export default {
   border-radius: 2px;
   background: #eaebed;
 }
-.count >>> .el-input-number__decrease:hover, .count >>> .el-input-number__increase:hover {
+.count >>> .el-input-number__decrease:hover,
+.count >>> .el-input-number__increase:hover {
   color: var(--color, "#004ea2");
 }
 .count >>> [class*=" el-icon-"],

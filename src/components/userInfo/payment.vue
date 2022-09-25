@@ -75,7 +75,7 @@
         <!-- 以下v-for一个商品 -->
         <div
           class="commodity"
-          v-for="(item0, index) in commodityList.slice(
+          v-for="(item0, index) in orderInfo.slice(
             (currentPage - 1) * pagesize,
             currentPage * pagesize
           )"
@@ -83,17 +83,17 @@
         >
           <div class="productInfo">
             <div class="productPic">
-              <img src="" alt="" />
+              <img :src="item0.pic_url" alt="" />
             </div>
             <div class="infoBox">
-              <div class="name_zh" @click="toProductInfo()">
+              <div class="name_zh" @click="toProductInfo(item0.id)">
                 {{ item0.name }}
               </div>
               <div class="infoWord">
                 {{ $t("order.itemNo") + "：" }}{{ item0.huohao }}
               </div>
               <div class="infoWord">
-                {{ $t("order.casNum") + "：" }}{{ item0.shopCart_id }}
+                {{ $t("order.casNum") + "：" }}{{ item0.cas }}
               </div>
             </div>
           </div>
@@ -103,14 +103,14 @@
             <div class="num">{{ item0.count }}</div>
           </div>
           <!-- 关于金额的计算方式 -->
-          <div class="payment">{{ item0.count * item0.price }}</div>
+          <div class="payment">{{ orderList.payment }}</div>
         </div>
       </div>
       <div class="pagination">
         <el-pagination
           background="#004ea2"
           layout="prev,pager,next"
-          :total="commodityList.length"
+          :total="orderInfo.length"
           :page-size="pagesize"
           :pager-count="pagerCount"
           :current-page="currentPage"
@@ -125,7 +125,7 @@
     <div class="payType">
       <div class="typeTitle">{{ $t("cart.payType") }}</div>
       <div class="typeBox">
-        <div
+        <!-- <div
           class="type"
           :class="{ type_checked: wechar == true }"
           @click="payType('wx')"
@@ -136,7 +136,8 @@
           <div class="typeName">
             {{ $t("cart.weChat") + " " + $t("cart.payment") }}
           </div>
-        </div>
+        </div> -->
+
         <div
           class="type"
           :class="{ type_checked: zhifubao == true }"
@@ -177,7 +178,7 @@
         {{ $t("cart.total") }}&nbsp;&nbsp;&nbsp;
         <div>{{ allmoney }}</div>
       </div>
-      <div class="pay" @click="createOrder()">{{ $t("cart.settlement") }}</div>
+      <div class="pay" @click="pay()">{{ $t("cart.settlement") }}</div>
     </div>
   </div>
 </template>
@@ -185,7 +186,7 @@
 import handleAddress from "../../js/handlerAddress";
 import addressForm from "../address/addressForm.vue";
 export default {
-  name: "setOrder",
+  name: "payment",
   components: {
     addressForm,
   },
@@ -216,8 +217,8 @@ export default {
       }, //单个货物
       orderBox: [], //订单汇总传参
       addresses: [], // 地址列表
-
-      commodityList: [
+      orderList: [],
+      orderInfo: [
         // {
         //   name: "S915939 碳化硅, 99.9% metals basis,100目",
         //   huohao: "S915939-5g",
@@ -232,7 +233,9 @@ export default {
   },
   created() {
     this.getAddress();
-    this.$data.commodityList = JSON.parse(localStorage.getItem("checkBox"));
+    this.$data.orderList = JSON.parse(localStorage.getItem("oneOrder"));
+    this.$data.orderInfo = this.$data.orderList.product;
+    console.log(this.$data.orderInfo, "cccccc");
   },
   watch: {
     isReloadAddress(val) {
@@ -241,11 +244,11 @@ export default {
         this.isReloadAddress = false;
       }
     },
-    commodityList: {
+    orderInfo: {
       handler() {
         this.$nextTick(() => {
           let obj;
-          this.$data.commodityList.forEach((item) => {
+          this.$data.orderInfo.forEach((item) => {
             this.$data.pushProduct.product_params_id = item.id;
             this.$data.pushProduct.count = item.count;
             obj = JSON.stringify(this.$data.pushProduct); //深拷贝
@@ -263,7 +266,7 @@ export default {
     allmoney() {
       let _allmoney = this.$data.allmoney;
       _allmoney += this.$data.freight;
-      this.$data.commodityList.forEach((item) => {
+      this.$data.orderInfo.forEach((item) => {
         _allmoney += item.count * item.price;
       });
       this.$data.allmoney = _allmoney;
@@ -287,9 +290,12 @@ export default {
         path: "cart",
       });
     },
-    toProductInfo() {
+    toProductInfo(code) {
       this.$router.push({
         path: "/productInfo",
+        query: {
+          id: code,
+        }
       });
     },
     // 修改地址------------------
@@ -387,7 +393,8 @@ export default {
           break;
       }
     },
-    toPay() {
+    // 支付
+    pay() {
       // 判断是否选择支付方式
       if (!this.$data.payWay) {
         this.$message({
@@ -397,7 +404,7 @@ export default {
       } else if (this.$data.payWay) {
         this.$http
           .post("/pay", {
-            order_no: this.$data.orderId,
+            order_no: localStorage.getItem("orderNo"),
             type: this.$data.payWay,
             image: "",
           })
@@ -426,50 +433,6 @@ export default {
           });
       }
     },
-    createOrder() {
-      if (this.$data.addressId === -1) {
-        this.$message({
-          message: "尚未选择收货地址",
-          type: "error",
-        });
-      } else {
-        this.$http
-          .post("/createOrder", {
-            // products: {
-            //   product_params_id: item.id,
-            //   count: item.count,
-            // },
-            products: this.$data.orderBox,
-            type: JSON.parse(localStorage.getItem("isSubmitMy")),
-            address: this.$data.addressId,
-          })
-          .then((res) => {
-            if (res.data.code == 20000) {
-              this.$message({
-                message: "创建订单成功",
-                type: "success",
-              });
-              this.$data.orderId = res.data.data.order_no;
-              // this.toPay();
-              this.func();
-            } else {
-              this.$message({
-                message: res.data.msg,
-                type: "error",
-              });
-            }
-          })
-          .catch((err) => {
-            this.$message({
-              message: "未知错误!",
-              type: "error",
-            });
-            console.log("err", err);
-          });
-      }
-    },
-    
-    
   },
 };
 </script>

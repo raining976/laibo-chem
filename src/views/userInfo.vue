@@ -57,10 +57,11 @@ export default {
         let name = this.$route.name;
         switch (name) {
           case "cart":
-          case "payment":
+          case "setOrder":
             this.currentIdx = 0;
             break;
           case "order":
+          case "payment":
           case "orderInfo":
             this.currentIdx = 1;
             break;

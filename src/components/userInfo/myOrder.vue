@@ -1,16 +1,34 @@
 // 我的订单部分
 //createDate:2022-07-17
 <template>
-  <div class="myOrder">
-    <div class="title">{{$t('base.order')}}</div>
+  <div class="myOrder" :key="updata">
+    <div class="top">
+      <div class="title">
+        {{ $t("base.order") + "( " + $t("cart.total") + " : " + count + ")" }}
+      </div>
+      <div class="deleteBtn" @click="delProduct()">{{ $t("base.dele") }}</div>
+    </div>
+    <!-- 以下为订单 -->
     <div class="orderList">
       <div class="listHead">
-        <div class="_shopId word">{{$t('order.num')}}</div>
-        <div class="_product word">{{$t('order.product')}}</div>
-        <div class="_type word">{{$t('order.type')}}</div>
-        <div class="_unit word">{{$t('order.unit')}}</div>
-        <div class="_orderStatus word">{{$t('order.state')}}</div>
-        <div class="_payment word">{{$t('order.sum')}}</div>
+        <div class="quanxuan">
+          <input
+            class="checkAll"
+            id="checkall"
+            name="commodity"
+            type="checkbox"
+            v-model="checkall"
+            @change="checkAll()"
+          />
+          <label class="word" for="checkAll">{{ $t("cart.allCheck") }} </label>
+        </div>
+        <!--  -->
+        <div class="_shopId word">{{ $t("order.num") }}</div>
+        <div class="_product word">{{ $t("order.product") }}</div>
+        <div class="_type word">{{ $t("order.type") }}</div>
+        <div class="_unit word">{{ $t("order.unit") }}</div>
+        <div class="_orderStatus word">{{ $t("order.state") }}</div>
+        <div class="_payment word">{{ $t("order.sum") }}</div>
       </div>
       <div class="allOrder">
         <!-- 以下v-for一个商品 -->
@@ -22,28 +40,68 @@
           )"
           :key="index"
         >
+          <div class="radio">
+            <label>
+              <input
+                class="checkOne"
+                name="commodity"
+                type="checkbox"
+                @change="checkOne(item0)"
+                v-model="item0.checked"
+              />
+            </label>
+          </div>
+          <!--  -->
           <div class="shopId">
             {{ item0.id }}
           </div>
           <div class="product">
-            <div
-              class="productName"
-              title=""
-            >
-              {{ name }}1111&nbsp;
-            </div>
+            <div class="productName" title="">{{ name }}1111&nbsp;</div>
           </div>
           <div class="type">{{ item0.type }}</div>
           <div class="unit">{{ item0.team }}</div>
-          <div class="orderStatus">{{item0.status}}</div>
+          <div class="orderStatus">{{ item0.status }}</div>
           <!-- 关于金额的计算方式 ？-->
           <div class="payment">{{ item0.payment }}</div>
-          <div class="toOrderInfo" @click="toOrderInfo(item0.id)">{{$t('order.checkDetail')}}></div>
+          <!--  折叠框 -->
+          <el-dropdown>
+            <span class="el-dropdown-link">
+              更多
+              <el-icon class="el-icon--right">
+                <arrow-down />
+              </el-icon>
+            </span>
+            <template #dropdown>
+              <el-dropdown-menu>
+                <el-dropdown-item>
+                  <div class="toOrderInfo" @click="toPay(item0.id, item0)">
+                   继续支付
+                  </div>
+                </el-dropdown-item>
+                <el-dropdown-item>
+                  <div class="toOrderInfo" @click="toOrderInfo(item0.id)">
+                    {{ $t("order.checkDetail") }}
+                  </div>
+                  </el-dropdown-item>
+                <!-- <el-dropdown-item disabled>Action 4</el-dropdown-item>
+                <el-dropdown-item divided>Action 5</el-dropdown-item> -->
+              </el-dropdown-menu>
+            </template>
+          </el-dropdown>
         </div>
       </div>
       <div class="pagination">
-<el-pagination background="#004ea2" layout="prev,pager,next" :total="orderList.length" :page-size="pagesize" :pager-count="pagerCount" :current-page="currentPage" @current-change="handleCurrentChange" @size-change="handleSizeChange">
-    </el-pagination>
+        <el-pagination
+          background="#004ea2"
+          layout="prev,pager,next"
+          :total="orderList.length"
+          :page-size="pagesize"
+          :pager-count="pagerCount"
+          :current-page="currentPage"
+          @current-change="handleCurrentChange"
+          @size-change="handleSizeChange"
+        >
+        </el-pagination>
       </div>
     </div>
   </div>
@@ -57,71 +115,140 @@ export default {
       pagesize: 3, // 每页显示多少条
       currentPage: 1, // 当前页数
       pagerCount: 5, //五个以上加省略号
+      updata: 0, // 更新页面
+      //
+      count: 0,
+      updata: 0, // 更新页面
+      checkall: false,
+      checkedOrder: [], //复选框有关 存放选择商品
       orderList: [
-      //   {
-      //     name: ["hh","ww","ee"],
-      //     status: "已签收",
-      //     shopId: "22222222222222",
-      //     type: "个人",
-      //     unit: "个人",
-      //     payment: 666,
-      //   },
-      //  {
-      //     name: ["hh","ww","ee"],
-      //     status: "已签收",
-      //     shopId: "22222222222222",
-      //     type: "个人",
-      //     unit: "个人",
-      //     payment: 666,
-      //   },
-      //   {
-      //     name: ["hh","ww","ee"],
-      //     status: "已签收",
-      //     shopId: "22222222222222",
-      //     type: "个人",
-      //     unit: "个人",
-      //     payment: 666,
-      //   },
-      //   {
-      //     name: ["hh","ww","ee"],
-      //     status: "已签收",
-      //     shopId: "22222222222222",
-      //     type: "个人",
-      //     unit: "个人",
-      //     payment: 666,
-      //   },
+        //   {
+        //     name: ["hh","ww","ee"],
+        //     status: "已签收",
+        //     shopId: "22222222222222",
+        //     type: "个人",
+        //     unit: "个人",
+        //     payment: 666,
+        //   },
       ],
     };
   },
-  created() {
-   this.getOrders();
-
+  async created() {
+    await this.getOrders();
+    await this.addChecked();
+    this.$data.count = this.$data.orderList.length;
   },
   methods: {
     // 获取订单
-    getOrders() {
-       this.$http
+    async getOrders() {
+      await this.$http
         .get("/order", {
           params: {
             page: 1,
-          }     
+          },
         })
         //回调函数
         .then((res) => {
-          if(!res.data.data){
-             this.$data.orderList = [];
-          }
-          // this.$data.count = res.data.data.count;
-          else {
+          if (!res.data.data) {
+            this.$data.orderList = [];
+          } else {
             this.$data.orderList = res.data.data.orders;
-          console.log("ceshi", res.data.data);
-          console.log("ceshi,shuzu ", this.$data.orderList); 
+            // this.$data.count = res.data.data.count;
           }
         })
         .catch((err) => {
           console.log(err);
         });
     },
+    // 远端修改，后重新获取
+    async delProduct() {
+      if (this.$data.checkedOrder.length !== 0) {
+        this.$data.checkall = false;
+        this.$data.checkedOrder = [];
+        this.$data.orderList.forEach(async (item) => {
+          if (item.checked === true) {
+            await this.$http
+              .get("/delOrder", {
+                params: {
+                  order_no: item.id,
+                },
+              })
+              //回调函数
+              .then((res) => {
+                if (res.data.code == 20000) {
+                  this.$message({
+                    message: "删除成功",
+                    type: "success",
+                  });
+                } else {
+                  this.$message({
+                    message: res.data.msg,
+                    type: "error",
+                  });
+                }
+              })
+              .catch((err) => {
+                this.$message({
+                  message: "未知错误!",
+                  type: "error",
+                });
+                console.log("err", err);
+              });
+          }
+        });
+        await this.getOrders();
+        await this.addChecked();
+      }
+      this.$data.count = this.$data.orderList.length;
+      this.$data.updata++;
+    },
+    //复选框相关
+    // 添加 checked属性
+    async addChecked() {
+      this.$data.orderList.forEach((item) => {
+        Object.assign(item, { checked: false });
+      });
+    },
+    // 多选
+    checkAll() {
+      // 数组为空时无法点击
+      if (this.$data.orderList.length === 0) {
+        this.$data.checkall = false;
+      }
+      // 实现全选
+      if (this.$data.checkall === true) {
+        this.$data.checkedOrder = this.$data.orderList;
+        this.$data.orderList.forEach((item) => {
+          item.checked = true;
+        });
+      }
+      // 实现反选
+      else if (this.$data.checkall === false) {
+        this.$data.checkedOrder = [];
+        this.$data.orderList.forEach((item) => {
+          item.checked = false;
+        });
+      }
+    },
+    checkOne(item) {
+      //选中时操作
+      if (item.checked === true) {
+        this.$data.checkedOrder.push(item);
+      }
+      //取消选中操作
+      else if (item.checked === false) {
+        this.$data.checkedOrder = this.$data.checkedOrder.filter((ele) => {
+          return ele.id !== item.id;
+        });
+      }
+      //取消全选状态
+      if (_this.$data.checkedOrder.length === this.$data.orderList.length) {
+        this.$data.checkall = true;
+      } else {
+        this.$data.checkall = false;
+      }
+    },
+
     // 分页
     handleSizeChange(val) {
       this.$data.pagesize = val;
@@ -131,11 +258,19 @@ export default {
       this.$data.currentPage = val;
       // console.log(`当前页: ${val}`);
     },
+    toPay(id, obj) {
+      
+      localStorage.setItem("oneOrder", JSON.stringify(obj));
+      localStorage.setItem("orderNo", id);
+      this.$router.push({
+        path: "/payment",
+      });
+    },
     toOrderInfo(id) {
       this.$router.push({
         path: "/orderInfo/" + id,
-      })
-    }
+      });
+    },
   },
 };
 </script>
@@ -143,14 +278,31 @@ export default {
 .myOrder {
   overflow: hidden;
 }
+.top {
+  width: 100%;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #eaeaec;
+  display: flex;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.deleteBtn {
+  margin: 0 48px 0 0;
+  cursor: pointer;
+  overflow: hidden;
+}
+.deleteBtn:hover {
+  color: #ff4747;
+}
+
 .title {
   font-size: 20px;
   font-family: Microsoft YaHei UI;
   font-weight: bold;
   color: #333333;
-  padding-bottom: 30px;
-  margin-bottom: 20px;
-  border-bottom: 2px solid #eaeaec;
+  margin-right: 50px;
+  margin-bottom: 30px;
 }
 /* 下为购物车样式 */
 .orderList {
@@ -160,10 +312,28 @@ export default {
 }
 /* 表头 --*/
 .listHead {
+  position: relative;
   width: 100%;
   height: 44px;
   display: flex;
   align-items: center;
+}
+.quanxuan {
+  width: 230px;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  margin: 0 0px 0 28px;
+}
+/* ！复选框 */
+.checkAll {
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+
+  margin: 0 6px 0 0px;
+  border: 1px solid #999999;
+  border-radius: 2px;
 }
 .word {
   /* width: 65px; */
@@ -186,13 +356,13 @@ export default {
 }
 ._type {
   /* margin: 0 0 0 198px; */
-/* width: 145px; */
-flex: 2;
+  /* width: 145px; */
+  flex: 2;
 }
 ._unit {
   /* margin: 0 0 0 109px; */
-/* width: 85px; */
-flex: 1;
+  /* width: 85px; */
+  flex: 1;
 }
 ._orderStatus {
   /* margin: 0 0 0 100px; */
@@ -226,40 +396,56 @@ flex: 1;
   border-radius: 10px;
   overflow: hidden;
 }
+.checkOne {
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+  border: 1px solid #999;
+  border-radius: 2px;
+}
+.radio {
+  position: absolute;
+  top: 20px;
+  left: 28px;
+  width: 18px;
+  height: 18px;
+  /* border: 1px solid #999; */
+  /* background-color: #fff; */
+  /* border-radius: 2px; */
+}
 .shopId {
   /* width: 700px; */
   flex: 1.2;
-    /* margin: 0 27px 0 52px; */
-    text-align: center;
-    word-break: break-all;
+  /* margin: 0 27px 0 52px; */
+  text-align: center;
+  word-break: break-all;
   /* overflow: hidden; */
 }
 .product {
-    flex: 2;
+  flex: 2;
   /* width: 700px; */
   height: 165px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-      word-break: break-all;
-
+  word-break: break-all;
 }
 
 .type {
-    flex: 2;
+  flex: 2;
   /* width: 110px; */
   /* margin: 0 50px 0 0; */
   text-align: center;
 }
 .unit {
-    flex: 1;
+  flex: 1;
   /* width: 165px; */
   text-align: center;
   font-weight: 600;
 }
 .orderStatus {
-    flex: 1;
+  flex: 1;
   /* width: 165px; */
   display: flex;
   justify-content: center;
@@ -269,17 +455,27 @@ flex: 1;
 }
 
 .payment {
-    flex: 1;
+  flex: 1;
   /* width: 150px; */
   text-align: center;
   font-weight: 600;
 }
-.toOrderInfo {
-  cursor: pointer;
-  position: absolute;
+.myOrder >>> .el-dropdown {
+   position: absolute;
   right: 24px;
   bottom: 30px;
+}
+.myOrder >>> .el-dropdown-link {
+    cursor: pointer;
+     
   color: #004ea2;
+}
+.toOrderInfo {
+  cursor: pointer;
+  /* position: absolute;
+  right: 24px;
+  bottom: 30px;
+  color: #004ea2; */
 }
 .toOrderInfo:hover {
   font-weight: 600;
@@ -293,7 +489,11 @@ flex: 1;
   --el-pagination-button-height: 40px;
   --el-pagination-font-type: 16px;
 }
-.myOrder /deep/ .el-pagination.is-background .el-pager li:not(.disabled).active {
+.myOrder
+  /deep/
+  .el-pagination.is-background
+  .el-pager
+  li:not(.disabled).active {
   background-color: #004ea2;
 }
 .myOrder /deep/.el-pagination.is-background .btn-next,

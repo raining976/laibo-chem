@@ -45,7 +45,7 @@ export default {
         })
         //回调函数
         .then((res) => {
-          this.$data.productList = res.data.data;
+          this.$data.productList = res.data.data.products;
         })
         .catch((err) => {
           console.log(err);

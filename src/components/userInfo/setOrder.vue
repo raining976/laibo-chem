@@ -340,45 +340,6 @@ export default {
           break;
       }
     },
-    toPay() {
-      // 判断是否选择支付方式
-      if (!this.$data.payWay) {
-        this.$message({
-          message: "尚未选择支付类型",
-          type: "error",
-        });
-      } else if (this.$data.payWay) {
-        this.$http
-          .post("/pay", {
-            order_no: this.$data.orderId,
-            type: this.$data.payWay,
-            image: "",
-          })
-          .then((res) => {
-            if (res.data.code == 20000) {
-              this.$message({
-                message: "支付成功",
-                type: "success",
-              });
-              this.$router.push({
-                path: "/payCompleted/" + this.$data.orderId,
-              });
-            } else {
-              this.$message({
-                message: res.data.msg,
-                type: "error",
-              });
-            }
-          })
-          .catch((err) => {
-            this.$message({
-              message: "未知错误!",
-              type: "error",
-            });
-            console.log("err", err);
-          });
-      }
-    },
     createOrder() {
       if (this.$data.addressId === -1) {
         this.$message({
@@ -403,8 +364,6 @@ export default {
                 type: "success",
               });
               this.$data.orderId = res.data.data.order_no;
-              // this.toPay();
-              this.func();
             } else {
               this.$message({
                 message: res.data.msg,

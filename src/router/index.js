@@ -10,6 +10,7 @@ const productInfo = () => import("../components/searchProduct/productInfo.vue");
 const userInfo = () => import("../views/userInfo.vue");
 const cart = () => import("../components/userInfo/shopCart.vue");
 const setOrder = () => import("../components/userInfo/setOrder.vue");
+const payment = () => import("../components/userInfo/payment.vue");
 const payCompleted = () => import("../components/userInfo/payCompleted.vue");
 const order = () => import("../components/userInfo/myOrder.vue");
 const orderInfo = () => import("../components/userInfo/orderInfo.vue");
@@ -112,6 +113,12 @@ const routes = [
         path: '/setOrder',
         name: 'setOrder',
         component: setOrder,
+        meta: { requiresAuth: true },
+      },
+      {
+        path: '/payment',
+        name: 'payment',
+        component: payment,
         meta: { requiresAuth: true },
       },
       {
