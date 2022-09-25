@@ -159,7 +159,7 @@ export default {
       if (this.currentIndex == -1) this.$refs.chosen.style.display = "none";
       else {
         this.$refs.chosen.style.display = "inline-block";
-        this.$refs.chosen.style.left = 120 * val + "px";
+        this.$refs.chosen.style.left = 100 * val + "px";
         this.chosenWidth = this.$refs.nav_li[val].offsetWidth + "px";
       }
     },
@@ -320,7 +320,7 @@ export default {
   display: flex;
   align-items: center;
   cursor: pointer;
-  width: 120px;
+  width: 100px;
 }
 .nav .hello {
   position: relative;
