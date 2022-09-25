@@ -53,7 +53,7 @@ export default {
       newsBox: [
         {
           type: this.$t("home.companyNews"),
-          pic: require("../../assets/p7.png"),
+          pic: require("../../assets/t5.png"),
           newsList: [
             // {
             //   newsTitle: "莱博斯威2022春节发货通知",
@@ -63,7 +63,7 @@ export default {
         },
         {
           type: this.$t("home.technicalArticle"),
-          pic: require("../../assets/p7.png"),
+          pic: require("../../assets/t5.png"),
           newsList: [
             // {
             //   newsTitle: "莱博斯威2022春节发货通知",

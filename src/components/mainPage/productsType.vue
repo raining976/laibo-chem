@@ -25,9 +25,9 @@ export default {
       // 1 0 2
       type: "",
       typeList: [
-        { img: require("../../assets/p1.png"), name: "低值易耗品" },
+        { img: require("../../assets/111.jpg"), name: "染料" },
         { img: require("../../assets/p2.png"), name: "中间品" },
-        { img: require("../../assets/p3.png"), name: "染料" },
+        { img: require("../../assets/p1.png"), name: "低值易耗品" },
       ],
     };
   },
@@ -48,8 +48,8 @@ export default {
         path: "/searchResult",
         query: {
           whichType: this.$data.type,
-        }
-      })
+        },
+      });
     },
   },
 };
