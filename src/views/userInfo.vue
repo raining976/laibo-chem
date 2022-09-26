@@ -9,6 +9,7 @@
               v-for="(item, index) in menuList"
               :key="index"
               :class="{ choose: currentIdx == index }"
+              
               @click="chooseThis(index)"
             >
               {{ item.selectName }}

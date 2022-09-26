@@ -76,9 +76,13 @@
             <div class="price">{{ item0.price }}</div>
             <div class="count">
               <el-input-number
+              type="number"
                 v-model="item0.count"
                 @click="numChange(item0)"
+  
                 :min="1"
+                @keydown="channelInputLimit"
+                
               ></el-input-number>
             </div>
             <!-- 关于金额的计算方式 -->
@@ -216,8 +220,10 @@ export default {
           });
           next();
         });
+    }else{
+      next()
     }
-    next();
+
   },
   methods: {
     // setCommodityBox(el) {
@@ -355,10 +361,12 @@ export default {
           }
         });
         await this.getCart();
+        this.$data.updata++;
         await this.addChecked();
+        this.$data.count = this.$data.commodityList.length;
+      
       }
-      this.$data.count = this.$data.commodityList.length;
-      this.$data.updata++;
+      
     },
     //复选框相关
     // 添加 checked属性
@@ -419,6 +427,16 @@ export default {
     // handleChange() {
 
     // },
+    //对数字输入框进行限制
+ channelInputLimit (e) {
+  let key = e.key
+  // 不允许输入'e'和'.'
+  if (key === 'e' || key === '.') {
+    e.returnValue = false
+    return false;
+  }
+  return true;
+},
     numChange(handler) {
       if (handler.checked === true) {
         this.$data.checkedCommodities.forEach((item) => {

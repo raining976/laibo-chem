@@ -153,7 +153,7 @@
         <div
           class="type"
           :class="{ type_checked: geren == true }"
-          @click="payType('geren')"
+          @click="payType('pic')"
         >
           <div class="typeSign">
             <img src="../../assets/gerenzhifu.png" alt="" />
@@ -171,14 +171,15 @@
           <div class="typeName">{{ $t("cart.bills") + $t("cart.firm") }}</div>
         </div>
       </div>
-      <div>
+      <div class="upload" v-if="showBills">
         <el-upload
           class="upload-demo"
+          ref="upload"
           drag
-          action=""          
+          action=""
           :multiple="false"
           accept=".jpeg, .jpg, .png"
-          :before-upload="beforeUpload"
+          :on-change="onUploadChange"
           :before-remove="beforeRemove"
           :on-exceed="handleExceed"
           :file-list="fileList"
@@ -186,16 +187,17 @@
           :auto-upload="false"
           :limit="1"
         >
+          <!-- 要改下面 -->
           <el-icon class="el-icon--upload"><upload-filled /></el-icon>
           <div class="el-upload__text">
-            Drop file here or <em>click to upload</em>
+            将文件拖到此处，或 <em>点击选取文件</em>
           </div>
           <template #tip>
-            <div class="el-upload__tip">
-              jpg/png files with a size less than 500kb
-            </div>
+            <div class="el-upload__tip">只能选取jpg/png文件，且不超过5M</div>
           </template>
         </el-upload>
+        <!--  -->
+        <el-button @click="submitForm()" >提交到服务器</el-button>
       </div>
     </div>
     <!-- 以下为底部 -->
@@ -204,7 +206,7 @@
         {{ $t("cart.total") }}&nbsp;&nbsp;&nbsp;
         <div>{{ allmoney }}</div>
       </div>
-      <div class="pay" @click="pay()">{{ $t("cart.settlement") }}</div>
+      <el-button :disabled="showBills == true? true:false" class="pay" @click="pay()">{{ submitBtn }}</el-button>
     </div>
   </div>
 </template>
@@ -242,6 +244,10 @@ export default {
         count: 0,
       }, //单个货物
       fileList: [], // 上传的图片数组
+      isLt2k: "", // 上传文件大小判断
+      isImg: "",
+      submitBtn: this.$t("cart.settlement"),
+      showBills: false,
       orderBox: [], //订单汇总传参
       addresses: [], // 地址列表
       orderList: [],
@@ -382,59 +388,123 @@ export default {
       this.$data.addressId = code;
     },
     // 文件上传相关--------------
-     //上传之前
-       beforeUpload(file) {       
-     var FileExt = file.name.replace(/.+\./, "");       
-      if (['jpg','png'].indexOf(FileExt.toLowerCase()) === -1){            
-        this.$message({ 
-            type: 'warning', 
-            message: '请上传后缀名为jpg或png的附件！' 
-         });                
-        return false;       
-      }      
-      this.isLt2k = file.size / 1024  < 200?'1':'0';        
-    if(this.isLt2k==='0') {            
-        this.$message({                
-            message: '上传文件大小不能超过200k!',                
-            type: 'error'            
-        });        
-    }        
-     return this.isLt2k==='1'?true: false;
-},
-        // 上传成功
-        upSuccess(res) {
-            this.$message({
-                type: 'success',
-                message: '上传成功',
-                showClose: true,
-                offset: 80,
+    //上传之前
+    onUploadChange(file) {
+      var FileExt = file.name.replace(/.+\./, "");
+      if (["jpg", "png"].indexOf(FileExt.toLowerCase()) === -1) {
+        this.isImg = "0";
+        this.$message({
+          type: "warning",
+          message: "请上传后缀名为jpg、png的附件！",
+        });
+        file.status = "error";
+      }
+      this.isLt2k = file.size / 1024 / 1024 < 5 ? "1" : "0";
+      if (this.isLt2k === "0") {
+        this.$message({
+          message: "上传文件大小不能超过200k!",
+          type: "error",
+        });
+        file.status = "error";
+      }
+      return this.isImg === "1"
+        ? true
+        : false && this.isLt2k === "1"
+        ? true
+        : false;
+    },
+    // 上传
+    submitForm() {
+      console.log("ff22", this.$refs.upload.uploadFiles.length);
+      if(this.$refs.upload.uploadFiles.length !== 0) {
+      let file = this.$refs.upload.uploadFiles.pop().raw; //这里获取上传的文件对象
+      console.log("ff", file);
+      let formData = new FormData();
+      formData.append("order_no", localStorage.getItem("orderNo"));
+      formData.append("type", this.$data.payWay);
+      formData.append("image", file);
+      console.log(formData.get("type"));
+      // this.$axios.post("/upload", formData).then((res) => {
+      //   console.log(res.data);
+      // }); {
+      if (this.$data.payWay) {
+        this.$http({
+            headers: { "Content-Type": "multipart/form-data" },
+            method: 'post',
+            url: "/pay",
+            data: formData,
             })
-        },
-        // 上传失败
-        upError() {
-            this.$message({
-                type: 'error',
-                message: '上传失败',
-                showClose: true,
-                offset: 80,
-            });
-        },
-       //上传的文件改变时（覆盖原来的文件）
-        upChange(file, fileList) {
-            if (fileList.length > 0) {
-                this.fileList = [fileList[fileList.length - 1]];
+          .then((res) => {
+            if (res.data.code == 20000) {
+              this.$message({
+                message: "支付成功",
+                type: "success",
+              });
+              // this.$router.push({
+              //   path: "/payCompleted/" + this.$data.orderId,
+              // });
+            } else {
+              this.$message({
+                message: res.data.msg,
+                type: "error",
+              });
             }
-        },
-        // 移除列表
-        upRemve(file) {
-            console.log(file)
-        },
-     handleExceed(files, fileList) {
-        this.$message.warning(`当前限制选择 1 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
-      },
-      beforeRemove(file, fileList) {
-        return this.$confirm(`确定移除 ${ file.name }？`);
-      },
+          })
+          .catch((err) => {
+            this.$message({
+              message: "未知错误!",
+              type: "error",
+            });
+            console.log("err", err);
+          });
+      }
+      } else {
+        this.$message({
+          message: "请选取单据",
+          type: "error",
+        });
+      }
+
+    },
+    // 上传成功
+    upSuccess(res) {
+      this.$message({
+        type: "success",
+        message: "上传成功",
+        showClose: true,
+        offset: 80,
+      });
+    },
+    // 上传失败
+    upError() {
+      this.$message({
+        type: "error",
+        message: "上传失败",
+        showClose: true,
+        offset: 80,
+      });
+    },
+    //上传的文件改变时（覆盖原来的文件）
+    upChange(file, fileList) {
+      if (fileList.length > 0) {
+        this.fileList = [fileList[fileList.length - 1]];
+      }
+    },
+    // 移除列表
+    upRemove(file) {
+      console.log(file);
+    },
+    handleExceed(files, fileList) {
+      this.$message.warning(`当前限制选择 1 个文件`);
+      // ，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件
+    },
+    beforeRemove(file, fileList) {
+      return this.$confirm(`确定移除${file.name}?`, "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      });
+    },
     // 分页---
     handleSizeChange(val) {
       this.$data.pagesize = val;
@@ -453,24 +523,32 @@ export default {
           this.$data.zhifubao = false;
           this.$data.geren = false;
           this.$data.gongsi = false;
+          this.$data.showBills = false;
+          this.$data.submitBtn = this.$t("cart.settlement");
           break;
         case "alipay":
           this.$data.wechar = false;
           this.$data.zhifubao = true;
           this.$data.geren = false;
           this.$data.gongsi = false;
+          this.$data.showBills = false;
+          this.$data.submitBtn = this.$t("cart.settlement");
           break;
-        case "geren":
+        case "pic":
           this.$data.wechar = false;
           this.$data.zhifubao = false;
           this.$data.geren = true;
           this.$data.gongsi = false;
+          this.$data.showBills = true;
+          this.$data.submitBtn = "---";
           break;
         case "gongsi":
           this.$data.wechar = false;
           this.$data.zhifubao = false;
           this.$data.geren = false;
           this.$data.gongsi = true;
+          this.$data.showBills = true;
+          this.$data.submitBtn = "---";
           break;
       }
     },
@@ -487,7 +565,7 @@ export default {
           .post("/pay", {
             order_no: localStorage.getItem("orderNo"),
             type: this.$data.payWay,
-            image: "",
+            // image: "",
           })
           .then((res) => {
             if (res.data.code == 20000) {
@@ -495,6 +573,7 @@ export default {
                 message: "支付成功",
                 type: "success",
               });
+              window.location.href = res.data.data.url;
               this.$router.push({
                 path: "/payCompleted/" + this.$data.orderId,
               });
@@ -891,6 +970,30 @@ export default {
   font-weight: 400;
   color: #4a4a4a;
   line-height: 16px;
+}
+/* 上传文件相关 */
+.upload >>> .el-upload-dragger {
+  width: 700px;
+  height: 80px;
+}
+.upload >>> .el-upload-dragger .el-upload__text em {
+  color: var(--color);
+}
+.upload >>> .el-upload-dragger:hover {
+  color: var(--color);
+}
+.upload >>> .el-upload-list__item {
+  width: 70%;
+}
+.upload >>> .is-error .el-upload-list__item-name {
+  color: red !important;
+}
+.upload >>> .el-button {
+  margin-top: 20px;
+}
+.upload >>> .el-button:focus, .el-button:hover {
+  background-color: var(--color);
+  color: #fff;
 }
 /* 以下为底部 */
 .footer {

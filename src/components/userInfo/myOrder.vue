@@ -1,7 +1,7 @@
 // 我的订单部分
 //createDate:2022-07-17
 <template>
-  <div class="myOrder" :key="updata">
+  <div class="myOrder" :key="reload">
     <div class="top">
       <div class="title">
         {{ $t("base.order") + "( " + $t("cart.total") + " : " + count + ")" }}
@@ -10,8 +10,8 @@
     </div>
     <!-- 以下为订单 -->
     <div class="orderList">
-      <div class="listHead">
-        <div class="quanxuan">
+      <!-- 全选 -->
+       <div class="quanxuan">
           <input
             class="checkAll"
             id="checkall"
@@ -22,6 +22,7 @@
           />
           <label class="word" for="checkAll">{{ $t("cart.allCheck") }} </label>
         </div>
+      <div class="listHead">    
         <!--  -->
         <div class="_shopId word">{{ $t("order.num") }}</div>
         <div class="_product word">{{ $t("order.product") }}</div>
@@ -115,10 +116,9 @@ export default {
       pagesize: 3, // 每页显示多少条
       currentPage: 1, // 当前页数
       pagerCount: 5, //五个以上加省略号
-      updata: 0, // 更新页面
+      reload: 0, // 更新页面
       //
       count: 0,
-      updata: 0, // 更新页面
       checkall: false,
       checkedOrder: [], //复选框有关 存放选择商品
       orderList: [
@@ -197,10 +197,12 @@ export default {
           }
         });
         await this.getOrders();
+        this.$data.reload ++;
         await this.addChecked();
+        this.$data.count = this.$data.orderList.length;
+      
       }
-      this.$data.count = this.$data.orderList.length;
-      this.$data.updata++;
+      
     },
     //复选框相关
     // 添加 checked属性
@@ -280,7 +282,7 @@ export default {
 }
 .top {
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom:20px;
   border-bottom: 2px solid #eaeaec;
   display: flex;
   justify-content: space-between;
@@ -306,20 +308,23 @@ export default {
 }
 /* 下为购物车样式 */
 .orderList {
+  position: relative;
   width: 100%;
   min-height: 370px;
   overflow: hidden;
 }
 /* 表头 --*/
 .listHead {
-  position: relative;
+  
   width: 100%;
   height: 44px;
+  margin: 20px 0 0;
   display: flex;
   align-items: center;
 }
 .quanxuan {
   width: 230px;
+    top: 5px;
   position: absolute;
   display: flex;
   align-items: center;
