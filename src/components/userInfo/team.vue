@@ -21,12 +21,14 @@
           effect="light"
           popper-class="editTip"
         >
-          <i
-            class="el-icon-bell notice set"
-            @click="isNoticeShow = !isNoticeShow"
-          ></i>
+          <el-badge :value="noticeLength" :max="10" class="item">
+            <i
+              class="el-icon-bell notice set"
+              @click="isNoticeShow = !isNoticeShow"
+            ></i>
+          </el-badge>
         </el-tooltip>
-        <notice v-if="isNoticeShow" ref="notice" :key="noticeKey" />
+        <notice v-show="isNoticeShow" ref="notice" :key="noticeKey" />
       </div>
     </div>
     <div class="content">
@@ -51,13 +53,13 @@ export default {
       noticeKey: 0, // notice刷新key
       notices: [], // 申请加入团队的通知列表
       teamId: -1, // 团队id
+      noticeLength: 0, // 通知列表长度
     };
   },
   mounted() {
     this.getUserInfo();
-   
     setTimeout(() => {
-      if (this.in_team!=0) {
+      if (this.in_team != 0) {
         this.getTeamInfo();
       }
     }, 50);

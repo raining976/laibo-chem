@@ -40,15 +40,10 @@ export default {
       notices: [],
     };
   },
-  mounted(){
-    this.getNotice()
+  mounted() {
+    this.getNotice();
   },
   methods: {
-    allRead() {
-      for (let i = 0; i < this.notices.length; i++) {
-        this.notices[i].isDot = false;
-      }
-    },
     // 处理申请加入团队
     handleApplication(flag, idx) {
       if (flag == 0) {
@@ -69,6 +64,9 @@ export default {
               message: "处理成功",
               type: "success",
             });
+            // if(flag == 1){
+            //  调用更新成员列表的函数
+            // }
             this.getNotice();
           } else {
             this.$message({
@@ -110,6 +108,7 @@ export default {
           if (res.data.code == 20000) {
             if (res.data.data.acceptList) {
               this.notices = res.data.data.acceptList;
+              this.$parent.noticeLength = res.data.data.acceptList.length;
             } else this.notices = [];
           } else {
             console.log("res.data.msg", res.data.msg);
