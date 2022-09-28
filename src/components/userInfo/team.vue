@@ -21,7 +21,7 @@
           effect="light"
           popper-class="editTip"
         >
-          <el-badge :value="noticeLength" :max="10" class="item">
+          <el-badge :value="noticeLength" :max="10" :hidden="noticeLength == 0">
             <i
               class="el-icon-bell notice set"
               @click="isNoticeShow = !isNoticeShow"
