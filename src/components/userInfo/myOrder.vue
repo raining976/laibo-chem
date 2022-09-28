@@ -6,7 +6,18 @@
       <div class="title">
         {{ $t("base.order") + "( " + $t("cart.total") + " : " + count + ")" }}
       </div>
-      <div class="deleteBtn" @click="delProduct()">{{ $t("base.dele") }}</div>
+      <div class="deleteBtn" >
+        <el-tooltip
+                  effect="light"
+                  content="删除选中商品"
+                  placement="top"
+                >
+                  <i
+                    class="el-icon-delete-solid"
+                   @click="delProduct()"
+                  ></i>
+                </el-tooltip>
+      </div>
     </div>
     <!-- 以下为订单 -->
     <div class="orderList">
@@ -63,7 +74,7 @@
           <div class="unit">{{ item0.team }}</div>
           <div class="orderStatus">{{ item0.status }}</div>
           <!-- 关于金额的计算方式 ？-->
-          <div class="payment">{{ item0.payment }}</div>
+          <div class="payment">{{ currency(item0.payment).format() }}</div>
           <!--  折叠框 -->
           <el-dropdown>
             <span class="el-dropdown-link">
@@ -74,7 +85,7 @@
             </span>
             <template #dropdown>
               <el-dropdown-menu>
-                <el-dropdown-item>
+                <el-dropdown-item :disabled="item0.status == '待付款' ?false:true">
                   <div class="toOrderInfo" @click="toPay(item0.id, item0)">
                    继续支付
                   </div>

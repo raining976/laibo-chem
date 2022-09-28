@@ -6,12 +6,12 @@
       <div class="title">{{$t('order.detail')}}</div>
       <div class="Btn">
       <div class="returnBtn" @click="toMyOrder()">{{$t('base.back')}}</div>
-      <div class="deleteBtn" @click="func()">{{$t('base.dele') + $t('base.order')}}</div>
+      <!-- <div class="deleteBtn" @click="func()">{{$t('base.dele') + $t('base.order')}}</div> -->
       </div>
       
     </div>
     <div class="orderInfo">
-      <div class="detail"><strong>{{$t('order.num')+'：'}}</strong>{{}}</div>
+      <div class="detail"><strong>{{$t('order.num')+'：'}}</strong>{{orderId}}</div>
       <div class="detail"><strong>{{$t('order.logistic')+'：'}}</strong>{{}}</div>
       <div class="detail"><strong>{{$t('order.shipping')+'：'}}</strong>{{}}</div>
       <div class="detail"><strong>{{$t('order.receive')+'：'}}</strong>{{}}</div>
@@ -69,13 +69,13 @@
               <div class="infoWord">{{$t('order.casNum')+'：'}}{{ item0.shopCart_id }}</div>
             </div>
           </div>
-          <div class="size">{{ item0.guige }}</div>
-          <div class="price">{{ }}</div>
+          <div class="size">{{ item0.product.guige }}</div>
+          <div class="price">{{ currency(item0.price).format() }}</div>
           <div class="count">
-            <div class="num">{{num}}</div>
+            <div class="num">{{ item0.count }}</div>
           </div>
           <!-- 关于金额的计算方式  num * price -->
-          <div class="payment">{{ item0.price }}</div>
+          <div class="payment">{{ currency(item0.price * item0.count).format() }}</div>
         </div>
       </div>
       <div class="pagination">
@@ -105,6 +105,7 @@ export default {
       currentPage: 1, // 当前页数
       pagerCount: 5, //五个以上加省略号
       // 时间线
+      orderId: "",
       color: "#004ea2",
       size: "large",
       activities: [
@@ -165,6 +166,7 @@ export default {
              this.$data.commodityList = [];
           }
           else {
+          this.$data.orderId = this.$route.params.id;
           this.$data.commodityList = res.data.data.product_params_count;
           // console.log("ceshi", res.data.data);
           // console.log("ceshi,shuzu ", this.$data.commodityList);

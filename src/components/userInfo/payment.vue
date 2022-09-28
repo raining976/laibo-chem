@@ -59,7 +59,7 @@
       </div>
 
       <div class="freight">
-        {{ $t("cart.fright") + "：" }}<strong>{{ freight }}</strong>
+        {{ $t("cart.fright") + "：" }}<strong>{{ currency(orderList.post_fee).format() }}</strong>
       </div>
     </div>
     <!-- 商品统计 -->
@@ -204,7 +204,7 @@
     <div class="footer">
       <div class="allMoney">
         {{ $t("cart.total") }}&nbsp;&nbsp;&nbsp;
-        <div>{{ allmoney }}</div>
+        <div>{{ currency(allmoney).format() }}</div>
       </div>
       <el-button :disabled="showBills == true? true:false" class="pay" @click="pay()">{{ submitBtn }}</el-button>
     </div>
@@ -248,7 +248,7 @@ export default {
       isImg: "",
       submitBtn: this.$t("cart.settlement"),
       showBills: false,
-      orderBox: [], //订单汇总传参
+      orderBox: [], //订单汇总传参--按照后端格式
       addresses: [], // 地址列表
       orderList: [],
       orderInfo: [
@@ -298,10 +298,12 @@ export default {
   computed: {
     allmoney() {
       let _allmoney = this.$data.allmoney;
-      _allmoney += this.$data.freight;
-      this.$data.orderInfo.forEach((item) => {
-        _allmoney += item.count * item.price;
-      });
+      // _allmoney += this.$data.orderList.post_fee;
+      // this.$data.orderList.forEach((item) => {
+      //   _allmoney += item.payment;
+            
+      // });
+       _allmoney += this.$data.orderList.payment;
       this.$data.allmoney = _allmoney;
       return _allmoney;
     },

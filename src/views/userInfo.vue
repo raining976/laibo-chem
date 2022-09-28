@@ -46,7 +46,6 @@ export default {
   created() {
     let quanxian = localStorage.getItem("privilege");
     // 0成员 1普通管理员 2群主？
-    console.log("ddd",quanxian,localStorage.getItem("privilege"));
     if( quanxian === "1" || quanxian === "2") {
         this.menuList.push(this.addFun);
     }

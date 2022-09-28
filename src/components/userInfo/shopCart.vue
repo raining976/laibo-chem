@@ -10,7 +10,18 @@
           $t("userMenu.cart") + "( " + $t("cart.total") + " : " + count + ")"
         }}
       </div>
-      <div class="deleteBtn" @click="delProduct()">{{ $t("base.dele") }}</div>
+      <div class="deleteBtn" >
+        <el-tooltip
+                  effect="light"
+                  content="删除选中商品"
+                  placement="top"
+                >
+                  <i
+                    class="el-icon-delete-solid"
+                   @click="delProduct()"
+                  ></i>
+                </el-tooltip>
+      </div>
     </div>
     <!-- 以下是购物车信息 -->
     <div class="shopCart">
@@ -73,20 +84,24 @@
               </div>
             </div>
             <div class="size">{{ item0.guige }}</div>
-            <div class="price">{{ item0.price }}</div>
+            <div class="price">{{ currency(item0.price).format() }}</div>
             <div class="count">
               <el-input-number
               type="number"
                 v-model="item0.count"
                 @click="numChange(item0)"
-  
+                @blur="numCheck(item0)"
                 :min="1"
                 @keydown="channelInputLimit"
-                
+                 @input="
+                    data.release_count = String(data.release_count)
+                      .replace(/[^\d]/g, '')
+                      .replace(/^0{1,}/g, '')
+                  "
               ></el-input-number>
             </div>
             <!-- 关于金额的计算方式 -->
-            <div class="payment">{{ item0.price * item0.count }}</div>
+            <div class="payment">{{ currency(item0.price * item0.count).format() }}</div>
           </div>
         </div>
       </div>
@@ -115,7 +130,7 @@
       </div>
       <div class="allMoney">
         {{ $t("cart.addUp") }}&nbsp;&nbsp;
-        <div>{{ _money }}</div>
+        <div>{{ currency(_money).format() }}</div>
       </div>
       <div class="toPay" @click="toPay()">
         {{ $t("cart.to") + $t("cart.settlement") }}
@@ -198,7 +213,8 @@ export default {
       if (item.checked === false) {
         if (item.count !== this.oldList[index].count) {
           this.$data.isChange = true;
-          return;
+          return; 
+          // 此处为失效的
         }
       }
     });
@@ -214,10 +230,10 @@ export default {
            next();
         })
         .catch(() => {
-          this.$message({
-            type: "info",
-            message: "已取消保存更改",
-          });
+          // this.$message({
+          //   type: "info",
+          //   message: "已取消保存更改",
+          // });
           next();
         });
     }else{
@@ -438,11 +454,17 @@ export default {
   return true;
 },
     numChange(handler) {
+      console.log(handler.count)
       if (handler.checked === true) {
         this.$data.checkedCommodities.forEach((item) => {
           if (item.name === handler.name) item.count = handler.count;
         });
       }
+    },
+    numCheck(obj) {
+      console.log("fff",obj.count)
+if(obj.count === NaN||obj.count === undefined )obj.count = 1;
+console.log("fff",obj.count)
     },
     // 分页
     handleSizeChange(val) {

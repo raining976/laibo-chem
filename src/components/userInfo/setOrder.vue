@@ -86,7 +86,7 @@
               <img src="" alt="" />
             </div>
             <div class="infoBox">
-              <div class="name_zh" @click="toProductInfo()">
+              <div class="name_zh" @click="toProductInfo(item0.product_id)">
                 {{ item0.name }}
               </div>
               <div class="infoWord">
@@ -98,12 +98,12 @@
             </div>
           </div>
           <div class="size">{{ item0.guige }}</div>
-          <div class="price">{{ item0.price }}</div>
+          <div class="price">{{ currency(item0.price).format() }}</div>
           <div class="count">
             <div class="num">{{ item0.count }}</div>
           </div>
           <!-- 关于金额的计算方式 -->
-          <div class="payment">{{ item0.count * item0.price }}</div>
+          <div class="payment">{{ currency(item0.count * item0.price).format() }}</div>
         </div>
       </div>
       <div class="pagination">
@@ -125,7 +125,7 @@
     <div class="footer">
       <div class="allMoney">
         {{ $t("cart.total") }}&nbsp;&nbsp;&nbsp;
-        <div>{{ allmoney }}</div>
+        <div>{{ currency(allmoney).format() }}</div>
       </div>
       <div class="pay" @click="createOrder()">{{ $t("cart.setOrder") }}</div>
     </div>
@@ -240,9 +240,12 @@ export default {
         path: "cart",
       });
     },
-    toProductInfo() {
+    toProductInfo(code) {
       this.$router.push({
         path: "/productInfo",
+         query: {
+            id: code,
+           }
       });
     },
     // 修改地址------------------
