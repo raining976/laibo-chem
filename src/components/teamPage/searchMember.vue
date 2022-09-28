@@ -26,47 +26,40 @@
           <span class="email">{{ $t("base.email") }}</span>
           <span class="phone">{{ $t("base.phone") }}</span>
           <span class="privilege">{{ $t("team.privilege") }}</span>
-          <span class="operation">{{ $t("base.action") }}</span>
+          <span class="operation" v-if="myPrivilege == 1 || myPrivilege == 2">{{
+            $t("base.action")
+          }}</span>
         </li>
-        <li class="eachLi" v-for="(item, index) in memberList" :key="index">
+        <li class="eachLi listContent" v-for="(item, index) in memberList" :key="index">
           <span class="name">{{ item.name }}</span>
           <span class="email">{{ item.email }}</span>
           <span class="phone">{{ item.phone }}</span>
           <span class="privilege">{{ item.privilegeText }}</span>
-          <!-- <span class="operation">{{ $t("base.dele") }}</span> -->
-          <span class="operation">
-            <el-dropdown>
-              <el-button
-                :disabled="
-                  myPrivilege == 0 ||
-                  item.privilege == 2 ||
-                  !myPrivilege == 2 ||
-                  !myPrivilege == 1
-                "
-              >
-                处理
-              </el-button>
-              <template #dropdown>
-                <el-dropdown-menu>
-                  <el-dropdown-item
-                    :disabled="item.privilege == 1"
-                    @click="setAdminOpen(index)"
-                    >提拔为管理员</el-dropdown-item
-                  >
-                  <el-dropdown-item
-                    :disabled="item.privilege == 0"
-                    @click="delAdminOpen(index)"
-                    >降为普通成员</el-dropdown-item
-                  >
-                  <el-dropdown-item
-                    divided
-                    style="color: #bf0300"
-                    @click="delOpen(index)"
-                    >删除该成员</el-dropdown-item
-                  >
-                </el-dropdown-menu>
-              </template>
-            </el-dropdown>
+          <span class="operation" v-if="myPrivilege == 1 || myPrivilege == 2">
+            <i class="blank" v-if="item.privilege == 2"></i>
+            <img
+              src="../../assets/adminPlus.png"
+              class="handleBtn"
+              @click="setAdminOpen(index)"
+              v-if="item.privilege == 0"
+            />
+            <img
+              src="../../assets/adminMinus.png"
+              class="handleBtn"
+              @click="delAdminOpen(index)"
+              v-if="item.privilege == 1"
+              alt=""
+            />
+            <i
+              class="el-icon-delete delMember"
+              style="color: #bf0300; cursor: pointer"
+              v-if="
+                item.privilege != 2 &&
+                (item.privilege == 1 || item.privilege == 0)
+              "
+              v-show="myPrivilege == 1 || myPrivilege == 2"
+              @click="delOpen(index)"
+            ></i>
           </span>
         </li>
       </ul>
@@ -404,13 +397,15 @@ export default {
 };
 </script>
 <style>
-/* .msgBox {
-  width: 630px;
-  height: 200px;
+.searchMember .delMember {
+  transform: scale(2);
+  transform-origin: center;
 }
-.msgBox > div {
-  
-} */
+.searchMember .el-button:focus,
+.el-button:hover {
+  color: var(--color);
+  font-weight: 600;
+}
 </style>
 <style scoped>
 .searchBox {
@@ -423,7 +418,7 @@ export default {
   margin-right: 50px;
   border-bottom: 2px solid #eaeaec;
 }
-.searchBox > div{
+.searchBox > div {
   margin-left: 20px;
 }
 .tag {
@@ -470,6 +465,10 @@ input {
   border-radius: 5px;
   border-bottom: 1px solid #eaeaec;
   padding-left: 30px;
+  transition: 0.3s;
+}
+.eachLi.listContent:hover{
+  background: #f6f7f7;
 }
 .eachLi span {
   font-size: 16px;
@@ -493,15 +492,14 @@ input {
 .eachLi .name,
 .eachLi .privilege,
 .eachLi .operation {
-  flex: 0.5;
+  flex: 0.8;
 }
 
 .eachLi .operation {
+  display: flex;
+  align-items: center;
   font-size: 16px;
   font-family: Microsoft YaHei UI;
-  font-weight: 600;
-  color: var(--color);
-  cursor: pointer;
 }
 .listHead .operation {
   font-size: 18px;
@@ -509,6 +507,18 @@ input {
   font-weight: 600;
   color: #333333;
   cursor: initial;
+  text-align: center;
+}
+.eachLi .operation .handleBtn {
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  margin-right: 15px;
+}
+.blank {
+  display: inline-block;
+  width: 126px;
+  margin-right: 15px;
 }
 .searchMember .layPage {
   display: flex;
