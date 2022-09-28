@@ -48,7 +48,18 @@
 export default {
   name: "userInfoChange",
   data() {
-    var checkAge = (rule, value, callback) => {};
+    var checkPhone = (rule, value, callback) => {
+      if (!value) {
+        return callback(
+          new Error(this.$t("form.enter") + this.$t("base.phone"))
+        );
+      }
+      var pattern =
+        /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/;
+      if (!pattern.test(value)) {
+        return callback(new Error("手机号格式错误"));
+      }
+    };
     return {
       initName: "", // 原来的名字
       initPhone: "", // 原来的电话
@@ -70,8 +81,7 @@ export default {
         ],
         phone: [
           {
-            required: true,
-            message: this.$t("form.enter") + this.$t("base.phone"),
+            validator: checkPhone,
             trigger: "blur",
           },
         ],
@@ -99,14 +109,10 @@ export default {
       )
         .then(() => {
           this.postUserInfo();
-          next()
+          next();
         })
-        .catch((action) => {
-          this.$message({
-            type: "info",
-            message:
-              action === "cancel" ? "放弃保存并离开页面" : "停留在当前页面",
-          });
+        .catch(() => {
+          next();
         });
     } else {
       next();
@@ -162,6 +168,7 @@ export default {
               type: "success",
             });
             this.getUserInfo();
+            this.$root.key++;
           } else {
             this.$message({
               message: res.data.msg,
