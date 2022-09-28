@@ -37,7 +37,7 @@
             {{ $t("base.get") + $t("register.verfiCode") }}
           </div>
           <div class="getVerfiBtn" v-show="waitTimerShow">
-            {{ waitTimer }}
+            {{ waitTimer + "s"}}
           </div>
         </el-form-item>
         <!-- /验证码 -->
@@ -266,7 +266,7 @@ export default {
     },
     // 发送验证码倒计时
     verfi_timer() {
-      const TIME_COUNT = 10;
+      const TIME_COUNT = 120;
       this.waitTimer = TIME_COUNT;
       this.waitTimerShow = true;
       this.myTimer = setInterval(() => {
