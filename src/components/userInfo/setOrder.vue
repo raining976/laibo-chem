@@ -4,7 +4,7 @@
     <!-- 收获地址 -->
     <div class="amount">
       <div class="top">
-        <div class="title">{{ $t("cart.settlement") }}</div>
+        <!-- <div class="title">{{ $t("cart.settlement") }}</div> -->
         <div class="returnBtn" @click="toShopCart()">{{ $t("base.back") }}</div>
       </div>
 
@@ -28,7 +28,7 @@
               <p class="address">
                 {{ $t("base.address") }}&nbsp;:&nbsp;{{ address.address }}
               </p>
-              <div class="btnBox">
+              <!-- <div class="btnBox">
                 <div class="deleBtn icon_btn">
                   <el-tooltip
                     class="item"
@@ -52,7 +52,7 @@
                     <i class="el-icon-edit" @click="editAddress(index)"></i>
                   </el-tooltip>
                 </div>
-              </div>
+              </div> -->
             </li>
           </ul>
         </div>
@@ -405,7 +405,7 @@ export default {
   margin: 0 48px 0 0;
   height: 20px;
   line-height: 20px;
-  font-size: 16px;
+  font-size: 20px;
   margin-bottom: 30px;
   cursor: pointer;
   overflow: hidden;
@@ -516,7 +516,7 @@ export default {
   color: #004ea2;
   line-height: 18px;
   padding-bottom: 30px;
-  border-bottom: 2px solid #eaeaec;
+  /* border-bottom: 2px solid #eaeaec; */
   margin: 0 0 15px 0;
   overflow: hidden;
 }

@@ -67,8 +67,8 @@
           <div class="shopId">
             {{ item0.id }}
           </div>
-          <div class="product">
-            <div class="productName" title="">{{ name }}1111&nbsp;</div>
+          <div class="product" v-for="(product, index) in item0.product" :key="index">
+            <div class="productName" title="product.name">{{ product.name }}&nbsp;</div>
           </div>
           <div class="type">{{ item0.type }}</div>
           <div class="unit">{{ item0.team }}</div>
@@ -85,13 +85,13 @@
             </span>
             <template #dropdown>
               <el-dropdown-menu>
-                <el-dropdown-item :disabled="item0.status == '待付款' ?false:true">
-                  <div class="toOrderInfo" @click="toPay(item0.id, item0)">
+                <el-dropdown-item :disabled="item0.status == '待付款'? false:true" @click="toPay(item0.id, item0)">
+                  <div class="toOrderInfo">
                    继续支付
                   </div>
                 </el-dropdown-item>
-                <el-dropdown-item>
-                  <div class="toOrderInfo" @click="toOrderInfo(item0.id)">
+                <el-dropdown-item @click="toOrderInfo(item0.id)">
+                  <div class="toOrderInfo">
                     {{ $t("order.checkDetail") }}
                   </div>
                   </el-dropdown-item>
@@ -487,7 +487,7 @@ export default {
   color: #004ea2;
 }
 .toOrderInfo {
-  cursor: pointer;
+  /* cursor: pointer; */
   /* position: absolute;
   right: 24px;
   bottom: 30px;

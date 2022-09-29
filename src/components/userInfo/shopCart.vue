@@ -93,11 +93,7 @@
                 @blur="numCheck(item0)"
                 :min="1"
                 @keydown="channelInputLimit"
-                 @input="
-                    data.release_count = String(data.release_count)
-                      .replace(/[^\d]/g, '')
-                      .replace(/^0{1,}/g, '')
-                  "
+                oninput="this.value=this.value.replace(/\D/g,'')"
               ></el-input-number>
             </div>
             <!-- 关于金额的计算方式 -->
@@ -199,7 +195,6 @@ export default {
     _money() {
       let _money = 0;
       if (this.$data.checkedCommodities.length !== 0) {
-        console.log("cehsijjjj", this.$data.checkedCommodities);
         this.$data.checkedCommodities.forEach((item) => {
           _money += item.count * item.price;
         });
@@ -209,8 +204,10 @@ export default {
     },
   },
   beforeRouteLeave(to, from, next) {
+    console.log(to.name,"Fff")
     this.$data.commodityList.forEach(async (item, index) => {
-      if (item.checked === false) {
+      if (1) {
+        //取消选中的过滤
         if (item.count !== this.oldList[index].count) {
           this.$data.isChange = true;
           return; 
@@ -226,7 +223,7 @@ export default {
         center: true,
       })
         .then(() => {
-         this.saveChange();
+         this.saveChange(to.name);
            next();
         })
         .catch(() => {
@@ -289,10 +286,11 @@ export default {
       }
     },
     // 把未选择的保存
-    saveChange() {
+    saveChange(name) {
       // let isSuccess;
       this.$data.commodityList.forEach((item, index) => {
-        if (item.checked === false)
+        //取消选中的过滤
+        if (1)
           if (item.count !== this.oldList[index].count) {
             this.$http
               .post("/editCartProduct", {
@@ -302,11 +300,14 @@ export default {
               })
               //回调函数
               .then((res) => {
-                if (res.data.code == 20000) {
-                  this.$message({
+                if (res.data.code == 20000 ) {
+                  if(name !== "setOrder") {
+                        this.$message({
                     type: "success",
                     message: "保存更改成功",
                   });
+                  }
+              
                 } else {
                   isSuccess = false;
                   this.$message({
@@ -331,7 +332,7 @@ export default {
       if (localStorage.getItem("in_team") === "0") {
         this.$message({
           message: "您还未加入团队",
-          type: "error",
+          // type: "error",
         });
       } else if (localStorage.getItem("in_team") === "1") {
         if (this.$data.submitMy === 1) {
@@ -439,10 +440,6 @@ export default {
       }
     },
 
-    //商品数量调节---点击的话两个数组都会更改，但为防止意外做补充：选中后在更改数目
-    // handleChange() {
-
-    // },
     //对数字输入框进行限制
  channelInputLimit (e) {
   let key = e.key
@@ -453,6 +450,7 @@ export default {
   }
   return true;
 },
+// 将数字变化放入已选择数组
     numChange(handler) {
       console.log(handler.count)
       if (handler.checked === true) {
@@ -461,10 +459,9 @@ export default {
         });
       }
     },
+    // 防止输入框为空
     numCheck(obj) {
-      console.log("fff",obj.count)
 if(obj.count === NaN||obj.count === undefined )obj.count = 1;
-console.log("fff",obj.count)
     },
     // 分页
     handleSizeChange(val) {

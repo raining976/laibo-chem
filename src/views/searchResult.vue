@@ -37,7 +37,7 @@ export default {
   },
   data() {
     return {
-      res: "noResult",
+      res: "result",
       cate: "", // 0 1 2
       type: "", //需要判断
       isType: -1, // 判断字体加粗
@@ -171,14 +171,16 @@ export default {
 </script>
 <style scoped>
 .bg {
+  min-width: 1450px;
   width: 100%;
   display: flex;
   justify-content: center;
 }
 .solidLine {
+   min-width: 1450px;
   width: 100%;
-  height: 0.96px;
-  border-bottom: 0.96px solid #999999;
+  height: 1px;
+  border-bottom: 1px solid #999999;
   margin: 0 auto;
 }
 /* 下面是列表样式 */

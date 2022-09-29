@@ -16,7 +16,9 @@
             <!-- 以下为 -->
             <div class="oneDetail">
               <div class="detailName">{{ $t("product.casNum") }}:&nbsp;</div>
-              <div class="detailContent" :title="productData.cas">{{ productData.cas }}</div>
+              <div class="detailContent" :title="productData.cas">
+                {{ productData.cas }}
+              </div>
             </div>
 
             <div class="oneDetail">
@@ -28,7 +30,12 @@
 
             <div class="oneDetail">
               <div class="detailName">{{ $t("product.fenzishi") }}:&nbsp;</div>
-              <div class="detailContent" v-html="productData.linear_formula.replace(/(\d+)/g, '<sub>$1</sub>')" ></div>
+              <div
+                class="detailContent"
+                v-html="
+                  productData.linear_formula.replace(/(\d+)/g, '<sub>$1</sub>')
+                "
+              ></div>
             </div>
 
             <div class="oneDetail">
@@ -115,8 +122,10 @@
                         <el-input-number
                           v-model="item.num"
                           @change="handleChange"
-                          @click="chooce(index)"
+                          @blur="numCheck(item)"
                           :min="0"
+                          @keydown="channelInputLimit"
+                          oninput="this.value=this.value.replace(/\D/g,'')"
                         ></el-input-number>
                       </div>
                     </td>
@@ -129,7 +138,7 @@
       </div>
       <div class="btn">
         <div class="addCart" @click="addCart()">{{ $t("product.add") }}</div>
-        <div class="toBuy" @click="toBuy()">{{ $t("product.buy") }}</div>
+        <div class="toBuy" @click="setOrder()">{{ $t("product.buy") }}</div>
       </div>
 
       <div class="toCustomize" @click="isShow = !isShow">
@@ -204,13 +213,16 @@ export default {
       this.infoBox.push(el);
       //  console.log("ces",this.infoBox);
     },
-    // 设定只能选一个
-    chooce(id) {
-      this.infos[id];
-    },
+  
     //
     addCart() {
-      this.$data.productData.params.forEach((item) => {
+      if(!localStorage.getItem("token")) {
+        this.$message({
+                  message: "请先登录",
+                  // type: "error",
+                });
+      } else {
+        this.$data.productData.params.forEach((item) => {
         if (item.num !== 0) {
           this.$http
             .post("/cart", {
@@ -240,10 +252,34 @@ export default {
             });
         }
       });
+      }
+      
+    },
+    setOrder() {
+        if(!localStorage.getItem("token")) {
+        this.$message({
+                  message: "请先登录",
+                  // type: "error",
+                });
+      }else {
+
+      }
     },
     //商品数量调节
     handleChange(value) {
       console.log(value);
+    },
+       channelInputLimit(e) {
+      let key = e.key;
+      // 不允许输入'e'和'.'
+      if (key === "e" || key === ".") {
+        e.returnValue = false;
+        return false;
+      }
+      return true;
+    },
+    numCheck(obj) {
+      if (obj.num === NaN || obj.num === undefined) obj.num = 0;
     },
   },
 };

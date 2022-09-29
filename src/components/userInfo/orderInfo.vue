@@ -221,6 +221,7 @@ export default {
 .returnBtn {
   margin: 0 30px 0 0;
   cursor: pointer;
+  font-weight: 600;
 }
 .returnBtn:hover {
   color:#004ea2;

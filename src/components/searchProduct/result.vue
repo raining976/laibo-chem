@@ -25,7 +25,11 @@
                 {{ $t("order.fenziliang") + "：" }}{{ item.formula_weight }}
               </div>
               <div class="jiegoushi _data">
-                结构式：<span v-html="item.linear_formula.replace(/(\d+)/g, '<sub>$1</sub>')"></span>
+                结构式：<span
+                  v-html="
+                    item.linear_formula.replace(/(\d+)/g, '<sub>$1</sub>')
+                  "
+                ></span>
               </div>
               <div class="CAScode _data">
                 {{ $t("order.casNum") + "：" }}{{ item.cas }}
@@ -37,11 +41,11 @@
         <!-- 价格表格 -->
         <div class="collapse">
           <el-collapse
-            v-model="activeName"
+            v-model="activeName[index]"
             accordion
             @click="getTable(item.id)"
           >
-            <el-collapse-item name="1">
+            <el-collapse-item >
               <template #title>
                 <span class="textBox">价格与库存&nbsp;</span
                 ><img
@@ -56,7 +60,7 @@
                     <tr class="tableHead">
                       <th style="width: 145px">{{ $t("order.itemNo") }}</th>
                       <th style="width: 140px">{{ $t("order.size") }}</th>
-                      <th style="width: 215px">{{ $t("search.stock") }}</th>
+                      <!-- <th style="width: 215px">{{ $t("search.stock") }}</th> -->
                       <th style="width: 170px">
                         {{ $t("search.price") }}（RMB）
                       </th>
@@ -74,12 +78,12 @@
                           <div>{{ item.id + "-" + item1.weight }}</div>
                         </td>
                         <td class="size">
-                          <div>{{ item1.guige }}</div>
+                          <div>{{ item.guige }}</div>
                         </td>
 
-                        <td class="store">
+                        <!-- <td class="store">
                           <div>0{{ store }}</div>
-                        </td>
+                        </td> -->
                         <td class="rmb">
                           <div>{{ item1.price }}</div>
                         </td>
@@ -88,7 +92,10 @@
                             <el-input-number
                               v-model="item1.num"
                               @change="handleChange"
+                              @blur="numCheck(item1)"
                               :min="0"
+                              @keydown="channelInputLimit"
+                              oninput="this.value=this.value.replace(/\D/g,'')"
                             ></el-input-number>
                           </div>
                         </td>
@@ -131,6 +138,7 @@ export default {
   components: "",
   data() {
     return {
+      activeName: ['1','2','3','4','5'],
       // 分页器
       pagesize: 4, // 每页显示多少条
       currentPage: 1, // 当前页数
@@ -165,6 +173,11 @@ export default {
     };
   },
   watch: {
+    resultBox: {
+      handler() {
+        this.$data.currentPage = 1;
+      },
+    },
     productData: {
       handler() {
         this.$data.productData.forEach((item) => {
@@ -203,6 +216,12 @@ export default {
     },
     // 加入购物车
     addCart() {
+      if(!localStorage.getItem("token")) {
+        this.$message({
+                  message: "请先登录",
+                  // type: "error",
+                });
+      } else {
       this.$data.productData.forEach((item) => {
         if (item.num !== 0) {
           this.$http
@@ -233,6 +252,28 @@ export default {
             });
         }
       });
+      }
+    },
+    // 分页
+    handleSizeChange(val) {
+      this.$data.pagesize = val;
+      // console.log(`每页 ${val} 条`);
+    },
+    handleCurrentChange(val) {
+      this.$data.currentPage = val;
+      // console.log(`当前页: ${val}`);
+    },
+    channelInputLimit(e) {
+      let key = e.key;
+      // 不允许输入'e'和'.'
+      if (key === "e" || key === ".") {
+        e.returnValue = false;
+        return false;
+      }
+      return true;
+    },
+    numCheck(obj) {
+      if (obj.num === NaN || obj.num === undefined) obj.num = 0;
     },
     // 分页
     handleSizeChange(val) {
@@ -459,30 +500,34 @@ table tbody tr {
   align-items: center;
   justify-content: center;
 }
-.countBtnBox /deep/ .el-input-number {
-  width: 97%;
-  height: 30px;
-  line-height: 30px;
+.countBtnBox >>> .el-input-number {
+  width: 90%;
+  height: 32px;
+  line-height: 32px;
 }
-.countBtnBox /deep/ .el-input-number__decrease,
-.count /deep/.el-input-number__increase {
+.count >>> [class*=" el-icon-"],
+[class^="el-icon-"] {
+  font-weight: 600;
+}
+.countBtnBox >>> .el-input-number__decrease,
+.count >>> .el-input-number__increase {
   width: 30px;
   height: 30px;
   line-height: 30px;
   border-radius: 2px;
   background: #eaebed;
 }
-.countBtnBox /deep/ .el-input-number__decrease {
+.countBtnBox >>> .el-input-number__decrease {
   left: 0;
 }
-.countBtnBox /deep/.el-input-number__increase {
+.countBtnBox >>> .el-input-number__increase {
   right: 0;
 }
-.countBtnBox /deep/ .el-input__inner {
+.countBtnBox >>> .el-input__inner {
   position: absolute;
   top: 2px;
-  left: 30px;
-  width: calc(100% - 60px);
+  left: 31px;
+  width: calc(100% - 62px);
   height: 29px;
   line-height: 29px;
   border: 2px solid #eaebed;
@@ -518,24 +563,23 @@ table tbody tr {
   bottom: 43px; */
   margin: 0 0 20px 40%;
 }
-.pagination /deep/ .el-pagination {
+.pagination >>> .el-pagination {
   --el-pagination-button-height: 40px;
   --el-pagination-font-size: 16px;
 }
 .pagination
-  /deep/
-  .el-pagination.is-background
+  >>> .el-pagination.is-background
   .el-pager
   li:not(.disabled).active {
   background-color: #004ea2;
 }
-.pagination /deep/.el-pagination.is-background .btn-next,
-.pagination /deep/.el-pagination.is-background .btn-prev,
-.pagination /deep/.el-pagination.is-background .el-pager li {
+.pagination >>> .el-pagination.is-background .btn-next,
+.pagination >>> .el-pagination.is-background .btn-prev,
+.pagination >>> .el-pagination.is-background .el-pager li {
   min-width: 40px;
   border-radius: 5px;
 }
-.pagination /deep/ .el-icon {
+.pagination >>> .el-icon {
   margin: 0 auto;
 }
 </style>

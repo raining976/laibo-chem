@@ -103,7 +103,7 @@
             <div class="num">{{ item0.count }}</div>
           </div>
           <!-- 关于金额的计算方式 -->
-          <div class="payment">{{ orderList.payment }}</div>
+          <div class="payment">{{ currency(orderList.payment).format() }}</div>
         </div>
       </div>
       <div class="pagination">
