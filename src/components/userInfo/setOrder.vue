@@ -1,4 +1,6 @@
 //购物车（支付部分）
+// 全局判断 1加入了团队 0个人
+// 该组件接口 0是团队 1是个人
 <template>
   <div class="setOrderPage">
     <!-- 收获地址 -->
@@ -93,7 +95,7 @@
                 {{ $t("order.itemNo") + "：" }}{{ item0.huohao }}
               </div>
               <div class="infoWord">
-                {{ $t("order.casNum") + "：" }}{{ item0.shopCart_id }}
+                {{ $t("order.casNum") + "：" }}{{ item0.cas }}
               </div>
             </div>
           </div>
@@ -123,6 +125,13 @@
     <address-form v-if="formIsShow" />
     <!-- 以下为底部 -->
     <div class="footer">
+      <div class="submitMy" @click="isSubmitMy()">
+        <div
+          class="submitMyBtn"
+          :class="{ agree_submitMy: submitMy == 1 }"
+        ></div>
+        {{ $t("cart.submitOwn") }}
+      </div>
       <div class="allMoney">
         {{ $t("cart.total") }}&nbsp;&nbsp;&nbsp;
         <div>{{ currency(allmoney).format() }}</div>
@@ -157,6 +166,7 @@ export default {
       payWay: "",
       addressId: 0, // 地址id
       freight: 0, //运费
+            submitMy: 0, //判断是否提交个人订单 0集体  1个人
       allmoney: 0, //总计
       orderId: 0,
       curAddress: {}, // 当前地址对象
@@ -181,6 +191,13 @@ export default {
     };
   },
   created() {
+        if (localStorage.getItem("in_team") === "1") {
+      // 在团队
+      this.$data.submitMy = 0;
+    } else if (localStorage.getItem("in_team") === "0") {
+      // 在个人
+      this.$data.submitMy = 1;
+    }
     this.getAddress();
     this.$data.commodityList = JSON.parse(localStorage.getItem("checkBox"));
   },
@@ -313,7 +330,22 @@ export default {
       this.$data.currentPage = val;
       // console.log(`当前页: ${val}`);
     },
-
+ //提交到个人订单
+    isSubmitMy() {
+      if (localStorage.getItem("in_team") === "0") {
+        this.$message({
+          message: "您还未加入团队",
+          // type: "error",
+        });
+        this.$data.submitMy = 1;
+      } else if (localStorage.getItem("in_team") === "1") {
+        if (this.$data.submitMy === 1) {
+          this.$data.submitMy = 0; // 集体
+        } else if (this.$data.submitMy === 0) {
+          this.$data.submitMy = 1; // 个人
+        }
+      }
+    },
     payType(str) {
       this.$data.payWay = str;
       switch (str) {
@@ -357,7 +389,7 @@ export default {
             //   count: item.count,
             // },
             products: this.$data.orderBox,
-            type: JSON.parse(localStorage.getItem("isSubmitMy")),
+            type: this.$data.submitMy,
             address: this.$data.addressId,
           })
           .then((res) => {
@@ -775,6 +807,27 @@ export default {
   border-radius: 10px;
   margin: 90px 0 0 0;
   overflow: hidden;
+}
+.submitMy {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  /* width: 160px; */
+  height: 20px;
+  line-height: 20px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #004ea2;
+}
+.submitMyBtn {
+  width: 18px;
+  height: 18px;
+  margin: 0 11px 0 0px;
+  border: 1px solid #999999;
+  border-radius: 2px;
+}
+.agree_submitMy {
+  background-color: #004ea2;
 }
 .allMoney {
   display: flex;

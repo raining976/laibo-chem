@@ -1,6 +1,4 @@
 // 购物车
-// 全局判断 1加入了团队 0个人
-// 该组件接口 0是团队 1是个人
 //createDate:2022-07-17
 <template>
   <div :key="updata">
@@ -117,13 +115,6 @@
     </div>
     <!-- 底部购买 -->
     <div class="footer">
-      <div class="submitMy" @click="isSubmitMy()">
-        <div
-          class="submitMyBtn"
-          :class="{ agree_submitMy: submitMy == 1 }"
-        ></div>
-        {{ $t("cart.submitOwn") }}
-      </div>
       <div class="allMoney">
         {{ $t("cart.addUp") }}&nbsp;&nbsp;
         <div>{{ currency(_money).format() }}</div>
@@ -172,13 +163,6 @@ export default {
     await this.getCart();
     await this.addChecked();
     this.$data.count = this.$data.commodityList.length;
-    if (localStorage.getItem("in_team") === "1") {
-      // 在团队
-      this.$data.submitMy = 0;
-    } else if (localStorage.getItem("in_team") === "0") {
-      // 在个人
-      this.$data.submitMy = 1;
-    }
   },
   // beforeUpdate() {
   //   this.commodityBox = [];
@@ -276,7 +260,6 @@ export default {
           "checkBox",
           JSON.stringify(this.$data.checkedCommodities)
         );
-        localStorage.setItem("isSubmitMy", JSON.stringify(this.$data.submitMy));
         this.$router.push({
           path: "/setOrder",
           // query: {
@@ -326,21 +309,6 @@ export default {
           }
       });
       // return isSuccess;
-    },
-    //提交到个人订单
-    isSubmitMy() {
-      if (localStorage.getItem("in_team") === "0") {
-        this.$message({
-          message: "您还未加入团队",
-          // type: "error",
-        });
-      } else if (localStorage.getItem("in_team") === "1") {
-        if (this.$data.submitMy === 1) {
-          this.$data.submitMy = 0; // 集体
-        } else if (this.$data.submitMy === 0) {
-          this.$data.submitMy = 1; // 个人
-        }
-      }
     },
     // 远端修改，后重新获取
     async delProduct() {
@@ -761,27 +729,6 @@ if(obj.count === NaN||obj.count === undefined )obj.count = 1;
   background: #ffffff;
   border: 1px solid #eaeaec;
   border-radius: 10px;
-}
-.submitMy {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  /* width: 160px; */
-  height: 20px;
-  line-height: 20px;
-  font-size: 18px;
-  font-weight: 600;
-  color: #004ea2;
-}
-.submitMyBtn {
-  width: 18px;
-  height: 18px;
-  margin: 0 11px 0 0px;
-  border: 1px solid #999999;
-  border-radius: 2px;
-}
-.agree_submitMy {
-  background-color: #004ea2;
 }
 .allMoney {
   display: flex;

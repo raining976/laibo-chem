@@ -47,7 +47,6 @@ export default {
         //回调函数
         .then((res) => {
           this.$data.contentBox = res.data.data;
-          console.log("ceshi",res.data.data);
         })
         .catch((err) => {
           console.log(err);
@@ -63,7 +62,6 @@ export default {
         //回调函数
         .then((res) => {
           this.$data.contentBox = res.data.data;
-       console.log("ceshi",res.data.data);
         })
         .catch((err) => {
           console.log(err);
@@ -131,7 +129,7 @@ export default {
 .title {
    width: 100%;
    text-align: center;
-   font-size: 32px;
+   font-size: 36px;
    font-weight: 600;
    margin: 0 0 20px 0;
 }
@@ -143,7 +141,14 @@ export default {
   border-bottom: 2px solid #999999;
 }
 .content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   width: 80%;
-
+  font-size: 18px;
+}
+.content > p,.content > span {
+  text-align: center;
 }
 </style>

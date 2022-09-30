@@ -68,11 +68,11 @@
           <div class="shopId">
             {{ item0.id }}
           </div>
-          <div class="product" v-for="(product, index) in item0.product" :key="index">
-            <div class="productName" :title="product.name">{{ product.name }}&nbsp;</div>
+          <div class="product" >
+            <div class="productName" v-for="(product, index) in item0.product" :key="index" :title="product.name">{{ product.name }}&nbsp;</div>
           </div>
           <div class="type">{{ item0.type }}</div>
-          <div class="unit">{{ item0.team }}</div>
+          <div class="unit" >{{ item0.team == null? "——":item0.team }}</div>
           <div class="orderStatus">{{ item0.status }}</div>
           <!-- 关于金额的计算方式 ？-->
           <div class="payment">{{ currency(item0.payment).format() }}</div>

@@ -88,11 +88,11 @@
             <table border="0" cellspacing="0">
               <thead>
                 <tr class="tableHead">
-                  <th style="width: 145px">{{ $t("product.itemNo") }}</th>
-                  <th style="width: 140px">{{ $t("product.size") }}</th>
-                  <th style="width: 215px">{{ $t("product.stock") }}</th>
-                  <th style="width: 170px">{{ $t("product.price") }}</th>
-                  <th style="width: 200px">{{ $t("product.count") }}</th>
+                  <th style="width: 200px">{{ $t("product.itemNo") }}</th>
+                  <th style="width: 170px">{{ $t("product.size") }}</th>
+                  <!-- <th style="width: 215px">{{ $t("product.stock") }}</th> -->
+                  <th style="width: 240px">{{ $t("product.price") }}</th>
+                  <th style="width: 260px">{{ $t("product.count") }}</th>
                 </tr>
               </thead>
               <el-scrollbar max-height="132px">
@@ -110,17 +110,17 @@
                       <div>{{ productData.guige }}</div>
                     </td>
 
-                    <td class="store">
+                    <!-- <td class="store">
                       <div>111{{ store }}</div>
-                    </td>
+                    </td> -->
                     <td class="rmb">
-                      <div>{{ item.price }}</div>
+                      <div>{{ currency(item.price).format() }}</div>
                     </td>
                     <td class="count">
                       <!-- 计数器 -->
                       <div class="countBtnBox">
                         <el-input-number
-                          v-model="item.num"
+                          v-model="item.count"
                           @change="handleChange"
                           @blur="numCheck(item)"
                           :min="0"
@@ -160,6 +160,7 @@ export default {
       isShow: false, // 私人订制是否显示
       num: 0,
       infoBox: [],
+      checkBox: [], // 用于储存传递商品的数组
       productData: [
         // {
         //   huohao: "B835581-25mg",
@@ -201,7 +202,7 @@ export default {
     productData: {
       handler() {
         this.$data.productData.params.forEach((item) => {
-          Object.assign(item, { num: 0 });
+          Object.assign(item, { count: 0 });
         });
       },
     },
@@ -213,73 +214,100 @@ export default {
       this.infoBox.push(el);
       //  console.log("ces",this.infoBox);
     },
-  
+
     //
     addCart() {
-      if(!localStorage.getItem("token")) {
+      if (!localStorage.getItem("token")) {
         this.$message({
-                  message: "请先登录",
-                  // type: "error",
-                });
+          message: "请先登录",
+          // type: "error",
+        });
       } else {
         let isPost = false;
         let length = this.$data.productData.params.length;
-        this.$data.productData.params.forEach((item) => {
-        if (item.num !== 0) {
-          this.$http
-            .post("/cart", {
-              product_params_id: item.id,
-              count: item.num,
-            })
-            //回调函数
-            .then((res) => {
-              if (res.data.code == 20000) {
-                isPost = true;
+        this.$data.productData.params.forEach((item, index) => {
+          if (item.count !== 0) {
+            this.$http
+              .post("/cart", {
+                product_params_id: item.id,
+                count: item.count,
+              })
+              //回调函数
+              .then((res) => {
+                if (res.data.code == 20000) {
+                  isPost = true;
+                  this.$message({
+                    message: "添加成功",
+                    type: "success",
+                  });
+                } else {
+                  this.$message({
+                    message: res.data.msg,
+                    type: "error",
+                  });
+                }
+              })
+              .catch((err) => {
                 this.$message({
-                  message: "添加成功",
-                  type: "success",
-                });
-              } else {
-                this.$message({
-                  message: res.data.msg,
+                  message: "未知错误!",
                   type: "error",
                 });
-              }
-            })
-            .catch((err) => {
-              this.$message({
-                message: "未知错误!",
-                type: "error",
+                console.log("err", err);
               });
-              console.log("err", err);
+          } else if (index + 1 === length && isPost === false) {
+            this.$message({
+              message: "未选择数量!",
+              // type: "error",
             });
-        }else if((index + 1 )=== length&&isPost === false) {
-           this.$message({
-                message: "未选择数量!",
-                // type: "error",
-              });
-        }
-      });
+          }
+        });
       }
-      
     },
     // 购买按钮
     setOrder() {
-        if(!localStorage.getItem("token")) {
+      if (!localStorage.getItem("token")) {
         this.$message({
-                  message: "请先登录",
-                  // type: "error",
-                });
-      }else {
-        if(1){}
-
+          message: "请先登录",
+          // type: "error",
+        });
+      } else {
+        let isPost = false;
+        let length = this.$data.productData.params.length;
+        this.$data.productData.params.forEach((item, index) => {
+          if (item.count !== 0) {
+            this.$data.checkBox.splice(index, 0, {
+              huohao: this.$data.productData.id + "-" + item.weight,
+              count: item.count,
+              product_id: this.$data.productData.id,
+              product_params_id: item.id,
+              pic_url: this.$data.productData.pic_url,
+              guige: this.$data.productData.guige,
+              cas: this.$data.productData.cas,
+              name: this.$data.productData.name,
+              price: item.price,
+            });
+            isPost = true;
+          } else if (index + 1 === length && isPost === false) {
+            this.$message({
+              message: "未选择数量!",
+              // type: "error",
+            });
+          }
+        });
+        if (this.$data.checkBox.length !== 0) {
+          localStorage.setItem("checkBox", JSON.stringify(this.$data.checkBox));
+          this.$router.push({
+            path: "/setOrder",
+          });
+        }
       }
     },
+
     //商品数量调节
     handleChange(value) {
-      console.log(value);
+      // console.log(value);
     },
-       channelInputLimit(e) {
+    channelInputLimit(e) {
       let key = e.key;
       // 不允许输入'e'和'.'
       if (key === "e" || key === ".") {
@@ -289,7 +317,7 @@ export default {
       return true;
     },
     numCheck(obj) {
-      if (obj.num === NaN || obj.num === undefined) obj.num = 0;
+      if (obj.count === NaN || obj.count === undefined) obj.count = 0;
     },
   },
 };
@@ -475,24 +503,28 @@ table tbody tr {
   z-index: 999;
 } */
 .huohao {
-  width: 145px;
+  width: 200px;
+  /* width: 145px; */
   color: #004ea2;
 }
 .size {
-  width: 140px;
+  width: 170px;
+  /* width: 140px; */
   color: #171717;
 }
 .store {
-  width: 215px;
+  /* width: 215px; */
   color: #004ea2;
 }
 .rmb {
-  width: 170px;
+  width: 240px;
+  /* width: 170px; */
   color: #ff4d4d;
 }
 /* 购买数量按钮 */
 .count {
-  width: 200px;
+  /* width: 200px; */
+  width: 260px;
   display: flex;
   align-items: center;
   justify-content: center;

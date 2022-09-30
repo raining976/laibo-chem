@@ -59,13 +59,13 @@
                 <table border="0" cellspacing="0">
                   <thead>
                     <tr class="tableHead">
-                      <th style="width: 145px">{{ $t("order.itemNo") }}</th>
-                      <th style="width: 140px">{{ $t("order.size") }}</th>
+                      <th style="width: 200px">{{ $t("order.itemNo") }}</th>
+                      <th style="width: 170px">{{ $t("order.size") }}</th>
                       <!-- <th style="width: 215px">{{ $t("search.stock") }}</th> -->
-                      <th style="width: 170px">
+                      <th style="width: 240px">
                         {{ $t("search.price") }}（RMB）
                       </th>
-                      <th style="width: 200px">{{ $t("order.count") }}</th>
+                      <th style="width: 260px">{{ $t("order.count") }}</th>
                     </tr>
                   </thead>
                   <el-scrollbar max-height="132px">
@@ -91,7 +91,7 @@
                         <td class="count">
                           <div class="countBtnBox">
                             <el-input-number
-                              v-model="item1.num"
+                              v-model="item1.count"
                               @change="handleChange"
                               @blur="numCheck(item1)"
                               :min="0"
@@ -205,7 +205,7 @@ export default {
     productData: {
       handler() {
         this.$data.productData.forEach((item) => {
-          Object.assign(item, { num: 0 });
+          Object.assign(item, { count: 0 });
         });
       },
        immediate:true,
@@ -250,12 +250,12 @@ export default {
       } else {
         let isPost = false;
         let length = this.$data.productData.length;
-      this.$data.productData.forEach((item) => {
-        if (item.num !== 0) {
+      this.$data.productData.forEach((item, index) => {
+        if (item.count !== 0) {
           this.$http
             .post("/cart", {
               product_params_id: item.id,
-              count: item.num,
+              count: item.count,
             })
             //回调函数
             .then((res) => {
@@ -309,7 +309,7 @@ export default {
       return true;
     },
     numCheck(obj) {
-      if (obj.num === NaN || obj.num === undefined) obj.num = 0;
+      if (obj.count === NaN || obj.count === undefined) obj.count = 0;
     },
     // 分页
     handleSizeChange(val) {
@@ -509,24 +509,24 @@ table tbody tr {
 }
 
 .tableContent .fenziliang {
-  width: 145px;
+  width: 200px;
   color: #004ea2;
 }
 .tableContent .size {
-  width: 140px;
+  width: 170px;
   color: #171717;
 }
 .tableContent .store {
-  width: 215px;
+  /* width: 215px; */
   color: #004ea2;
 }
 .tableContent .rmb {
-  width: 170px;
+  width: 240px;
   color: #ff4d4d;
 }
 /* 购买数量按钮 */
 .tableContent .count {
-  width: 200px;
+  width: 260px;
   display: flex;
   align-items: center;
   justify-content: center;
