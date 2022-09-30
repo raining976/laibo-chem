@@ -198,9 +198,6 @@ export default {
     },
     
   },
-  setup() {
-    const activeName = ref("1");
-  },
 };
 </script>
 <style scoped>

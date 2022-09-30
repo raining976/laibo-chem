@@ -1,6 +1,6 @@
 <template>
   <div class="resultPage">
-    <div class="tip">查到一下几种结果：</div>
+    <div class="tip">查到以下几种结果：</div>
     <div class="resultBigBox">
       <!-- v-for模块 -->
       <div
@@ -40,8 +40,9 @@
         </div>
         <!-- 价格表格 -->
         <div class="collapse">
+          <!-- activeNames[index + (currentPage - 1) * pagesize].node -->
           <el-collapse
-            v-model="activeName[index]"
+            v-model="activeNames"
             accordion
             @click="getTable(item.id)"
           >
@@ -115,11 +116,14 @@
     </div>
     <div class="pagination">
       <el-pagination
+        :hide-on-single-page="true"
+        v-model="currentPage"
         background="#004ea2"
         layout="prev,pager,next"
         :total="resultBox.length"
         :page-size="pagesize"
         :current-page="currentPage"
+        @change="handleCurrentChange"
         @current-change="handleCurrentChange"
         @size-change="handleSizeChange"
       >
@@ -138,7 +142,7 @@ export default {
   components: "",
   data() {
     return {
-      activeName: ['1','2','3','4','5'],
+      activeNames: ['0'], //可折叠列表参数，控制展开--循环增加元素也可行
       // 分页器
       pagesize: 4, // 每页显示多少条
       currentPage: 1, // 当前页数
@@ -172,18 +176,40 @@ export default {
       ],
     };
   },
+  created() {
+ console.log(this.resultBox,"gggg")
+  },
+      mounted() {
+    // 
+     console.log(this.resultBox,"ffff")
+    window.scrollTo(0, 0);
+  },
   watch: {
-    resultBox: {
-      handler() {
-        this.$data.currentPage = 1;
-      },
-    },
+    // resultBox: {
+    //   handler(newObj) {
+    //     // this.$nextTick(()=> {
+    //       this.$data.currentPage = 1;
+    //     // let length = this.$data.resultBox.length;
+    //     let i = 0;
+    //     while(newObj.length !== i ) {
+    //       this.$data.activeNames.push({node: "(i+1) + '' "});
+    //       i ++;
+    //     }
+    //     console.log(this.$data.activeNames)
+    //     // })
+        
+    //   },
+      // immediate:true,
+      // deep:true,
+    // },
     productData: {
       handler() {
         this.$data.productData.forEach((item) => {
           Object.assign(item, { num: 0 });
         });
       },
+       immediate:true,
+      deep:true,
     },
   },
   methods: {
@@ -222,6 +248,8 @@ export default {
                   // type: "error",
                 });
       } else {
+        let isPost = false;
+        let length = this.$data.productData.length;
       this.$data.productData.forEach((item) => {
         if (item.num !== 0) {
           this.$http
@@ -232,6 +260,7 @@ export default {
             //回调函数
             .then((res) => {
               if (res.data.code == 20000) {
+                isPost = true;
                 this.$message({
                   message: "添加成功",
                   type: "success",
@@ -250,6 +279,11 @@ export default {
               });
               console.log("err", err);
             });
+        }else if((index + 1 )=== length&&isPost === false) {
+           this.$message({
+                message: "未选择数量!",
+                // type: "error",
+              });
         }
       });
       }
@@ -261,6 +295,8 @@ export default {
     },
     handleCurrentChange(val) {
       this.$data.currentPage = val;
+      console.log("dddd")
+      this.$data.activeNames = ['0'];
       // console.log(`当前页: ${val}`);
     },
     channelInputLimit(e) {
@@ -312,7 +348,8 @@ export default {
 }
 .resultBigBox {
   width: 1120px;
-  min-height: 1240px;
+  /* min-height: 1240px; */
+  min-height: 200px;
   overflow: hidden;
 }
 .resultBox {

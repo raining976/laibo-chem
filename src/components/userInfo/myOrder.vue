@@ -22,7 +22,9 @@
     <!-- 以下为订单 -->
     <div class="orderList">
       <!-- 全选 -->
-       <div class="quanxuan">
+      
+      <div class="listHead"> 
+        <div class="quanxuan">
           <input
             class="checkAll"
             id="checkall"
@@ -32,8 +34,7 @@
             @change="checkAll()"
           />
           <label class="word" for="checkAll">{{ $t("cart.allCheck") }} </label>
-        </div>
-      <div class="listHead">    
+        </div>    
         <!--  -->
         <div class="_shopId word">{{ $t("order.num") }}</div>
         <div class="_product word">{{ $t("order.product") }}</div>
@@ -68,7 +69,7 @@
             {{ item0.id }}
           </div>
           <div class="product" v-for="(product, index) in item0.product" :key="index">
-            <div class="productName" title="product.name">{{ product.name }}&nbsp;</div>
+            <div class="productName" :title="product.name">{{ product.name }}&nbsp;</div>
           </div>
           <div class="type">{{ item0.type }}</div>
           <div class="unit">{{ item0.team }}</div>
@@ -319,8 +320,9 @@ export default {
 }
 /* 下为购物车样式 */
 .orderList {
-  position: relative;
+  /* position: relative; */
   width: 100%;
+  min-width: 950px;
   min-height: 370px;
   overflow: hidden;
 }
@@ -334,19 +336,19 @@ export default {
   align-items: center;
 }
 .quanxuan {
-  width: 230px;
-    top: 5px;
-  position: absolute;
+  /* width: 60px; */
+    /* top: 5px;
+  position: absolute; */
   display: flex;
   align-items: center;
-  margin: 0 0px 0 28px;
+  margin: 0 0px 0 20px; 
+  flex: 0.6;
 }
 /* ！复选框 */
 .checkAll {
   cursor: pointer;
   width: 18px;
   height: 18px;
-
   margin: 0 6px 0 0px;
   border: 1px solid #999999;
   border-radius: 2px;
@@ -361,6 +363,7 @@ export default {
   line-height: 18px;
   text-align: center;
 }
+
 ._shopId {
   /* width: 85px; */
   flex: 1.2;
@@ -368,12 +371,12 @@ export default {
 ._product {
   /* margin: 0 0 0 264px; */
   /* width: 84px; */
-  flex: 2;
+  flex: 1.9;
 }
 ._type {
   /* margin: 0 0 0 198px; */
   /* width: 145px; */
-  flex: 2;
+  flex: 1.9;
 }
 ._unit {
   /* margin: 0 0 0 109px; */
@@ -420,11 +423,13 @@ export default {
   border-radius: 2px;
 }
 .radio {
-  position: absolute;
+  /* position: absolute;
   top: 20px;
-  left: 28px;
-  width: 18px;
-  height: 18px;
+  left: 28px; */
+  /* width: 18px; */
+  height: 18px; 
+  margin-left: 20px;
+  flex: 0.6;
   /* border: 1px solid #999; */
   /* background-color: #fff; */
   /* border-radius: 2px; */

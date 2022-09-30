@@ -222,6 +222,8 @@ export default {
                   // type: "error",
                 });
       } else {
+        let isPost = false;
+        let length = this.$data.productData.params.length;
         this.$data.productData.params.forEach((item) => {
         if (item.num !== 0) {
           this.$http
@@ -232,6 +234,7 @@ export default {
             //回调函数
             .then((res) => {
               if (res.data.code == 20000) {
+                isPost = true;
                 this.$message({
                   message: "添加成功",
                   type: "success",
@@ -250,11 +253,17 @@ export default {
               });
               console.log("err", err);
             });
+        }else if((index + 1 )=== length&&isPost === false) {
+           this.$message({
+                message: "未选择数量!",
+                // type: "error",
+              });
         }
       });
       }
       
     },
+    // 购买按钮
     setOrder() {
         if(!localStorage.getItem("token")) {
         this.$message({
@@ -262,6 +271,7 @@ export default {
                   // type: "error",
                 });
       }else {
+        if(1){}
 
       }
     },
