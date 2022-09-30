@@ -30,38 +30,50 @@
             $t("base.action")
           }}</span>
         </li>
-        <li class="eachLi listContent" v-for="(item, index) in memberList" :key="index">
+        <li
+          class="eachLi listContent"
+          v-for="(item, index) in memberList"
+          :key="index"
+        >
           <span class="name">{{ item.name }}</span>
           <span class="email">{{ item.email }}</span>
           <span class="phone">{{ item.phone }}</span>
           <span class="privilege">{{ item.privilegeText }}</span>
-          <span class="operation" v-if="(myEmail != item.email && myPrivilege == 1) ||( myPrivilege == 2 && myEmail != item.email)||( myPrivilege == 0 && myEmail != item.email)" >
-            <i class="blank" v-if="item.privilege == 2"></i>
-            <img
-              src="../../assets/adminPlus.png"
-              class="handleBtn"
-              @click="setAdminOpen(index)"
-              v-if="item.privilege == 0"
-            />
-            <img
-              src="../../assets/adminMinus.png"
-              class="handleBtn"
-              @click="delAdminOpen(index)"
-              v-if="item.privilege == 1"
-              alt=""
-            />
-            <i
-              class="el-icon-delete delMember"
-              style="color: #bf0300; cursor: pointer"
+          <span class="operation">
+            <div
+              class="btnBox"
               v-if="
-                item.privilege != 2 &&
-                (item.privilege == 1 || item.privilege == 0)
+                (myEmail != item.email && myPrivilege == 1) ||
+                (myPrivilege == 2 && myEmail != item.email) ||
+                (myPrivilege == 0 && myEmail != item.email)
               "
-              v-show="myPrivilege == 1 || myPrivilege == 2"
-              @click="delOpen(index)"
-            ></i>
+            >
+              <i class="blank" v-if="item.privilege == 2"></i>
+              <img
+                src="../../assets/adminPlus.png"
+                class="handleBtn"
+                @click="setAdminOpen(index)"
+                v-if="item.privilege == 0"
+              />
+              <img
+                src="../../assets/adminMinus.png"
+                class="handleBtn"
+                @click="delAdminOpen(index)"
+                v-if="item.privilege == 1"
+                alt=""
+              />
+              <i
+                class="el-icon-delete delMember"
+                style="color: #bf0300; cursor: pointer"
+                v-if="
+                  item.privilege != 2 &&
+                  (item.privilege == 1 || item.privilege == 0)
+                "
+                v-show="myPrivilege == 1 || myPrivilege == 2"
+                @click="delOpen(index)"
+              ></i>
+            </div>
           </span>
-          <span class="operation" v-if="myEmail == item.email || myPrivilege == 2"></span>
         </li>
       </ul>
       <div class="layPage">
@@ -89,12 +101,12 @@ export default {
       keywords: "", // 搜索成员关键字
       isSearch: false, // 是否为搜索成员
       myPrivilege: 0, // 我的权限
-      myEmail:'', // 我的邮箱
+      myEmail: "", // 我的邮箱
     };
   },
   created() {
     this.myPrivilege = localStorage.getItem("privilege");
-    this.myEmail = localStorage.getItem("myEmail")
+    this.myEmail = localStorage.getItem("myEmail");
   },
   mounted() {
     let flag = this.$route.params.flag;
@@ -470,7 +482,7 @@ input {
   padding-left: 30px;
   transition: 0.3s;
 }
-.eachLi.listContent:hover{
+.eachLi.listContent:hover {
   background: #f6f7f7;
 }
 .eachLi span {
