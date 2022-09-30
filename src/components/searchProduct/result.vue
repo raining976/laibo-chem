@@ -41,12 +41,8 @@
         <!-- 价格表格 -->
         <div class="collapse">
           <!-- activeNames[index + (currentPage - 1) * pagesize].node -->
-          <el-collapse
-            v-model="activeNames"
-            accordion
-            @click="getTable(item.id)"
-          >
-            <el-collapse-item >
+          <el-collapse v-model="activeNames" @click="getTable(index)" @change="collapseChange">
+            <el-collapse-item :name="item.id">
               <template #title>
                 <span class="textBox">价格与库存&nbsp;</span
                 ><img
@@ -142,7 +138,7 @@ export default {
   components: "",
   data() {
     return {
-      activeNames: ['0'], //可折叠列表参数，控制展开--循环增加元素也可行
+      activeNames: [], //可折叠列表参数，控制展开--循环增加元素也可行
       // 分页器
       pagesize: 4, // 每页显示多少条
       currentPage: 1, // 当前页数
@@ -174,14 +170,16 @@ export default {
         //   num: 0,
         // },
       ],
+      productDatas:{} , //字典 key为id 键为一个数组对象 productData
     };
   },
   created() {
- console.log(this.resultBox,"gggg")
+
+    //  console.log(this.resultBox,"gggg")
   },
-      mounted() {
-    // 
-     console.log(this.resultBox,"ffff")
+  mounted() {
+    //
+    //  console.log(this.resultBox,"ffff")
     window.scrollTo(0, 0);
   },
   watch: {
@@ -197,10 +195,10 @@ export default {
     //     }
     //     console.log(this.$data.activeNames)
     //     // })
-        
+
     //   },
-      // immediate:true,
-      // deep:true,
+    // immediate:true,
+    // deep:true,
     // },
     productData: {
       handler() {
@@ -208,28 +206,35 @@ export default {
           Object.assign(item, { count: 0 });
         });
       },
-       immediate:true,
-      deep:true,
+      immediate: true,
+      deep: true,
     },
   },
   methods: {
-    getTable(code) {
-      if (this.$data.pastId !== code) {
+    collapseChange(val){
+      console.log('val',val)
+    },
+    getTable(idx) {
+      const id = this.resultBox[idx].id
+      if (this.$data.pastId !== id) {
         this.$http
           .get("/product/detail", {
             params: {
-              id: code,
+              id: id,
             },
           })
           //回调函数
           .then((res) => {
             this.$data.productData = res.data.data.params;
+            // this.productDatas.id = res.data.data.params
+            Object.assign(this.productDatas, {id:res.data.data.params});
+            console.log('this.productDatas',this.productDatas)
           })
           .catch((err) => {
             console.log(err);
           });
       }
-      this.$data.pastId = code;
+      this.$data.pastId = id;
     },
     //
     toProductInfo(code) {
@@ -242,50 +247,51 @@ export default {
     },
     // 加入购物车
     addCart() {
-      if(!localStorage.getItem("token")) {
+      if (!localStorage.getItem("token")) {
         this.$message({
-                  message: "请先登录",
-                  // type: "error",
-                });
+          message: "请先登录",
+          // type: "error",
+        });
       } else {
         let isPost = false;
         let length = this.$data.productData.length;
-      this.$data.productData.forEach((item, index) => {
-        if (item.count !== 0) {
-          this.$http
-            .post("/cart", {
-              product_params_id: item.id,
-              count: item.count,
-            })
-            //回调函数
-            .then((res) => {
-              if (res.data.code == 20000) {
-                isPost = true;
+        this.$data.productData.forEach((item, index) => {
+          if (item.count !== 0) {
+            this.$http
+              .post("/cart", {
+                product_params_id: item.id,
+                count: item.count,
+              })
+              //回调函数
+              .then((res) => {
+                if (res.data.code == 20000) {
+                  isPost = true;
+                  this.$message({
+                    message: "添加成功",
+                    type: "success",
+                  });
+                } else {
+                  this.$message({
+                    message: res.data.msg,
+                    type: "error",
+                  });
+                }
+              })
+              .catch((err) => {
                 this.$message({
-                  message: "添加成功",
-                  type: "success",
-                });
-              } else {
-                this.$message({
-                  message: res.data.msg,
+                  message: "未知错误!",
                   type: "error",
                 });
-              }
-            })
-            .catch((err) => {
-              this.$message({
-                message: "未知错误!",
-                type: "error",
+                console.log("err", err);
               });
-              console.log("err", err);
+          } else if (index + 1 === length && isPost === false) {
+            console.log(index + 1, length, isPost, "fffff");
+            this.$message({
+              message: "未选择数量!",
+              // type: "error",
             });
-        }else if((index + 1 )=== length&&isPost === false) {
-           this.$message({
-                message: "未选择数量!",
-                // type: "error",
-              });
-        }
-      });
+          }
+        });
       }
     },
     // 分页
@@ -293,12 +299,7 @@ export default {
       this.$data.pagesize = val;
       // console.log(`每页 ${val} 条`);
     },
-    handleCurrentChange(val) {
-      this.$data.currentPage = val;
-      console.log("dddd")
-      this.$data.activeNames = ['0'];
-      // console.log(`当前页: ${val}`);
-    },
+
     channelInputLimit(e) {
       let key = e.key;
       // 不允许输入'e'和'.'
@@ -464,7 +465,7 @@ export default {
 }
 /* 以下是表格 */
 .prize {
-  width: 77.5%;
+  width: 76.5%;
   height: 174px;
   margin: 0 0 0 20px;
   /* border: 0.96px solid #999999; */

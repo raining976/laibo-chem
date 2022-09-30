@@ -216,7 +216,7 @@ export default {
     },
 
     //
-    addCart() {
+   async addCart() {
       if (!localStorage.getItem("token")) {
         this.$message({
           message: "请先登录",
@@ -224,22 +224,23 @@ export default {
         });
       } else {
         let isPost = false;
-        let length = this.$data.productData.params.length;
-        this.$data.productData.params.forEach((item, index) => {
+        // let length = this.$data.productData.params.length;
+
+      for(let item of this.$data.productData.params) {
           if (item.count !== 0) {
-            this.$http
+         await this.$http
               .post("/cart", {
                 product_params_id: item.id,
                 count: item.count,
               })
               //回调函数
               .then((res) => {
-                if (res.data.code == 20000) {
-                  isPost = true;
+                if (res.data.code == 20000) {  
                   this.$message({
                     message: "添加成功",
                     type: "success",
                   });
+                  isPost = true;
                 } else {
                   this.$message({
                     message: res.data.msg,
@@ -254,13 +255,14 @@ export default {
                 });
                 console.log("err", err);
               });
-          } else if (index + 1 === length && isPost === false) {
+          } 
+        }
+        if (!isPost ) {
             this.$message({
               message: "未选择数量!",
               // type: "error",
             });
           }
-        });
       }
     },
     // 购买按钮
@@ -287,7 +289,7 @@ export default {
               price: item.price,
             });
             isPost = true;
-          } else if (index + 1 === length && isPost === false) {
+          } else if ((index + 1) === length && isPost === false) {
             this.$message({
               message: "未选择数量!",
               // type: "error",

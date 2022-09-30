@@ -6,24 +6,17 @@
       <div class="title">
         {{ $t("base.order") + "( " + $t("cart.total") + " : " + count + ")" }}
       </div>
-      <div class="deleteBtn" >
-        <el-tooltip
-                  effect="light"
-                  content="删除选中商品"
-                  placement="top"
-                >
-                  <i
-                    class="el-icon-delete-solid"
-                   @click="delProduct()"
-                  ></i>
-                </el-tooltip>
+      <div class="deleteBtn">
+        <el-tooltip effect="light" content="删除选中商品" placement="top">
+          <i class="el-icon-delete-solid" @click="delProduct()"></i>
+        </el-tooltip>
       </div>
     </div>
     <!-- 以下为订单 -->
     <div class="orderList">
       <!-- 全选 -->
-      
-      <div class="listHead"> 
+
+      <div class="listHead">
         <div class="quanxuan">
           <input
             class="checkAll"
@@ -34,7 +27,7 @@
             @change="checkAll()"
           />
           <label class="word" for="checkAll">{{ $t("cart.allCheck") }} </label>
-        </div>    
+        </div>
         <!--  -->
         <div class="_shopId word">{{ $t("order.num") }}</div>
         <div class="_product word">{{ $t("order.product") }}</div>
@@ -68,11 +61,18 @@
           <div class="shopId">
             {{ item0.id }}
           </div>
-          <div class="product" >
-            <div class="productName" v-for="(product, index) in item0.product" :key="index" :title="product.name">{{ product.name }}&nbsp;</div>
+          <div class="product">
+            <div
+              class="productName"
+              v-for="(product, index) in item0.product"
+              :key="index"
+              :title="product.name"
+            >
+              {{ product.name }}&nbsp;
+            </div>
           </div>
           <div class="type">{{ item0.type }}</div>
-          <div class="unit" >{{ item0.team == null? "——":item0.team }}</div>
+          <div class="unit">{{ item0.team == null ? "——" : item0.team }}</div>
           <div class="orderStatus">{{ item0.status }}</div>
           <!-- 关于金额的计算方式 ？-->
           <div class="payment">{{ currency(item0.payment).format() }}</div>
@@ -86,16 +86,17 @@
             </span>
             <template #dropdown>
               <el-dropdown-menu>
-                <el-dropdown-item :disabled="item0.status == '待付款'? false:true" @click="toPay(item0.id, item0)">
-                  <div class="toOrderInfo">
-                   继续支付
-                  </div>
+                <el-dropdown-item
+                  :disabled="item0.status == '待付款' ? false : true"
+                  @click="toPay(item0.id, item0)"
+                >
+                  <div class="toOrderInfo">继续支付</div>
                 </el-dropdown-item>
                 <el-dropdown-item @click="toOrderInfo(item0.id)">
                   <div class="toOrderInfo">
                     {{ $t("order.checkDetail") }}
                   </div>
-                  </el-dropdown-item>
+                </el-dropdown-item>
                 <!-- <el-dropdown-item disabled>Action 4</el-dropdown-item>
                 <el-dropdown-item divided>Action 5</el-dropdown-item> -->
               </el-dropdown-menu>
@@ -105,6 +106,7 @@
       </div>
       <div class="pagination">
         <el-pagination
+          :hide-on-single-page="true"
           background="#004ea2"
           layout="prev,pager,next"
           :total="orderList.length"
@@ -153,7 +155,7 @@ export default {
   methods: {
     // 获取订单
     async getOrders() {
-      await this.$http
+       await this.$http
         .get("/order", {
           params: {
             page: 1,
@@ -173,48 +175,61 @@ export default {
         });
     },
     // 远端修改，后重新获取
-    async delProduct() {
-      if (this.$data.checkedOrder.length !== 0) {
+    delProduct() {
+      if (this.$data.checkedOrder.length === 0) {
+        this.$message({
+          message: "未选择商品",
+          // type: "success",
+        });
+      } else if (this.$data.checkedOrder.length !== 0) {
         this.$data.checkall = false;
         this.$data.checkedOrder = [];
-        this.$data.orderList.forEach(async (item) => {
-          if (item.checked === true) {
-            await this.$http
-              .get("/delOrder", {
-                params: {
-                  order_no: item.id,
-                },
-              })
-              //回调函数
-              .then((res) => {
-                if (res.data.code == 20000) {
-                  this.$message({
-                    message: "删除成功",
-                    type: "success",
-                  });
-                } else {
-                  this.$message({
-                    message: res.data.msg,
-                    type: "error",
-                  });
-                }
-              })
-              .catch((err) => {
+        // this.delPost(this.orderList).then(() => {
+        //   this.getOrders();
+        // });
+        this.delPost(this.orderList)
+        //  this.getOrders()
+        // this.$data.reload ++;
+        // await this.getOrders();
+        // await this.addChecked();
+        // this.$data.count = this.$data.orderList.length;
+      }
+    },
+     delPost(orderList) {
+      orderList.forEach((item) => {
+        if (item.checked === true) {
+          this.$http
+            .get("/delOrder", {
+              params: {
+                order_no: item.id,
+              },
+            })
+            //回调函数
+            .then((res) => {
+              if (res.data.code == 20000) {
                 this.$message({
-                  message: "未知错误!",
+                  message: "删除成功",
+                  type: "success",
+                });
+
+                this.getOrders()
+              } else {
+                this.$message({
+                  message: res.data.msg,
                   type: "error",
                 });
-                console.log("err", err);
+              }
+            })
+            .catch((err) => {
+              this.$message({
+                message: "未知错误!",
+                type: "error",
               });
-          }
-        });
-        await this.getOrders();
-        this.$data.reload ++;
-        await this.addChecked();
-        this.$data.count = this.$data.orderList.length;
-      
-      }
-      
+              console.log("err", err);
+            });
+        }
+      });
+      return 1
     },
     //复选框相关
     // 添加 checked属性
@@ -227,7 +242,7 @@ export default {
     checkAll() {
       // 数组为空时无法点击
       if (this.$data.orderList.length === 0) {
-        this.$data.checkall = false;
+        this.checkall = false;
       }
       // 实现全选
       if (this.$data.checkall === true) {
@@ -256,7 +271,7 @@ export default {
         });
       }
       //取消全选状态
-      if (_this.$data.checkedOrder.length === this.$data.orderList.length) {
+      if (this.$data.checkedOrder.length === this.$data.orderList.length) {
         this.$data.checkall = true;
       } else {
         this.$data.checkall = false;
@@ -273,7 +288,6 @@ export default {
       // console.log(`当前页: ${val}`);
     },
     toPay(id, obj) {
-      
       localStorage.setItem("oneOrder", JSON.stringify(obj));
       localStorage.setItem("orderNo", id);
       this.$router.push({
@@ -294,7 +308,7 @@ export default {
 }
 .top {
   width: 100%;
-  margin-bottom:20px;
+  margin-bottom: 20px;
   border-bottom: 2px solid #eaeaec;
   display: flex;
   justify-content: space-between;
@@ -328,7 +342,6 @@ export default {
 }
 /* 表头 --*/
 .listHead {
-  
   width: 100%;
   height: 44px;
   margin: 20px 0 0;
@@ -337,11 +350,11 @@ export default {
 }
 .quanxuan {
   /* width: 60px; */
-    /* top: 5px;
+  /* top: 5px;
   position: absolute; */
   display: flex;
   align-items: center;
-  margin: 0 0px 0 20px; 
+  margin: 0 0px 0 20px;
   flex: 0.6;
 }
 /* ！复选框 */
@@ -427,7 +440,7 @@ export default {
   top: 20px;
   left: 28px; */
   /* width: 18px; */
-  height: 18px; 
+  height: 18px;
   margin-left: 20px;
   flex: 0.6;
   /* border: 1px solid #999; */
@@ -482,13 +495,13 @@ export default {
   font-weight: 600;
 }
 .myOrder >>> .el-dropdown {
-   position: absolute;
+  position: absolute;
   right: 24px;
   bottom: 30px;
 }
 .myOrder >>> .el-dropdown-link {
-    cursor: pointer;
-     
+  cursor: pointer;
+
   color: #004ea2;
 }
 .toOrderInfo {

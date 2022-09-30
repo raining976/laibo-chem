@@ -1,7 +1,7 @@
 // 购物车
 //createDate:2022-07-17
 <template>
-  <div :key="updata">
+  <div :key="load">
     <div class="top">
       <div class="title">
         {{
@@ -255,7 +255,12 @@ export default {
     },
     // 交付的商品
     toPay() {
-      if (this.$data._money > 0) {
+         if(this.$data.checkedCommodities.length === 0) {
+          this.$message({
+                    message: "未选择商品",
+                    // type: "success",
+                  });
+      }else if (this.$data._money > 0) {
         localStorage.setItem(
           "checkBox",
           JSON.stringify(this.$data.checkedCommodities)
@@ -312,7 +317,13 @@ export default {
     },
     // 远端修改，后重新获取
     async delProduct() {
-      if (this.$data.checkedCommodities.length !== 0) {
+      if(this.$data.checkedCommodities.length === 0) {
+          this.$message({
+                    message: "未选择商品",
+                    // type: "success",
+                  });
+      }
+       else if (this.$data.checkedCommodities.length !== 0) {
         this.$data.checkall = false;
         this.$data.checkedCommodities = [];
         this.$data.commodityList.forEach(async (item) => {
