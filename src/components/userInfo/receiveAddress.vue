@@ -265,7 +265,22 @@ export default {
 }
 .eachAddress .address {
   line-height: 30px;
+  height: 150px;
+  overflow-y: auto;
+  word-wrap: break-word;
+  word-break: normal;
 }
+.address::-webkit-scrollbar
+{
+    width:6px;
+}
+.address::-webkit-scrollbar-thumb{
+    width: 6px;
+    height: 30px;
+    border-radius:4px;
+    background-color: #c7c7c9;
+}
+
 .btnBox {
   align-self: flex-end;
   display: flex;
