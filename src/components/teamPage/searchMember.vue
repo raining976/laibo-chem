@@ -35,7 +35,7 @@
           <span class="email">{{ item.email }}</span>
           <span class="phone">{{ item.phone }}</span>
           <span class="privilege">{{ item.privilegeText }}</span>
-          <span class="operation" v-if="myPrivilege == 1 || myPrivilege == 2">
+          <span class="operation" v-if="(myEmail != item.email && myPrivilege == 1) ||( myPrivilege == 2 && myEmail != item.email)||( myPrivilege == 0 && myEmail != item.email)" >
             <i class="blank" v-if="item.privilege == 2"></i>
             <img
               src="../../assets/adminPlus.png"
@@ -61,6 +61,7 @@
               @click="delOpen(index)"
             ></i>
           </span>
+          <span class="operation" v-if="myEmail == item.email || myPrivilege == 2"></span>
         </li>
       </ul>
       <div class="layPage">
@@ -88,10 +89,12 @@ export default {
       keywords: "", // 搜索成员关键字
       isSearch: false, // 是否为搜索成员
       myPrivilege: 0, // 我的权限
+      myEmail:'', // 我的邮箱
     };
   },
   created() {
     this.myPrivilege = localStorage.getItem("privilege");
+    this.myEmail = localStorage.getItem("myEmail")
   },
   mounted() {
     let flag = this.$route.params.flag;

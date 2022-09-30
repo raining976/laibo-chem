@@ -104,6 +104,7 @@ export default {
         if (res.data.code == 20000) {
           localStorage.setItem("privilege", res.data.data.privilege);
           localStorage.setItem("in_team", res.data.data.in_team);
+          localStorage.setItem("myEmail",res.data.data.email)
         }
       });
     }
