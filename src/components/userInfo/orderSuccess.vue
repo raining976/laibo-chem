@@ -1,5 +1,5 @@
 <template>
-    <div class="payCompleted">
+    <div class="orderSuccess">
         <div class="completedPic"><img src="../../assets/dingdan.png" alt=""></div>
         <div class="completedWord">您的订单已经成功支付，订单交易号：{{orderId}}</div>
         <div class="btnBox">
@@ -11,18 +11,18 @@
 </template>
 <script>
 export default {
-  name: "payCompleted",
+  name: "orderSuccess",
   components: "",
   data() {
     return {
       orderId: 1111,
     };
   },
-  created: {
-
+  created() {
+      this.orderId = this.$route.params.orderd;
   },
   methods: {
-     getPayCompleted() {
+     getorderSuccess() {
         
      },
      toCart() {
@@ -36,7 +36,7 @@ export default {
 };
 </script>
 <style scoped>
-.payCompleted {
+.orderSuccess {
     width: 1120px;
     height: 578px;
     display: flex;

@@ -11,7 +11,7 @@ const userInfo = () => import("../views/userInfo.vue");
 const cart = () => import("../components/userInfo/shopCart.vue");
 const setOrder = () => import("../components/userInfo/setOrder.vue");
 const payment = () => import("../components/userInfo/payment.vue");
-const payCompleted = () => import("../components/userInfo/payCompleted.vue");
+const orderSuccess = () => import("../components/userInfo/orderSuccess.vue");
 const order = () => import("../components/userInfo/myOrder.vue");
 const orderInfo = () => import("../components/userInfo/orderInfo.vue");
 const team = () => import("../components/userInfo/team.vue");
@@ -122,9 +122,9 @@ const routes = [
         meta: { requiresAuth: true },
       },
       {
-        path: "/payCompleted/:id",
-        name: "payCompleted",
-        component: payCompleted,
+        path: "/orderSuccess.vue/:id",
+        name: "orderSuccess",
+        component: orderSuccess,
         meta: { requiresAuth: true },
       },
       {

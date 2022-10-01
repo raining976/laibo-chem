@@ -168,8 +168,6 @@ export default {
           else {
           this.$data.orderId = this.$route.params.id;
           this.$data.commodityList = res.data.data.product_params_count;
-          // console.log("ceshi", res.data.data);
-          // console.log("ceshi,shuzu ", this.$data.commodityList);
           }     
         })
         .catch((err) => {

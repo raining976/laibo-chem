@@ -32,7 +32,7 @@
           <div class="unit">{{ item0.team }}</div>
           <div class="orderStatus">{{ item0.status }}</div>
           <!-- 关于金额的计算方式 ？-->
-          <div class="payment">{{ item0.payment }}</div>
+          <div class="payment">{{ cuurency(item0.payment).format() }}</div>
           <div class="review" :class="{ showBtn: item0.status == '待审核' }">
             <div class="agree" @click="reviewOrder('1', item0.id)">
               <img src="../../assets/勾勾.png" alt="" title="同意" />

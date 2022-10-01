@@ -157,7 +157,7 @@ export default {
         sum: "最终金额",
         checkDetail: "查看订单详情",
         toPay: "继续支付",
-        more: "more",
+        more: "更多",
         detail: "订单详情",
         logistic: "物流公司",
         shipping: "发货地址",
