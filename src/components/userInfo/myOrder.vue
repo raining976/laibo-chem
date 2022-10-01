@@ -79,7 +79,7 @@
           <!--  折叠框 -->
           <el-dropdown>
             <span class="el-dropdown-link">
-              更多
+              {{ $t("order.more") }}
               <el-icon class="el-icon--right">
                 <arrow-down />
               </el-icon>
@@ -90,7 +90,7 @@
                   :disabled="item0.status == '待付款' ? false : true"
                   @click="toPay(item0.id, item0)"
                 >
-                  <div class="toOrderInfo">继续支付</div>
+                  <div class="toOrderInfo"> {{ $t("order.toPay") }}</div>
                 </el-dropdown-item>
                 <el-dropdown-item @click="toOrderInfo(item0.id)">
                   <div class="toOrderInfo">
@@ -352,6 +352,7 @@ export default {
   /* top: 5px;
   position: absolute; */
   display: flex;
+  height: 100%;
   align-items: center;
   margin: 0 0px 0 20px;
   flex: 0.6;
@@ -360,14 +361,16 @@ export default {
 .checkAll {
   cursor: pointer;
   width: 18px;
-  height: 18px;
+  /* height: 18px; */
+  line-height: 18px;
   margin: 0 6px 0 0px;
   border: 1px solid #999999;
   border-radius: 2px;
 }
 .word {
   /* width: 65px; */
-  height: 18px;
+  /* height: 18px; */
+  height: 100%;
   font-size: 18px;
   font-family: Microsoft YaHei UI;
   font-weight: 400;

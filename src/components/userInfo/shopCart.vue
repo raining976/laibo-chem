@@ -187,7 +187,6 @@ export default {
     },
   },
   beforeRouteLeave(to, from, next) {
-    console.log(to.name, "Fff");
     this.$data.commodityList.forEach(async (item, index) => {
       if (1) {
         //取消选中的过滤

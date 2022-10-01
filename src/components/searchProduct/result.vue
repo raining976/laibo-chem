@@ -174,12 +174,9 @@ export default {
     };
   },
   created() {
-
-    //  console.log(this.resultBox,"gggg")
   },
   mounted() {
-
-    //  console.log(this.resultBox,"ffff")
+  //  console.log(this.resultBox,"ffff")
     window.scrollTo(0, 0);
   },
   watch: {
@@ -194,12 +191,9 @@ export default {
   },
   methods: {
     addCount() {
-      console.log('this._resultBox',this._resultBox)
-      // let obj = this.resultBox.params
       for(let item of this._resultBox)
         for(let item1 of item.params) {
            Object.assign(item1, { count: 0 });
-           console.log("ggg")
         }   
         
         

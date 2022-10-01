@@ -153,6 +153,8 @@ export default {
         state: "Status",
         sum: "Amount",
         checkDetail: "To view the order details",
+        toPay: "Continue to pay",
+        more: "More",
         detail: "Orderdetail",
         logistic: "APLL",
         shipping: "Ship Address",
