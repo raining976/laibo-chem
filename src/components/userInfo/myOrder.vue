@@ -8,7 +8,7 @@
       </div>
       <div class="deleteBtn">
         <el-tooltip effect="light" content="删除选中商品" placement="top">
-          <i class="el-icon-delete-solid" @click="delProduct()"></i>
+          <i class="el-icon-delete" style="font-size:25px" @click="delProduct()"></i>
         </el-tooltip>
       </div>
     </div>
@@ -149,7 +149,7 @@ export default {
   },
   async created() {
     await this.getOrders();
-    await this.addChecked();
+    this.addChecked();
     this.$data.count = this.$data.orderList.length;
   },
   methods: {
@@ -175,7 +175,7 @@ export default {
         });
     },
     // 远端修改，后重新获取
-    delProduct() {
+   async delProduct() {
       if (this.$data.checkedOrder.length === 0) {
         this.$message({
           message: "未选择商品",
@@ -187,18 +187,18 @@ export default {
         // this.delPost(this.orderList).then(() => {
         //   this.getOrders();
         // });
-        this.delPost(this.orderList)
-        //  this.getOrders()
-        // this.$data.reload ++;
+       await this.delPostReq(this.orderList)
+        await this.getOrders()
+        this.$data.reload ++;
         // await this.getOrders();
-        // await this.addChecked();
-        // this.$data.count = this.$data.orderList.length;
+        this.addChecked();
+        this.$data.count = this.$data.orderList.length;
       }
     },
-     delPost(orderList) {
-      orderList.forEach((item) => {
+    async delPostReq(orderList) {
+      for(let item of orderList) {
         if (item.checked === true) {
-          this.$http
+          await this.$http
             .get("/delOrder", {
               params: {
                 order_no: item.id,
@@ -211,8 +211,7 @@ export default {
                   message: "删除成功",
                   type: "success",
                 });
-
-                this.getOrders()
+                // this.getOrders()
               } else {
                 this.$message({
                   message: res.data.msg,
@@ -228,12 +227,12 @@ export default {
               console.log("err", err);
             });
         }
-      });
-      return 1
+      };
+
     },
     //复选框相关
     // 添加 checked属性
-    async addChecked() {
+     addChecked() {
       this.$data.orderList.forEach((item) => {
         Object.assign(item, { checked: false });
       });

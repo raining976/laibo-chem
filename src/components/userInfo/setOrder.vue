@@ -346,6 +346,7 @@ export default {
         }
       }
     },
+    
     payType(str) {
       this.$data.payWay = str;
       switch (str) {

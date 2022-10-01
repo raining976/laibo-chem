@@ -8,17 +8,14 @@
           $t("userMenu.cart") + "( " + $t("cart.total") + " : " + count + ")"
         }}
       </div>
-      <div class="deleteBtn" >
-        <el-tooltip
-                  effect="light"
-                  content="删除选中商品"
-                  placement="top"
-                >
-                  <i
-                    class="el-icon-delete-solid"
-                   @click="delProduct()"
-                  ></i>
-                </el-tooltip>
+      <div class="deleteBtn">
+        <el-tooltip effect="light" content="删除选中商品" placement="top">
+          <i
+            class="el-icon-delete"
+            style="font-size: 25px"
+            @click="delProduct()"
+          ></i>
+        </el-tooltip>
       </div>
     </div>
     <!-- 以下是购物车信息 -->
@@ -85,7 +82,7 @@
             <div class="price">{{ currency(item0.price).format() }}</div>
             <div class="count">
               <el-input-number
-              type="number"
+                type="number"
                 v-model="item0.count"
                 @click="numChange(item0)"
                 @blur="numCheck(item0)"
@@ -95,7 +92,9 @@
               ></el-input-number>
             </div>
             <!-- 关于金额的计算方式 -->
-            <div class="payment">{{ currency(item0.price * item0.count).format() }}</div>
+            <div class="payment">
+              {{ currency(item0.price * item0.count).format() }}
+            </div>
           </div>
         </div>
       </div>
@@ -188,13 +187,13 @@ export default {
     },
   },
   beforeRouteLeave(to, from, next) {
-    console.log(to.name,"Fff")
+    console.log(to.name, "Fff");
     this.$data.commodityList.forEach(async (item, index) => {
       if (1) {
         //取消选中的过滤
         if (item.count !== this.oldList[index].count) {
           this.$data.isChange = true;
-          return; 
+          return;
           // 此处为失效的
         }
       }
@@ -207,8 +206,8 @@ export default {
         center: true,
       })
         .then(() => {
-         this.saveChange(to.name);
-           next();
+          this.saveChange(to.name);
+          next();
         })
         .catch(() => {
           // this.$message({
@@ -217,10 +216,9 @@ export default {
           // });
           next();
         });
-    }else{
-      next()
+    } else {
+      next();
     }
-
   },
   methods: {
     // setCommodityBox(el) {
@@ -255,12 +253,12 @@ export default {
     },
     // 交付的商品
     toPay() {
-         if(this.$data.checkedCommodities.length === 0) {
-          this.$message({
-                    message: "未选择商品",
-                    // type: "success",
-                  });
-      }else if (this.$data._money > 0) {
+      if (this.$data.checkedCommodities.length === 0) {
+        this.$message({
+          message: "未选择商品",
+          // type: "success",
+        });
+      } else if (this.$data._money > 0) {
         localStorage.setItem(
           "checkBox",
           JSON.stringify(this.$data.checkedCommodities)
@@ -288,14 +286,13 @@ export default {
               })
               //回调函数
               .then((res) => {
-                if (res.data.code == 20000 ) {
-                  if(name !== "setOrder") {
-                        this.$message({
-                    type: "success",
-                    message: "保存更改成功",
-                  });
+                if (res.data.code == 20000) {
+                  if (name !== "setOrder") {
+                    this.$message({
+                      type: "success",
+                      message: "保存更改成功",
+                    });
                   }
-              
                 } else {
                   isSuccess = false;
                   this.$message({
@@ -317,21 +314,19 @@ export default {
     },
     // 远端修改，后重新获取
     async delProduct() {
-      if(this.$data.checkedCommodities.length === 0) {
-          this.$message({
-                    message: "未选择商品",
-                    // type: "success",
-                  });
-      }
-       else if (this.$data.checkedCommodities.length !== 0) {
+      if (this.$data.checkedCommodities.length === 0) {
+        this.$message({
+          message: "未选择商品",
+          // type: "success",
+        });
+      } else if (this.$data.checkedCommodities.length !== 0) {
         this.$data.checkall = false;
         this.$data.checkedCommodities = [];
-        this.$data.commodityList.forEach(async (item) => {
+        for (let item of this.$data.commodityList) {
           if (item.checked === true) {
             await this.$http
               .post("/delCartProduct", {
-                  id: item.id,
-                           
+                id: item.id,
               })
               //回调函数
               .then((res) => {
@@ -355,14 +350,12 @@ export default {
                 console.log("err", err);
               });
           }
-        });
+        }
         await this.getCart();
         this.$data.updata++;
         await this.addChecked();
         this.$data.count = this.$data.commodityList.length;
-      
       }
-      
     },
     //复选框相关
     // 添加 checked属性
@@ -420,18 +413,18 @@ export default {
     },
 
     //对数字输入框进行限制
- channelInputLimit (e) {
-  let key = e.key
-  // 不允许输入'e'和'.'
-  if (key === 'e' || key === '.') {
-    e.returnValue = false
-    return false;
-  }
-  return true;
-},
-// 将数字变化放入已选择数组
+    channelInputLimit(e) {
+      let key = e.key;
+      // 不允许输入'e'和'.'
+      if (key === "e" || key === ".") {
+        e.returnValue = false;
+        return false;
+      }
+      return true;
+    },
+    // 将数字变化放入已选择数组
     numChange(handler) {
-      console.log(handler.count)
+      console.log(handler.count);
       if (handler.checked === true) {
         this.$data.checkedCommodities.forEach((item) => {
           if (item.name === handler.name) item.count = handler.count;
@@ -440,7 +433,7 @@ export default {
     },
     // 防止输入框为空
     numCheck(obj) {
-if(obj.count === NaN||obj.count === undefined )obj.count = 1;
+      if (obj.count === NaN || obj.count === undefined) obj.count = 1;
     },
     // 分页
     handleSizeChange(val) {
@@ -472,11 +465,14 @@ if(obj.count === NaN||obj.count === undefined )obj.count = 1;
 .deleteBtn:hover {
   color: #ff4747;
 }
-
+.deleteBtn >>> [class*=" el-icon-"],
+[class^="el-icon-"] {
+  font-weight: 400;
+}
 .title {
   font-size: 20px;
   font-family: Microsoft YaHei UI;
-  font-weight: bold;
+  font-weight: 600;
   color: #333333;
   margin-right: 50px;
   margin-bottom: 30px;
@@ -684,6 +680,10 @@ if(obj.count === NaN||obj.count === undefined )obj.count = 1;
 .count >>> [class*=" el-icon-"],
 [class^="el-icon-"] {
   font-weight: 600;
+}
+.deleteBtn >>> [class*=" el-icon-"],
+[class^="el-icon-"] {
+  font-weight: 400;
 }
 .count >>> .el-input-number__decrease {
   left: 0;

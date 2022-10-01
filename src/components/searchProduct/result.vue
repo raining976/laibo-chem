@@ -5,7 +5,7 @@
       <!-- v-for模块 -->
       <div
         class="resultBox"
-        v-for="(item, index) in resultBox.slice(
+        v-for="(item, index) in _resultBox.slice(
           (currentPage - 1) * pagesize,
           currentPage * pagesize
         )"
@@ -41,7 +41,7 @@
         <!-- 价格表格 -->
         <div class="collapse">
           <!-- activeNames[index + (currentPage - 1) * pagesize].node -->
-          <el-collapse v-model="activeNames" @click="getTable(index)" @change="collapseChange">
+          <el-collapse v-model="activeNames" @change="collapseChange">
             <el-collapse-item :name="item.id">
               <template #title>
                 <span class="textBox">价格与库存&nbsp;</span
@@ -68,7 +68,7 @@
                     <tbody>
                       <tr
                         class="tableContent"
-                        v-for="(item1, index) in productData"
+                        v-for="(item1, index) in item.params"
                         :key="index"
                       >
                         <td class="fenziliang">
@@ -82,7 +82,7 @@
                           <div>0{{ store }}</div>
                         </td> -->
                         <td class="rmb">
-                          <div>{{ item1.price }}</div>
+                          <div>{{ currency(item1.price).format() }}</div>
                         </td>
                         <td class="count">
                           <div class="countBtnBox">
@@ -100,7 +100,7 @@
                     </tbody>
                   </el-scrollbar>
                 </table>
-                <div class="addCart" @click="addCart()">
+                <div class="addCart" @click="addCart(index)">
                   {{ $t("search.add")
                   }}<img src="../../assets/gouwuche.png" alt="" />
                 </div>
@@ -116,7 +116,7 @@
         v-model="currentPage"
         background="#004ea2"
         layout="prev,pager,next"
-        :total="resultBox.length"
+        :total="_resultBox.length"
         :page-size="pagesize"
         :current-page="currentPage"
         @change="handleCurrentChange"
@@ -143,7 +143,7 @@ export default {
       pagesize: 4, // 每页显示多少条
       currentPage: 1, // 当前页数
       pastId: 0, // 记录产品id
-      resultBigBox: [
+      _resultBox: [
         // {
         //   pic: require("../../assets/p22.png"),
         //   name_zh: "2-(三丁基锡)-5-三氟甲基吡啶",
@@ -153,7 +153,7 @@ export default {
         //   casCode: "",
         //   mdlCode: "",
         // },
-      ],
+      ], // 承载 props的数据
       productData: [
         // {
         //   fenziliang: "2016-05-03",
@@ -178,64 +178,36 @@ export default {
     //  console.log(this.resultBox,"gggg")
   },
   mounted() {
-    //
+
     //  console.log(this.resultBox,"ffff")
     window.scrollTo(0, 0);
   },
   watch: {
-    // resultBox: {
-    //   handler(newObj) {
-    //     // this.$nextTick(()=> {
-    //       this.$data.currentPage = 1;
-    //     // let length = this.$data.resultBox.length;
-    //     let i = 0;
-    //     while(newObj.length !== i ) {
-    //       this.$data.activeNames.push({node: "(i+1) + '' "});
-    //       i ++;
-    //     }
-    //     console.log(this.$data.activeNames)
-    //     // })
-
-    //   },
-    // immediate:true,
-    // deep:true,
-    // },
-    productData: {
+   resultBox: {
       handler() {
-        this.$data.productData.forEach((item) => {
-          Object.assign(item, { count: 0 });
-        });
+      this._resultBox = JSON.parse(JSON.stringify(this.resultBox));
+        this.addCount()
       },
       immediate: true,
       deep: true,
     },
   },
   methods: {
+    addCount() {
+      console.log('this._resultBox',this._resultBox)
+      // let obj = this.resultBox.params
+      for(let item of this._resultBox)
+        for(let item1 of item.params) {
+           Object.assign(item1, { count: 0 });
+           console.log("ggg")
+        }   
+        
+        
+    },
     collapseChange(val){
-      console.log('val',val)
+      // console.log('val',val)
     },
-    getTable(idx) {
-      const id = this.resultBox[idx].id
-      if (this.$data.pastId !== id) {
-        this.$http
-          .get("/product/detail", {
-            params: {
-              id: id,
-            },
-          })
-          //回调函数
-          .then((res) => {
-            this.$data.productData = res.data.data.params;
-            // this.productDatas.id = res.data.data.params
-            Object.assign(this.productDatas, {id:res.data.data.params});
-            console.log('this.productDatas',this.productDatas)
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      }
-      this.$data.pastId = id;
-    },
+
     //
     toProductInfo(code) {
       this.$router.push({
@@ -246,7 +218,7 @@ export default {
       });
     },
     // 加入购物车
-    addCart() {
+   async addCart(index) {
       if (!localStorage.getItem("token")) {
         this.$message({
           message: "请先登录",
@@ -255,9 +227,23 @@ export default {
       } else {
         let isPost = false;
         let length = this.$data.productData.length;
-        this.$data.productData.forEach((item, index) => {
+        for(let item of this.$data._resultBox[index].params) {
           if (item.count !== 0) {
-            this.$http
+           await this.addCartReq(item);
+            isPost = true;
+          }
+        };
+        if (isPost === false) {
+            console.log(index + 1, length, isPost, "fffff");
+            this.$message({
+              message: "未选择数量!",
+              // type: "error",
+            });
+          }
+      }
+    },
+    async addCartReq(item) {
+     await this.$http
               .post("/cart", {
                 product_params_id: item.id,
                 count: item.count,
@@ -265,7 +251,6 @@ export default {
               //回调函数
               .then((res) => {
                 if (res.data.code == 20000) {
-                  isPost = true;
                   this.$message({
                     message: "添加成功",
                     type: "success",
@@ -284,15 +269,10 @@ export default {
                 });
                 console.log("err", err);
               });
-          } else if (index + 1 === length && isPost === false) {
-            console.log(index + 1, length, isPost, "fffff");
-            this.$message({
-              message: "未选择数量!",
-              // type: "error",
-            });
-          }
-        });
-      }
+    },
+        //商品数量调节
+    handleChange(value) {
+      // console.log(value);
     },
     // 分页
     handleSizeChange(val) {

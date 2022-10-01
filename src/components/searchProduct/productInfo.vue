@@ -226,7 +226,7 @@ export default {
         let isPost = false;
         // let length = this.$data.productData.params.length;
 
-      for(let item of this.$data.productData.params) {
+     for(let item of this.$data.productData.params) {
           if (item.count !== 0) {
          await this.$http
               .post("/cart", {
