@@ -170,6 +170,7 @@ export default {
         itemNo: "货号",
         casNum: "CAS编号",
         fenziliang: "分子量",
+        jiegoushi: "结构式",
     },
     // 购物车
     cart: {

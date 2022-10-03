@@ -257,9 +257,7 @@ export default {
       });
     },
     toShopCart() {
-      this.$router.push({
-        path: "cart",
-      });
+      this.$router.go(-1)
     },
     toProductInfo(code) {
       this.$router.push({
@@ -405,8 +403,8 @@ export default {
               });
               this.$data.orderId = res.data.data.order_no;
               this.$router.push({
-                // path: "/orderSuccess/" + this.$data.orderId,
-                path: "/order",
+                path: "/orderSuccess/" + this.$data.orderId,
+                // path: "/order",
               })
             } else {
               this.$message({

@@ -122,7 +122,7 @@ const routes = [
         meta: { requiresAuth: true },
       },
       {
-        path: "/orderSuccess.vue/:id",
+        path: "/orderSuccess/:id",
         name: "orderSuccess",
         component: orderSuccess,
         meta: { requiresAuth: true },

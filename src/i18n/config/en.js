@@ -167,7 +167,7 @@ export default {
         itemNo: "Product code",
         casNum: "The CAS number",
         fenziliang: "molecular weight",
-        
+        jiegoushi: "Linear ormula",
     },
     // 购物车
     cart: {
