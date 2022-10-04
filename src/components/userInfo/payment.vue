@@ -8,7 +8,7 @@
         <div class="returnBtn" @click="toShopCart()">{{ $t("base.back") }}</div>
       </div>
 
-      <div class="content">
+      <div class="content"> 
         <div class="addressBox">
           <ul class="addressList">
             <!-- v-for -->
