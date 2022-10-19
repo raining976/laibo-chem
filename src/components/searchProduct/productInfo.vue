@@ -9,7 +9,7 @@
           <div class="productName_zh">{{ productData.name }}</div>
           <div class="productName_en">{{ productData.enName }}</div>
           <!-- 浓度 -->
-          <div class="concentration">{{ productData.guige }}</div>
+          <div class="concentration"><span v-html="productData.guige != null ?productData.guige:'——'"></span></div>
           <div class="solidLine2"></div>
           <!-- 详细信息 -->
           <div class="details">
@@ -17,7 +17,7 @@
             <div class="oneDetail">
               <div class="detailName">{{ $t("product.casNum") }}:&nbsp;</div>
               <div class="detailContent" :title="productData.cas">
-                {{ productData.cas }}
+                <span v-html="productData.cas != null ?productData.cas:'——'"></span>
               </div>
             </div>
 
@@ -25,7 +25,7 @@
               <div class="detailName">
                 {{ $t("product.wuhuaxingzhi") }}:&nbsp;
               </div>
-              <div class="detailContent">{{ productData.properties }}</div>
+              <div class="detailContent"><span v-html="productData.properties != null ?productData.properties:'——'"></span></div>
             </div>
 
             <div class="oneDetail">
@@ -33,7 +33,7 @@
               <div
                 class="detailContent"
                 v-html="
-                  productData.linear_formula.replace(/(\d+)/g, '<sub>$1</sub>')
+                  productData.linear_formula != null ?productData.linear_formula.replace(/(\d+)/g, '<sub>$1</sub>'): '——'
                 "
               ></div>
             </div>
@@ -42,45 +42,45 @@
               <div class="detailName">
                 {{ $t("product.meltingPoint") }}:&nbsp;
               </div>
-              <div class="detailContent">{{ productData.melting }}</div>
+              <div class="detailContent"><span v-html="productData.melting != null ?productData.melting:'——'"></span></div>
             </div>
 
             <div class="oneDetail">
               <div class="detailName">
                 {{ $t("product.fenziliang") }}:&nbsp;
               </div>
-              <div class="detailContent">{{ productData.formula_weight }}</div>
+              <div class="detailContent"><span v-html="productData.formula_weight != null ?productData.formula_weight:'——'"></span></div>
             </div>
 
             <div class="oneDetail">
               <div class="detailName">
                 {{ $t("product.boilingPoint") }}:&nbsp;
               </div>
-              <div class="detailContent">{{ productData.boiling }}</div>
+              <div class="detailContent"><span v-html="productData.boiling != null ?productData.boiling:'——'"></span></div>
             </div>
 
             <div class="oneDetail">
               <div class="detailName">
                 {{ $t("product.einecsCode") }}:&nbsp;
               </div>
-              <div class="detailContent">{{ productData.EINECS }}</div>
+              <div class="detailContent"><span v-html="productData.EINECS != null ?productData.EINECS:'——'"></span></div>
             </div>
 
             <div class="oneDetail">
               <div class="detailName">{{ $t("product.midu") }}:&nbsp;</div>
-              <div class="detailContent">{{ productData.density }}</div>
+              <div class="detailContent"><span v-html="productData.density != null ?productData.density:'——'"></span></div>
             </div>
 
             <div class="oneDetail">
               <div class="detailName">{{ $t("product.mdl") }}:&nbsp;</div>
-              <div class="detailContent">{{ productData.mdl }}</div>
+              <div class="detailContent"><span v-html="productData.mdl != null ?productData.mdl:'——'"></span></div>
             </div>
 
             <div class="oneDetail">
               <div class="detailName">
                 {{ $t("product.storageCondition") }}:&nbsp;
               </div>
-              <div class="detailContent">{{ productData.storage }}</div>
+              <div class="detailContent"><span v-html="productData.storage != null ?productData.storage:'——'"></span></div>
             </div>
           </div>
           <!-- 价格表格 -->
@@ -331,6 +331,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-top: 100px;
 }
 .solidLine1 {
   width: 1410.05px;

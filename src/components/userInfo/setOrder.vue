@@ -201,6 +201,10 @@ export default {
     this.getAddress();
     this.$data.commodityList = JSON.parse(localStorage.getItem("checkBox"));
   },
+    mounted() {
+    //
+    window.scrollTo(0, 0);
+  },
   watch: {
     isReloadAddress(val) {
       if (val) {
@@ -253,9 +257,7 @@ export default {
       });
     },
     toShopCart() {
-      this.$router.push({
-        path: "cart",
-      });
+      this.$router.go(-1)
     },
     toProductInfo(code) {
       this.$router.push({
@@ -400,6 +402,10 @@ export default {
                 type: "success",
               });
               this.$data.orderId = res.data.data.order_no;
+              this.$router.push({
+                path: "/orderSuccess/" + this.$data.orderId,
+                // path: "/order",
+              })
             } else {
               this.$message({
                 message: res.data.msg,
@@ -495,6 +501,20 @@ export default {
 }
 .eachAddress .address {
   line-height: 30px;
+  height: 150px;
+  overflow-y: auto;
+  word-wrap: break-word;
+  word-break: normal;
+}
+.address::-webkit-scrollbar
+{
+    width:6px;
+}
+.address::-webkit-scrollbar-thumb{
+    width: 6px;
+    height: 30px;
+    border-radius:4px;
+    background-color: #c7c7c9;
 }
 .btnBox {
   align-self: flex-end;

@@ -44,7 +44,7 @@ export default {
     // 主页
     home: {
         searchTip: "Please enter the product code, CAS code, or structured query keywords",
-        toILaiBoPlus: "enter the iLabplus platform",
+        toILaiBoPlus: "the iLabplus platform",
         product: "Products",
         sort: 'Categories',
         hot: "Hot",
@@ -167,7 +167,7 @@ export default {
         itemNo: "Product code",
         casNum: "The CAS number",
         fenziliang: "molecular weight",
-        
+        jiegoushi: "Linear ormula",
     },
     // 购物车
     cart: {

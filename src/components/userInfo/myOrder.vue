@@ -152,6 +152,10 @@ export default {
     this.addChecked();
     this.$data.count = this.$data.orderList.length;
   },
+    mounted() {
+    //
+    window.scrollTo(0, 0);
+  },
   methods: {
     // 获取订单
     async getOrders() {
@@ -361,7 +365,7 @@ export default {
 .checkAll {
   cursor: pointer;
   width: 18px;
-  /* height: 18px; */
+  height: 18px;
   line-height: 18px;
   margin: 0 6px 0 0px;
   border: 1px solid #999999;
@@ -370,7 +374,7 @@ export default {
 .word {
   /* width: 65px; */
   /* height: 18px; */
-  height: 100%;
+  /* height: 100%; */
   font-size: 18px;
   font-family: Microsoft YaHei UI;
   font-weight: 400;

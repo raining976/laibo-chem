@@ -22,19 +22,19 @@
               <!-- v-for模块 -->
 
               <div class="fenziliang _data">
-                {{ $t("order.fenziliang") + "：" }}{{ item.formula_weight }}
+                {{ $t("order.fenziliang") + "：" }}<span v-html="item.formula_weight != null ?item.formula_weight
+                :'——'"></span>
               </div>
               <div class="jiegoushi _data">
-                结构式：<span
+                {{ $t("order.jiegoushi") + "：" }}<span
                   v-html="
-                    item.linear_formula.replace(/(\d+)/g, '<sub>$1</sub>')
-                  "
+                    item.linear_formula != null ?item.linear_formula.replace(/(\d+)/g, '<sub>$1</sub>'):'——'"
                 ></span>
               </div>
               <div class="CAScode _data">
-                {{ $t("order.casNum") + "：" }}{{ item.cas }}
+                {{ $t("order.casNum") + "：" }}<span v-html="item.cas != null ?item.cas:'——'"></span>
               </div>
-              <div class="MDLcode _data">MDL号：{{ item.mdl }}</div>
+              <div class="MDLcode _data">MDL号：<span v-html="item.mdl != null ?item.mdl:'——'"></span></div>
             </div>
           </div>
         </div>
@@ -112,7 +112,6 @@
     </div>
     <div class="pagination">
       <el-pagination
-        :hide-on-single-page="true"
         v-model="currentPage"
         background="#004ea2"
         layout="prev,pager,next"
@@ -183,6 +182,7 @@ export default {
    resultBox: {
       handler() {
       this._resultBox = JSON.parse(JSON.stringify(this.resultBox));
+      console.log(this._resultBox,";llll")
         this.addCount()
       },
       immediate: true,
@@ -310,6 +310,7 @@ export default {
 /* 下面是搜索结果的样式 */
 .resultPage {
   margin: 0 160px 0 0;
+  /* padding-top: 100px; */
 }
 .tip {
   width: 1120px;
@@ -324,7 +325,7 @@ export default {
 .resultBigBox {
   width: 1120px;
   /* min-height: 1240px; */
-  min-height: 200px;
+  min-height: 600px;
   overflow: hidden;
 }
 .resultBox {

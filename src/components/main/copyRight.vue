@@ -8,7 +8,7 @@
       <div class="red">
         本网站销售的所有产品仅用于工业应用或者科学研究等非医疗目的，不可用于人类或动物的临床诊断或治疗，非药用，非食用。
       </div>
-      <div class="blue bottom" >
+      <div class="blue bottom">
         <span>沪公网安备xxxxxxxxxxxxxxxxxxx号</span>
         <span>危险品化学经营许可证（带存储）</span>
       </div>
@@ -28,7 +28,7 @@ export default {
   align-items: center;
   width: 100%;
   height: 190px;
-  background: #ffffff;
+  background: #f7f7f7;
 }
 .content {
   display: flex;
@@ -38,8 +38,8 @@ export default {
   width: 900px;
   margin: 0 auto;
 }
-.content > div{
-margin-top: 20px;
+.content > div {
+  margin-top: 20px;
 }
 .blue {
   font-size: 14px;
@@ -53,7 +53,7 @@ margin-top: 20px;
   font-weight: bold;
   color: #fe2c2c;
 }
-.bottom{
+.bottom {
   display: flex;
   justify-content: space-between;
   width: 500px;

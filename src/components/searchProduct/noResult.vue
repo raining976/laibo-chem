@@ -16,7 +16,7 @@ export default {
 <style scoped>
 .noResult {
     width: 1120px;
-    height: 578px;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;

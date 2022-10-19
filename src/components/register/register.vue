@@ -422,6 +422,7 @@ export default {
   align-items: center;
   width: 100%;
   height: 900px;
+  padding-top: 100px;
 }
 .content {
   display: flex;

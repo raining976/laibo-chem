@@ -1,42 +1,17 @@
 <template>
   <div class="appFooter">
     <div class="h">
-      <div class="contactUsBox">
-        <!-- 地址部分 -->
-        <div class="corpAddress">
-          <div class="logoBox">
-            <img src="../../assets/logo2.png" alt="" />
-          </div>
-          <div class="textBox">
-            <p class="address">{{ corpAddress }}</p>
-          </div>
-        </div>
-        <!-- /地址部分 -->
-        <!-- 联系我们部分 -->
-        <div class="contractUs">
-          <h3 class="title">{{ contractUs }}</h3>
-          <span class="line"></span>
-          <div class="iconBox">
-            <ul class="iconUl">
-              <li class="eachIcon" v-for="(icon, index) in icons" :key="index">
-                <img :src="icon.url" :title="icon.msg" :alt="icon.msg" />
-              </li>
-            </ul>
-          </div>
-        </div>
-        <!-- /联系我们部分 -->
-      </div>
-      <!-- 右侧列表部分 -->
+      <!-- 左侧列表部分 -->
       <div class="listBlock">
-        <!-- 技术研发 -->
-        <ul class="eachMenu tech">
-          <h2 class="menuTitle">{{ tech }}</h2>
+        <!-- 人才招聘 -->
+        <ul class="eachMenu joinUS">
+          <h2 class="menuTitle">{{ joinUS }}</h2>
           <span class="line"></span>
-          <li class="menuLi" v-for="(tech, index) in techs" :key="index">
-            {{ tech.name }}
+          <li class="menuLi" v-for="(join, index) in joins" :key="index">
+            {{ join.name }}
           </li>
         </ul>
-        <!-- /技术研发 -->
+        <!-- /人才招聘 -->
         <!-- 合作高校 -->
         <ul class="eachMenu cooperationSchool">
           <h2 class="menuTitle">{{ cooperationSchool }}</h2>
@@ -56,17 +31,32 @@
           </li>
         </ul>
         <!-- /关于我们 -->
-        <!-- 人才招聘 -->
-        <ul class="eachMenu joinUS">
-          <h2 class="menuTitle">{{ joinUS }}</h2>
-          <span class="line"></span>
-          <li class="menuLi" v-for="(join, index) in joins" :key="index">
-            {{ join.name }}
-          </li>
-        </ul>
-        <!-- /人才招聘 -->
       </div>
-      <!-- /右侧列表部分 -->
+      <!-- /左侧列表部分 -->
+      <div class="contactUsBox">
+        <!-- 地址部分 -->
+        <!-- <div class="corpAddress">
+          <div class="logoBox">
+            <img src="../../assets/logo2.png" alt="" />
+          </div>
+          <div class="textBox">
+            <p class="address">{{ corpAddress }}</p>
+          </div>
+        </div> -->
+        <!-- /地址部分 -->
+        <!-- 联系我们部分 -->
+        <div class="contractUs">
+          <h3 class="title">{{ contractUs }}</h3>
+          <div class="iconBox">
+            <ul class="iconUl">
+              <li class="eachIcon" v-for="(icon, index) in icons" :key="index">
+                <img :src="icon.url" :title="icon.msg" :alt="icon.msg" />
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!-- /联系我们部分 -->
+      </div>
     </div>
   </div>
 </template>
@@ -101,19 +91,9 @@ export default {
           msg: "Twitter",
         },
       ],
-      tech: "技术研发",
       cooperationSchool: "合作高校",
       aboutUs: "关于我们",
       joinUS: "人才招聘",
-      // 技术研发
-      techs: [
-        {
-          name: "中间品",
-        },
-        {
-          name: "低值消耗品",
-        },
-      ],
       // 合作高校
       schools: [
         {
@@ -143,6 +123,10 @@ export default {
           text: "labservice@188.com",
         },
         {
+          icon: require("../../assets/youxiang2.png"),
+          text: "postmaster@laibochem.com",
+        },
+        {
           icon: require("../../assets/dizhi.png"),
           text: "山东省青岛市高新区同顺路8号青岛网谷合心园2号楼902A",
         },
@@ -151,9 +135,6 @@ export default {
       joins: [
         {
           name: "人才自荐",
-        },
-        {
-          name: "公司近况介绍",
         },
       ],
     };
@@ -164,90 +145,99 @@ export default {
 <style scoped>
 .appFooter {
   width: 100%;
-  height: 555px;
+  height: 21.35vw;
   background: #f7f7f7;
 }
 .h {
   display: flex;
   justify-content: space-between;
-  width: 72%;
+  padding: 0 7.92vw;
   margin: 0 auto;
 }
 .h > div {
-  margin-top: 45px;
+  margin-top: 4.43vw;
 }
 .corpAddress {
-  width: 319px;
-  font-size: 14px;
+  width: 16.61vw;
+  font-size: 0.73vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #666666;
 }
 .textBox {
-  margin-top: 20px;
+  margin-top: 1.04vw;
 }
 .contractUs {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-start;
-  width: 240px;
-  height: 110px;
-  margin-top: 80px;
+  justify-content: flex-start;
+  align-items: center;
+  width: 17.19vw;
 }
-.line {
-  width: 33px;
-  height: 1px;
-  background: var(--color);
-  border: 1.5px solid var(--color);
+.contractUs .title {
+  font-size: 1.25vw;
+  font-family: Microsoft YaHei UI;
+  font-weight: bold;
+  width: 13.65vw;
+  height: 4.74vw;
+  background: #004ea2;
+  border-radius: 2.34vw;
+  text-align: center;
+  line-height: 4.74vw;
+  color: #fff;
+  margin-bottom: 2.34vw;
+  cursor: pointer;
 }
 .iconUl {
   display: flex;
   justify-content: space-between;
-  width: 230px;
+  width: 11.98vw;
 }
 .eachIcon {
   cursor: pointer;
   transition: all 0.3s;
-  border-radius: 24px;
+  border-radius: 1.25vw;
+  width: 2.08vw;
+  height: 2.08vw;
 }
 .eachIcon:hover {
   transform: scale(1.1);
-  box-shadow: 0px 1px 24px -9px #919191;
-  --webkit-box-shadow: 0px 1px 24px -9px #919191;
-  --moz-box-shadow: 0px 1px 24px -9px #919191;
+  box-shadow: 0vw 0.05vw 1.25vw -0.47vw #919191;
+  --webkit-box-shadow: 0vw 0.05vw 1.25vw -0.47vw #919191;
+  --moz-box-shadow: 0vw 0.05vw 1.25vw -0.47vw #919191;
 }
 .listBlock {
-  width: 750px;
+  width: 48.44vw;
   display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  justify-content: flex-start;
 }
 .eachMenu {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  width: 250px;
+  width: 16.15vw;
 }
 .menuTitle {
-  font-size: 24px;
+  font-size: 1.35vw;
+  font-family: Microsoft YaHei UI;
+  font-weight: bold;
   font-family: Microsoft YaHei UI;
   font-weight: bold;
   color: #4a4a4a;
-  margin-bottom: 27px;
+  margin-bottom: 1.41vw;
 }
 .menuLi {
   display: flex;
-  margin-top: 19px;
-  font-size: 14px;
+  margin-top: 0.99vw;
+  font-size: 1.04vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #666666;
 }
 .menuLi img {
-  margin-right: 16px;
+  margin-right: 0.83vw;
 }
-.cooperationSchool .menuLi:last-child{
+.cooperationSchool .menuLi:last-child {
   cursor: pointer;
   color: #383838;
 }

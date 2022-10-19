@@ -1,109 +1,129 @@
 <template>
   <div class="newsCenter">
-    <div class="title">
-      <span style="color: #004ea2">{{ $t("home.news") }}</span
-      >{{ $t("home.center") }}
-    </div>
-    <div class="newsBigBox">
-      <!-- 下为v-for模块 -->
-      <div class="newsBox" v-for="(item, index) in newsBox" :key="index">
-        <div class="newsType">
-          <div class="sign">
-            <img src="../../assets/internet.png" alt="" />
+    <div class="h">
+      <div class="title">
+        <span>新闻中心</span>
+        <span class="line"></span>
+        <span>NEWS</span>
+      </div>
+      <div class="contentBox">
+        <!-- 公司新闻 -->
+        <div class="newsBox">
+          <div class="topBox">
+            <h3>公司新闻</h3>
+            <div class="moreBtn">更多新闻 +</div>
           </div>
-          <div class="type">{{ item.type }}</div>
+          <ul class="newsList articleList">
+            <li v-for="(news, index) in newsList" :key="index" data-aos="flip-up">
+              <div class="timeBox">
+                <div class="day">{{ news.day }}</div>
+                <div class="yearMonth">{{ news.yearMonth }}</div>
+              </div>
+              <div class="articleInfo">
+                <h4 class="articleTitle">
+                  {{ news.title }}
+                </h4>
+                <p class="articleIntro">
+                  {{ news.intro }}
+                </p>
+                <span class="detailBtn"> 查看详情 </span>
+              </div>
+            </li>
+          </ul>
         </div>
-
-        <div class="dashedLine"></div>
-        <!-- 图片（不知道要不要用轮播 -->
-        <div class="newsPic"><img :src="item.pic" alt="" /></div>
-
-        <!-- 下为-v-for模块 -->
-        <div
-          class="newsContent"
-          v-for="(item1, index) in item.newsList"
-          :key="index"
-        >
-          <!-- 内容 -->
-          <div class="news">
-            <div
-              class="newsTitle"
-              :title="item1.title"
-              @click="toContent(item1.id, item.type)"
-            >
-              {{ item1.title }}
-            </div>
-            <div class="pubdate">{{ item1.update }}</div>
+        <!-- /公司新闻 -->
+        <!-- 技术文章 -->
+        <div class="techArticleBox">
+          <div class="topBox">
+            <h3>技术文章</h3>
+            <div class="moreBtn">更多新闻</div>
           </div>
-          <div class="dashedLine"></div>
+          <ul class="newsList articleList">
+            <li v-for="(news, index) in newsList" :key="index">
+              <div class="timeBox">
+                <div class="day">{{ news.day }}</div>
+                <div class="yearMonth">{{ news.yearMonth }}</div>
+              </div>
+              <div class="articleInfo">
+                <h4 class="articleTitle">
+                  {{ news.title }}
+                </h4>
+                <p class="articleIntro">
+                  {{ news.intro }}
+                </p>
+                <span class="detailBtn"> 查看详情 </span>
+              </div>
+            </li>
+          </ul>
         </div>
-        <div class="newsMore" @click="toMoreNewsArticle(item.type)">
-          {{ $t("home.readMore") }}&nbsp;>
-        </div>
+        <!-- /技术文章 -->
       </div>
     </div>
   </div>
 </template>
-<script>
+
+<script >
+
 export default {
   name: "newsCenter",
   components: "",
   data() {
     return {
-      newsBox: [
+      newsList: [
         {
-          type: this.$t("home.companyNews"),
-          pic: require("../../assets/t5.png"),
-          newsList: [
-            // {
-            //   newsTitle: "莱博斯威2022春节发货通知",
-            //   pubdate: "01-20",
-            // },
-          ],
+          title: "莱博斯威2022春节发货通知",
+          yearMonth: "2022-10",
+          day: "10",
+          intro:
+            "一些内容一些内容一些内容一些内容一些内容一些内容一些一些内容一些内容一些内容一些内容一些内些内容一些内容一些内些内容一些内容一些内容一些内...",
         },
         {
-          type: this.$t("home.technicalArticle"),
-          pic: require("../../assets/t5.png"),
-          newsList: [
-            // {
-            //   newsTitle: "莱博斯威2022春节发货通知",
-            //   pubdate: "01-20",
-            // },
-          ],
+          title: "莱博斯威2022春节发货通知",
+          yearMonth: "2022-10",
+          day: "10",
+          intro:
+            "一些内容一些内容一些内容一些内容一些内容一些内容一些一些内容一些内容一些内容一些内容一些内些内容一些内容一些内些内容一些内容一些内容一些内...",
+        },
+        {
+          title: "莱博斯威2022春节发货通知",
+          yearMonth: "2022-10",
+          day: "10",
+          intro:
+            "一些内容一些内容一些内容一些内容一些内容一些内容一些一些内容一些内容一些内容一些内容一些内些内容一些内容一些内些内容一些内容一些内容一些内...",
         },
       ],
     };
   },
   created() {
-    this.$http
-      .get("/news", {
-        params: {
-          page: 1,
-          limit: 3,
-        },
-      })
-      //回调函数
-      .then((res) => {
-        this.$data.newsBox[0].newsList = res.data.data;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    //
-    this.$http
-      .get("/article", {
-        params: {
-          page: 1,
-          limit: 3,
-        },
-      })
-      //回调函数
-      .then((res) => {
-        this.$data.newsBox[1].newsList = res.data.data;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    // this.$http
+    //   .get("/news", {
+    //     params: {
+    //       page: 1,
+    //       limit: 3,
+    //     },
+    //   })
+    //   //回调函数
+    //   .then((res) => {
+    //     this.$data.newsBox[0].newsList = res.data.data;
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
+    // //
+    // this.$http
+    //   .get("/article", {
+    //     params: {
+    //       page: 1,
+    //       limit: 3,
+    //     },
+    //   })
+    //   //回调函数
+    //   .then((res) => {
+    //     this.$data.newsBox[1].newsList = res.data.data;
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
   },
   methods: {
     // 去往新闻详情页
@@ -130,161 +150,145 @@ export default {
 </script>
 <style scoped>
 .newsCenter {
+  position: relative;
+  background-image: url("../../assets/xinwen.png");
+  background-size: cover;
+}
+.newsCenter::after {
+  position: absolute;
+  content: "";
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.h {
+  position: relative;
+  z-index: 2;
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
-  height: 936.96px;
-  background: #e3f5ff;
-  overflow: hidden;
+  height: 53.65vw;
 }
+
 .title {
   width: 100%;
-  height: 60.1px;
-  font-size: 60.1px;
-  margin: 60.1px 0 80.06px;
+  height: 3.13vw;
+  font-size: 3.13vw;
+  margin: 4.17vw 0 4.69vw;
   font-family: Microsoft YaHei UI;
   font-weight: bold;
-  color: #000;
-  line-height: 60.1px;
+  color: #fff;
+  line-height: 3.13vw;
   text-align: center;
 }
-.title > span {
-  margin-right: 10px;
+.title > .line {
+  display: inline-block;
+  width: 0.52vw;
+  height: 51px;
+  background: #fff;
+  margin: 0 1.56vw;
 }
-.newsBigBox {
-  /* 固定一行两个 */
-  width: 1920px;
+.contentBox {
   display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
+  justify-content: space-between;
+  width: calc(100vw - 14.79vw);
+  color: #fff;
 }
-/* 单个新闻盒子的样式 */
-.newsBox {
-  position: relative;
-  width: 580.03px;
-  height: 624.96px;
-  padding: 0 38.02px;
-  background: #ffffff;
-  border-radius: 4.99px;
-  margin: 0 46.08px;
-  overflow: hidden;
+.contentBox > div {
+  width: 34.48vw;
+  height: 35.52vw;
 }
-/* 类别 ----问题width要不要改为100%*/
-.newsType {
-  width: 100%;
-  height: 36.1px;
-  display: flex;
-  align-items: center;
-  margin: 36.1px 14.98px 18px 0;
-}
-.sign {
-  width: 36px;
-  height: 36px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0 14.98px 0 0;
-}
-.sign > img {
-  width: 36px;
-  height: 36px;
-  object-fit: cover;
-}
-.type {
-  /* width: 94px; */
-  height: 24px;
-  font-size: 24px;
-  font-family: Microsoft YaHei UI;
-  font-weight: bold;
-  color: #333333;
-  line-height: 14.02px;
-}
-.dashedLine {
-  width: 580.03px;
-  height: 1.92px;
-  background-image: linear-gradient(
-    to right,
-    #e4e4e4 70%,
-    rgba(255, 255, 255, 0) 0%
-  ); /* 35%设置虚线点x轴上的长度 */
-  background-position: bottom; /* top配置上边框位置的虚线 */
-  background-size: 14.98px 1.92px; /* 第一个参数设置虚线点的间距；第二个参数设置虚线点y轴上的长度 */
-  background-repeat: repeat-x;
-}
-.newsPic {
-  width: 580.03px;
-  height: 254.02px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 27.07px 0;
-}
-.newsPic > img {
-  width: 580.03px;
-  height: 254.02px;
-  object-fit: cover;
-}
-.newsContent {
-  width: 580.03px;
-}
-.news {
+.topBox {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 580.03px;
-  height: 36px;
-
+  margin-bottom: 3.13vw;
+}
+.topBox h3 {
+  font-size: 1.88vw;
   font-family: Microsoft YaHei UI;
-  font-weight: bold;
-  color: #323333;
+  font-weight: 500;
+  color: #ffffff;
 }
-.newsTitle {
-  cursor: pointer;
-  /* width: 350px; */
-  /* height: 36px; */
-  line-height: 18px;
-  font-size: 18px;
-  font-family: Microsoft YaHei UI;
-  font-weight: bold;
-  color: #323333;
-
-  transition: 0.8s;
-}
-.newsTitle:hover {
-  color: #004ea2;
-}
-.pubdate {
-  width: 120px;
-  /* height: 36px; */
-  line-height: 16px;
-  font-size: 16px;
+.topBox .moreBtn {
+  font-size: 0.83vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
+  color: #ffffff;
+  cursor: pointer;
+}
+.topBox .moreBtn:hover {
+  font-weight: 700;
+}
+.articleList {
+  display: flex;
+  flex-direction: column;
+}
+.articleList li {
+  display: flex;
+  width: 34.48vw;
+  justify-content: center;
+  height: 9.58vw;
+  background: #ffffff;
+  border-radius: 0.26vw;
+  margin: 0.36vw 0;
+}
+.articleList li .timeBox {
+  height: 3.65vw;
+  color: #2b6fb4;
+  margin-top: 1.04vw;
+  border-right: 0.1vw solid #999999;
+  padding-right: 1.41vw;
+}
+.articleList .timeBox .day {
+  font-size: 2.5vw;
+  font-family: Microsoft YaHei UI;
+  font-weight: 400;
+}
+.articleList .timeBox .yearMonth {
+  font-size: 0.73vw;
+  font-family: Microsoft YaHei UI;
+  font-weight: bold;
+  color: #2b6fb4;
+}
+.articleList .articleInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 19.53vw;
+  padding: 1.98vw 0;
+  font-size: 0.73vw;
+  font-family: Microsoft YaHei UI;
+  font-weight: 400;
+  color: #666666;
+  margin-left: 1.41vw;
+}
+.articleList .articleInfo h4 {
+  font-size: 0.94vw;
+  font-family: Microsoft YaHei UI;
+  font-weight: bold;
   color: #323333;
-  text-align: right; /*文本向右对齐*/
-  /* word-break:break-all; */
-  word-wrap: break-word;
+}
+.articleList .articleInfo p {
+  text-overflow: ellipsis;
+  white-space: wrap;
   overflow: hidden;
+  height: 2vw;
 }
-.newsMore {
-  cursor: pointer;
-  position: absolute;
-  bottom: 24px;
-  right: 38.02px;
-  /* width: 75px; */
-  height: 18px;
-  line-height: 18px;
-  font-size: 16px;
+.articleList .articleInfo .detailBtn {
+  font-size: 0.78vw;
   font-family: Microsoft YaHei UI;
-  font-weight: 400;
-  color: #004ea2;
-  line-height: 18px;
-  margin-left: auto;
-  /* 让盒子要右靠 */
-  /* transition: 1s; */
-}
-.newsMore:hover {
   font-weight: 600;
+  color: #999999;
+  cursor: pointer;
+}
+.articleList .articleInfo .detailBtn:hover {
+  color: #323333;
+  font-weight: 700;
 }
 </style>
