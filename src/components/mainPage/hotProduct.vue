@@ -1,28 +1,20 @@
 // 热门产品
 <template>
-  <router-view></router-view>
-  <div class="hotProducts">
-    <div class="title">
-      {{ $t("home.hot")
-      }}<span style="color: #004ea2">{{ $t("home.product") }}</span>
-    </div>
-    <div class="hotProductBox">
-      <div
-        class="hotProduct"
-        v-for="(item, index) in productList.slice(0,5)"
-        :key="index"
-        @click="toProductInfo(item.id)"
-      >
-        <div class="hotProductPic">
-          <img :src="item.pic_url" alt="" />
-          <div class="shadow"></div>
-        </div>
-        <div class="hotProductName"><div>{{ item.name }}</div></div>
-      </div>
-    </div>
-    <div class="aboutIt" @click="toLearnMore()">
-      <div class="aboutMore">{{ $t("home.learnMore") }}&nbsp;&nbsp;</div>
-      <div class="aboutArrow">></div>
+  <div class="hotProduct">
+    <h3 class="title">
+      <span class="title_zh">热门产品</span>
+      <span class="line"></span>
+      <span class="title_en">HOT PRODUCTS </span>
+    </h3>
+    <div class="carouselBox">
+      <ul class="move">
+        <li v-for="(p, index) in products" :key="index">
+          <img :src="p.pic" alt="" />
+          <span class="proName">{{ p.name }}</span>
+        </li>
+      </ul>
+      <div class="btnLeft btn" @click="move(0)">&lt;</div>
+      <div class="btnRight btn" @click="move(1)">&gt;</div>
     </div>
   </div>
 </template>
@@ -32,24 +24,30 @@ export default {
   components: "",
   data() {
     return {
-      productList: [
+      products: [
+        { pic: require("../../assets/111.jpg"), name: "111" },
+        { pic: require("../../assets/111.jpg"), name: "222" },
+        { pic: require("../../assets/111.jpg"), name: "333" },
+        { pic: require("../../assets/111.jpg"), name: "444" },
+        { pic: require("../../assets/111.jpg"), name: "555" },
+        { pic: require("../../assets/111.jpg"), name: "222" },
+        { pic: require("../../assets/111.jpg"), name: "222" },
       ],
     };
   },
   created() {
-      this.$http
-        .get("/hotProducts", {
-          // params: {
-
-          // },
-        })
-        //回调函数
-        .then((res) => {
-          this.$data.productList = res.data.data.products;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+    // this.$http
+    //   .get("/hotProducts", {
+    //     // params: {
+    //     // },
+    //   })
+    //   //回调函数
+    //   .then((res) => {
+    //     this.products = res.data.data.products;
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
   },
   methods: {
     toProductInfo(code) {
@@ -67,177 +65,107 @@ export default {
           whichType: 4,
         },
       });
-    }
+    },
+    move(val) {
+      if(val){
+        // 右
+      }else{
+        // 左
+      }
+    },
   },
 };
 </script>
 <style scoped>
-.hotProducts {
-  width: 100%;
-  height: 1102.08px;
-  background: #ffffff;
+.hotProduct {
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow: hidden;
+  background: #f2f4f5;
 }
 .title {
-  width: 100%;
-  height: 60.1px;
-  font-size: 60.1px;
-  padding: 80.06px 0 49.92px;
+  display: flex;
+  align-items: center;
+  font-size: 48px;
   font-family: Microsoft YaHei UI;
   font-weight: bold;
-  color: #000;
-  background-color: #fff;
-  line-height: 60.1px;
-  text-align: center;
+  color: #333333;
+  margin: 140px 0 70px 0;
 }
-.title > span {
-  margin-left: 10px;
+.title .line {
+  display: inline-block;
+  width: 10px;
+  height: 51px;
+  background: #333333;
+  margin: 0 36px;
 }
-.hotProductBox {
-  max-width: 1920px;
-  min-width: 1396px;
-  width:100%;
-  height: 703px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex-wrap: wrap;
-}
-.hotProduct {
-  overflow: hidden;
-}
-/* 大图片 */
-.hotProduct:nth-of-type(1) {
-  /* width: 958.08px; */
-  width: 49.6%;
-  /* height: 702.72px; */
-  height: 99.5%;
-}
-.hotProduct:nth-of-type(1) .hotProductPic {
-  /* width: 958.08px; */
-  width: 100%;
-  /* height: 604.03px; */
-   height: 80%;
-}
-.hotProduct:nth-of-type(1) .hotProductPic > img {
-  /* width: 958.08px;
-  height: 604.03px; */
-   width: 100%;
-  height: 80%;
-  object-fit: contain;
-}
-.hotProduct:nth-of-type(1) .hotProductName {
-  /* width: 958.08px; */
-  width: 100%;
-  height: 20%;
-    display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 40px;
-  background-color: #2867b4;
-  color: #fff;
-  text-align: center;
-}
-.hotProduct {
-  /* width: 478.08px; */
-  width: 24.8%;
-  /* height: 350.02px; */
-  height: 49.7%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 0.03% 0.05% 0 0;
-  overflow: hidden;
-}
-.hotProductPic {
+.carouselBox {
   position: relative;
-  /* width: 478.08px; */
   width: 100%;
-  /* height: 302.02px; */
-  height:80%;
-  overflow: hidden;
-  cursor: pointer;
-  /* ?? */
+  height: 500px;
+  /* overflow: hidden; */
+  margin-bottom: 180px;
 }
-.hotProductPic > img {
-  /* width: 478.08px; */
-  width: 100%;
-  /* height: 302.02px; */
-  height: 80%;
-  object-fit: contain;
-}
-.shadow {
+.btn {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #000;
-  opacity: 0;
-  pointer-events: none;
-  transition: all 0.6s;
-}
-/*遮罩 */
-.hotProductPic > img:hover + .shadow {
-  opacity: 0.4;
-}
-.hotProductName {
-  width: 100%;
-  /* height: 48px; */
-  height: 20%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 20px;
-  /* line-height: 48px; */
-  background-color: #2867b4;
-  color: #fff;
+  top: 50%;
+  font-size: 50px;
+  color: #ffffff;
+  width: 100px;
+  height: 100px;
+  text-align: center;
+  line-height: 100px;
+  background: rgba(0, 0, 0, 0.47);
+  border-radius: 50%;
   cursor: pointer;
-  /* text-align: center; */
+  transition: 0.3s;
 }
-.aboutIt {
-  position: relative;
-  margin: 60.1px 0 0 0;
-  width: 221.95px;
-  height: 60.1px;
+.btn:hover{
+  font-size: 60px;
+  
+}
+.btn.btnLeft {
+  left: 100px;
+}
+.btn.btnRight {
+  right: 100px;
+}
+.carouselBox .move {
   display: flex;
-  justify-content: center;
+  margin-left: -225px;
+}
+.carouselBox .move li {
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  border: 1.92px solid #004ea2;
-  border-radius: 4.99px;
+  justify-content: center;
+  padding: 50px;
+  height: 400px;
+  background: #f6f8fc;
+  box-shadow: 6px 6px 24px 0px rgba(0, 12, 52, 0.13);
+  border-radius: 5px;
+  margin: 0 20px;
+  transition: 0.3s;
   cursor: pointer;
-  transition: all 0.2s;
 }
-.aboutIt:hover {
-  background-color: #004ea2;
+.carouselBox .move li img {
+  width: 350px;
+  height: 190px;
 }
-.aboutIt:hover >div{
-  color: #fff;
+.proName {
+  font-size: 30px;
+  font-family: Microsoft YaHei UI;
+  font-weight: 400;
+  color: #333;
+  margin-top: 80px;
 }
-.aboutMore {
-  font-size: 22.08px;
-  font-family: Source Han Sans SC VF;
-  font-weight: bold;
-  color: #004ea2;
- 
-}
-.aboutArrow {
-   position: absolute;
-  font-size: 22px;
-  animation: moveArrow 1s ease-out 0.3s infinite alternate;
-}
-@keyframes moveArrow {
-  0% {
-    right: 10px;
-  }
-  50% {
-    right: 15px;
-  }
-  100% {
-    right: 20px;
-  }
+.carouselBox .move li:hover {
+  background: rgb(41, 116, 184);
+  background: linear-gradient(
+    0deg,
+    rgba(41, 116, 184, 1) 0%,
+    rgba(0, 212, 255, 0) 100%
+  );
+  color: #ffffff;
 }
 </style>

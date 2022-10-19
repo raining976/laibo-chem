@@ -1,62 +1,19 @@
-//购物车（支付部分）
+//订单（支付部分）
 <template>
   <div class="paymentPage">
     <!-- 收获地址 -->
     <div class="amount">
       <div class="top">
         <div class="title">{{ $t("cart.settlement") }}</div>
-        <div class="returnBtn" @click="toShopCart()">{{ $t("base.back") }}</div>
+        <div class="returnBtn" @click="back()">{{ $t("base.back") }}</div>
       </div>
 
-      <div class="content"> 
-        <div class="addressBox">
-          <ul class="addressList">
-            <!-- v-for -->
-            <li
-              class="eachAddress"
-              v-for="(address, index) in addresses"
-              :key="index"
-              :class="{ border: index == isBorder }"
-              @click="chooseAddress(index, address.id)"
-            >
-              <p class="name">
-                {{ $t("address.name") }}&nbsp;:&nbsp;{{ address.name }}
-              </p>
-              <p class="phone">
-                {{ $t("base.phone") }}&nbsp;:&nbsp;{{ address.phone }}
-              </p>
-              <p class="address">
-                {{ $t("base.address") }}&nbsp;:&nbsp;{{ address.address }}
-              </p>
-              <div class="btnBox">
-                <div class="deleBtn icon_btn">
-                  <el-tooltip
-                    class="item"
-                    effect="light"
-                    content="删除地址"
-                    placement="top"
-                  >
-                    <i
-                      class="el-icon-delete-solid"
-                      @click="(curIdx = index), bounceMsg()"
-                    ></i>
-                  </el-tooltip>
-                </div>
-                <div class="editBtn icon_btn">
-                  <el-tooltip
-                    class="item"
-                    effect="light"
-                    content="修改地址"
-                    placement="top"
-                  >
-                    <i class="el-icon-edit" @click="editAddress(index)"></i>
-                  </el-tooltip>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
+      <div class="orderInfo">
+      <div class="detail"><strong>{{$t('order.num')+'：'}}</strong>{{orderNo}}</div>
+      <div class="detail"><strong>{{ $t("address.name")+'：' }}</strong>{{}}</div>
+      <div class="detail"><strong>{{$t("base.phone")+'：'}}</strong>{{}}</div>
+      <div class="detail"><strong>{{$t("base.address")+'：'}}</strong>{{}}</div>
+    </div>
 
       <div class="freight">
         {{ $t("cart.fright") + "：" }}<strong>{{ currency(orderList.post_fee).format() }}</strong>
@@ -212,11 +169,11 @@
 </template>
 <script>
 import handleAddress from "../../js/handlerAddress";
-import addressForm from "../address/addressForm.vue";
+// import addressForm from "../address/addressForm.vue";
 export default {
   name: "payment",
   components: {
-    addressForm,
+    // addressForm,
   },
   data() {
     return {
@@ -250,6 +207,7 @@ export default {
       showBills: false,
       orderBox: [], //订单汇总传参--按照后端格式
       addresses: [], // 地址列表
+      info:[],
       orderList: [],
       orderInfo: [
         // {
@@ -265,10 +223,10 @@ export default {
     };
   },
   created() {
-    this.getAddress();
     this.$data.orderList = JSON.parse(localStorage.getItem("oneOrder"));
+    this.orderNo = localStorage.getItem("orderNo")
+    this.getOrderInfo()
     this.$data.orderInfo = this.$data.orderList.product;
-    console.log(this.$data.orderInfo, "cccccc");
   },
   watch: {
     isReloadAddress(val) {
@@ -309,6 +267,31 @@ export default {
     },
   },
   methods: {
+    // 获取信息
+     getOrderInfo() {
+        this.$http
+        .get("/order/detail", {
+          params: {
+             order_id: localStorage.getItem("orderNo"), // 暂定
+          }
+         
+        })
+        //回调函数
+        .then((res) => {
+           if(!res.data.data){
+             this.$data.info = [];
+          }
+          else {
+          // this.$data.orderId = this.$route.params.id;
+          this.$data.info = handleAddress(res.data.data.sx);
+          // console.log("ceshi", res.data.data);
+          // console.log("ceshi,shuzu ", this.$data.commodityList);
+          }     
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+     },
     getAddress() {
       this.$http.get("/address").then((res) => {
         if (res.data.code == 20000) {
@@ -320,10 +303,8 @@ export default {
         }
       });
     },
-    toShopCart() {
-      this.$router.push({
-        path: "cart",
-      });
+    back() {
+      this.$router.go(-1)
     },
     toProductInfo(code) {
       this.$router.push({
@@ -636,87 +617,16 @@ export default {
   /* margin-right: 50px; */
   margin-bottom: 30px;
 }
-/* ----- */
-.addressList {
-  display: flex;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-  /* height: 0; */
-}
-.eachAddress {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  width: 332px;
-  min-width: 250px;
-  flex: 1;
-  height: 200px;
-  background: #f7f7f7;
-  border: 2px solid #f7f7f7;
-  border-radius: 10px;
-  padding: 27px 48px;
-  margin-bottom: 50px;
-  margin-right: 50px;
-  cursor: pointer;
-}
-.border {
-  border: 3px solid #004ea2;
-  padding: 26px 47px;
-}
-.eachAddress p {
-  margin-bottom: 14px;
-  font-size: 19px;
-  font-family: Microsoft YaHei UI;
-  font-weight: 500;
-  color: #4a4a4a;
-}
-.eachAddress .address {
-  line-height: 30px;
-}
-.btnBox {
-  align-self: flex-end;
-  display: flex;
-  justify-content: flex-end;
-}
-.btnBox > div {
+.detail {
+  margin: 0 0 22px 0;
+  height: 18px;
   font-size: 16px;
   font-family: Microsoft YaHei UI;
-  font-weight: 600;
-  cursor: pointer;
-  margin-left: 20px;
-}
-.editBtn {
-  color: var(--color);
-}
-.deleBtn {
-  color: rgb(164, 72, 72);
-}
-.detailedAddress {
-  width: 494px;
-  height: 163px;
-  border: 2px solid #999999;
-  border-radius: 5px;
+  font-weight: bold;
+  color: #4a4a4a;
+  line-height: 18px;
 }
 
-.addAddress {
-  margin-left: 10px;
-  transform: scale(1.5);
-  transform-origin: center;
-  cursor: pointer;
-  transition: 0.3s;
-  background-color: #e3f5ff;
-  border-radius: 10px;
-}
-.addAddress:hover {
-  transform: scale(1.7);
-  color: var(--color);
-  box-shadow: 0px 17px 29px -11px #c7c7c9;
-  --webkit-box-shadow: 0px 17px 29px -11px #c7c7c9;
-  --moz-box-shadow: 0px 17px 29px -11px #c7c7c9;
-}
-.icon_btn >>> i {
-  transform: scale(1.5);
-}
 .freight {
   /* width: 142px; */
   height: 18px;

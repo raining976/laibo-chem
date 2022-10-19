@@ -133,6 +133,8 @@ export default {
 .userInfo {
   width: 100%;
   min-height: 1054px;
+  /* margin-top: 100px; */
+  padding-top: 100px;
 }
 .contentBox {
   display: flex;

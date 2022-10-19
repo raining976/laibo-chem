@@ -169,6 +169,10 @@ export default {
   // updated() {
   //   console.log(this.commodityBox);
   // },
+    mounted() {
+    //
+    window.scrollTo(0, 0);
+  },
   computed: {
     // 购物车件数
     // allProducts() {
@@ -326,6 +330,7 @@ export default {
             await this.$http
               .post("/delCartProduct", {
                 id: item.id,
+                from: "shopcart",
               })
               //回调函数
               .then((res) => {

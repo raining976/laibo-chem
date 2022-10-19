@@ -15,7 +15,6 @@
           v-for="(item1, index) in typeList"
           :key="index"
           @click="searchType(item1)"
-
         >
           {{ item1 }}
         </div>
@@ -42,7 +41,7 @@ export default {
       type: "", //需要判断
       isType: -1, // 判断字体加粗
       inputValue: "",
-      typeList: ["中间品", "低值易耗品", "染料"],
+      typeList: ["中间体", "实验用品", "染料"],
       resultBox: [],
     };
   },
@@ -72,10 +71,10 @@ export default {
     ) {
       this.$data.cate = this.$route.query.whichType;
       if(this.$data.cate === "0") {
-          this.searchType("中间品");
-      }else  if(this.$data.cate === "1") {
-          this.searchType("低值易耗品");
+          this.searchType("中间体");
       }else  if(this.$data.cate === "2") {
+          this.searchType("实验用品");
+      }else  if(this.$data.cate === "1") {
           this.searchType("染料");
       }
     }
@@ -131,20 +130,20 @@ export default {
     searchType(str) {
       this.$data.inputValue = "";
       switch (str) {
-        case "中间品":
+        case "中间体":
           // this.$data.inputValue = str;
           this.$data.type = str;
           this.$data.cate = 0;
           break;
-        case "低值易耗品":
+        case "实验用品":
           // this.$data.inputValue = str;
           this.$data.type = str;
-          this.$data.cate = 1;
+          this.$data.cate = 2;
           break;
         case "染料":
           // this.$data.inputValue = str;
           this.$data.type = str;
-          this.$data.cate = 2;
+          this.$data.cate = 1;
           break;
       }
       this.getSearchResult();
@@ -175,6 +174,8 @@ export default {
   width: 100%;
   display: flex;
   justify-content: center;
+  padding-top: 100px;
+  min-height: 800px;
 }
 .solidLine {
    min-width: 1450px;

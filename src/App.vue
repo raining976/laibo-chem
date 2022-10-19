@@ -1,12 +1,14 @@
 <template>
-  <appNav :key="key" />
-  <router-view name="search"></router-view>
+  <div class="navBox">
+    <appNav :key="key" />
+  </div>
+  <!-- <router-view name="search"></router-view> -->
   <keep-alive>
     <router-view name="table" v-if="$route.meta.keepAlive"></router-view>
   </keep-alive>
   <router-view name="table" v-if="!$route.meta.keepAlive"></router-view>
   <router-view name="textPage"></router-view>
-  <appFooter />
+  <!-- <appFooter /> -->
   <copyRight />
   <!-- 登录模态框 -->
   <log-in v-if="isShowLogIn" />
@@ -59,7 +61,7 @@ export default {
 <style>
 :root {
   /* 字体颜色 */
-  --text--color: #666666;
+  --text--color: #000;
   /* 主题色 */
   --color: #004ea2;
   /* 判定通过颜色 */
@@ -100,9 +102,15 @@ body >>> .is-message-box .el-button--primary {
   font-weight: 700;
   color: var(--color);
 }
-.el-dropdown__popper .navDropdown .el-dropdown-menu__item  {
+.el-dropdown__popper .navDropdown .el-dropdown-menu__item {
   font-size: 18px;
   /* 这是两个动画,我只能把我这个放大优先级调到最高 */
   transform-origin: top;
+}
+.navBox {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  z-index: 999;
 }
 </style>

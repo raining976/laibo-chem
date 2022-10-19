@@ -2,18 +2,32 @@
 <template>
   <div class="productsType">
     <div class="title">
-      <span style="color: #004ea2">{{ $t("home.product") }}</span
-      >{{ $t("home.sort") }}
+      <span>产品分类</span>
+      <span class="line"></span>
+      <span>OUR PRODUCTS</span>
     </div>
-    <div class="productTypeBox">
-      <div class="productType" v-for="(item, index) in typeList" :key="index">
-        <div class="productTypePic" @click="toSearchType(item.name)">
-          <img :src="item.img" alt="" />
-          <div class="shadow"></div>
+    <ul class="productSortList">
+      <li
+        v-for="(item, index) in typeList"
+        :key="index"
+        :style="{ backgroundImage: 'url(' + item.pic + ')' }"
+      >
+        <div class="contentBox" @click="toSearchType(index)">
+          <div class="imgBox"><img :src="item.pic" alt="item.alt" /></div>
+          <div class="textBox">
+            <div class="text">
+              <h3>{{ item.name_zh }}</h3>
+              <h3>{{ item.name_en }}</h3>
+            </div>
+            <div class="btnBox">
+              <span class="btn1"></span>
+              <span class="btn2"></span>
+              <span class="btn3"></span>
+            </div>
+          </div>
         </div>
-        <div class="productTypeName">{{ item.name }}</div>
-      </div>
-    </div>
+      </li>
+    </ul>
   </div>
 </template>
 <script>
@@ -22,34 +36,43 @@ export default {
   components: "",
   data() {
     return {
-      // 1 0 2
-      type: "",
+      type: 0, // 中间体:0 实验用品:1 染料:2  定制产品:3
       typeList: [
-        { img: require("../../assets/111.jpg"), name: "染料" },
-        { img: require("../../assets/p2.png"), name: "中间品" },
-        { img: require("../../assets/p1.png"), name: "低值易耗品" },
+        {
+          pic: require("../../assets/p2.png"),
+          name_zh: "中间体",
+          name_en: "INTERMEDIATES",
+        },
+        {
+          pic: require("../../assets/111.jpg"),
+          name_zh: "染料",
+          name_en: "DYES",
+        },
+        {
+          pic: require("../../assets/p1.png"),
+          name_zh: "实验用品",
+          name_en: "EXPERIMENTAL SUPPLIES",
+        },
+        {
+          pic: require("../../assets/p1.png"),
+          name_zh: "定制产品",
+          name_en: "CUSTOMIZED PRODUCTS",
+        },
       ],
     };
   },
   methods: {
-    toSearchType(str) {
-      switch (str) {
-        case "中间品":
-          this.$data.type = "0";
-          break;
-        case "低值易耗品":
-          this.$data.type = "1";
-          break;
-        case "染料":
-          this.$data.type = "2";
-          break;
+    toSearchType(idx) {
+      if (idx < 3) {
+        this.$router.push({
+          path: "/searchResult",
+          query: {
+            whichType: idx,
+          },
+        });
+      } else if (idx == 3) {
+        // 定制铲平
       }
-      this.$router.push({
-        path: "/searchResult",
-        query: {
-          whichType: this.$data.type,
-        },
-      });
     },
   },
 };
@@ -62,75 +85,129 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow: hidden;
-  /* 防止上下冲突 */
 }
 .title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
-  height: 60.1px;
-  font-size: 60.1px;
+  font-size: 47px;
   margin: 73.92px 0 60.1px 0;
   font-family: Source Han Sans SC VF;
   font-weight: bold;
   color: #000;
-  line-height: 60.1px;
   text-align: center;
 }
-.title > span {
-  margin-right: 10px;
+.title > .line {
+  display: inline-block;
+  width: 10px;
+  height: 51px;
+  background: #333333;
+  margin: 0 36px;
 }
-.productTypeBox {
-  width: 100%;
+
+/* 改 */
+.productSortList {
   display: flex;
-  justify-content: center;
 }
-.productType {
-  width: 450.05px;
-  height: 402.05px;
-  margin: 0 13.06px;
+.productSortList > li {
+  position: relative;
+  width: 386px;
+  height: 496px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 5px;
+  margin: 0 14px;
+  transition: 0.3s;
+  cursor: pointer;
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.productSortList > li::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.7);
+}
+.productSortList > li .contentBox {
+  width: 286px;
+  height: 396px;
+  padding: 50px;
+  position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  border-radius: 4.99px;
-  overflow: hidden;
+  justify-content: flex-start;
+  align-items: center;
+  z-index: 2;
+  transition: 0.3s;
 }
-.productTypePic {
+.productSortList > li:hover .contentBox {
+  background-color: rgba(40, 103, 180, 0.8);
+}
+.productSortList > li:hover .text h3 {
+  color: #ffffff;
+}
+.productSortList > li:hover .btnBox > span {
+  background: #ffffff;
+}
+.productSortList > li .text h3 {
+  font-size: 24px;
+  font-family: Microsoft YaHei UI;
+  font-weight: bold;
+  color: #333;
+  margin: 10px 0;
+  white-space: nowrap;
+}
+.productSortList .textBox {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin-top: 36px;
+}
+.productSortList img {
+  width: 293px;
+  height: 303px;
+  background: #ffffff;
+  border-radius: 5px;
+}
+.btnBox {
   position: relative;
-  width: 100%;
-  height: 336.96px;
-  background-color: #fff;
-  overflow: hidden;
 }
-.productTypePic > img {
-  width: 450.05px;
-  height: 336.96px;
-  /* 让图片居中？ */
-  /* text-align: center; */
-  object-fit: contain;
-
-  /*图片  */
-}
-.shadow {
+.btnBox::after {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 450.05px;
-  height: 336.96px;
-  background-color: #000;
-  opacity: 0;
-  pointer-events: none;
-  transition: all 0.6s;
+  content: "";
+  background-image: url("../../assets/bai.png");
+  display: inline-block;
+  background-size: cover;
+  left: -34px;
+  width: 25px;
+  height: 25px;
+  transition: 0.3s;
 }
-/*遮罩 */
-.productTypePic > img:hover + .shadow {
-  opacity: 0.4;
+.productSortList > li:hover .btnBox::after {
+  background-image: url("../../assets/lan.png");
 }
-.productTypeName {
-  width: 100%;
-  height: 66.05px;
-  line-height: 66.05px;
+.btnBox > span {
+  right: 0;
+  position: absolute;
+  width: 42px;
+  height: 24px;
   background-color: #2867b4;
-  color: #fff;
-  text-align: center;
+  transition: 00.3s;
+}
+.btnBox .btn2 {
+  transform: rotate(60deg);
+}
+.btnBox .btn3 {
+  transform: rotate(-60deg);
+}
+.btnBox img {
+  width: 24px;
+  height: 24px;
 }
 </style>
