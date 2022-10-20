@@ -226,6 +226,7 @@ router.beforeEach((to, from, next) => {
       // this.$root.isShowLogIn = true
       // alert("请先登录!");
       ElMessage("请先登录!")
+      window.openLogin()
       next({
         path: '/',
       })

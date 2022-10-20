@@ -11,7 +11,12 @@
   <!-- <appFooter /> -->
   <copyRight />
   <!-- 登录模态框 -->
-  <log-in v-if="isShowLogIn" />
+  <transition leave-active-class="fadeOut">
+    <log-in v-if="isShowLogIn" />
+  </transition>
+  <transition leave-active-class="fadeOut"
+    ><private-order v-if="isShowOrder"
+  /></transition>
 </template>
 
 
@@ -20,6 +25,7 @@ import appNav from "./components/main/appNav.vue";
 import appFooter from "./components/main/appFooter.vue";
 import copyRight from "./components/main/copyRight.vue";
 import logIn from "./components/logIn/logIn.vue";
+import privateOrder from "./components/privateOrder/privateOrder.vue";
 export default {
   name: "App",
   components: {
@@ -27,16 +33,27 @@ export default {
     appFooter,
     copyRight,
     logIn,
+    privateOrder,
   },
 
   data() {
     return {
       isShowLogIn: false, // 是否显示登录
       key: 1, // 用于强制刷新nav组件
+      isShowOrder: false, // 私人订单
     };
   },
-  methods: {},
   created() {
+    // Object.defineProperty(window, "isShowLogin", {
+    //   writable: true,
+    //   get() {
+    //     return this.isShowLogIn;
+    //   },
+    //   set(val) {
+    //     this.isShowLogIn = val;
+    //   },
+    // });
+    // window.isShowLogIn = this.isShowLogIn;
     let nowTime = new Date().getTime() / 1000;
     let refresh_exp = localStorage.getItem("refresh_exp");
     if (refresh_exp - nowTime < 60 && refresh_exp) {
@@ -46,6 +63,9 @@ export default {
       localStorage.removeItem("token_exp");
     }
   },
+  mounted(){
+    window.openLogin = this.openLogin
+  },
   unmounted() {
     window.localStorage.removeItem("lang");
   },
@@ -54,6 +74,9 @@ export default {
     changeLogIn() {
       this.isShowLogIn = !this.isShowLogIn;
     },
+    openLogin(){
+      this.isShowLogIn = true
+    }
   },
 };
 </script>
@@ -112,5 +135,26 @@ body >>> .is-message-box .el-button--primary {
   position: absolute;
   top: 0;
   z-index: 999;
+}
+.fadeOut {
+  animation: fadeOut 0.3s;
+}
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes fadeUp {
+  0% {
+    transform: translateY(40px);
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 </style>
