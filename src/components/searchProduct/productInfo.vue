@@ -1,6 +1,6 @@
 <template>
   <div class="bg">
-    <div class="solidLine1"></div>
+    <!-- <div class="solidLine1"></div> -->
     <div class="productInfo">
       <div class="productInfoBox">
         <div class="productPic"><img :src="productData.pic_url" alt="" /></div>
@@ -202,11 +202,12 @@
         <div class="toBuy" @click="setOrder()">{{ $t("product.buy") }}</div>
       </div>
 
-      <div class="toCustomize" @click="isShow = !isShow">
+      <div class="toCustomize" @click="openOrder()">
         {{ $t("product.personalTailor") }}>
       </div>
     </div>
-    <private-order v-if="isShow" />
+      <private-order v-if="isShow" />
+    
   </div>
 </template>
 <script>
@@ -270,6 +271,10 @@ export default {
   },
 
   methods: {
+    // 打开私人订单
+    openOrder(){
+      this.$root.isShowOrder = ! this.$root.isShowOrder
+    },
     //ref数组
     info(el) {
       this.infoBox.push(el);
@@ -283,6 +288,7 @@ export default {
           message: "请先登录",
           // type: "error",
         });
+        this.$root.openLogin()
       } else {
         let isPost = false;
         // let length = this.$data.productData.params.length;
@@ -333,6 +339,7 @@ export default {
           message: "请先登录",
           // type: "error",
         });
+        this.$root.openLogin()
       } else {
         let isPost = false;
         let length = this.$data.productData.params.length;

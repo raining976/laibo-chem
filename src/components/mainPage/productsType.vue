@@ -11,6 +11,7 @@
         v-for="(item, index) in typeList"
         :key="index"
         :style="{ backgroundImage: 'url(' + item.pic + ')' }"
+        data-aos="flip-right"
       >
         <div class="contentBox" @click="toSearchType(index)">
           <div class="imgBox"><img :src="item.pic" alt="item.alt" /></div>
@@ -71,7 +72,8 @@ export default {
           },
         });
       } else if (idx == 3) {
-        // 定制铲平
+        // 定制产品
+        this.$root.isShowOrder = !this.$root.isShowOrder;
       }
     },
   },
@@ -80,7 +82,7 @@ export default {
 <style scoped>
 .productsType {
   width: 100%;
-  height: 732.1px;
+  height: 38.13vw;
   background: #f2f2f2;
   display: flex;
   flex-direction: column;
@@ -91,8 +93,8 @@ export default {
   justify-content: center;
   align-items: center;
   width: 100%;
-  font-size: 47px;
-  margin: 73.92px 0 60.1px 0;
+  font-size: 2.45vw;
+  margin: 3.85vw 0 3.13vw 0;
   font-family: Source Han Sans SC VF;
   font-weight: bold;
   color: #000;
@@ -100,10 +102,10 @@ export default {
 }
 .title > .line {
   display: inline-block;
-  width: 10px;
-  height: 51px;
+  width: 0.52vw;
+  height: 2.66vw;
   background: #333333;
-  margin: 0 36px;
+  margin: 0 1.88vw;
 }
 
 /* 改 */
@@ -112,11 +114,11 @@ export default {
 }
 .productSortList > li {
   position: relative;
-  width: 386px;
-  height: 496px;
+  width: 20.1vw;
+  height: 25.83vw;
   background: rgba(255, 255, 255, 0.6);
-  border-radius: 5px;
-  margin: 0 14px;
+  border-radius: 0.26vw;
+  margin: 0 0.73vw;
   transition: 0.3s;
   cursor: pointer;
   background-size: 100% 100%;
@@ -135,9 +137,9 @@ export default {
   background: rgba(255, 255, 255, 0.7);
 }
 .productSortList > li .contentBox {
-  width: 286px;
-  height: 396px;
-  padding: 50px;
+  width: 14.9vw;
+  height: 20.63vw;
+  padding: 2.6vw;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -156,24 +158,24 @@ export default {
   background: #ffffff;
 }
 .productSortList > li .text h3 {
-  font-size: 24px;
+  font-size: 1.25vw;
   font-family: Microsoft YaHei UI;
   font-weight: bold;
   color: #333;
-  margin: 10px 0;
+  margin: 0.52vw 0;
   white-space: nowrap;
 }
 .productSortList .textBox {
   display: flex;
   width: 100%;
   justify-content: space-between;
-  margin-top: 36px;
+  margin-top: 1.88vw;
 }
 .productSortList img {
-  width: 293px;
-  height: 303px;
+  width: 15.26vw;
+  height: 15.78vw;
   background: #ffffff;
-  border-radius: 5px;
+  border-radius: 0.26vw;
 }
 .btnBox {
   position: relative;
@@ -184,9 +186,9 @@ export default {
   background-image: url("../../assets/bai.png");
   display: inline-block;
   background-size: cover;
-  left: -34px;
-  width: 25px;
-  height: 25px;
+  left: -1.77vw;
+  width: 1.3vw;
+  height: 1.3vw;
   transition: 0.3s;
 }
 .productSortList > li:hover .btnBox::after {
@@ -195,8 +197,8 @@ export default {
 .btnBox > span {
   right: 0;
   position: absolute;
-  width: 42px;
-  height: 24px;
+  width: 2.19vw;
+  height: 1.25vw;
   background-color: #2867b4;
   transition: 00.3s;
 }
@@ -207,7 +209,7 @@ export default {
   transform: rotate(-60deg);
 }
 .btnBox img {
-  width: 24px;
-  height: 24px;
+  width: 1.25vw;
+  height: 1.25vw;
 }
 </style>

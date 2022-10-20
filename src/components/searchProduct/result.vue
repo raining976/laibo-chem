@@ -218,6 +218,7 @@ export default {
           message: "请先登录",
           // type: "error",
         });
+        this.$root.openLogin()
       } else {
         let isPost = false;
         let length = this.$data.productData.length;

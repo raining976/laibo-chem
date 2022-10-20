@@ -66,7 +66,7 @@ export default {
 <style scoped>
 .carouselBox {
   width: 100%;
-  height: 1080px;
+  height: 100vh;
   overflow: hidden;
 }
 .carouselBox >>> .el-carousel {
@@ -88,15 +88,15 @@ export default {
 }
 /* 底部按钮 */
 .carouselBox >>> .el-carousel__button {
-  width: 19.97px;
-  height: 19.97px;
+  width: 1.04vw;
+  height: 1.04vw;
   background-color: #999;
   border-radius: 50%;
 }
 /* 左右按钮 */
 .carouselBox >>> .el-carousel__arrow {
-  width: 100px;
-  height: 100px;
+  width: 5.21vw;
+  height: 5.21vw;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -107,8 +107,8 @@ export default {
 }
 .carouselBox >>> .el-icon-arrow-right,
 .carouselBox >>> .el-icon-arrow-left {
-  width: 49.92px;
-  height: 49.92px;
+  width: 2.6vw;
+  height: 2.6vw;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -117,8 +117,8 @@ export default {
 .carouselBox >>> .el-icon-arrow-right::before {
   display: block;
   content: "";
-  width: 49.92px;
-  height: 49.92px;
+  width: 2.6vw;
+  height: 2.6vw;
   background-image: url("../../assets/箭头 右 (3).png");
   background-position: 100% auto;
   background-size: contain;
@@ -126,8 +126,8 @@ export default {
 .carouselBox >>> .el-icon-arrow-left::before {
   display: block;
   content: "";
-  width: 49.92px;
-  height: 49.92px;
+  width: 2.6vw;
+  height: 2.6vw;
   background-image: url("../../assets/箭头 左 (3).png");
   background-position: 100% auto;
   background-size: contain;
@@ -138,7 +138,7 @@ export default {
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   background-size: cover;
   background-repeat: no-repeat;
 }
@@ -150,7 +150,7 @@ export default {
   bottom: 0;
   top: 0;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   background: rgba(0, 69, 153, 0.3);
 }
 .imgBox .textBox {
@@ -158,26 +158,26 @@ export default {
   z-index: 2;
 }
 .imgBox .textBox > div {
-  font-size: 100px;
+  font-size: 5.21vw;
   font-family: Georgia;
   font-weight: 400;
   color: #ffffff;
   text-align: center;
 }
 .carouselBox >>> .el-carousel__arrow--left {
-  left: 180px !important;
+  left: 9.38vw !important;
 }
 .carouselBox >>> .el-carousel__arrow--right {
-  right: 180px !important;
+  right: 9.38vw !important;
 }
 
 /* 轮播图下方按钮 */
 .carouselBox >>> li.el-carousel__indicator,
 .carouselBox >>> .el-carousel__indicator .el-carousel__button {
-  width: 60px;
-  height: 10px;
+  width: 3.13vw;
+  height: 0.52vw;
   background: #999999;
-  border-radius: 2px;
+  border-radius: 0.1vw;
   padding: 0;
 }
 .carouselBox >>> li.el-carousel__indicator {
@@ -188,6 +188,6 @@ export default {
   background: var(--color);
 }
 .carouselBox >>> .el-carousel__indicators {
-  margin-bottom: 100px;
+  margin-bottom: 5.21vw;
 }
 </style>

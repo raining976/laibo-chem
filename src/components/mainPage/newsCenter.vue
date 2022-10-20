@@ -39,7 +39,7 @@
             <div class="moreBtn">更多新闻</div>
           </div>
           <ul class="newsList articleList">
-            <li v-for="(news, index) in newsList" :key="index">
+            <li v-for="(news, index) in newsList" :key="index" data-aos="flip-up">
               <div class="timeBox">
                 <div class="day">{{ news.day }}</div>
                 <div class="yearMonth">{{ news.yearMonth }}</div>
