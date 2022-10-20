@@ -99,8 +99,10 @@
 </template>
 
 <script>
+
 export default {
   name: "appNav",
+
   data() {
     return {
       menuLists: [
@@ -122,6 +124,7 @@ export default {
       isWhite: 0, // 在主页为 0 , 不在主页为 1
       inputValue: "", // 搜索关键词
       isSearch: 0,
+
     };
   },
   created() {
@@ -224,7 +227,8 @@ export default {
           this.$router.push("/cart");
           break;
         case 3:
-          this.$parent.isShowOrder = !this.$parent.isShowOrder;
+          // 私人订单
+          this.$root.isShowOrder = !this.$root.isShowOrder
           break;
         default:
           break;
@@ -310,15 +314,15 @@ export default {
   display: flex;
   justify-content: center;
   width: 100%;
-  height: 100px;
+  height: 5.21vw;
   /* Typography */
   font-family: Microsoft YaHei UI;
   font-weight: 400;
-  font-size: 18px;
+  font-size: 0.94vw;
   /* visual */
   background-color: transparent;
   /* background: pink; */
-  border-bottom: 1px solid var(--text--color);
+  border-bottom: 0.05vw solid var(--text--color);
 }
 .h {
   display: flex;
@@ -334,40 +338,38 @@ export default {
   height: 100%;
 }
 .logoBox {
-  width: 220px;
+  width: 11.46vw;
   cursor: pointer;
 }
 .logoBox img {
-  /* width: 60px;
-  height: 60px; */
-  width: 219px;
-  height: 74px;
+  width: 11.41vw;
+  height: 3.85vw;
 }
 
 .inputBox {
   position: relative;
-  width: 370px;
+  width: 19.27vw;
   height: 100%;
   display: flex;
   align-items: center;
 }
 .inputBox input {
-  width: 370px;
-  height: 39px;
-  border-radius: 19px;
-  border: 1px solid var(--text--color);
+  width: 19.27vw;
+  height: 2.03vw;
+  border-radius: 0.99vw;
+  border: 0.05vw solid var(--text--color);
   background: transparent;
   color: var(--text--color);
-  padding: 0 20px;
+  padding: 0 1.04vw;
 }
 .inputBox input::placeholder {
   color: var(--text--color);
 }
 .inputBox .search {
   position: absolute;
-  right: 15px;
-  width: 23px;
-  height: 23px;
+  right: 0.78vw;
+  width: 1.2vw;
+  height: 1.2vw;
   cursor: pointer;
 }
 .menu {
@@ -381,12 +383,12 @@ export default {
 
 .menu .chosen {
   display: inline-block;
-  width: 0px;
-  height: 7px;
+  width: 0vw;
+  height: 0.36vw;
   background: var(--color);
   position: absolute;
   left: 0;
-  bottom: -26px;
+  bottom: -1.35vw;
   transition: 0.5s;
 }
 .btnBox {
@@ -395,15 +397,15 @@ export default {
   color: var(--text--color);
 }
 .btnBox .btn:first-child {
-  margin-right: 30px;
+  margin-right: 1.56vw;
 }
 .btnBox .btn {
-  padding: 0 20px;
-  height: 39px;
+  padding: 0 1.04vw;
+  height: 2.03vw;
   text-align: center;
-  line-height: 39px;
-  border: 1px solid var(--text--color);
-  border-radius: 19px;
+  line-height: 2.03vw;
+  border: 0.05vw solid var(--text--color);
+  border-radius: 0.99vw;
   cursor: pointer;
   transition: all 0.3s;
 }
@@ -416,49 +418,49 @@ export default {
   color: var(--text--color);
 }
 .language {
-  font-size: 18px;
+  font-size: 0.94vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
-  margin: 0 10px;
+  margin: 0 0.52vw;
   color: var(--text--color);
   cursor: pointer;
 }
 /* 被选中的语言按钮的样式 */
 .choose {
   font-weight: 600;
-  font-size: 20px;
+  font-size: 1.04vw;
   color: var(--color);
 }
 .menu li {
   display: flex;
   align-items: center;
   cursor: pointer;
-  margin: 0 20px;
+  margin: 0 1.04vw;
 }
 .nav .hello {
   position: relative;
   cursor: pointer;
-  margin-right: 77px;
+  margin-right: 4.01vw;
 }
 .nav .hello:hover .menuBox {
   display: flex !important;
 }
 .nav .hello .menuBox {
   position: absolute;
-  bottom: -40px;
+  bottom: -2.08vw;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100px;
-  padding: 10px 20px;
-  border-radius: 5px;
+  width: 5.21vw;
+  padding: 0.52vw 1.04vw;
+  border-radius: 0.26vw;
   background: #eaf3f8;
 }
 
 .nav >>> .el-dropdown {
   transform: scale(1.3);
   transform-origin: center;
-  margin-right: 30px;
+  margin-right: 1.56vw;
   cursor: pointer;
 }
 .nav >>> .el-message-box {
@@ -468,12 +470,12 @@ export default {
   color: var(--text--color);
 }
 .toILabPlus {
-  padding: 0 20px;
-  height: 39px;
-  border: 1px solid var(--text--color);
-  border-radius: 19px;
+  padding: 0 1.04vw;
+  height: 2.03vw;
+  border: 0.05vw solid var(--text--color);
+  border-radius: 0.99vw;
   text-align: center;
-  line-height: 39px;
+  line-height: 2.03vw;
   color: var(--text--color);
   cursor: pointer;
   transition: 0.3s;

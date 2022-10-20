@@ -1,54 +1,56 @@
 <template>
   <div class="logIn">
-    <div class="content" ref="logInContent">
-      <div class="logInBox" v-show="isLogIn">
-        <h2 class="title" ref="title">{{ $t("logIn.userLogIn") }}</h2>
-        <!-- 邮箱表单部分 -->
-        <div class="inputBox" data-after="">
-          <input
-            type="text"
-            class="email"
-            :placeholder="$t('logIn.emailTip')"
-            v-model="logInForm.email"
-            @blur="checkEmail($event)"
-            @keydown.enter="login()"
-          />
+    <transition appear appear-active-class="fadeIn">
+      <div class="content" ref="logInContent">
+        <div class="logInBox" v-show="isLogIn">
+          <h2 class="title" ref="title">{{ $t("logIn.userLogIn") }}</h2>
+          <!-- 邮箱表单部分 -->
+          <div class="inputBox" data-after="">
+            <input
+              type="text"
+              class="email"
+              :placeholder="$t('logIn.emailTip')"
+              v-model="logInForm.email"
+              @blur="checkEmail($event)"
+              @keydown.enter="login()"
+            />
+          </div>
+          <!-- /邮箱表单部分 -->
+          <!-- 验证码或密码部分  -->
+          <div class="inputBox verificationBox" data-after="">
+            <input
+              ref="psd_verification"
+              type="text"
+              class="verification"
+              :placeholder="inputVerification"
+              v-model="logInForm.psd"
+              @blur="checkVerification($event)"
+              @keydown.enter="login()"
+            />
+            <span class="getCodeBtn" v-show="!isPsdLogin" @click="getCode()">{{
+              $t("logIn.verifyBtn")
+            }}</span>
+            <span class="getCodeBtn" v-show="isTimer">{{ count + "s" }}</span>
+          </div>
+          <!-- /验证码或密码部分  -->
+          <!-- 切换登录方式和注册 -->
+          <div class="psd_register">
+            <span class="psdLogIn" @click="changeLogIn()" ref="logInWay">{{
+              $t("logIn.passLogIn")
+            }}</span>
+            <span class="register" @click="toRegister()"
+              >{{ $t("logIn.register") }}
+            </span>
+          </div>
+          <!-- /切换登录方式和注册 -->
+          <div class="logInBtn" @click="login()">{{ $t("logIn.logIn") }}</div>
+          <div class="forgotPsd" @click="toForgetPsd()">
+            {{ $t("logIn.forget") }}
+          </div>
         </div>
-        <!-- /邮箱表单部分 -->
-        <!-- 验证码或密码部分  -->
-        <div class="inputBox verificationBox" data-after="">
-          <input
-            ref="psd_verification"
-            type="text"
-            class="verification"
-            :placeholder="inputVerification"
-            v-model="logInForm.psd"
-            @blur="checkVerification($event)"
-            @keydown.enter="login()"
-          />
-          <span class="getCodeBtn" v-show="!isPsdLogin" @click="getCode()">{{
-            $t("logIn.verifyBtn")
-          }}</span>
-          <span class="getCodeBtn" v-show="isTimer">{{ count + "s" }}</span>
-        </div>
-        <!-- /验证码或密码部分  -->
-        <!-- 切换登录方式和注册 -->
-        <div class="psd_register">
-          <span class="psdLogIn" @click="changeLogIn()" ref="logInWay">{{
-            $t("logIn.passLogIn")
-          }}</span>
-          <span class="register" @click="toRegister()"
-            >{{ $t("logIn.register") }}
-          </span>
-        </div>
-        <!-- /切换登录方式和注册 -->
-        <div class="logInBtn" @click="login()">{{ $t("logIn.logIn") }}</div>
-        <div class="forgotPsd" @click="toForgetPsd()">
-          {{ $t("logIn.forget") }}
-        </div>
+        <forget-psd v-if="!isLogIn" />
       </div>
-      <forget-psd v-if="!isLogIn" />
-    </div>
+    </transition>
   </div>
 </template>
 
@@ -119,7 +121,7 @@ export default {
   methods: {
     toRegister() {
       this.$router.push("/register");
-      this.$parent.isShowLogIn = false;
+      this.$root.isShowLogIn = false;
     },
     // 切换登录方式
     changeLogIn() {
@@ -170,8 +172,8 @@ export default {
     closeLogIn(e) {
       let logIn = this.$refs.logInContent;
       if (!e.path.includes(logIn)) {
-        this.$parent.isShowLogIn = false;
-      } else this.$parent.isShowLogIn = true;
+        this.$root.isShowLogIn = false;
+      } else this.$root.isShowLogIn = true;
     },
 
     // 登录
@@ -313,7 +315,7 @@ export default {
         message: "登录成功!",
         type: "success",
       });
-      this.$parent.isShowLogIn = false;
+      this.$root.isShowLogIn = false;
       this.$parent.key++;
       // 保存access和refresh
       localStorage.setItem("token", token);
@@ -336,6 +338,7 @@ export default {
   left: 0;
   right: 0;
   top: 0;
+  bottom: 0;
   z-index: 999;
 }
 .content {
@@ -473,5 +476,8 @@ input::-webkit-input-placeholder {
   font-weight: 400;
   color: var(--color);
   cursor: pointer;
+}
+.fadeIn{
+  animation: fadeUp 0.5s;
 }
 </style>
