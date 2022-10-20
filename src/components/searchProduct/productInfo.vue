@@ -9,7 +9,11 @@
           <div class="productName_zh">{{ productData.name }}</div>
           <div class="productName_en">{{ productData.enName }}</div>
           <!-- 浓度 -->
-          <div class="concentration"><span v-html="productData.guige != null ?productData.guige:'——'"></span></div>
+          <div class="concentration">
+            <span
+              v-html="productData.guige != null ? productData.guige : '——'"
+            ></span>
+          </div>
           <div class="solidLine2"></div>
           <!-- 详细信息 -->
           <div class="details">
@@ -17,7 +21,9 @@
             <div class="oneDetail">
               <div class="detailName">{{ $t("product.casNum") }}:&nbsp;</div>
               <div class="detailContent" :title="productData.cas">
-                <span v-html="productData.cas != null ?productData.cas:'——'"></span>
+                <span
+                  v-html="productData.cas != null ? productData.cas : '——'"
+                ></span>
               </div>
             </div>
 
@@ -25,7 +31,15 @@
               <div class="detailName">
                 {{ $t("product.wuhuaxingzhi") }}:&nbsp;
               </div>
-              <div class="detailContent"><span v-html="productData.properties != null ?productData.properties:'——'"></span></div>
+              <div class="detailContent">
+                <span
+                  v-html="
+                    productData.properties != null
+                      ? productData.properties
+                      : '——'
+                  "
+                ></span>
+              </div>
             </div>
 
             <div class="oneDetail">
@@ -33,7 +47,12 @@
               <div
                 class="detailContent"
                 v-html="
-                  productData.linear_formula != null ?productData.linear_formula.replace(/(\d+)/g, '<sub>$1</sub>'): '——'
+                  productData.linear_formula != null
+                    ? productData.linear_formula.replace(
+                        /(\d+)/g,
+                        '<sub>$1</sub>'
+                      )
+                    : '——'
                 "
               ></div>
             </div>
@@ -42,45 +61,87 @@
               <div class="detailName">
                 {{ $t("product.meltingPoint") }}:&nbsp;
               </div>
-              <div class="detailContent"><span v-html="productData.melting != null ?productData.melting:'——'"></span></div>
+              <div class="detailContent">
+                <span
+                  v-html="
+                    productData.melting != null ? productData.melting : '——'
+                  "
+                ></span>
+              </div>
             </div>
 
             <div class="oneDetail">
               <div class="detailName">
                 {{ $t("product.fenziliang") }}:&nbsp;
               </div>
-              <div class="detailContent"><span v-html="productData.formula_weight != null ?productData.formula_weight:'——'"></span></div>
+              <div class="detailContent">
+                <span
+                  v-html="
+                    productData.formula_weight != null
+                      ? productData.formula_weight
+                      : '——'
+                  "
+                ></span>
+              </div>
             </div>
 
             <div class="oneDetail">
               <div class="detailName">
                 {{ $t("product.boilingPoint") }}:&nbsp;
               </div>
-              <div class="detailContent"><span v-html="productData.boiling != null ?productData.boiling:'——'"></span></div>
+              <div class="detailContent">
+                <span
+                  v-html="
+                    productData.boiling != null ? productData.boiling : '——'
+                  "
+                ></span>
+              </div>
             </div>
 
             <div class="oneDetail">
               <div class="detailName">
                 {{ $t("product.einecsCode") }}:&nbsp;
               </div>
-              <div class="detailContent"><span v-html="productData.EINECS != null ?productData.EINECS:'——'"></span></div>
+              <div class="detailContent">
+                <span
+                  v-html="
+                    productData.EINECS != null ? productData.EINECS : '——'
+                  "
+                ></span>
+              </div>
             </div>
 
             <div class="oneDetail">
               <div class="detailName">{{ $t("product.midu") }}:&nbsp;</div>
-              <div class="detailContent"><span v-html="productData.density != null ?productData.density:'——'"></span></div>
+              <div class="detailContent">
+                <span
+                  v-html="
+                    productData.density != null ? productData.density : '——'
+                  "
+                ></span>
+              </div>
             </div>
 
             <div class="oneDetail">
               <div class="detailName">{{ $t("product.mdl") }}:&nbsp;</div>
-              <div class="detailContent"><span v-html="productData.mdl != null ?productData.mdl:'——'"></span></div>
+              <div class="detailContent">
+                <span
+                  v-html="productData.mdl != null ? productData.mdl : '——'"
+                ></span>
+              </div>
             </div>
 
             <div class="oneDetail">
               <div class="detailName">
                 {{ $t("product.storageCondition") }}:&nbsp;
               </div>
-              <div class="detailContent"><span v-html="productData.storage != null ?productData.storage:'——'"></span></div>
+              <div class="detailContent">
+                <span
+                  v-html="
+                    productData.storage != null ? productData.storage : '——'
+                  "
+                ></span>
+              </div>
             </div>
           </div>
           <!-- 价格表格 -->
@@ -216,7 +277,7 @@ export default {
     },
 
     //
-   async addCart() {
+    async addCart() {
       if (!localStorage.getItem("token")) {
         this.$message({
           message: "请先登录",
@@ -226,16 +287,16 @@ export default {
         let isPost = false;
         // let length = this.$data.productData.params.length;
 
-     for(let item of this.$data.productData.params) {
+        for (let item of this.$data.productData.params) {
           if (item.count !== 0) {
-         await this.$http
+            await this.$http
               .post("/cart", {
                 product_params_id: item.id,
                 count: item.count,
               })
               //回调函数
               .then((res) => {
-                if (res.data.code == 20000) {  
+                if (res.data.code == 20000) {
                   this.$message({
                     message: "添加成功",
                     type: "success",
@@ -255,14 +316,14 @@ export default {
                 });
                 console.log("err", err);
               });
-          } 
-        }
-        if (!isPost ) {
-            this.$message({
-              message: "未选择数量!",
-              // type: "error",
-            });
           }
+        }
+        if (!isPost) {
+          this.$message({
+            message: "未选择数量!",
+            // type: "error",
+          });
+        }
       }
     },
     // 购买按钮
@@ -289,7 +350,7 @@ export default {
               price: item.price,
             });
             isPost = true;
-          } else if ((index + 1) === length && isPost === false) {
+          } else if (index + 1 === length && isPost === false) {
             this.$message({
               message: "未选择数量!",
               // type: "error",

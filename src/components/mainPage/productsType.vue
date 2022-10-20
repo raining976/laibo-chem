@@ -39,7 +39,7 @@ export default {
       type: 0, // 中间体:0 实验用品:1 染料:2  定制产品:3
       typeList: [
         {
-          pic: require("../../assets/p2.png"),
+          pic: require("../../assets/zhongjianti.png"),
           name_zh: "中间体",
           name_en: "INTERMEDIATES",
         },
@@ -54,7 +54,7 @@ export default {
           name_en: "EXPERIMENTAL SUPPLIES",
         },
         {
-          pic: require("../../assets/p1.png"),
+          pic: require("../../assets/dingzhichanpin.png"),
           name_zh: "定制产品",
           name_en: "CUSTOMIZED PRODUCTS",
         },
