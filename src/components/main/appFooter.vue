@@ -236,9 +236,14 @@ export default {
 }
 .menuLi img {
   margin-right: 0.83vw;
+
 }
 .cooperationSchool .menuLi:last-child {
   cursor: pointer;
   color: #383838;
+}
+.eachIcon img{
+  width: 2.08vw;
+  height: 2.08vw;
 }
 </style>

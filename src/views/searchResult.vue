@@ -170,32 +170,32 @@ export default {
 </script>
 <style scoped>
 .bg {
-  min-width: 1450px;
+  min-width: 75.52vw;
   width: 100%;
   display: flex;
   justify-content: center;
-  padding-top: 100px;
-  min-height: 800px;
+  padding-top: 5.21vw;
+  min-height: 41.67vw;
 }
 .solidLine {
-   min-width: 1450px;
+   min-width: 75.52vw;
   width: 100%;
-  height: 1px;
-  border-bottom: 1px solid #999999;
+  height: 0.05vw;
+  border-bottom: 0.05vw solid #999999;
   margin: 0 auto;
 }
 /* 下面是列表样式 */
 .searchNav {
   overflow: hidden;
-  width: 180px;
-  margin: 0 10px 0px 0;
+  width: 9.38vw;
+  margin: 0 0.52vw 0px 0;
 }
 .returnBtn {
   cursor: pointer;
-  height: 18px;
-  margin: 0 5px 0 0;
-  font-size: 16px;
-  line-height: 18px;
+  height: 0.94vw;
+  margin: 0 0.26vw 0 0;
+  font-size: 0.83vw;
+  line-height: 0.94vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #004ea2;
@@ -205,9 +205,9 @@ export default {
 }
 .nowPosi {
   cursor: pointer;
-  height: 18px;
-  font-size: 16px;
-  line-height: 18px;
+  height: 0.94vw;
+  font-size: 0.83vw;
+  line-height: 0.94vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #000;
@@ -217,18 +217,18 @@ export default {
   display: flex;
   width: 100%;
   align-items: center;
-  margin: 14px 0 50px;
+  margin: 0.73vw 0 2.6vw;
 }
 .typeList {
   width: 100%;
 }
 .type {
   cursor: pointer;
-  width: 82px;
-  height: 18px;
-  font-size: 16px;
-  line-height: 18px;
-  margin: 10px 0;
+  width: 4.27vw;
+  height: 0.94vw;
+  font-size: 0.83vw;
+  line-height: 0.94vw;
+  margin: 0.52vw 0;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #004ea2;

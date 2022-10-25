@@ -314,25 +314,25 @@ export default {
   /* padding-top: 100px; */
 }
 .tip {
-  width: 1120px;
-  height: 20px;
-  font-size: 16px;
-  margin: 14px 0 24.96px;
+  width: 58.33vw;
+  height: 1.04vw;
+  font-size: 0.83vw;
+  margin: 0.73vw 0 1.3vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #333333;
-  line-height: 20px;
+  line-height: 1.04vw;
 }
 .resultBigBox {
-  width: 1120px;
+  width: 58.33vw;
   /* min-height: 1240px; */
-  min-height: 600px;
+  min-height: 31.25vw;
   overflow: hidden;
 }
 .resultBox {
   width: 100%;
   /* height: 390px; */
-  margin: 0 0 15px 0;
+  margin: 0 0 0.78vw 0;
   background-color: #f7f7f7;
   /* overflow: hidden; */
 }
@@ -341,54 +341,54 @@ export default {
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 187px;
-  border-radius: 5px;
+  height: 9.74vw;
+  border-radius: 0.26vw;
   overflow: hidden;
   background-color: #f7f7f7;
 }
 .resultPic {
-  width: 160px;
-  height: 160px;
-  margin: 0 64px 0 0;
+  width: 8.33vw;
+  height: 8.33vw;
+  margin: 0 3.33vw 0 0;
   background: #ffffff;
-  border-radius: 5px;
+  border-radius: 0.26vw;
   overflow: hidden;
 }
 .resultPic > img {
-  width: 160px;
-  height: 160px;
+  width: 8.33vw;
+  height: 8.33vw;
   object-fit: contain;
 }
 .resultInfo {
-  width: 860px;
-  height: 160px;
+  width: 44.79vw;
+  height: 8.33vw;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 .resultName_zh {
   /* width: 100%; */
-  height: 21px;
-  margin: 0 0 13px 0;
-  font-size: 20px;
+  height: 1.09vw;
+  margin: 0 0 0.68vw 0;
+  font-size: 1.04vw;
   font-family: Microsoft YaHei UI;
   font-weight: 600;
   color: #004ea2;
-  line-height: 21px;
+  line-height: 1.09vw;
   cursor: pointer;
 }
 .resultName_zh > span:hover {
-  border-bottom: 2px solid #004ea2;
+  border-bottom: 0.1vw solid #004ea2;
 }
 .resultName_en {
   /* width: 100%; */
-  height: 20px;
-  margin: 0 0 17px 0;
-  font-size: 18px;
+  height: 1.04vw;
+  margin: 0 0 0.89vw 0;
+  font-size: 0.94vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #333333;
-  line-height: 20px;
+  line-height: 1.04vw;
 }
 .resultDetail {
   width: 70%;
@@ -397,17 +397,17 @@ export default {
   overflow: hidden;
 }
 ._data {
-  width: 260px;
-  height: 15px;
-  margin: 8px 4px 8px 0;
-  font-size: 14px;
+  width: 13.54vw;
+  height: 0.78vw;
+  margin: 0.42vw 0.21vw 0.42vw 0;
+  font-size: 0.73vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #333333;
-  line-height: 15px;
+  line-height: 0.78vw;
 }
 .jiegoushi {
-  width: 330px;
+  width: 17.19vw;
 }
 /* 可折叠列表 */
 .collapse {
@@ -415,16 +415,16 @@ export default {
   margin: 0 auto;
   /* height: 422px; */
   background: #f7f7f7;
-  border-radius: 10px;
+  border-radius: 0.52vw;
   overflow: hidden;
 }
 
 .collapse >>> .el-collapse-item__header {
-  text-indent: 45px;
-  font-size: 16px;
+  text-indent: 2.34vw;
+  font-size: 0.83vw;
   color: #004ea2;
   background-color: transparent;
-  border-bottom: 1px solid #eaeaec;
+  border-bottom: 0.05vw solid #eaeaec;
 }
 .collapse >>> .el-collapse-item__arrow,
 .el-icon-arrow-right,
@@ -442,10 +442,10 @@ export default {
 /* 以下是表格 */
 .prize {
   width: 76.5%;
-  height: 174px;
-  margin: 0 0 0 20px;
+  height: 9.06vw;
+  margin: 0 0 0 1.04vw;
   /* border: 0.96px solid #999999; */
-  border-radius: 5px;
+  border-radius: 0.26vw;
   overflow: hidden;
 }
 table {
@@ -458,7 +458,7 @@ table thead tr {
 }
 tbody {
   display: block;
-  height: 132px;
+  height: 6.88vw;
   /* overflow-x: hidden;
   overflow-y: overlay;
   -webkit-overflow-y: overlay;
@@ -472,25 +472,25 @@ table tbody tr {
 } */
 
 .tableHead > th {
-  height: 42px;
-  font-size: 16px;
+  height: 2.19vw;
+  font-size: 0.83vw;
   color: #333;
   background-color: transparent;
 }
 .tableContent div {
   overflow: hidden;
-  height: 44px;
-  line-height: 44px;
-  font-size: 16px;
+  height: 2.29vw;
+  line-height: 2.29vw;
+  font-size: 0.83vw;
   text-align: center;
 }
 
 .tableContent .fenziliang {
-  width: 200px;
+  width: 10.42vw;
   color: #004ea2;
 }
 .tableContent .size {
-  width: 170px;
+  width: 8.85vw;
   color: #171717;
 }
 .tableContent .store {
@@ -498,26 +498,26 @@ table tbody tr {
   color: #004ea2;
 }
 .tableContent .rmb {
-  width: 240px;
+  width: 12.5vw;
   color: #ff4d4d;
 }
 /* 购买数量按钮 */
 .tableContent .count {
-  width: 260px;
+  width: 13.54vw;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 .tableContent .countBtnBox {
-  width: 160px;
+  width: 8.33vw;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 .countBtnBox >>> .el-input-number {
   width: 90%;
-  height: 32px;
-  line-height: 32px;
+  height: 1.67vw;
+  line-height: 1.67vw;
 }
 .count >>> [class*=" el-icon-"],
 [class^="el-icon-"] {
@@ -525,10 +525,10 @@ table tbody tr {
 }
 .countBtnBox >>> .el-input-number__decrease,
 .count >>> .el-input-number__increase {
-  width: 30px;
-  height: 30px;
-  line-height: 30px;
-  border-radius: 2px;
+  width: 1.56vw;
+  height: 1.56vw;
+  line-height: 1.56vw;
+  border-radius: 0.1vw;
   background: #eaebed;
 }
 .countBtnBox >>> .el-input-number__decrease {
@@ -539,34 +539,34 @@ table tbody tr {
 }
 .countBtnBox >>> .el-input__inner {
   position: absolute;
-  top: 2px;
-  left: 31px;
+  top: 0.1vw;
+  left: 1.61vw;
   width: calc(100% - 62px);
-  height: 29px;
-  line-height: 29px;
-  border: 2px solid #eaebed;
+  height: 1.51vw;
+  line-height: 1.51vw;
+  border: 0.1vw solid #eaebed;
   padding: 0;
   /* background: #eaebed; */
 }
 .addCart {
   position: absolute;
-  width: 132px;
-  height: 34px;
+  width: 6.88vw;
+  height: 1.77vw;
   display: flex;
   justify-content: center;
   align-items: center;
   color: #004ea2;
-  font-size: 14px;
+  font-size: 0.73vw;
   background: #ffffff;
-  border-radius: 5px;
-  bottom: 14px;
-  right: 36px;
+  border-radius: 0.26vw;
+  bottom: 0.73vw;
+  right: 1.88vw;
   cursor: pointer;
 }
 .addCart > img {
-  margin: 0 0 0 8.06px;
-  width: 23px;
-  height: 20px;
+  margin: 0 0 0 0.42vw;
+  width: 1.2vw;
+  height: 1.04vw;
 }
 .addCart:hover {
   background-color: #daeefe;
@@ -575,11 +575,11 @@ table tbody tr {
 .pagination {
   /* position: absolute;
   bottom: 43px; */
-  margin: 0 0 20px 40%;
+  margin: 0 0 1.04vw 40%;
 }
 .pagination >>> .el-pagination {
-  --el-pagination-button-height: 40px;
-  --el-pagination-font-size: 16px;
+  --el-pagination-button-height: 2.08vw;
+  --el-pagination-font-size: 0.83vw;
 }
 .pagination
   >>> .el-pagination.is-background
@@ -590,8 +590,8 @@ table tbody tr {
 .pagination >>> .el-pagination.is-background .btn-next,
 .pagination >>> .el-pagination.is-background .btn-prev,
 .pagination >>> .el-pagination.is-background .el-pager li {
-  min-width: 40px;
-  border-radius: 5px;
+  min-width: 2.08vw;
+  border-radius: 0.26vw;
 }
 .pagination >>> .el-icon {
   margin: 0 auto;

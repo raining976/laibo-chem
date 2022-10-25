@@ -311,15 +311,15 @@ export default {
 }
 .top {
   width: 100%;
-  margin-bottom: 20px;
-  border-bottom: 2px solid #eaeaec;
+  margin-bottom: 1.04vw;
+  border-bottom: 0.1vw solid #eaeaec;
   display: flex;
   justify-content: space-between;
   overflow: hidden;
 }
 
 .deleteBtn {
-  margin: 0 48px 0 0;
+  margin: 0 2.5vw 0 0;
   cursor: pointer;
   overflow: hidden;
 }
@@ -328,26 +328,26 @@ export default {
 }
 
 .title {
-  font-size: 20px;
+  font-size: 1.04vw;
   font-family: Microsoft YaHei UI;
   font-weight: bold;
   color: #333333;
-  margin-right: 50px;
-  margin-bottom: 30px;
+  margin-right: 2.6vw;
+  margin-bottom: 1.56vw;
 }
 /* 下为购物车样式 */
 .orderList {
   /* position: relative; */
   width: 100%;
-  min-width: 950px;
-  min-height: 370px;
+  min-width: 49.48vw;
+  min-height: 19.27vw;
   overflow: hidden;
 }
 /* 表头 --*/
 .listHead {
   width: 100%;
-  height: 44px;
-  margin: 20px 0 0;
+  height: 2.29vw;
+  margin: 1.04vw 0 0;
   display: flex;
   align-items: center;
 }
@@ -358,28 +358,28 @@ export default {
   display: flex;
   height: 100%;
   align-items: center;
-  margin: 0 0px 0 20px;
+  margin: 0 0px 0 1.04vw;
   flex: 0.6;
 }
 /* ！复选框 */
 .checkAll {
   cursor: pointer;
-  width: 18px;
-  height: 18px;
-  line-height: 18px;
-  margin: 0 6px 0 0px;
-  border: 1px solid #999999;
-  border-radius: 2px;
+  width: 0.94vw;
+  height: 0.94vw;
+  line-height: 0.94vw;
+  margin: 0 0.31vw 0 0px;
+  border: 0.05vw solid #999999;
+  border-radius: 0.1vw;
 }
 .word {
   /* width: 65px; */
   /* height: 18px; */
   /* height: 100%; */
-  font-size: 18px;
+  font-size: 0.94vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #4a4a4a;
-  line-height: 18px;
+  line-height: 0.94vw;
   text-align: center;
 }
 
@@ -416,7 +416,7 @@ export default {
 .allOrder {
   position: relative;
   width: 100%;
-  height: 711px;
+  height: 37.03vw;
   display: flex;
   flex-direction: column;
 }
@@ -427,27 +427,27 @@ export default {
   align-items: center;
   /* justify-content: center; */
   width: 100%;
-  min-width: 747px;
-  height: 217px;
-  margin: 0 0 20px 0;
+  min-width: 38.91vw;
+  height: 11.3vw;
+  margin: 0 0 1.04vw 0;
   background: #f7f7f7;
-  border-radius: 10px;
+  border-radius: 0.52vw;
   overflow: hidden;
 }
 .checkOne {
   cursor: pointer;
-  width: 18px;
-  height: 18px;
-  border: 1px solid #999;
-  border-radius: 2px;
+  width: 0.94vw;
+  height: 0.94vw;
+  border: 0.05vw solid #999;
+  border-radius: 0.1vw;
 }
 .radio {
   /* position: absolute;
   top: 20px;
   left: 28px; */
   /* width: 18px; */
-  height: 18px;
-  margin-left: 20px;
+  height: 0.94vw;
+  margin-left: 1.04vw;
   flex: 0.6;
   /* border: 1px solid #999; */
   /* background-color: #fff; */
@@ -464,7 +464,7 @@ export default {
 .product {
   flex: 2;
   /* width: 700px; */
-  height: 165px;
+  height: 8.59vw;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -490,7 +490,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0 10px 0 0;
+  margin: 0 0.52vw 0 0;
   color: #004ea2;
 }
 
@@ -502,8 +502,8 @@ export default {
 }
 .myOrder >>> .el-dropdown {
   position: absolute;
-  right: 24px;
-  bottom: 30px;
+  right: 1.25vw;
+  bottom: 1.56vw;
 }
 .myOrder >>> .el-dropdown-link {
   cursor: pointer;
@@ -522,27 +522,27 @@ export default {
 }
 /* 分页器 */
 .pagination {
-  margin: 20px 0 0 36%;
+  margin: 1.04vw 0 0 36%;
   overflow: hidden;
 }
-.myOrder /deep/ .el-pagination {
-  --el-pagination-button-height: 40px;
-  --el-pagination-font-type: 16px;
+.myOrder >>> .el-pagination {
+  --el-pagination-button-height: 2.08vw;
+  --el-pagination-font-type: 0.83vw;
 }
 .myOrder
-  /deep/
+  >>>
   .el-pagination.is-background
   .el-pager
   li:not(.disabled).active {
   background-color: #004ea2;
 }
-.myOrder /deep/.el-pagination.is-background .btn-next,
-.myOrder /deep/.el-pagination.is-background .btn-prev,
-.myOrder /deep/.el-pagination.is-background .el-pager li {
-  min-width: 40px;
-  border-radius: 5px;
+.myOrder >>>.el-pagination.is-background .btn-next,
+.myOrder >>>.el-pagination.is-background .btn-prev,
+.myOrder >>>.el-pagination.is-background .el-pager li {
+  min-width: 2.08vw;
+  border-radius: 0.26vw;
 }
-.myOrder /deep/ .el-icon {
+.myOrder >>> .el-icon {
   margin: 0 auto;
 }
 </style>

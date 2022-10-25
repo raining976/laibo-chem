@@ -57,6 +57,7 @@ export default {
     };
   },
   mounted() {
+    
     this.getUserInfo();
     setTimeout(() => {
       if (this.in_team != 0) {
@@ -64,6 +65,7 @@ export default {
       }
     }, 50);
   },
+
   watch: {
     isNoticeShow: {
       handler(val) {
@@ -200,28 +202,28 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: 30px;
-  margin-bottom: 20px;
-  border-bottom: 2px solid #eaeaec;
+  padding-bottom: 1.56vw;
+  margin-bottom: 1.04vw;
+  border-bottom: 0.1vw solid #eaeaec;
 }
 .title {
-  font-size: 20px;
+  font-size: 1.04vw;
   font-family: Microsoft YaHei UI;
   font-weight: bold;
   color: #333333;
 }
 .setBox {
   position: relative;
-  margin-right: 100px;
+  margin-right: 5.21vw;
 }
 .team .setBox >>> .set {
-  margin: 0 20px;
+  margin: 0 1.04vw;
   transform: scale(2.5);
   transform-origin: center;
   cursor: pointer;
   transition: all 0.3s;
   background: #e3f5ff;
-  border-radius: 5px;
+  border-radius: 0.26vw;
 }
 .team .setBox .edit:hover,
 .team .setBox .notice:hover {

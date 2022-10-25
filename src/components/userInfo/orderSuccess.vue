@@ -1,6 +1,6 @@
 <template>
     <div class="orderSuccess">
-        <div class="completedPic"><img src="../../assets/dingdan.png" alt=""></div>
+        <div class="completedPic"><img src="../../assets/dingdan.webp" alt=""></div>
         <div class="completedWord">您的订单已经成功支付，订单交易号：{{orderId}}</div>
         <div class="btnBox">
             <div class="toCart btnStyle" @click="toCart()">返回购物车</div>

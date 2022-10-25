@@ -1,7 +1,7 @@
 <template>
   <router-view name="textPage"></router-view>
   <div >
-    <div class="solidLine"></div>
+    <!-- <div class="solidLine"></div> -->
     <div class="siteNav">
       <div class="mainPage" @click="toMainPage()">首页</div>
       &nbsp;&nbsp;&gt;&nbsp;&nbsp;
@@ -165,7 +165,9 @@ export default {
   line-height: 24px;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
-  margin: 14px auto 0;
+  /* margin: 14px auto 0; */
+  margin: 0 auto;
+  padding-top: calc(5.21vw + 0.73vw);
 }
 .siteNav div:hover {
   text-decoration: underline;
@@ -189,7 +191,7 @@ export default {
 .bg {
   position: relative;
   width: 100%;
-  height: 610px;
+  height: 640px;
   margin: 50px 0 0 0;
   display: flex;
   flex-direction: column;

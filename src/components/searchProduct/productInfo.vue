@@ -149,14 +149,14 @@
             <table border="0" cellspacing="0">
               <thead>
                 <tr class="tableHead">
-                  <th style="width: 200px">{{ $t("product.itemNo") }}</th>
-                  <th style="width: 170px">{{ $t("product.size") }}</th>
+                  <th style="width: 10.42vw">{{ $t("product.itemNo") }}</th>
+                  <th style="width: 8.85vw">{{ $t("product.size") }}</th>
                   <!-- <th style="width: 215px">{{ $t("product.stock") }}</th> -->
-                  <th style="width: 240px">{{ $t("product.price") }}</th>
-                  <th style="width: 260px">{{ $t("product.count") }}</th>
+                  <th style="width: 12.5vw">{{ $t("product.price") }}</th>
+                  <th style="width: 13.54vw">{{ $t("product.count") }}</th>
                 </tr>
               </thead>
-              <el-scrollbar max-height="132px">
+              <el-scrollbar max-height="6.88vw">
                 <tbody>
                   <!--一行 -->
                   <tr
@@ -206,8 +206,7 @@
         {{ $t("product.personalTailor") }}>
       </div>
     </div>
-      <private-order v-if="isShow" />
-    
+    <private-order v-if="isShow" />
   </div>
 </template>
 <script>
@@ -272,8 +271,8 @@ export default {
 
   methods: {
     // 打开私人订单
-    openOrder(){
-      this.$root.isShowOrder = ! this.$root.isShowOrder
+    openOrder() {
+      this.$root.isShowOrder = !this.$root.isShowOrder;
     },
     //ref数组
     info(el) {
@@ -288,7 +287,7 @@ export default {
           message: "请先登录",
           // type: "error",
         });
-        this.$root.openLogin()
+        this.$root.openLogin();
       } else {
         let isPost = false;
         // let length = this.$data.productData.params.length;
@@ -339,7 +338,7 @@ export default {
           message: "请先登录",
           // type: "error",
         });
-        this.$root.openLogin()
+        this.$root.openLogin();
       } else {
         let isPost = false;
         let length = this.$data.productData.params.length;
@@ -399,18 +398,18 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 100px;
+  padding-top: 5.21vw;
 }
 .solidLine1 {
-  width: 1410.05px;
-  height: 1px;
-  border-bottom: 1px solid #999999;
+  width: 73.44vw;
+  height: 0.05vw;
+  border-bottom: 0.05vw solid #999999;
   margin: 0 auto;
 }
 .productInfo {
-  width: 1410px;
-  min-height: 749.95px;
-  margin: 77px 0 20px 0;
+  width: 73.44vw;
+  min-height: 39.06vw;
+  margin: 4.01vw 0 1.04vw 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -418,99 +417,99 @@ export default {
   position: relative;
 }
 .productInfoBox {
-  width: 1410px;
-  min-height: 556px;
+  width: 73.44vw;
+  min-height: 28.96vw;
   overflow: hidden;
   display: flex;
 }
 .productPic {
-  width: 505px;
+  width: 26.3vw;
   /* min-height: 542.02px; */
   height: 98%;
-  margin: 0 27.07px 0 0;
-  border: 1px solid #999999;
-  border-radius: 5px;
+  margin: 0 1.41vw 0 0;
+  border: 0.05vw solid #999999;
+  border-radius: 0.26vw;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
 }
 .productPic > img {
-  width: 504.96px;
-  height: 542.02px;
+  width: 26.3vw;
+  height: 28.23vw;
   object-fit: contain;
 }
 .info {
-  width: 874.94px;
-  min-height: 542.02px;
+  width: 45.57vw;
+  min-height: 28.23vw;
   overflow: hidden;
 }
 .productName_zh {
   width: 100%;
 
-  font-size: 48px;
+  font-size: 2.5vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #004ea2;
-  line-height: 49.92px;
-  margin: 0 0 12px 0;
+  line-height: 2.6vw;
+  margin: 0 0 0.63vw 0;
 }
 .productName_en {
   width: 100%;
 
-  font-size: 30px;
-  line-height: 32px;
+  font-size: 1.56vw;
+  line-height: 1.67vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #333333;
 }
 .concentration {
   width: 100%;
-  height: 24px;
-  margin: 12.1px 0 0 5px;
-  font-size: 24px;
+  height: 1.25vw;
+  margin: 0.63vw 0 0 0.26vw;
+  font-size: 1.25vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #004ea2;
-  line-height: 24px;
+  line-height: 1.25vw;
 }
 .solidLine2 {
-  width: 874.94px;
-  height: 1px;
-  margin: 24px 0 14px;
-  border-bottom: 1px solid #999999;
+  width: 45.57vw;
+  height: 0.05vw;
+  margin: 1.25vw 0 0.73vw;
+  border-bottom: 0.05vw solid #999999;
 }
 .details {
   width: 100%;
-  min-height: 190.08px;
+  min-height: 9.9vw;
   /* margin: 0 0 12px 0; */
   overflow: hidden;
   display: flex;
   flex-wrap: wrap;
 }
 .oneDetail {
-  width: 437px;
-  min-height: 18px;
-  margin: 10px 0;
+  width: 22.76vw;
+  min-height: 0.94vw;
+  margin: 0.52vw 0;
   display: flex;
 }
 .detailName {
-  min-width: 140px;
-  height: 18px;
-  font-size: 18px;
+  min-width: 7.29vw;
+  height: 0.94vw;
+  font-size: 0.94vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #333333;
-  line-height: 18px;
+  line-height: 0.94vw;
   /* word-break: normal; */
 }
 .detailContent {
-  height: 18px;
-  font-size: 18px;
+  height: 0.94vw;
+  font-size: 0.94vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #333333;
-  line-height: 18px;
+  line-height: 0.94vw;
   white-space: nowrap;
   text-overflow: ellipsis;
   /* word-break: break-all; */
@@ -519,14 +518,14 @@ export default {
 /* 以下是表格 */
 .prize {
   width: 99.5%;
-  height: 174px;
-  border: 1px solid #999999;
-  border-radius: 5px;
+  height: 9.06vw;
+  border: 0.05vw solid #999999;
+  border-radius: 0.26vw;
   overflow: hidden;
 }
 table {
   width: 100%;
-  border-spacing: 0px;
+  border-spacing: 0vw;
   border-collapse: collapse;
 }
 table thead tr {
@@ -534,7 +533,7 @@ table thead tr {
 }
 tbody {
   display: block;
-  height: 132px;
+  height: 6.88vw;
   /* overflow-x: hidden;
   overflow-y: overlay;
   -webkit-overflow-y: overlay;
@@ -548,15 +547,16 @@ table tbody tr {
 } */
 
 .tableHead > th {
-  height: 42px;
+  height: 2.19vw;
   color: #333;
   background-color: #eaebed;
+  font-size: .8333vw;
 }
 .tableContent div {
   overflow: hidden;
-  height: 44px;
-  line-height: 44px;
-  font-size: 16px;
+  height: 2.29vw;
+  line-height: 2.29vw;
+  font-size: 0.83vw;
   text-align: center;
 }
 .tableContent {
@@ -574,12 +574,12 @@ table tbody tr {
   z-index: 999;
 } */
 .huohao {
-  width: 200px;
+  width: 10.42vw;
   /* width: 145px; */
   color: #004ea2;
 }
 .size {
-  width: 170px;
+  width: 8.85vw;
   /* width: 140px; */
   color: #171717;
 }
@@ -588,35 +588,35 @@ table tbody tr {
   color: #004ea2;
 }
 .rmb {
-  width: 240px;
+  width: 12.5vw;
   /* width: 170px; */
   color: #ff4d4d;
 }
 /* 购买数量按钮 */
 .count {
   /* width: 200px; */
-  width: 260px;
+  width: 13.54vw;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 .countBtnBox {
-  width: 160px;
+  width: 8.33vw;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 .countBtnBox >>> .el-input-number {
   width: 90%;
-  height: 31.5px;
-  line-height: 31.5px;
+  height: 1.64vw;
+  line-height: 1.64vw;
 }
 .countBtnBox >>> .el-input-number__decrease,
 .count >>> .el-input-number__increase {
-  width: 30px;
-  height: 30px;
-  line-height: 30px;
-  border-radius: 2px;
+  width: 1.56vw;
+  height: 1.56vw;
+  line-height: 1.56vw;
+  border-radius: 0.1vw;
   background: #eaebed;
 }
 .count >>> [class*=" el-icon-"],
@@ -631,37 +631,37 @@ table tbody tr {
 }
 .countBtnBox >>> .el-input__inner {
   position: absolute;
-  top: 1px;
-  left: 31px;
-  width: calc(100% - 62px);
-  height: 29.5px;
-  line-height: 29.5px;
-  border: 2px solid #eaebed;
+  top: 0.05vw;
+  left: 1.61vw;
+  width: calc(100% - 3.23vw);
+  height: 1.54vw;
+  line-height: 1.54vw;
+  border: 0.1vw solid #eaebed;
   padding: 0;
   /* background: #eaebed; */
 }
 
 /* ---- */
 .btn {
-  margin: 33.98px 0 0 0;
+  margin: 1.77vw 0 0 0;
   display: flex;
 }
 .addCart,
 .toBuy {
   cursor: pointer;
-  width: 240px;
-  height: 64px;
-  line-height: 64px;
-  font-size: 24px;
+  width: 12.5vw;
+  height: 3.33vw;
+  line-height: 3.33vw;
+  font-size: 1.25vw;
   color: #004ea2;
   font-weight: 600;
   text-align: center;
   background: #e0f3fe;
-  border-radius: 5px;
+  border-radius: 0.26vw;
   transition: all 0.2s;
 }
 .addCart {
-  margin: 0 16px 0 0;
+  margin: 0 0.83vw 0 0;
 }
 .addCart:hover,
 .toBuy:hover {
@@ -669,15 +669,15 @@ table tbody tr {
   background-color: #004ea2;
 }
 .toCustomize {
-  height: 24px;
-  line-height: 24px;
+  height: 1.25vw;
+  line-height: 1.25vw;
   cursor: pointer;
   position: absolute;
   color: #004ea2;
   background-color: #e0f3fe;
-  bottom: 38.02px;
+  bottom: 1.98vw;
   right: 0;
-  font-size: 22px;
+  font-size: 1.15vw;
 }
 .toCustomize:hover {
   color: #fff;

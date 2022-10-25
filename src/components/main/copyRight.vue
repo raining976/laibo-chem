@@ -27,7 +27,7 @@ export default {
   display: flex;
   align-items: center;
   width: 100%;
-  height: 190px;
+  height: 9.9vw;
   background: #f7f7f7;
 }
 .content {
@@ -35,20 +35,20 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 900px;
+  width: 46.88vw;
   margin: 0 auto;
 }
 .content > div {
-  margin-top: 20px;
+  margin-top: 1.04vw;
 }
 .blue {
-  font-size: 14px;
+  font-size: 0.73vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #014a97;
 }
 .red {
-  font-size: 14px;
+  font-size: 0.73vw;
   font-family: Microsoft YaHei UI;
   font-weight: bold;
   color: #fe2c2c;
@@ -56,6 +56,6 @@ export default {
 .bottom {
   display: flex;
   justify-content: space-between;
-  width: 500px;
+  width: 26.04vw;
 }
 </style>

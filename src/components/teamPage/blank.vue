@@ -2,7 +2,7 @@
 <template>
   <div class="blank">
     <div class="imgBox">
-      <img src="../../assets/teamBlank.png" alt="" />
+      <img src="../../assets/teamBlank.webp" alt="" />
       <h3 class="imgTitle">{{ $t("team.noTeam") }}</h3>
     </div>
     <div class="btnBox">

@@ -132,9 +132,8 @@ export default {
 <style scoped>
 .userInfo {
   width: 100%;
-  min-height: 1054px;
-  /* margin-top: 100px; */
-  padding-top: 100px;
+  min-height: 54.9vw;
+  padding-top: 5.21vw;
 }
 .contentBox {
   display: flex;
@@ -143,22 +142,22 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 330px;
+  width: 17.19vw;
 }
 .eachSelect {
   position: relative;
   text-align: start;
-  line-height: 50px;
-  width: calc(307px - 82px);
-  padding: 0 41px;
-  height: 50px;
-  border-radius: 5px;
-  font-size: 18px;
+  line-height: 2.6vw;
+  width: calc(15.99vw - 4.27vw);
+  padding: 0 2.14vw;
+  height: 2.6vw;
+  border-radius: 0.26vw;
+  font-size: 0.94vw;
   font-family: Microsoft YaHei UI;
   font-weight: bold;
   color: #4a4a4a;
   cursor: pointer;
-  margin: 8px 0;
+  margin: 0.42vw 0;
   transition: all 0.3s;
   /* background: #e3f5ff; */
 }
@@ -169,26 +168,26 @@ export default {
 .square {
   position: absolute;
   display: inline-block;
-  left: 10px;
-  top: 21px;
-  width: 10px;
-  height: 10px;
+  left: 0.52vw;
+  top: 1.09vw;
+  width: 0.52vw;
+  height: 0.52vw;
   transition: all 0.3s;
 }
 .choose .square {
-  left: 24px;
-  top: 21px;
+  left: 1.25vw;
+  top: 1.09vw;
   background: #004ea2;
 }
 .line {
-  width: 3px;
+  width: 0.16vw;
   background-color: #eaeaec;
-  height: 862px;
-  margin-top: 12px;
+  height: 44.9vw;
+  margin-top: 0.63vw;
 }
 .menuContent {
-  min-height: 1054px;
-  margin: 50px 50px 100px 50px;
+  min-height: 54.9vw;
+  margin: 2.6vw 2.6vw 5.21vw 2.6vw;
   flex: 1;
 }
 </style>

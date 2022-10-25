@@ -10,7 +10,7 @@
               status-icon
               :rules="rules"
               ref="ruleForm"
-              label-width="100px"
+              label-width="5.21vw"
               class="demo-ruleForm"
             >
               <el-form-item label="email" prop="email">
@@ -191,50 +191,50 @@ export default {
   --animate-duration: 0.5s;
 }
 .privateOrderBox .el-form-item__label {
-  font-size: 16px;
+  font-size: 0.83vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #666666;
 }
 .privateOrderBox .el-form-item__content {
-  width: 367px;
-  height: 41px;
-  border-radius: 5px;
+  width: 19.11vw;
+  height: 2.14vw;
+  border-radius: 0.26vw;
 }
 .privateOrderBox .el-input {
-  width: 367px;
-  height: 41px;
-  border-radius: 5px;
+  width: 19.11vw;
+  height: 2.14vw;
+  border-radius: 0.26vw;
 }
 .privateOrderBox .el-input__inner {
-  width: 367px;
-  height: 41px;
-  border-radius: 5px;
-  border: 1px solid #999999;
+  width: 19.11vw;
+  height: 2.14vw;
+  border-radius: 0.26vw;
+  border: 0.05vw solid #999999;
 }
 .privateOrderBox .el-input__inner:focus,
 .privateOrderBox .el-input__inner:hover {
-  border: 1px solid var(--color);
+  border: 0.05vw solid var(--color);
 }
 
 .privateOrderBox .el-form-item .demand {
-  width: 367px;
-  height: 103px;
+  width: 19.11vw;
+  height: 5.36vw;
 }
 
 .privateOrderBox .el-form-item .el-textarea__inner {
-  width: 367px;
-  height: 103px;
-  border: 1px solid #999999;
-  border-radius: 5px;
+  width: 19.11vw;
+  height: 5.36vw;
+  border: 0.05vw solid #999999;
+  border-radius: 0.26vw;
   resize: none;
 }
 .privateOrderBox .demandBox .el-form-item__content {
-  width: 367px;
-  height: 103px;
+  width: 19.11vw;
+  height: 5.36vw;
 }
 .privateOrderBox .el-form-item {
-  margin-top: 30px;
+  margin-top: 1.56vw;
 }
 .privateOrderBox .btnBox .el-form-item__content {
   display: flex;
@@ -243,14 +243,14 @@ export default {
 .privateOrderBox .orderSubmit:nth-child(1) {
   display: flex;
   justify-content: center;
-  width: 69px;
-  height: 38px;
+  width: 3.59vw;
+  height: 1.98vw;
   background: var(--color);
-  border-radius: 5px;
+  border-radius: 0.26vw;
 }
 .privateOrderBox .orderSubmit:nth-child(1) span {
   text-align: center;
-  font-size: 18px;
+  font-size: 0.94vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #ffffff;
@@ -258,14 +258,14 @@ export default {
 .privateOrderBox .orderReset:nth-child(2) {
   display: flex;
   justify-content: center;
-  width: 69px;
-  height: 38px;
+  width: 3.59vw;
+  height: 1.98vw;
   color: var(--color);
-  border-radius: 5px;
+  border-radius: 0.26vw;
   border-color: var(--color);
 }
 .privateOrderBox .orderReset:nth-child(2) span {
-  font-size: 18px;
+  font-size: 0.94vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
 }
@@ -308,31 +308,31 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 693px;
-  height: 812px;
+  width: 36.09vw;
+  height: 42.29vw;
   background: #ffffff;
-  box-shadow: 0px 4px 33px 7px rgba(7, 2, 3, 0.17);
-  border-radius: 10px;
+  box-shadow: 0px 0.21vw 1.72vw 0.36vw rgba(7, 2, 3, 0.17);
+  border-radius: 0.52vw;
 }
 .formBox {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  height: calc(812px - 94px);
-  padding: 40px 0 54px 0;
+  height: calc(42.29vw - 4.9vw);
+  padding: 2.08vw 0 2.81vw 0;
 }
 .title {
-  font-size: 36px;
+  font-size: 1.88vw;
   font-family: Microsoft YaHei UI;
   font-weight: bold;
   color: #004ea2;
-  padding-bottom: 38px;
-  border-bottom: 4px solid #004ea2;
+  padding-bottom: 1.98vw;
+  border-bottom: 0.21vw solid #004ea2;
 }
 .contactUs {
-  margin: 54px 25px 0 25px;
-  font-size: 16px;
+  margin: 2.81vw 1.3vw 0 1.3vw;
+  font-size: 0.83vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #666666;

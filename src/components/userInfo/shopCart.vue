@@ -12,7 +12,7 @@
         <el-tooltip effect="light" content="删除选中商品" placement="top">
           <i
             class="el-icon-delete"
-            style="font-size: 25px"
+            style="font-size: 1.3vw"
             @click="delProduct()"
           ></i>
         </el-tooltip>
@@ -169,7 +169,7 @@ export default {
   // updated() {
   //   console.log(this.commodityBox);
   // },
-    mounted() {
+  mounted() {
     //
     window.scrollTo(0, 0);
   },
@@ -454,15 +454,15 @@ export default {
 <style scoped>
 .top {
   width: 100%;
-  margin-bottom: 20px;
-  border-bottom: 2px solid #eaeaec;
+  margin-bottom: 1.04vw;
+  border-bottom: 0.1vw solid #eaeaec;
   display: flex;
   justify-content: space-between;
   overflow: hidden;
 }
 
 .deleteBtn {
-  margin: 0 48px 0 0;
+  margin: 0 2.5vw 0 0;
   cursor: pointer;
   overflow: hidden;
 }
@@ -474,43 +474,44 @@ export default {
   font-weight: 400;
 }
 .title {
-  font-size: 20px;
+  font-size: 1.04vw;
   font-family: Microsoft YaHei UI;
   font-weight: 600;
   color: #333333;
-  margin-right: 50px;
-  margin-bottom: 30px;
+  margin-right: 2.6vw;
+  margin-bottom: 1.56vw;
 }
 /* ---以下为购物车样式 */
 .shopCart {
   width: 100%;
-  height: 820px;
+  height: 42.71vw;
   overflow: hidden;
 }
 /* 表头 ------*/
 .listHead {
   position: relative;
   width: 100%;
-  height: 44px;
+  height: 2.29vw;
   display: flex;
   align-items: center;
+  font-size: .9375vw;
 }
 .quanxuan {
-  width: 230px;
+  width: 11.98vw;
   position: absolute;
   display: flex;
   align-items: center;
-  margin: 0 0px 0 28px;
+  margin: 0 0px 0 1.46vw;
 }
 /* ！复选框 */
 .checkAll {
   cursor: pointer;
-  width: 18px;
-  height: 18px;
+  width: 0.94vw;
+  height: 0.94vw;
 
-  margin: 0 6px 0 0px;
-  border: 1px solid #999999;
-  border-radius: 2px;
+  margin: 0 0.31vw 0 0px;
+  border: 0.05vw solid #999999;
+  border-radius: 0.1vw;
 }
 /* .checked {
   cursor: pointer;
@@ -521,12 +522,12 @@ export default {
   border-radius: 2px;
 } */
 .word {
-  height: 18px;
-  font-size: 18px;
+  height: 0.94vw;
+  font-size: 0.94vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #4a4a4a;
-  line-height: 18px;
+  line-height: 0.94vw;
 }
 ._productInfo {
   /* width: 565px; */
@@ -557,7 +558,7 @@ export default {
 /* 内容 */
 .allCommodity {
   width: 100%;
-  height: 665px;
+  height: 34.64vw;
   display: flex;
   flex-direction: column;
 }
@@ -568,26 +569,27 @@ export default {
   align-items: center;
   /* justify-content: center; */
   width: 100%;
-  min-width: 1080px;
-  height: 207px;
-  margin: 0 0 20px 0;
+  min-width: 56.25vw;
+  height: 10.78vw;
+  margin: 0 0 1.04vw 0;
   background: #f7f7f7;
-  border-radius: 10px;
+  border-radius: 0.52vw;
   overflow: hidden;
+  font-size: .9375vw;
 }
 .checkOne {
   cursor: pointer;
-  width: 18px;
-  height: 18px;
-  border: 1px solid #999;
-  border-radius: 2px;
+  width: 0.94vw;
+  height: 0.94vw;
+  border: 0.05vw solid #999;
+  border-radius: 0.1vw;
 }
 .radio {
   position: absolute;
-  top: 20px;
-  left: 28px;
-  width: 18px;
-  height: 18px;
+  top: 1.04vw;
+  left: 1.46vw;
+  width: 0.94vw;
+  height: 0.94vw;
   /* border: 1px solid #999; */
   /* background-color: #fff; */
   /* border-radius: 2px; */
@@ -595,53 +597,53 @@ export default {
 .productInfo {
   flex: 4.1;
   /* width: 700px; */
-  height: 165px;
+  height: 8.59vw;
   display: flex;
   align-items: center;
-  margin: 0 27px 0 68px;
+  margin: 0 1.41vw 0 3.54vw;
 }
 .productPic {
-  width: 165px;
-  height: 165px;
+  width: 8.59vw;
+  height: 8.59vw;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0 33px 0 0;
+  margin: 0 1.72vw 0 0;
   background: #ffffff;
-  border-radius: 5px;
+  border-radius: 0.26vw;
   overflow: hidden;
 }
 .productPic img {
   object-fit: contain;
 }
 .infoBox {
-  width: calc(100% - 198px);
-  height: 165px;
+  width: calc(100% - 10.31vw);
+  height: 8.59vw;
   overflow: hidden;
 }
 .name_zh {
   cursor: pointer;
-  min-height: 20px;
-  font-size: 18px;
+  min-height: 1.04vw;
+  font-size: 0.94vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #004ea2;
-  line-height: 20px;
-  padding: 0 0 2px 0;
-  margin: 20px 0 15px;
+  line-height: 1.04vw;
+  padding: 0 0 0.1vw 0;
+  margin: 1.04vw 0 0.78vw;
 }
 .name_zh:hover {
   /* border-bottom: 2px solid #004EA2; */
   text-decoration: underline;
 }
 .infoWord {
-  min-height: 18px;
-  font-size: 18px;
+  min-height: 0.94vw;
+  font-size: 0.94vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #333333;
-  line-height: 18px;
-  margin: 8px 0;
+  line-height: 0.94vw;
+  margin: 0.42vw 0;
 }
 .size {
   flex: 1;
@@ -661,20 +663,20 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0 5px;
+  margin: 0 0.26vw;
 }
 .count >>> .el-input-number {
   width: 90%;
-  height: 30px;
-  line-height: 30px;
+  height: 1.56vw;
+  line-height: 1.56vw;
 }
 .count >>> .el-input-number__decrease,
 .count >>> .el-input-number__increase {
-  width: 30px;
-  height: 30px;
-  line-height: 30px;
+  width: 1.56vw;
+  height: 1.56vw;
+  line-height: 1.56vw;
   font-weight: 600;
-  border-radius: 2px;
+  border-radius: 0.1vw;
   background: #eaebed;
 }
 .count >>> .el-input-number__decrease:hover,
@@ -697,12 +699,12 @@ export default {
 }
 .count >>> .el-input__inner {
   position: absolute;
-  top: 2px;
-  left: 31px;
-  width: calc(100% - 62px);
-  height: 29.5px;
-  line-height: 29.5px;
-  border: 2px solid #eaebed;
+  top: 0.1vw;
+  left: 1.61vw;
+  width: calc(100% - 3.23vw);
+  height: 1.54vw;
+  line-height: 1.54vw;
+  border: 0.1vw solid #eaebed;
   padding: 0;
   /* background: #eaebed; */
 }
@@ -715,12 +717,12 @@ export default {
 }
 /* 分页器 */
 .pagination {
-  margin: 20px 0 0 36%;
+  margin: 1.04vw 0 0 36%;
   overflow: hidden;
 }
 .shopCart >>> .el-pagination {
-  --el-pagination-button-height: 40px;
-  --el-pagination-font-size: 16px;
+  --el-pagination-button-height: 2.08vw;
+  --el-pagination-font-size: 0.83vw;
 }
 .shopCart >>> .el-pagination.is-background .el-pager li:not(.disabled).active {
   background-color: #004ea2;
@@ -728,8 +730,8 @@ export default {
 .shopCart >>> .el-pagination.is-background .btn-next,
 .shopCart >>> .el-pagination.is-background .btn-prev,
 .shopCart >>> .el-pagination.is-background .el-pager li {
-  min-width: 40px;
-  border-radius: 5px;
+  min-width: 2.08vw;
+  border-radius: 0.26vw;
 }
 .shopCart >>> .el-icon {
   margin: 0 auto;
@@ -737,40 +739,40 @@ export default {
 /* 以下为底部 */
 .footer {
   width: 95%;
-  height: 100px;
+  height: 5.21vw;
   display: flex;
   justify-content: flex-end;
   align-items: center;
   background: #ffffff;
-  border: 1px solid #eaeaec;
-  border-radius: 10px;
+  border: 0.05vw solid #eaeaec;
+  border-radius: 0.52vw;
 }
 .allMoney {
   display: flex;
   align-items: center;
-  min-width: 220px;
-  height: 18px;
-  font-size: 18px;
+  min-width: 11.46vw;
+  height: 0.94vw;
+  font-size: 0.94vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #333333;
-  line-height: 18px;
-  margin: 0 0 0 42px;
+  line-height: 0.94vw;
+  margin: 0 0 0 2.19vw;
 }
 .allMoney div {
-  font-size: 26px;
+  font-size: 1.35vw;
   color: #ff4747;
 }
 .toPay {
   cursor: pointer;
-  padding: 0 23px;
-  height: 52px;
-  line-height: 52px;
+  padding: 0 1.2vw;
+  height: 2.71vw;
+  line-height: 2.71vw;
   text-align: center;
-  margin: 0 24px 0 26px;
+  margin: 0 1.25vw 0 1.35vw;
   color: #004ea2;
   background-color: #e0f3fe;
-  border-radius: 26px;
+  border-radius: 1.35vw;
 }
 .toPay:hover {
   color: #fff;
