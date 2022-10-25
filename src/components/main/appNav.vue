@@ -3,13 +3,13 @@
     <div class="h">
       <div class="content">
         <div class="logoBox">
-          <img src="../../assets/logo.png" alt="" @click="toMainPage()" />
+          <img :src="logos[this.isWhite]" alt="" @click="toMainPage()" />
         </div>
         <div class="inputBox">
           <input
             v-model="inputValue"
             type="text"
-            placeholder="输入产品编码，CAS编码，关键字或结构式"
+            :placeholder="$t('home.searchTip')"
             @keyup.enter="toSearchResult()"
           />
           <img
@@ -44,10 +44,8 @@
           }}</span>
         </div>
         <!-- 你好客户 -->
-        <el-dropdown>
-          <span class="userName">
-            {{ name }}
-          </span>
+        <el-dropdown v-if="isLogin">
+          <span class="userName"> {{ $t("nav.hello") + name }} </span>
           <template #dropdown>
             <el-dropdown-menu class="navDropdown">
               <el-dropdown-item
@@ -99,7 +97,6 @@
 </template>
 
 <script>
-
 export default {
   name: "appNav",
 
@@ -109,7 +106,7 @@ export default {
         { menuName: this.$t("nav.home") },
         { menuName: this.$t("nav.myOrder") },
         { menuName: this.$t("nav.cart") },
-        { menuName: "私人订制" },
+        { menuName: this.$t("nav.customization") },
       ],
       register: "注册",
       isActive: true, // 当前语言是否为中文
@@ -121,12 +118,16 @@ export default {
         require("../../assets/search_white.png"),
         require("../../assets/search_black.png"),
       ],
+      logos: [
+        require("../../assets/logo.png"),
+        require("../../assets/logo_black.png"),
+      ],
       isWhite: 0, // 在主页为 0 , 不在主页为 1
       inputValue: "", // 搜索关键词
       isSearch: 0,
-
     };
   },
+
   created() {
     // 个人状态
     if (localStorage.getItem("token")) {
@@ -167,12 +168,13 @@ export default {
         this.$refs.nav_li[this.currentIndex].offsetWidth + "px";
     }, 50);
   },
+
   watch: {
     // 监听路由
     $route: {
       immediate: true,
       handler(val) {
-        console.log("val", val);
+        // console.log("val", val);
         if (val.path == "/" || val.path == "/mainPage") {
           document.documentElement.style.setProperty("--text--color", "#fff");
           this.isWhite = 0;
@@ -228,7 +230,7 @@ export default {
           break;
         case 3:
           // 私人订单
-          this.$root.isShowOrder = !this.$root.isShowOrder
+          this.$root.isShowOrder = !this.$root.isShowOrder;
           break;
         default:
           break;
@@ -261,6 +263,7 @@ export default {
         });
     },
     toTeam() {
+      if (this.$route.path.includes("team")) return;
       let inTeam = localStorage.getItem("in_team");
       if (inTeam == 0) this.$router.push("/teamBlank");
       else if (inTeam == 1) this.$router.push("/searchMember");
@@ -323,6 +326,7 @@ export default {
   background-color: transparent;
   /* background: pink; */
   border-bottom: 0.05vw solid var(--text--color);
+  /* background: #ffffff; */
 }
 .h {
   display: flex;
@@ -361,10 +365,13 @@ export default {
   background: transparent;
   color: var(--text--color);
   padding: 0 1.04vw;
+
 }
 .inputBox input::placeholder {
   color: var(--text--color);
+  font-size: 0.83vw;
 }
+
 .inputBox .search {
   position: absolute;
   right: 0.78vw;
@@ -468,6 +475,7 @@ export default {
 }
 .userName {
   color: var(--text--color);
+  font-size: 0.9375vw;
 }
 .toILabPlus {
   padding: 0 1.04vw;

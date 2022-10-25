@@ -3,7 +3,7 @@
     <transition appear appear-active-class="fadeIn">
       <div class="content" ref="logInContent">
         <div class="logInBox" v-show="isLogIn">
-          <h2 class="title" ref="title">{{ $t("logIn.userLogIn") }}</h2>
+          <h2 class="title" ref="title">{{ $t("nav.logIn") }}</h2>
           <!-- 邮箱表单部分 -->
           <div class="inputBox" data-after="">
             <input
@@ -48,7 +48,9 @@
             {{ $t("logIn.forget") }}
           </div>
         </div>
-        <forget-psd v-if="!isLogIn" />
+        <transition enter-active-class="fade">
+          <forget-psd v-if="!isLogIn" />
+        </transition>
       </div>
     </transition>
   </div>
@@ -144,12 +146,12 @@ export default {
     checkEmail(e) {
       let a = e.path[1]; // 获取带有after伪元素的父盒子
       if (this.logInForm.email == "") {
-        a.setAttribute("data-after", "邮箱不能为空");
+        a.setAttribute("data-after", this.$t("email.noEmpty"));
         return;
       }
       let pattern = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
       if (!pattern.test(this.logInForm.email)) {
-        a.setAttribute("data-after", "邮箱格式不正确");
+        a.setAttribute("data-after", this.$t("email.noFormat"));
       } else {
         a.setAttribute("data-after", "");
         this.isEmail = true;
@@ -160,8 +162,10 @@ export default {
     checkVerification(e) {
       let a = e.path[1]; // 获取带有after伪元素的父盒子
       if (this.logInForm.email == "") {
-        if (this.pageCode == 1) a.setAttribute("data-after", "验证码不能为空");
-        if (this.pageCode == 2) a.setAttribute("data-after", "密码不能为空");
+        if (this.pageCode == 1)
+          a.setAttribute("data-after", this.$t("email.emptyVerify"));
+        if (this.pageCode == 2)
+          a.setAttribute("data-after", this.$t("email.emptyPass"));
       } else {
         a.setAttribute("data-after", "");
         this.isVerifyCode = true;
@@ -178,7 +182,7 @@ export default {
 
     // 登录
     login() {
-      console.log("登录");
+      // console.log("登录");
       switch (this.pageCode) {
         // 验证码登录时
         case 1:
@@ -315,8 +319,8 @@ export default {
         message: "登录成功!",
         type: "success",
       });
-      this.$root.isShowLogIn = false;
-      this.$parent.key++;
+      if (this.$root.isShowLogIn) this.$root.isShowLogIn = false;
+      this.$root.key++;
       // 保存access和refresh
       localStorage.setItem("token", token);
       localStorage.setItem("refresh", refresh);
@@ -477,7 +481,12 @@ input::-webkit-input-placeholder {
   color: var(--color);
   cursor: pointer;
 }
-.fadeIn{
+.fadeIn {
+  animation: fadeUp 0.5s;
+}
+
+
+.fade {
   animation: fadeUp 0.5s;
 }
 </style>

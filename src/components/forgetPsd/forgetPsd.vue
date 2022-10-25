@@ -82,6 +82,7 @@ export default {
   methods: {
     // 返回登录
     returnLogIn() {
+      console.log("this.$parent.isLogIn", this.$parent.isLogIn);
       this.$parent.isLogIn = true;
     },
 
@@ -89,7 +90,7 @@ export default {
     checkVerification(e) {
       let a = e.path[1]; // 获取带有after伪元素的父盒子
       if (this.submitForm.email == "") {
-        a.setAttribute("data-after", "验证码不能为空");
+        a.setAttribute("data-after", this.$t("email.emptyVerify"));
         this.isVerifyCode = false;
       } else {
         a.setAttribute("data-after", "");
@@ -109,7 +110,7 @@ export default {
           .then((res) => {
             let msg;
             if (res.data.code == 20000) {
-              msg = "发送成功";
+              msg = this.$t("callback.success");
               this.timerInterval();
             }
             this.$message({
@@ -145,7 +146,7 @@ export default {
           .catch((err) => {
             console.log("forgetPass err", err);
             this.$message({
-              message: "未知错误!",
+              message: this.$t("callback.error"),
               type: "error",
             });
           });
@@ -181,13 +182,13 @@ export default {
     checkEmail(e) {
       let a = e.path[1]; // 获取带有after伪元素的父盒子
       if (this.submitForm.email == "") {
-        a.setAttribute("data-after", "邮箱不能为空");
+        a.setAttribute("data-after", this.$t("email.noEmpty"));
         this.isEmail = false;
         return;
       }
       let pattern = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
       if (!pattern.test(this.submitForm.email)) {
-        a.setAttribute("data-after", "邮箱格式不正确");
+        a.setAttribute("data-after", this.$t("email.noFormat"));
         this.isEmail = false;
       } else {
         a.setAttribute("data-after", "");
@@ -199,7 +200,7 @@ export default {
     passEmpty(e) {
       let a = e.path[1];
       if (this.submitForm.newPassword == "") {
-        a.setAttribute("data-after", "请输入您的新密码");
+        a.setAttribute("data-after", this.$t("forgetPass.newPass"));
         this.isPass = false;
       } else {
         a.setAttribute("data-after", "");
@@ -211,12 +212,12 @@ export default {
     checkPassFunc(e) {
       let a = e.path[1];
       if (this.checkPass == "") {
-        a.setAttribute("data-after", "请输入确认密码");
+        a.setAttribute("data-after", this.$t("forgetPass.confirm"));
         this.isCheck = false;
         return;
       }
       if (this.checkPass != this.submitForm.newPassword) {
-        a.setAttribute("data-after", "确认密码与新密码不一致");
+        a.setAttribute("data-after", this.$t("forgetPass.noEqual"));
         this.isCheck = false;
       } else {
         a.setAttribute("data-after", "");

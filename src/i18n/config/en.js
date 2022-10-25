@@ -35,15 +35,17 @@ export default {
     // 导航栏
     nav: {
         home: "Home",
-        myOrder: "MyOrder",
+        myOrder: "My order",
         cart: "Cart",
-        logIn: "Sign in",
-        register: "Sign up",
-        hello: "Hi,"
+        logIn: "Login",
+        register: "Register",
+        hello: "Hi~",
+        customization: "Customization"
+
     },
     // 主页
     home: {
-        searchTip: "Please enter the product code, CAS code, or structured query keywords",
+        searchTip: "Enter the product number, CAS or keywords",
         toILaiBoPlus: "the iLabplus platform",
         product: "Products",
         sort: 'Categories',
@@ -73,13 +75,13 @@ export default {
         userLogIn: "User Login",
         emailTip: "Please enter your email address",
         verifyTip: 'verification code',
-        verifyBtn: "Get CAPTCHA",
+        verifyBtn: "Get Verification code",
         passLogIn: "Password to login",
         verifyLogIn: "Verify Login",
         register: "REGISTRATION",
         logIn: "Enter",
         forget: "Forgot password",
-        passTip: "LOST PASSWORD",
+        passTip: "Please enter your password",
         findPass: "Retrieve password",
         newPassTip: "Please enter a new password",
         checkPassTip: "Please confirm password",
@@ -88,7 +90,7 @@ export default {
     },
     // 注册
     register: {
-        userRegister: "Sign In",
+        userRegister: "Register",
         name: "Name",
         email: "Email",
         verfiCode: "VerfiCode",
@@ -213,6 +215,25 @@ export default {
         price: "Price",
         stock: "Stock",
         add: "Add to cart",
+    },
+    // 邮箱验证
+    email:{
+        noEmpty:'Email cannot be empty',
+        noFormat:'Email address format is not correct',
+        emptyVerify:'Verification code cannot be empty',
+        emptyPass:'Password cannot be empty'
+    },
+    // callback
+    callback:{
+        success:"successfully!",
+        error:'Unknown Error!'
+    },
+    // 忘记密码
+    forgetPass:{
+        confirm:"Please enter the confirmation password",
+        noEqual:'The two passwords are not equal',
+        newPass:'Please enter a new password',
+        
     }
 
 }

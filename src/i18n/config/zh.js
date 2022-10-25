@@ -41,12 +41,13 @@ export default {
         cart: "购物车",
         logIn: "登录",
         register: "注册",
-        hello:"你好,"
+        hello:"你好!",
+        customization:"私人定制"
     },
     // 主页
     home: {
-        searchTip: "请输入产品编码，CAS编码，关键字或结构式查询",
-        toILaiBoPlus: "进入iLabplus平台",
+        searchTip: "输入产品编码，CAS编码，关键字或结构式",
+        toILaiBoPlus: "iLabplus",
         product: "产品",
         sort: '分类',
         hot: "热门",
@@ -217,6 +218,25 @@ export default {
         price:"售价",
         stock:"库存",
         add:"加入购物车",
+        
+    },
+    // 邮箱验证
+    email:{
+        noEmpty:'邮箱不能为空',
+        noFormat:'邮箱格式不正确',
+        emptyVerify:'验证码不能为空',
+        emptyPass:'密码不能为空'
+    },
+    // callback
+    callback:{
+        success:"成功!",
+        error:'未知错误'
+    },
+    // 忘记密码
+    forgetPass:{
+        confirm:"请输入确认密码",
+        noEqual:'确认密码与新密码不一致',
+        newPass:'请输入新密码',
         
     }
 }

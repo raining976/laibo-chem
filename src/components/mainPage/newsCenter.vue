@@ -11,10 +11,14 @@
         <div class="newsBox">
           <div class="topBox">
             <h3>公司新闻</h3>
-            <div class="moreBtn">更多新闻 +</div>
+            <div class="moreBtn" @click="toMoreNewsArticle('公司新闻')">更多新闻 +</div>
           </div>
           <ul class="newsList articleList">
-            <li v-for="(news, index) in newsList" :key="index" data-aos="flip-up">
+            <li
+              v-for="(news, index) in newsList"
+              :key="index"
+              data-aos="flip-up"
+            >
               <div class="timeBox">
                 <div class="day">{{ news.day }}</div>
                 <div class="yearMonth">{{ news.yearMonth }}</div>
@@ -24,9 +28,11 @@
                   {{ news.title }}
                 </h4>
                 <p class="articleIntro">
-                  {{ news.intro }}
+                  {{ news.short_description }}
                 </p>
-                <span class="detailBtn"> 查看详情 </span>
+                <span class="detailBtn">
+                  <span @click="toContent(news.id, '公司新闻')">查看详情</span>
+                </span>
               </div>
             </li>
           </ul>
@@ -36,22 +42,28 @@
         <div class="techArticleBox">
           <div class="topBox">
             <h3>技术文章</h3>
-            <div class="moreBtn">更多新闻</div>
+            <div class="moreBtn" @click="toMoreNewsArticle('技术文章')">更多文章+</div>
           </div>
           <ul class="newsList articleList">
-            <li v-for="(news, index) in newsList" :key="index" data-aos="flip-up">
+            <li
+              v-for="(article, index) in articleList"
+              :key="index"
+              data-aos="flip-up"
+            >
               <div class="timeBox">
-                <div class="day">{{ news.day }}</div>
-                <div class="yearMonth">{{ news.yearMonth }}</div>
+                <div class="day">{{ article.day }}</div>
+                <div class="yearMonth">{{ article.yearMonth }}</div>
               </div>
               <div class="articleInfo">
                 <h4 class="articleTitle">
-                  {{ news.title }}
+                  {{ article.title }}
                 </h4>
                 <p class="articleIntro">
-                  {{ news.intro }}
+                  {{ article.short_description }}
                 </p>
-                <span class="detailBtn"> 查看详情 </span>
+                <span class="detailBtn">
+                  <span @click="toContent(article.id, '技术文章')">查看详情</span>
+                </span>
               </div>
             </li>
           </ul>
@@ -63,67 +75,18 @@
 </template>
 
 <script >
-
 export default {
   name: "newsCenter",
   components: "",
   data() {
     return {
-      newsList: [
-        {
-          title: "莱博斯威2022春节发货通知",
-          yearMonth: "2022-10",
-          day: "10",
-          intro:
-            "一些内容一些内容一些内容一些内容一些内容一些内容一些一些内容一些内容一些内容一些内容一些内些内容一些内容一些内些内容一些内容一些内容一些内...",
-        },
-        {
-          title: "莱博斯威2022春节发货通知",
-          yearMonth: "2022-10",
-          day: "10",
-          intro:
-            "一些内容一些内容一些内容一些内容一些内容一些内容一些一些内容一些内容一些内容一些内容一些内些内容一些内容一些内些内容一些内容一些内容一些内...",
-        },
-        {
-          title: "莱博斯威2022春节发货通知",
-          yearMonth: "2022-10",
-          day: "10",
-          intro:
-            "一些内容一些内容一些内容一些内容一些内容一些内容一些一些内容一些内容一些内容一些内容一些内些内容一些内容一些内些内容一些内容一些内容一些内...",
-        },
-      ],
+      newsList: [],
+      articleList: [],
     };
   },
-  created() {
-    // this.$http
-    //   .get("/news", {
-    //     params: {
-    //       page: 1,
-    //       limit: 3,
-    //     },
-    //   })
-    //   //回调函数
-    //   .then((res) => {
-    //     this.$data.newsBox[0].newsList = res.data.data;
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
-    // //
-    // this.$http
-    //   .get("/article", {
-    //     params: {
-    //       page: 1,
-    //       limit: 3,
-    //     },
-    //   })
-    //   //回调函数
-    //   .then((res) => {
-    //     this.$data.newsBox[1].newsList = res.data.data;
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+  mounted() {
+    this.getNews();
+    this.getArticle();
   },
   methods: {
     // 去往新闻详情页
@@ -145,13 +108,69 @@ export default {
         // 传参
       });
     },
+    getNews() {
+      this.$http
+        .get("/news", {
+          params: {
+            page: 1,
+            limit: 3,
+          },
+        })
+        .then((res) => {
+          this.newsList = this.handleTime(res.data.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    getArticle() {
+      this.$http
+        .get("/article", {
+          params: {
+            page: 1,
+            limit: 3,
+          },
+        })
+        //回调函数
+        .then((res) => {
+          this.articleList = this.handleTime(res.data.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    handleTime(arr) {
+      arr.forEach((ele) => {
+        let time = ele.update.split("-");
+        ele.day = time[2];
+        ele.yearMonth = time[0] + "-" + time[1];
+        if (ele.short_description)
+          ele.short_description =
+            ele.short_description
+              .replace(
+                /(\t|\r|\n|\s|\b|\f|\"|\u|&nbsp;|&nbsp|&nbs|&nb|&n|&)/gi,
+                ""
+              )
+              .replace(/(\\)/gi, "") + "...";
+      });
+      return arr;
+    },
+  //   checkDetail(id, type) {
+  //     this.$router.push({
+  //       name: "content",
+  //       params: {
+  //         id: id,
+  //         type: type,
+  //       },
+  //     });
+  //   },
   },
 };
 </script>
 <style scoped>
 .newsCenter {
   position: relative;
-  background-image: url("../../assets/xinwen.png");
+  background-image: url("../../assets/xinwen.webp");
   background-size: cover;
 }
 .newsCenter::after {
@@ -280,14 +299,14 @@ export default {
   overflow: hidden;
   height: 2vw;
 }
-.articleList .articleInfo .detailBtn {
+.articleList .articleInfo .detailBtn > span {
   font-size: 0.78vw;
   font-family: Microsoft YaHei UI;
   font-weight: 600;
   color: #999999;
   cursor: pointer;
 }
-.articleList .articleInfo .detailBtn:hover {
+.articleList .articleInfo .detailBtn > span:hover {
   color: #323333;
   font-weight: 700;
 }

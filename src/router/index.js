@@ -225,11 +225,11 @@ router.beforeEach((to, from, next) => {
       // this.$root.key++
       // this.$root.isShowLogIn = true
       // alert("请先登录!");
-      ElMessage("请先登录!")
+      // ElMessage("请先登录!")
       window.openLogin()
-      next({
-        path: '/',
-      })
+      // next({
+      //   path: '/',
+      // })
     } else {
       next()  // 确保一定要调用 next()
     }

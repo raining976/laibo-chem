@@ -121,7 +121,9 @@ body >>> .is-message-box {
 body >>> .is-message-box .el-button--primary {
   background: var(--color);
 }
-.el-dropdown-menu__item:hover a {
+.el-dropdown-menu__item:hover a,
+.el-dropdown-menu__item:hover span
+ {
   font-weight: 700;
   color: var(--color);
 }

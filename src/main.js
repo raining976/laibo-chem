@@ -13,7 +13,7 @@ AOS.init({
     disable: window.innerWidth < 1024,
     once: true,
     duration: 800,
-});
+}); 
 const app = createApp(App);
 app.config.globalProperties.$http = axios;
 // 挂载js-base64
