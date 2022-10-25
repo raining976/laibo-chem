@@ -40,22 +40,22 @@ export default {
       type: 0, // 中间体:0 实验用品:1 染料:2  定制产品:3
       typeList: [
         {
-          pic: require("../../assets/zhongjianti.png"),
+          pic: require("../../assets/zhongjianti.webp"),
           name_zh: "中间体",
           name_en: "INTERMEDIATES",
         },
         {
-          pic: require("../../assets/111.jpg"),
+          pic: require("../../assets/111.webp"),
           name_zh: "染料",
           name_en: "DYES",
         },
         {
-          pic: require("../../assets/p1.png"),
+          pic: require("../../assets/shiyanyongpin.webp"),
           name_zh: "实验用品",
           name_en: "EXPERIMENTAL SUPPLIES",
         },
         {
-          pic: require("../../assets/dingzhichanpin.png"),
+          pic: require("../../assets/dingzhichanpin.webp"),
           name_zh: "定制产品",
           name_en: "CUSTOMIZED PRODUCTS",
         },
@@ -124,6 +124,7 @@ export default {
   background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;
+  box-shadow: 0.31vw 0.31vw 1.25vw 0vw rgb(0 12 52 / 13%);
 }
 .productSortList > li::after {
   content: "";
@@ -147,6 +148,12 @@ export default {
   align-items: center;
   z-index: 2;
   transition: 0.3s;
+  border-radius: 0.26vw;
+}
+.productSortList > li:hover{
+  transform: scale(1.02);
+  box-shadow: 0.31vw 0.31vw 1.25vw 0.2vw rgb(0 12 52 / 23%);
+
 }
 .productSortList > li:hover .contentBox {
   background-color: rgba(40, 103, 180, 0.8);

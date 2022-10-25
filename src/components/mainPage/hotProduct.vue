@@ -14,7 +14,7 @@
           ref="eachLi"
           @click="toProductInfo(p.id)"
         >
-          <img :src="p.pic" alt="" />
+          <img :src="p.pic_url" alt="" />
           <span class="proName">{{ p.name }}</span>
         </li>
       </ul>
@@ -194,6 +194,7 @@ export default {
   font-weight: 400;
   color: #333;
   margin-top: 4.17vw;
+  height: 3.13vw;
 }
 .carouselBox .move li:hover {
   background: rgb(41, 116, 184);

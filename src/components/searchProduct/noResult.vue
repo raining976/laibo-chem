@@ -1,6 +1,6 @@
   <template>
     <div class="noResult">
-        <div><img src="../../assets/noRes.png" alt=""></div>
+        <div><img src="../../assets/noRes.webp" alt=""></div>
     </div>
 
 </template>

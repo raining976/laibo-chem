@@ -36,7 +36,7 @@ export default {
   components: "",
   data() {
     return {
-      map: require("../../assets/view.png"),
+      map: require("../../assets/view.webp"),
     };
   },
 };
@@ -44,7 +44,7 @@ export default {
 <style scoped>
 .profileBox {
   position: relative;
-  background-image: url("../../assets/laibo.png");
+  background-image: url("../../assets/laibo.webp");
   background-size: cover;
   background-repeat: no-repeat;
 }

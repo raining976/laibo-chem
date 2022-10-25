@@ -25,22 +25,22 @@ export default {
     return {
       imgList: [
         {
-          pic_url: require("../../assets/laibo.png"),
+          pic_url: require("../../assets/laibo.webp"),
           text_en: "LAIBO CHEM",
           text_zh: "青岛莱博斯威仪电科技有限公司",
         },
         {
-          pic_url: require("../../assets/zhuanye.png"),
+          pic_url: require("../../assets/zhuanye.webp"),
           text_en: "SPECIALTY",
           text_zh: "专业",
         },
         {
-          pic_url: require("../../assets/chuangxin.png"),
+          pic_url: require("../../assets/chuangxin.webp"),
           text_en: "INNOVATION",
           text_zh: "创新",
         },
         {
-          pic_url: require("../../assets/gongying.png"),
+          pic_url: require("../../assets/gongying.webp"),
           text_en: "MUTUAL BENEFITS",
           text_zh: "共赢",
         },
