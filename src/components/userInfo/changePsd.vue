@@ -150,21 +150,21 @@ export default {
 </script>
 <style>
 .changePsd .el-form-item__label {
-  margin-right: 20px;
+  margin-right: 1.04vw;
   text-align: end;
-  font-size: 18px;
+  font-size: 0.94vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #333333;
 }
 .changePsd .el-input__inner {
-  height: 43px;
-  border: 2px solid #999999;
-  border-radius: 5px;
+  height: 2.24vw;
+  border: 0.1vw solid #999999;
+  border-radius: 0.26vw;
 }
 .changePsd .el-input__inner:hover,
 .changePsd .el-input__inner:focus {
-  border: 2px solid var(--color);
+  border: 0.1vw solid var(--color);
 }
 .changePsd .el-input__icon {
   transform: scale(1.5);
@@ -173,34 +173,34 @@ export default {
   color: var(--check-color);
 }
 .changePsd .btnBox .el-form-item__content {
-  padding-left: 20px;
+  padding-left: 1.04vw;
 }
 .changePsd .btnBox .el-button--primary {
   background: var(--color);
 }
 .changePsd .el-button {
-  width: 107px;
-  height: 46px;
-  border-radius: 5px;
+  width: 5.57vw;
+  height: 2.4vw;
+  border-radius: 0.26vw;
 }
 .changePsd .el-button span {
-  font-size: 20px;
+  font-size: 1.04vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
 }
 </style>
 <style scoped>
 .content {
-  width: 550px;
-  padding-left: 30px;
+  width: 28.65vw;
+  padding-left: 1.56vw;
 }
 .title {
-  font-size: 20px;
+  font-size: 1.04vw;
   font-family: Microsoft YaHei UI;
   font-weight: bold;
   color: #333333;
-  padding-bottom: 30px;
-  margin-bottom: 20px;
-  border-bottom: 2px solid #eaeaec;
+  padding-bottom: 1.56vw;
+  margin-bottom: 1.04vw;
+  border-bottom: 0.1vw solid #eaeaec;
 }
 </style>

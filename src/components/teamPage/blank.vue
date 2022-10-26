@@ -49,29 +49,29 @@ export default {
   align-items: center;
 }
 .imgTitle {
-  font-size: 48px;
+  font-size: 2.5vw;
   /* font-family: YOUSHEhaoshenti; */
   font-weight: 400;
   color: #2a94f4;
-  margin-top: 10px;
+  margin-top: 0.52vw;
 }
 .btnBox {
   display: flex;
-  width: calc(468px + 77px);
+  width: calc(24.38vw + 4.01vw);
   justify-content: space-between;
-  margin-top: 100px;
+  margin-top: 5.21vw;
 }
 .btn {
   display: inline-block;
-  width: 234px;
-  height: 49px;
+  width: 12.19vw;
+  height: 2.55vw;
   background: #2a94f4;
-  border-radius: 5px;
-  font-size: 24px;
+  border-radius: 0.26vw;
+  font-size: 1.25vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   text-align: center;
-  line-height: 49px;
+  line-height: 2.55vw;
   color: #ffffff;
   cursor: pointer;
   transition: 0.3s;

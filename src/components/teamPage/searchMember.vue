@@ -428,65 +428,65 @@ export default {
   justify-content: flex-start;
   align-items: center;
   /* width: 700px; */
-  padding-top: 30px;
-  padding-bottom: 50px;
-  margin-right: 50px;
-  border-bottom: 2px solid #eaeaec;
+  padding-top: 1.56vw;
+  padding-bottom: 2.6vw;
+  margin-right: 2.6vw;
+  border-bottom: 0.1vw solid #eaeaec;
 }
 .searchBox > div {
-  margin-left: 20px;
+  margin-left: 1.04vw;
 }
 .tag {
-  font-size: 18px;
+  font-size: 0.94vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #333333;
 }
 input {
-  width: 260px;
-  height: 43px;
-  border: 2px solid #999999;
-  border-radius: 5px;
-  padding-left: 20px;
+  width: 13.54vw;
+  height: 2.24vw;
+  border: 0.1vw solid #999999;
+  border-radius: 0.26vw;
+  padding-left: 1.04vw;
 }
 .searchBtn {
-  width: 98px;
-  height: 41px;
+  width: 5.1vw;
+  height: 2.14vw;
   background: var(--color);
-  border-radius: 5px;
-  font-size: 18px;
+  border-radius: 0.26vw;
+  font-size: 0.94vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #ffffff;
   text-align: center;
-  line-height: 41px;
+  line-height: 2.14vw;
   cursor: pointer;
 }
 .listTitle {
-  font-size: 20px;
+  font-size: 1.04vw;
   font-family: Microsoft YaHei UI;
   font-weight: bold;
   color: #333333;
-  margin: 40px 0 30px 0;
+  margin: 2.08vw 0 1.56vw 0;
 }
 .memberList {
-  min-height: 530px;
+  min-height: 27.6vw;
 }
 .eachLi {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 55px;
-  border-radius: 5px;
-  border-bottom: 1px solid #eaeaec;
-  padding-left: 30px;
+  height: 2.86vw;
+  border-radius: 0.26vw;
+  border-bottom: 0.05vw solid #eaeaec;
+  padding-left: 1.56vw;
   transition: 0.3s;
 }
 .eachLi.listContent:hover {
   background: #f6f7f7;
 }
 .eachLi span {
-  font-size: 16px;
+  font-size: 0.83vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #666666;
@@ -496,7 +496,7 @@ input {
   border: 0;
 }
 .listHead span {
-  font-size: 18px;
+  font-size: 0.94vw;
   font-family: Microsoft YaHei UI;
   font-weight: 600;
   color: #333333;
@@ -513,11 +513,11 @@ input {
 .eachLi .operation {
   display: flex;
   align-items: center;
-  font-size: 16px;
+  font-size: 0.83vw;
   font-family: Microsoft YaHei UI;
 }
 .listHead .operation {
-  font-size: 18px;
+  font-size: 0.94vw;
   font-family: Microsoft YaHei UI;
   font-weight: 600;
   color: #333333;
@@ -525,22 +525,22 @@ input {
   text-align: center;
 }
 .eachLi .operation .handleBtn {
-  width: 32px;
-  height: 32px;
+  width: 1.67vw;
+  height: 1.67vw;
   cursor: pointer;
-  margin-right: 15px;
+  margin-right: 0.78vw;
 }
 .blank {
   display: inline-block;
-  width: 126px;
-  margin-right: 15px;
+  width: 6.56vw;
+  margin-right: 0.78vw;
 }
 .searchMember .layPage {
   display: flex;
   justify-content: center;
 }
 .layPage {
-  margin-top: 30px;
+  margin-top: 1.56vw;
 }
 .layPage >>> .el-pagination {
   transform: scale(1.3);
@@ -548,8 +548,8 @@ input {
 .layPage >>> .el-pagination > button,
 .layPage >>> .el-pagination .number {
   background: #ffffff;
-  border: 1px solid #999999;
-  border-radius: 2px;
+  border: 0.05vw solid #999999;
+  border-radius: 0.1vw;
 }
 .layPage >>> .el-pagination .el-icon {
   margin: 0 auto;

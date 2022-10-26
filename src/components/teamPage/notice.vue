@@ -124,18 +124,18 @@ export default {
 <style scoped>
 .noticeBox {
   position: absolute;
-  right: -30px;
-  bottom: -630px;
+  right: -1.56vw;
+  bottom: -32.81vw;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  width: calc(500px - 34px);
-  height: calc(610px - 40px);
-  padding: 20px 17px;
+  width: calc(26.04vw - 1.77vw);
+  height: calc(31.77vw - 2.08vw);
+  padding: 1.04vw 0.89vw;
   background: #ffffff;
-  box-shadow: 0px 10px 21px 0px rgba(7, 2, 3, 0.2);
-  border-radius: 10px;
+  box-shadow: 0px 0.52vw 1.09vw 0px rgba(7, 2, 3, 0.2);
+  border-radius: 0.52vw;
   transition: all 0.3s;
   z-index: 999;
 }
@@ -143,47 +143,47 @@ export default {
   width: 100%;
   display: flex;
   justify-content: space-between;
-  padding-bottom: 30px;
-  border-bottom: 2px solid #eaeaec;
-  margin-bottom: 20px;
+  padding-bottom: 1.56vw;
+  border-bottom: 0.1vw solid #eaeaec;
+  margin-bottom: 1.04vw;
 }
 .titleBox .title {
-  font-size: 18px;
+  font-size: 0.94vw;
   font-family: Microsoft YaHei UI;
   font-weight: 600;
   color: #333333;
 }
 .titleBox .btn {
-  font-size: 18px;
+  font-size: 0.94vw;
   font-family: Microsoft YaHei UI;
   font-weight: 600;
   color: var(--color);
   cursor: pointer;
 }
 .noticeList {
-  height: calc(92px * 5 + 40px);
+  height: calc(4.79vw * 5 + 2.08vw);
   overflow: auto;
   overflow-y: auto;
 }
 .noticeList::-webkit-scrollbar {
-  width: 7px;
+  width: 0.36vw;
 }
 /* 设置滚动条里面的滑块样式 */
 .noticeList::-webkit-scrollbar-thumb {
-  border-radius: 2px;
+  border-radius: 0.1vw;
   background-color: #dfdfe1;
 }
 .eachNotice {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 465px;
-  height: 92px;
+  width: 24.22vw;
+  height: 4.79vw;
   background: #f7f7f7;
-  border: 1px solid #ffffff;
-  border-radius: 10px;
-  margin-bottom: 10px;
-  margin-right: 5px;
+  border: 0.05vw solid #ffffff;
+  border-radius: 0.52vw;
+  margin-bottom: 0.52vw;
+  margin-right: 0.26vw;
 }
 .infoBox {
   display: flex;
@@ -193,11 +193,11 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-left: 30px;
+  margin-left: 1.56vw;
 }
 .infoContent span {
-  margin: 2px 0;
-  font-size: 16px;
+  margin: 0.1vw 0;
+  font-size: 0.83vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #333;
@@ -209,8 +209,8 @@ export default {
   display: flex;
 }
 .btnBox > .btn {
-  margin-right: 30px;
-  font-size: 16px;
+  margin-right: 1.56vw;
+  font-size: 0.83vw;
   font-family: Microsoft YaHei UI;
   font-weight: 600;
   cursor: pointer;
@@ -224,11 +224,11 @@ export default {
 .noticeBox >>> .user {
   transform: scale(3);
   background: #e3f5ff;
-  margin-left: 30px;
-  border-radius: 5px;
+  margin-left: 1.56vw;
+  border-radius: 0.26vw;
 }
 .noticeBox >>> .el-badge__content.is-fixed.is-dot {
-  right: -5px;
-  top: -5px;
+  right: -0.26vw;
+  top: -0.26vw;
 }
 </style>

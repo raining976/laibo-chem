@@ -201,20 +201,20 @@ export default {
 <style scoped>
 .top {
   width: 100%;
-  margin-bottom: 20px;
-  border-bottom: 2px solid #eaeaec;
+  margin-bottom: 1.04vw;
+  border-bottom: 0.1vw solid #eaeaec;
   display: flex;
   justify-content: space-between;
   overflow: hidden;
 }
 .Btn {
-  font-size: 16px;
+  font-size: 0.83vw;
   display: flex;
   justify-content: space-between;
   overflow: hidden;
 }
 .returnBtn {
-  margin: 0 30px 0 0;
+  margin: 0 1.56vw 0 0;
   cursor: pointer;
   font-weight: 600;
 }
@@ -222,7 +222,7 @@ export default {
   color:#004ea2;
 }
 .deleteBtn {
-  margin: 0 48px 0 0;
+  margin: 0 2.5vw 0 0;
   cursor: pointer;
 }
 .deleteBtn:hover {
@@ -230,40 +230,40 @@ export default {
 }
 
 .title {
-  font-size: 20px;
+  font-size: 1.04vw;
   font-family: Microsoft YaHei UI;
   font-weight: bold;
   color: #333333;
-  margin-right: 50px;
-  margin-bottom: 30px;
+  margin-right: 2.6vw;
+  margin-bottom: 1.56vw;
 }
 .detail {
-  margin: 0 0 22px 0;
-  height: 18px;
-  font-size: 16px;
+  margin: 0 0 1.15vw 0;
+  height: 0.94vw;
+  font-size: 0.83vw;
   font-family: Microsoft YaHei UI;
   font-weight: bold;
   color: #4a4a4a;
-  line-height: 18px;
+  line-height: 0.94vw;
 }
 /* 可折叠列表 */
 .collapse {
   width: 60%;
   /* height: 422px; */
   background: #f7f7f7;
-  border-radius: 10px;
+  border-radius: 0.52vw;
   overflow: hidden;
 }
 .process {
-  margin-top: 18px;
+  margin-top: 0.94vw;
   overflow: hidden;
 }
 .orderInfoPage /deep/ .el-collapse-item__header {
-  text-indent: 45px;
-  font-size: 20px;
+  text-indent: 2.34vw;
+  font-size: 1.04vw;
   color: #004ea2;
   background-color: transparent;
-  border-bottom: 1px solid #eaeaec;
+  border-bottom: 0.05vw solid #eaeaec;
 }
 .orderInfoPage /deep/ .el-collapse-item__arrow,
 .el-icon-arrow-right,
@@ -277,20 +277,20 @@ export default {
 }
 /* 时间线 */
 .process /deep/ .el-timeline {
-  margin-left: 63px;
+  margin-left: 3.28vw;
 }
 /* 下为购物车样式 */
 .shopCart {
   width: 100%;
-  min-height: 370px;
+  min-height: 19.27vw;
   overflow: hidden;
-  margin-top: 42px;
-    border-top: 2px solid #eaeaec; 
+  margin-top: 2.19vw;
+    border-top: 0.1vw solid #eaeaec; 
 }
 /* 表头 --*/
 .listHead {
   width: 100%;
-  height: 44px;
+  height: 2.29vw;
   display: flex;
   align-items: center;
 }
@@ -324,7 +324,7 @@ export default {
 /* 内容 */
 .allcommodity {
   width: 100%;
-  height: 455px;
+  height: 23.7vw;
   display: flex;
   flex-direction: column;
 }
@@ -334,70 +334,70 @@ export default {
   display: flex;
   align-items: center;
   width: 100%;
-  min-width: 940px;
-  height: 207px;
-  margin: 0 0 20px 0;
+  min-width: 48.96vw;
+  height: 10.78vw;
+  margin: 0 0 1.04vw 0;
   background: #f7f7f7;
-  border-radius: 10px;
+  border-radius: 0.52vw;
   overflow: hidden;
 }
 .word {
   /* width: 65px; */
-  height: 18px;
-  font-size: 18px;
+  height: 0.94vw;
+  font-size: 0.94vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #4a4a4a;
-  line-height: 18px;
+  line-height: 0.94vw;
 }
 .productInfo {
   flex: 4.1;
   /* width: 700px; */
-  height: 165px;
+  height: 8.59vw;
   display: flex;
   align-items: center;
-  margin: 0 27px 0 68px;
+  margin: 0 1.41vw 0 3.54vw;
 }
 .productPic {
-  width: 165px;
-  height: 165px;
+  width: 8.59vw;
+  height: 8.59vw;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0 33px 0 0;
+  margin: 0 1.72vw 0 0;
   background: #ffffff;
-  border-radius: 5px;
+  border-radius: 0.26vw;
   overflow: hidden;
 }
 .productPic img {
   object-fit: contain;
 }
 .infoBox {
-  height: 165px;
+  height: 8.59vw;
 }
 .name_zh {
   cursor: pointer;
-  height: 20px;
-  font-size: 18px;
+  height: 1.04vw;
+  font-size: 0.94vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #004ea2;
-  line-height: 20px;
-  padding: 0 0 2px 0;
-  margin: 20px 0 15px;
+  line-height: 1.04vw;
+  padding: 0 0 0.1vw 0;
+  margin: 1.04vw 0 0.78vw;
 }
 .name_zh:hover {
   /* border-bottom: 2px solid #004EA2; */
   text-decoration: underline;
 }
 .infoWord {
-  height: 18px;
-  font-size: 18px;
+  height: 0.94vw;
+  font-size: 0.94vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #333333;
-  line-height: 18px;
-  margin: 8px 0;
+  line-height: 0.94vw;
+  margin: 0.42vw 0;
 }
 .size {
   flex: 1;
@@ -416,15 +416,15 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0 10px 0 0;
+  margin: 0 0.52vw 0 0;
 }
 
 .num {
-  width: 50px;
-  height: 28px;
-  line-height: 28px;
+  width: 2.6vw;
+  height: 1.46vw;
+  line-height: 1.46vw;
   text-align: center;
-  margin: 0 2px;
+  margin: 0 0.1vw;
 }
 .payment {
   flex: 1;
@@ -434,12 +434,12 @@ export default {
 }
 /* 分页器 */
 .pagination {
-  margin: 20px 0 0 36%;
+  margin: 1.04vw 0 0 36%;
   overflow: hidden;
 }
 .orderInfoPage /deep/ .el-pagination {
-  --el-pagination-button-height: 40px;
-  --el-pagination-font-type: 16px;
+  --el-pagination-button-height: 2.08vw;
+  --el-pagination-font-type: 0.83vw;
 }
 .orderInfoPage
   /deep/
@@ -451,8 +451,8 @@ export default {
 .orderInfoPage /deep/.el-pagination.is-background .btn-next,
 .orderInfoPage /deep/.el-pagination.is-background .btn-prev,
 .orderInfoPage /deep/.el-pagination.is-background .el-pager li {
-  min-width: 40px;
-  border-radius: 5px;
+  min-width: 2.08vw;
+  border-radius: 0.26vw;
 }
 .orderInfoPage /deep/ .el-icon {
   margin: 0 auto;

@@ -188,27 +188,27 @@ export default {
 </script>
 <style>
 .userInfoChange .el-form-item {
-  margin-bottom: 25px;
+  margin-bottom: 1.3vw;
 }
 .userInfoChange .el-form-item__label {
-  font-size: 18px;
+  font-size: 0.94vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #333333;
-  margin-right: 20px;
+  margin-right: 1.04vw;
 }
 .userInfoChange .el-input__inner {
-  height: 43px;
-  border: 2px solid #999999;
-  border-radius: 5px;
-  font-size: 18px;
+  height: 2.24vw;
+  border: 0.1vw solid #999999;
+  border-radius: 0.26vw;
+  font-size: 0.94vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
 }
 
 .userInfoChange .el-input__inner:hover,
 .userInfoChange .el-input__inner:focus {
-  border: 2px solid var(--color);
+  border: 0.1vw solid var(--color);
 }
 .userInfoChange .is-disabled .el-input__inner {
   border: 0;
@@ -218,21 +218,21 @@ export default {
   border: 0;
 }
 .userInfoChange .el-button {
-  width: 120px;
-  height: 46px;
-  border-radius: 5px;
-  margin-left: 20px;
+  width: 6.25vw;
+  height: 2.4vw;
+  border-radius: 0.26vw;
+  margin-left: 1.04vw;
 }
 .userInfoChange .el-button--primary {
   background: var(--color);
 }
 .userInfoChange .el-radio__inner {
-  width: 18px;
-  height: 18px;
+  width: 0.94vw;
+  height: 0.94vw;
   border-color: var(--color);
 }
 .userInfoChange .el-radio__label {
-  font-size: 18px;
+  font-size: 0.94vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #666666;
@@ -250,24 +250,24 @@ export default {
   color: var(--check-color);
 }
 .userInfoChange .el-button span {
-  font-size: 20px;
+  font-size: 1.04vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
 }
 </style>
 <style scoped>
 .title {
-  font-size: 20px;
+  font-size: 1.04vw;
   font-family: Microsoft YaHei UI;
   font-weight: bold;
   color: #333333;
-  padding-bottom: 30px;
+  padding-bottom: 1.56vw;
 
-  margin-bottom: 20px;
-  border-bottom: 2px solid #eaeaec;
+  margin-bottom: 1.04vw;
+  border-bottom: 0.1vw solid #eaeaec;
 }
 .content {
-  width: 550px;
-  padding-left: 30px;
+  width: 28.65vw;
+  padding-left: 1.56vw;
 }
 </style>

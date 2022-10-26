@@ -191,49 +191,49 @@ export default {
   position: relative;
 }
 .newAddressTitle {
-  margin-bottom: 23px;
+  margin-bottom: 1.2vw;
 }
 .countrySelectBox {
   position: relative;
-  width: 350px;
+  width: 18.23vw;
   background: #f7f7f7;
-  margin-bottom: 26px;
-  margin-left: 5px;
+  margin-bottom: 1.35vw;
+  margin-left: 0.26vw;
 }
 .countrySelectBox >>> input {
-  padding-left: 117px;
+  padding-left: 6.09vw;
   background: #f7f7f7;
 }
 .countrySelectBox >>> .country-intl-label {
-  padding-left: 117px;
+  padding-left: 6.09vw;
   background: #f7f7f7;
 }
 
 /* 当前国家 */
 .curCountry {
   position: absolute;
-  left: 24px;
-  top: 10px;
-  font-size: 14px;
+  left: 1.25vw;
+  top: 0.52vw;
+  font-size: 0.73vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #999999;
   z-index: 1;
 }
 .newAddressTitle {
-  font-size: 18px;
+  font-size: 0.94vw;
   font-family: Microsoft YaHei UI;
   font-weight: 600;
   color: var(--color);
 }
 .pageTitle {
-  font-size: 20px;
+  font-size: 1.04vw;
   font-family: Microsoft YaHei UI;
   font-weight: bold;
   color: #333333;
-  padding-bottom: 30px;
-  border-bottom: 2px solid #eaeaec;
-  margin-bottom: 20px;
+  padding-bottom: 1.56vw;
+  border-bottom: 0.1vw solid #eaeaec;
+  margin-bottom: 1.04vw;
 }
 .addressList {
   display: flex;
@@ -245,39 +245,39 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  width: 332px;
-  min-width: 250px;
+  width: 17.29vw;
+  min-width: 13.02vw;
   flex: 1;
-  height: 200px;
+  height: 10.42vw;
   background: #f7f7f7;
-  border: 2px solid #f7f7f7;
-  border-radius: 10px;
-  padding: 27px 48px;
-  margin-bottom: 50px;
-  margin-right: 50px;
+  border: 0.1vw solid #f7f7f7;
+  border-radius: 0.52vw;
+  padding: 1.41vw 2.5vw;
+  margin-bottom: 2.6vw;
+  margin-right: 2.6vw;
 }
 .eachAddress p {
-  margin-bottom: 14px;
-  font-size: 19px;
+  margin-bottom: 0.73vw;
+  font-size: 0.99vw;
   font-family: Microsoft YaHei UI;
   font-weight: 500;
   color: #4a4a4a;
 }
 .eachAddress .address {
-  line-height: 30px;
-  height: 150px;
+  line-height: 1.56vw;
+  height: 7.81vw;
   overflow-y: auto;
   word-wrap: break-word;
   word-break: normal;
 }
 .address::-webkit-scrollbar
 {
-    width:6px;
+    width:0.31vw;
 }
 .address::-webkit-scrollbar-thumb{
-    width: 6px;
-    height: 30px;
-    border-radius:4px;
+    width: 0.31vw;
+    height: 1.56vw;
+    border-radius:0.21vw;
     background-color: #c7c7c9;
 }
 
@@ -287,11 +287,11 @@ export default {
   justify-content: flex-end;
 }
 .btnBox > div {
-  font-size: 16px;
+  font-size: 0.83vw;
   font-family: Microsoft YaHei UI;
   font-weight: 600;
   cursor: pointer;
-  margin-left: 20px;
+  margin-left: 1.04vw;
 }
 .editBtn {
   color: var(--color);
@@ -300,27 +300,27 @@ export default {
   color: rgb(164, 72, 72);
 }
 .detailedAddress {
-  width: 494px;
-  height: 163px;
-  border: 2px solid #999999;
-  border-radius: 5px;
+  width: 25.73vw;
+  height: 8.49vw;
+  border: 0.1vw solid #999999;
+  border-radius: 0.26vw;
 }
 
 .addAddress {
-  margin-left: 10px;
+  margin-left: 0.52vw;
   transform: scale(1.5);
   transform-origin: center;
   cursor: pointer;
   transition: 0.3s;
   background-color: #e3f5ff;
-  border-radius: 10px;
+  border-radius: 0.52vw;
 }
 .addAddress:hover {
   transform: scale(1.7);
   color: var(--color);
-  box-shadow: 0px 17px 29px -11px #c7c7c9;
-  --webkit-box-shadow: 0px 17px 29px -11px #c7c7c9;
-  --moz-box-shadow: 0px 17px 29px -11px #c7c7c9;
+  box-shadow: 0px 0.89vw 1.51vw -0.57vw #c7c7c9;
+  --webkit-box-shadow: 0vw 0.89vw 1.51vw -0.57vw #c7c7c9;
+  --moz-box-shadow: 0px 0.89vw 1.51vw -0.57vw #c7c7c9;
 }
 .icon_btn >>> i {
   transform: scale(1.5);

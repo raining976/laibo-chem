@@ -115,36 +115,36 @@ export default {
 </script>
 <style scoped>
 .backBtn {
-  margin-bottom: 40px;
+  margin-bottom: 2.08vw;
 }
 .backBtn a {
-  font-size: 18px;
+  font-size: 0.94vw;
   color: var(--color);
 }
 .searchBox {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  border-bottom: 2px solid #eaeaec;
-  padding-bottom: 50px;
-  margin-right: 50px;
-  margin-bottom: 50px;
+  border-bottom: 0.1vw solid #eaeaec;
+  padding-bottom: 2.6vw;
+  margin-right: 2.6vw;
+  margin-bottom: 2.6vw;
 }
 .tag {
-  font-size: 18px;
+  font-size: 0.94vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #333333;
 }
 .inputBox {
-  margin: 0 80px 0 30px;
+  margin: 0 4.17vw 0 1.56vw;
 }
 input {
-  width: 259px;
-  height: 43px;
-  border: 2px solid #999999;
-  border-radius: 5px;
-  padding-left: 20px;
+  width: 13.49vw;
+  height: 2.24vw;
+  border: 0.1vw solid #999999;
+  border-radius: 0.26vw;
+  padding-left: 1.04vw;
   transition: 00.3s;
 }
 input:hover,
@@ -152,24 +152,24 @@ input:focus {
   border-color: var(--color);
 }
 .btn {
-  width: 98px;
-  height: 41px;
+  width: 5.1vw;
+  height: 2.14vw;
   background: var(--color);
-  border-radius: 5px;
-  font-size: 18px;
+  border-radius: 0.26vw;
+  font-size: 0.94vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #ffffff;
-  line-height: 41px;
+  line-height: 2.14vw;
   text-align: center;
   cursor: pointer;
 }
 .listTitle {
-  font-size: 20px;
+  font-size: 1.04vw;
   font-family: Microsoft YaHei UI;
   font-weight: bold;
   color: #333333;
-  margin-bottom: 30px;
+  margin-bottom: 1.56vw;
 }
 .searchList {
   width: 100%;
@@ -178,35 +178,35 @@ input:focus {
 }
 
 .eachLi {
-  height: 55px;
+  height: 2.86vw;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-right: 50px;
-  padding-left: 10px;
+  margin-right: 2.6vw;
+  padding-left: 0.52vw;
 }
 .eachLi span {
   display: inline-block;
   flex: 1;
   align-items: center;
-  font-size: 16px;
+  font-size: 0.83vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #666666;
-  margin: 0 10px;
+  margin: 0 0.52vw;
 }
 .listHead {
   background: #eaebed;
-  border-radius: 5px;
+  border-radius: 0.26vw;
 }
 .listHead span {
-  font-size: 18px;
+  font-size: 0.94vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #333333;
 }
 .eachLi .joinBtn {
-  font-size: 16px;
+  font-size: 0.83vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: var(--color);

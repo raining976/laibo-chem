@@ -234,4 +234,10 @@ export default {
   font-weight: 600;
   background: red;
 }
+@media screen and (max-width: 960px) {
+  .team .setBox >>> .set {
+  transform: scale(1.5);
+    
+  }
+}
 </style>

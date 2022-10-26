@@ -585,19 +585,19 @@ export default {
 }
 .top {
   width: 100%;
-  margin-bottom: 20px;
-  border-bottom: 2px solid #eaeaec;
+  margin-bottom: 1.04vw;
+  border-bottom: 0.1vw solid #eaeaec;
   display: flex;
   justify-content: space-between;
   overflow: hidden;
 }
 
 .returnBtn {
-  margin: 0 48px 0 0;
-  height: 20px;
-  line-height: 20px;
-  font-size: 16px;
-  margin-bottom: 30px;
+  margin: 0 2.5vw 0 0;
+  height: 1.04vw;
+  line-height: 1.04vw;
+  font-size: 0.83vw;
+  margin-bottom: 1.56vw;
   cursor: pointer;
   overflow: hidden;
   font-weight: bold;
@@ -608,49 +608,49 @@ export default {
 }
 
 .title {
-  height: 20px;
-  line-height: 20px;
-  font-size: 20px;
+  height: 1.04vw;
+  line-height: 1.04vw;
+  font-size: 1.04vw;
   font-family: Microsoft YaHei UI;
   font-weight: bold;
   color: #333333;
   /* margin-right: 50px; */
-  margin-bottom: 30px;
+  margin-bottom: 1.56vw;
 }
 .detail {
-  margin: 0 0 22px 0;
-  height: 18px;
-  font-size: 16px;
+  margin: 0 0 1.15vw 0;
+  height: 0.94vw;
+  font-size: 0.83vw;
   font-family: Microsoft YaHei UI;
   font-weight: bold;
   color: #4a4a4a;
-  line-height: 18px;
+  line-height: 0.94vw;
 }
 
 .freight {
   /* width: 142px; */
-  height: 18px;
-  font-size: 18px;
+  height: 0.94vw;
+  font-size: 0.94vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #004ea2;
-  line-height: 18px;
-  padding-bottom: 30px;
-  border-bottom: 2px solid #eaeaec;
-  margin: 0 0 15px 0;
+  line-height: 0.94vw;
+  padding-bottom: 1.56vw;
+  border-bottom: 0.1vw solid #eaeaec;
+  margin: 0 0 0.78vw 0;
   overflow: hidden;
 }
 
 /* 下为购物车样式 */
 .shopCart {
   width: 100%;
-  min-height: 370px;
+  min-height: 19.27vw;
   overflow: hidden;
 }
 /* 表头 --*/
 .listHead {
   width: 100%;
-  height: 44px;
+  height: 2.29vw;
   display: flex;
   align-items: center;
 }
@@ -684,7 +684,7 @@ export default {
 /* 内容 */
 .allcommodity {
   width: 100%;
-  height: 455px;
+  height: 23.7vw;
   display: flex;
   flex-direction: column;
 }
@@ -694,72 +694,72 @@ export default {
   display: flex;
   align-items: center;
   width: 100%;
-  min-width: 940px;
-  height: 207px;
-  margin: 0 0 20px 0;
+  min-width: 48.96vw;
+  height: 10.78vw;
+  margin: 0 0 1.04vw 0;
   background: #f7f7f7;
-  border-radius: 10px;
+  border-radius: 0.52vw;
   overflow: hidden;
 }
 .word {
   /* width: 65px; */
-  height: 18px;
-  font-size: 18px;
+  height: 0.94vw;
+  font-size: 0.94vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #4a4a4a;
-  line-height: 18px;
+  line-height: 0.94vw;
 }
 .productInfo {
   flex: 4.1;
   /* width: 700px; */
-  height: 165px;
+  height: 8.59vw;
   display: flex;
   align-items: center;
-  margin: 0 27px 0 68px;
+  margin: 0 1.41vw 0 3.54vw;
 }
 .productPic {
-  width: 165px;
-  height: 165px;
+  width: 8.59vw;
+  height: 8.59vw;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0 33px 0 0;
+  margin: 0 1.72vw 0 0;
   background: #ffffff;
-  border-radius: 5px;
+  border-radius: 0.26vw;
   overflow: hidden;
 }
 .productPic img {
   object-fit: contain;
 }
 .infoBox {
-  width: calc(100% - 198px);
-  height: 165px;
+  width: calc(100% - 10.31vw);
+  height: 8.59vw;
   overflow: hidden;
 }
 .name_zh {
   cursor: pointer;
-  min-height: 20px;
-  font-size: 18px;
+  min-height: 1.04vw;
+  font-size: 0.94vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #004ea2;
-  line-height: 20px;
-  padding: 0 0 2px 0;
-  margin: 20px 0 15px;
+  line-height: 1.04vw;
+  padding: 0 0 0.1vw 0;
+  margin: 1.04vw 0 0.78vw;
 }
 .name_zh:hover {
   /* border-bottom: 2px solid #004EA2; */
   text-decoration: underline;
 }
 .infoWord {
-  height: 18px;
-  font-size: 18px;
+  height: 0.94vw;
+  font-size: 0.94vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #333333;
-  line-height: 18px;
-  margin: 8px 0;
+  line-height: 0.94vw;
+  margin: 0.42vw 0;
 }
 .size {
   flex: 1;
@@ -778,15 +778,15 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0 10px 0 0;
+  margin: 0 0.52vw 0 0;
 }
 
 .num {
-  width: 50px;
-  height: 28px;
-  line-height: 28px;
+  width: 2.6vw;
+  height: 1.46vw;
+  line-height: 1.46vw;
   text-align: center;
-  margin: 0 2px;
+  margin: 0 0.1vw;
 }
 .payment {
   flex: 1;
@@ -796,12 +796,12 @@ export default {
 }
 /* 分页器 */
 .pagination {
-  margin: 20px 0 0 36%;
+  margin: 1.04vw 0 0 36%;
   overflow: hidden;
 }
 .paymentPage /deep/ .el-pagination {
-  --el-pagination-button-height: 40px;
-  --el-pagination-font-size: 16px;
+  --el-pagination-button-height: 2.08vw;
+  --el-pagination-font-size: 0.83vw;
 }
 .paymentPage
   /deep/
@@ -813,8 +813,8 @@ export default {
 .paymentPage /deep/.el-pagination.is-background .btn-next,
 .paymentPage /deep/.el-pagination.is-background .btn-prev,
 .paymentPage /deep/.el-pagination.is-background .el-pager li {
-  min-width: 40px;
-  border-radius: 5px;
+  min-width: 2.08vw;
+  border-radius: 0.26vw;
 }
 .paymentPage /deep/ .el-icon {
   margin: 0 auto;
@@ -824,13 +824,13 @@ export default {
   overflow: hidden;
 }
 .typeTitle {
-  margin: 40px 0 30px;
-  height: 20px;
-  font-size: 20px;
+  margin: 2.08vw 0 1.56vw;
+  height: 1.04vw;
+  font-size: 1.04vw;
   font-family: Microsoft YaHei UI;
   font-weight: bold;
   color: #333333;
-  line-height: 20px;
+  line-height: 1.04vw;
 }
 .typeBox {
   display: flex;
@@ -839,54 +839,54 @@ export default {
 .type {
   /* width: 200px; */
 
-  height: 56px;
-  line-height: 58px;
-  border: 1px solid #999999;
-  border-radius: 5px;
-  margin: 0 46px 5px 0;
-  padding: 2px;
+  height: 2.92vw;
+  line-height: 3.02vw;
+  border: 0.05vw solid #999999;
+  border-radius: 0.26vw;
+  margin: 0 2.4vw 0.26vw 0;
+  padding: 0.1vw;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  padding: 0 15px;
+  padding: 0 0.78vw;
 }
 .type:hover,
 .type_checked {
-  border: 3px solid #004ea2;
-  height: 52px;
-  padding: 0 13px;
+  border: 0.16vw solid #004ea2;
+  height: 2.71vw;
+  padding: 0 0.68vw;
 }
 /* .type_checked {
   border: 3px solid #004ea2;
   padding: 0;
 } */
 .typeSign {
-  width: 38px;
-  height: 38px;
+  width: 1.98vw;
+  height: 1.98vw;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0 14px 0 0;
+  margin: 0 0.73vw 0 0;
   overflow: hidden;
 }
 .typeSign img {
   object-fit: contain;
-  width: 38px;
-  height: 38px;
+  width: 1.98vw;
+  height: 1.98vw;
 }
 .typeName {
-  height: 16px;
-  font-size: 16px;
+  height: 0.83vw;
+  font-size: 0.83vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #4a4a4a;
-  line-height: 16px;
+  line-height: 0.83vw;
 }
 /* 上传文件相关 */
 .upload >>> .el-upload-dragger {
-  width: 700px;
-  height: 80px;
+  width: 36.46vw;
+  height: 4.17vw;
 }
 .upload >>> .el-upload-dragger .el-upload__text em {
   color: var(--color);
@@ -901,7 +901,7 @@ export default {
   color: red !important;
 }
 .upload >>> .el-button {
-  margin-top: 20px;
+  margin-top: 1.04vw;
 }
 .upload >>> .el-button:focus, .el-button:hover {
   background-color: var(--color);
@@ -910,44 +910,44 @@ export default {
 /* 以下为底部 */
 .footer {
   width: 95%;
-  height: 100px;
+  height: 5.21vw;
   display: flex;
   justify-content: flex-end;
   align-items: center;
   background: #ffffff;
-  border: 1px solid #eaeaec;
-  border-radius: 10px;
-  margin: 90px 0 0 0;
+  border: 0.05vw solid #eaeaec;
+  border-radius: 0.52vw;
+  margin: 4.69vw 0 0 0;
   overflow: hidden;
 }
 .allMoney {
   display: flex;
   align-items: center;
-  min-width: 220px;
-  height: 18px;
-  font-size: 18px;
+  min-width: 11.46vw;
+  height: 0.94vw;
+  font-size: 0.94vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #333333;
-  line-height: 18px;
-  margin: 0 0 0 42px;
+  line-height: 0.94vw;
+  margin: 0 0 0 2.19vw;
 }
 .allMoney div {
-  font-size: 26px;
+  font-size: 1.35vw;
   color: #ff4747;
 }
 .pay {
   cursor: pointer;
-  padding: 0 23px;
-  height: 52px;
-  line-height: 52px;
-  font-size: 18px;
-  letter-spacing: 2px;
+  padding: 0 1.2vw;
+  height: 2.71vw;
+  line-height: 2.71vw;
+  font-size: 0.94vw;
+  letter-spacing: 0.1vw;
   text-align: center;
-  margin: 0 24px 0 26px;
+  margin: 0 1.25vw 0 1.35vw;
   color: #004ea2;
   background-color: #e0f3fe;
-  border-radius: 26px;
+  border-radius: 1.35vw;
 }
 .pay:hover {
   color: #fff;

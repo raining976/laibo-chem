@@ -12,7 +12,7 @@
         status-icon
         :rules="rules"
         ref="ruleForm"
-        label-width="130px"
+        label-width="6.77vw"
         class="demo-ruleForm"
         :disabled="!isEdit || !isAdmin"
       >
@@ -315,16 +315,16 @@ export default {
 </script>
 <style>
 .createTeam .el-form-item__label {
-  font-size: 18px;
+  font-size: 0.94vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #333333;
-  margin-right: 20px;
+  margin-right: 1.04vw;
 }
 .createTeam .el-input__inner {
-  height: 43px;
-  border: 2px solid #999999;
-  border-radius: 5px;
+  height: 2.24vw;
+  border: 0.1vw solid #999999;
+  border-radius: 0.26vw;
 }
 .createTeam .el-input__inner:hover,
 .createTeam .el-input__inner:focus {
@@ -349,13 +349,13 @@ export default {
   transform-origin: left;
 }
 .createTeam .el-button {
-  width: 107px;
-  height: 46px;
-  border-radius: 5px;
-  font-size: 20px;
+  width: 5.57vw;
+  height: 2.4vw;
+  border-radius: 0.26vw;
+  font-size: 1.04vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
-  margin-left: 20px;
+  margin-left: 1.04vw;
 }
 .createTeam .el-button--primary {
   background: var(--color);
@@ -365,14 +365,14 @@ export default {
 </style>
 <style scoped>
 .backBtn {
-  margin-bottom: 30px;
+  margin-bottom: 1.56vw;
 }
 .backBtn a {
-  font-size: 18px;
+  font-size: 0.94vw;
   color: var(--color);
 }
 .content {
-  width: 600px;
+  width: 31.25vw;
 }
 .createTeam >>> .el-cascader--large {
   width: 100%;
@@ -388,7 +388,7 @@ export default {
 .createTeam >>> .country-intl-label {
   display: flex;
   align-items: center;
-  border: #999999 2px solid;
+  border: #999999 0.1vw solid;
 }
 .createTeam >>> .country-intl-label:focus,
 .createTeam >>> .country-intl-label:hover {

@@ -85,10 +85,12 @@
               </el-icon>
             </span>
             <template #dropdown>
-              <el-dropdown-menu>
+              <el-dropdown-menu >
                 <el-dropdown-item
+                  class="dropdown"
                   :disabled="item0.status == '待付款' ? false : true"
                   @click="toPay(item0.id, item0)"
+                  placement='bottom'
                 >
                   <div class="toOrderInfo"> {{ $t("order.toPay") }}</div>
                 </el-dropdown-item>
@@ -419,6 +421,7 @@ export default {
   height: 37.03vw;
   display: flex;
   flex-direction: column;
+
 }
 
 .order {
@@ -433,6 +436,11 @@ export default {
   background: #f7f7f7;
   border-radius: 0.52vw;
   overflow: hidden;
+  font-size: 0.94vw;
+}
+.order >div {
+  font-size: 0.94vw;
+
 }
 .checkOne {
   cursor: pointer;
@@ -544,5 +552,11 @@ export default {
 }
 .myOrder >>> .el-icon {
   margin: 0 auto;
+}
+.productName{
+  font-size: .9375vw;
+}
+.myOrder >>> .dropdown  span{
+  font-size: 0.94vw;
 }
 </style>

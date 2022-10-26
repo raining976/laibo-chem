@@ -142,35 +142,35 @@ export default {
   overflow: hidden;
 }
 .title {
-  font-size: 20px;
+  font-size: 1.04vw;
   font-family: Microsoft YaHei UI;
   font-weight: bold;
   color: #333333;
-  padding-bottom: 30px;
-  margin-bottom: 20px;
-  border-bottom: 2px solid #eaeaec;
+  padding-bottom: 1.56vw;
+  margin-bottom: 1.04vw;
+  border-bottom: 0.1vw solid #eaeaec;
 }
 /* 下为购物车样式 */
 .orderList {
   width: 100%;
-  min-height: 370px;
+  min-height: 19.27vw;
   overflow: hidden;
 }
 /* 表头 --*/
 .listHead {
   width: 100%;
-  height: 44px;
+  height: 2.29vw;
   display: flex;
   align-items: center;
 }
 .word {
   /* width: 65px; */
-  height: 18px;
-  font-size: 18px;
+  height: 0.94vw;
+  font-size: 0.94vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #4a4a4a;
-  line-height: 18px;
+  line-height: 0.94vw;
   text-align: center;
 }
 ._shopId {
@@ -206,7 +206,7 @@ export default {
 .allOrder {
   position: relative;
   width: 100%;
-  height: 711px;
+  height: 37.03vw;
   display: flex;
   flex-direction: column;
 }
@@ -217,11 +217,11 @@ export default {
   align-items: center;
   /* justify-content: center; */
   width: 100%;
-  min-width: 747px;
-  height: 217px;
-  margin: 0 0 20px 0;
+  min-width: 38.91vw;
+  height: 11.3vw;
+  margin: 0 0 1.04vw 0;
   background: #f7f7f7;
-  border-radius: 10px;
+  border-radius: 0.52vw;
   overflow: hidden;
 }
 .shopId {
@@ -235,7 +235,7 @@ export default {
 .product {
   flex: 2;
   /* width: 700px; */
-  height: 165px;
+  height: 8.59vw;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -261,7 +261,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0 10px 0 0;
+  margin: 0 0.52vw 0 0;
   color: #004ea2;
 }
 
@@ -275,28 +275,28 @@ export default {
   display: flex;
   cursor: pointer;
   position: absolute;
-  right: 50px;
-  bottom: 20px;
+  right: 2.6vw;
+  bottom: 1.04vw;
   color: #004ea2;
   transition: all 0.6;
   display: none;
 }
 .agree img {
-  width: 32px;
-  height: 22px;
+  width: 1.67vw;
+  height: 1.15vw;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 .disagree img {
-  width: 22px;
-  height: 22px;
+  width: 1.15vw;
+  height: 1.15vw;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 .agree {
-  margin: 0 20px 0 0;
+  margin: 0 1.04vw 0 0;
 }
 .agree img:hover {
   transform: scale(1.25);
@@ -309,12 +309,12 @@ export default {
 }
 /* 分页器 */
 .pagination {
-  margin: 20px 0 0 36%;
+  margin: 1.04vw 0 0 36%;
   overflow: hidden;
 }
 .orderReview /deep/ .el-pagination {
-  --el-pagination-button-height: 40px;
-  --el-pagination-font-type: 16px;
+  --el-pagination-button-height: 2.08vw;
+  --el-pagination-font-type: 0.83vw;
 }
 .orderReview
   /deep/
@@ -326,8 +326,8 @@ export default {
 .orderReview /deep/.el-pagination.is-background .btn-next,
 .orderReview /deep/.el-pagination.is-background .btn-prev,
 .orderReview /deep/.el-pagination.is-background .el-pager li {
-  min-width: 40px;
-  border-radius: 5px;
+  min-width: 2.08vw;
+  border-radius: 0.26vw;
 }
 .orderReview /deep/ .el-icon {
   margin: 0 auto;

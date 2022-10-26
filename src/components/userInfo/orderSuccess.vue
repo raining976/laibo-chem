@@ -39,7 +39,7 @@ export default {
 <style scoped>
 .orderSuccess {
     width: 100%;
-    height: 578px;
+    height: 30.1vw;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -48,31 +48,31 @@ export default {
 .completedWord {
   /* width: 745px; */
   text-align: center;
-height: 25px;
-font-size: 24px;
+height: 1.3vw;
+font-size: 1.25vw;
 font-family: Microsoft YaHei UI;
 font-weight: 400;
 color: #2A94F4;
-line-height: 25px;
-margin: 26px 0 40px;
+line-height: 1.3vw;
+margin: 26px 0 2.08vw;
 }
 .btnBox {
 width: 45%;
-height: 50px;
+height: 2.6vw;
 display: flex;
 justify-content: space-between;
 align-items: center;
 }
 .btnStyle {
-width: 234px;
-height: 50px;
+width: 12.19vw;
+height: 2.6vw;
 background: #2A94F4;
-border-radius: 5px;
-font-size: 24px;
+border-radius: 0.26vw;
+font-size: 1.25vw;
 font-family: Microsoft YaHei UI;
 font-weight: 400;
 color: #FFFFFF;
-line-height: 50px;
+line-height: 2.6vw;
 text-align: center;
 cursor: pointer;
 }
