@@ -4,63 +4,69 @@
       <div class="privateOrderBox" ref="privateOrder">
         <div class="content">
           <div class="formBox">
-            <h3 class="title">私人定制</h3>
+            <h3 class="title">{{ $t("nav.customization") }}</h3>
             <el-form
               :model="ruleForm"
               status-icon
               :rules="rules"
               ref="ruleForm"
-              label-width="5.21vw"
+              label-width="5.8vw"
               class="demo-ruleForm"
             >
-              <el-form-item label="email" prop="email">
+              <el-form-item label="Email" prop="email">
                 <el-input
-                  placeholder="请输入email地址"
+                  :placeholder="$t('privateOrder.emailTip')"
                   type="text"
                   v-model="ruleForm.email"
                 ></el-input>
               </el-form-item>
-              <el-form-item label="联系人" prop="name">
+              <el-form-item :label="$t('privateOrder.name')" prop="name">
                 <el-input
-                  placeholder="请输入联系方式"
+                  :placeholder="$t('privateOrder.nameTip')"
                   type="text"
                   v-model="ruleForm.name"
                 ></el-input>
               </el-form-item>
-              <el-form-item label="联系电话" prop="phone">
+              <el-form-item :label="$t('privateOrder.phone')" prop="phone">
                 <el-input
-                  placeholder="请输入联系电话"
+                  :placeholder="$t('privateOrder.phoneTip')"
                   type="text"
                   v-model="ruleForm.phone"
                 ></el-input>
               </el-form-item>
-              <el-form-item label="联系单位" prop="company">
+              <el-form-item :label="$t('privateOrder.team')" prop="company">
                 <el-input
-                  placeholder="请输入单位名称"
+                  :placeholder="$t('privateOrder.teamTip')"
                   type="text"
                   v-model="ruleForm.company"
                 ></el-input>
               </el-form-item>
-              <el-form-item label="需求概述" prop="content" class="demandBox">
+              <el-form-item
+                :label="$t('privateOrder.demand')"
+                prop="content"
+                class="demandBox"
+              >
                 <el-input
                   class="demand"
-                  placeholder="请输入产品名称，CAS号，规格，数量"
+                  :placeholder="$t('privateOrder.demandTip')"
                   type="textarea"
                   v-model="ruleForm.content"
                 ></el-input>
               </el-form-item>
-              <p class="contactUs">联系方式&nbsp;:&nbsp;labservice@188.com</p>
+              <p class="contactUs">
+                {{ $t("privateOrder.contact") }}&nbsp;:&nbsp;labservice@188.com
+              </p>
             </el-form>
             <el-form-item class="btnBox">
               <el-button
                 type="primary"
                 @click="submitForm('ruleForm')"
                 class="orderSubmit"
-                >提交</el-button
+                >{{ $t("base.submit") }}</el-button
               >
-              <el-button @click="resetForm('ruleForm')" class="orderReset"
-                >重置</el-button
-              >
+              <el-button @click="resetForm('ruleForm')" class="orderReset">{{
+                $t("base.reset")
+              }}</el-button>
             </el-form-item>
           </div>
         </div>
@@ -73,38 +79,38 @@ export default {
   data() {
     var checkEmail = (_, value, callback) => {
       if (!value) {
-        return callback(new Error("邮箱不能为空"));
+        return callback(new Error(this.$t("email.noEmpty")));
       }
       let pattern = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
-      if (!pattern.test(value)) callback(new Error("邮箱格式不正确"));
+      if (!pattern.test(value)) callback(new Error(this.$t("email.noFormat")));
       callback();
     };
     var checkName = (_, value, callback) => {
       if (!value) {
-        return callback(new Error("联系人不能为空"));
+        return callback(new Error(this.$t("privateOrder.emptyName")));
       }
       callback();
     };
     var checkPhoneNum = (_, value, callback) => {
       if (!value) {
-        return callback(new Error("联系电话不能为空"));
+        return callback(new Error(this.$t("privateOrder.emptyPhone")));
       }
       let pattern =
         /((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d)|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d))$)/;
       if (!pattern.test(value)) {
-        callback(new Error("电话格式不正确"));
+        callback(new Error(this.$t("privateOrder.emptyFormat")));
       }
       callback();
     };
     var checkCompany = (_, value, callback) => {
       if (!value) {
-        return callback(new Error("联系单位不能为空"));
+        return callback(new Error(this.$t("privateOrder.emptyTeam")));
       }
       callback();
     };
     var checkDemand = (_, value, callback) => {
       if (!value) {
-        return callback(new Error("需求概述不能为空"));
+        return callback(new Error(this.$t("privateOrder.emptyDemand")));
       }
       callback();
     };
@@ -243,7 +249,7 @@ export default {
 .privateOrderBox .orderSubmit:nth-child(1) {
   display: flex;
   justify-content: center;
-  width: 3.59vw;
+  min-width: 3.59vw;
   height: 1.98vw;
   background: var(--color);
   border-radius: 0.26vw;
@@ -258,7 +264,7 @@ export default {
 .privateOrderBox .orderReset:nth-child(2) {
   display: flex;
   justify-content: center;
-  width: 3.59vw;
+  min-width: 3.59vw;
   height: 1.98vw;
   color: var(--color);
   border-radius: 0.26vw;
@@ -272,7 +278,9 @@ export default {
 .privateOrderBox .el-button--default:hover {
   background: #a5d0ff;
 }
-
+.privateOrderBox .el-button {
+  padding: 10px;
+}
 /* 后置对钩或叉 */
 
 .privateOrderBox .el-input__icon {
@@ -340,5 +348,4 @@ export default {
 .fade {
   animation: fadeUp 0.5s;
 }
-
 </style>

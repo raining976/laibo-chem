@@ -217,23 +217,42 @@ export default {
         add: "Add to cart",
     },
     // 邮箱验证
-    email:{
-        noEmpty:'Email cannot be empty',
-        noFormat:'Email address format is not correct',
-        emptyVerify:'Verification code cannot be empty',
-        emptyPass:'Password cannot be empty'
+    email: {
+        noEmpty: 'Email cannot be empty',
+        noFormat: 'Email address format is not correct',
+        emptyVerify: 'Verification code cannot be empty',
+        emptyPass: 'Password cannot be empty'
     },
     // callback
-    callback:{
-        success:"successfully!",
-        error:'Unknown Error!'
+    callback: {
+        success: "successfully!",
+        error: 'Unknown Error!'
     },
     // 忘记密码
-    forgetPass:{
-        confirm:"Please enter the confirmation password",
-        noEqual:'The two passwords are not equal',
-        newPass:'Please enter a new password',
-        
+    forgetPass: {
+        confirm: "Please enter the confirmation password",
+        noEqual: 'The two passwords are not equal',
+        newPass: 'Please enter a new password',
+
+    },
+    // 私人定制
+    privateOrder: {
+        name: 'Name',
+        phone: 'Phone',
+        team: 'Team Name',
+        demand: 'Requirements overview',
+        contact: 'Our email',
+        emailTip: 'Please enter your email address',
+        nameTip: 'Please enter your contact name',
+        phoneTip: 'Please enter your contact Phone',
+        teamTip: 'Please enter your team name',
+        demandTip: 'Please enter product name, CAS number, specification, quantity',
+        // 验证部分
+        emptyName: 'Name cannot be empty',
+        emptyPhone: 'The contact phone cannot be empty',
+        phoneFormat: 'The phone format is incorrect',
+        emptyTeam: 'Team name cannot be empty',
+        emptyDemand: 'The requirements overview cannot be empty',
     }
 
 }

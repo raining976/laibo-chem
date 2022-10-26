@@ -238,5 +238,24 @@ export default {
         noEqual:'确认密码与新密码不一致',
         newPass:'请输入新密码',
         
-    }
+    },
+    // 私人定制
+    privateOrder:{
+        name:'联系人',
+        phone:'联系电话',
+        team:'联系单位',
+        demand:'需求概述',
+        contact:'联系方式',
+        emailTip:'请输入Email地址',
+        nameTip:'请输入联系人姓名',
+        phoneTip:'请输入联系电话',
+        teamTip:'请输入单位名称',
+        demandTip:'请输入产品名称,CAS号,规格,数量',
+        // 验证部分
+        emptyName:'联系人不能为空',
+        emptyPhone:'联系电话不能为空',
+        phoneFormat:'电话格式不正确',
+        emptyTeam:'联系单位不能为空',
+        emptyDemand:'需求概述不能为空',
+        }
 }
