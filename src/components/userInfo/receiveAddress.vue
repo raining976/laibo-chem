@@ -38,7 +38,7 @@
                 <el-tooltip
                   class="item"
                   effect="light"
-                  content="删除地址"
+                  :content="$t('address.dele')"
                   placement="top"
                 >
                   <i
@@ -51,7 +51,7 @@
                 <el-tooltip
                   class="item"
                   effect="light"
-                  content="修改地址"
+                  :content="$t('address.edit')"
                   placement="top"
                 >
                   <i class="el-icon-edit" @click="editAddress(index)"></i>
@@ -118,9 +118,9 @@ export default {
       });
     },
     bounceMsg() {
-      this.$confirm("此操作将永久删除该地址, 是否继续?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+      this.$confirm(this.$t('callback.deleWarn'), this.$t('base.tip'), {
+        confirmButtonText: this.$t('base.sure'),
+        cancelButtonText: this.$t('base.cancel'),
         type: "warning",
         center: true,
       })
@@ -130,7 +130,7 @@ export default {
         .catch(() => {
           this.$message({
             type: "info",
-            message: "已取消删除",
+            message: this.$t('base.canceled'),
           });
         });
     },
@@ -156,7 +156,7 @@ export default {
         .then((res) => {
           if (res.data.code == 20000) {
             this.$message({
-              message: "删除成功",
+              message: this.$t('callback.deleSuccess'),
               type: "success",
             });
             this.isReloadAddress = true;

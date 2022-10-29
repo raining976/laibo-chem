@@ -221,10 +221,10 @@ export default {
       if (!array) return; // 数组为空时
       array.forEach((item) => {
         if (item.privilege == 1) {
-          item.privilegeText = "管理员";
+          item.privilegeText = this.$t('privilege.admin');
         } else if (item.privilege == 2) {
-          item.privilegeText = "团队拥有者";
-        } else item.privilegeText = "成员";
+          item.privilegeText = this.$t('privilege.owner');
+        } else item.privilegeText = this.$t('privilege.member');
       });
       return array;
     },

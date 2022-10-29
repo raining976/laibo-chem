@@ -129,7 +129,7 @@ export default {
       this.$http.post("/changePassword", form).then((res) => {
         if (res.data.code == 20000) {
           this.$message({
-            message: "修改成功!",
+            message: this.$t('callback.editSuccess'),
             type: "success",
           });
           this.ruleForm = {

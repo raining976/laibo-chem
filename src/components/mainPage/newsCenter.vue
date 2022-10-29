@@ -11,7 +11,9 @@
         <div class="newsBox">
           <div class="topBox">
             <h3>公司新闻</h3>
-            <div class="moreBtn" @click="toMoreNewsArticle('公司新闻')">更多新闻 +</div>
+            <div class="moreBtn" @click="toMoreNewsArticle('公司新闻')">
+              {{ $t("home.readMore") }} +
+            </div>
           </div>
           <ul class="newsList articleList">
             <li
@@ -31,7 +33,9 @@
                   {{ news.short_description }}
                 </p>
                 <span class="detailBtn">
-                  <span @click="toContent(news.id, '公司新闻')">查看详情</span>
+                  <span @click="toContent(news.id, '公司新闻')">
+                    {{ $t('home.learnMore') }}
+                  </span>
                 </span>
               </div>
             </li>
@@ -42,7 +46,9 @@
         <div class="techArticleBox">
           <div class="topBox">
             <h3>技术文章</h3>
-            <div class="moreBtn" @click="toMoreNewsArticle('技术文章')">更多文章+</div>
+            <div class="moreBtn" @click="toMoreNewsArticle('技术文章')">
+              {{ $t("home.readMore") }}+
+            </div>
           </div>
           <ul class="newsList articleList">
             <li
@@ -62,7 +68,9 @@
                   {{ article.short_description }}
                 </p>
                 <span class="detailBtn">
-                  <span @click="toContent(article.id, '技术文章')">查看详情</span>
+                  <span @click="toContent(article.id, '技术文章')"
+                    >  {{ $t('home.learnMore') }}</span
+                  >
                 </span>
               </div>
             </li>
@@ -155,15 +163,15 @@ export default {
       });
       return arr;
     },
-  //   checkDetail(id, type) {
-  //     this.$router.push({
-  //       name: "content",
-  //       params: {
-  //         id: id,
-  //         type: type,
-  //       },
-  //     });
-  //   },
+    //   checkDetail(id, type) {
+    //     this.$router.push({
+    //       name: "content",
+    //       params: {
+    //         id: id,
+    //         type: type,
+    //       },
+    //     });
+    //   },
   },
 };
 </script>

@@ -17,6 +17,9 @@
   <transition leave-active-class="fadeOut"
     ><private-order v-if="isShowOrder"
   /></transition>
+  <transition leave-active-class="fadeOut"
+    ><schools v-if="isShowSchools"
+  /></transition>
 </template>
 
 
@@ -26,6 +29,8 @@ import appFooter from "./components/main/appFooter.vue";
 import copyRight from "./components/main/copyRight.vue";
 import logIn from "./components/logIn/logIn.vue";
 import privateOrder from "./components/privateOrder/privateOrder.vue";
+import schools from "./components/schools/schools.vue";
+
 export default {
   name: "App",
   components: {
@@ -34,6 +39,7 @@ export default {
     copyRight,
     logIn,
     privateOrder,
+    schools,
   },
 
   data() {
@@ -41,6 +47,7 @@ export default {
       isShowLogIn: false, // 是否显示登录
       key: 1, // 用于强制刷新nav组件
       isShowOrder: false, // 私人订单
+      isShowSchools:  false, // 合作高校是否展示
     };
   },
   created() {
@@ -63,8 +70,8 @@ export default {
       localStorage.removeItem("token_exp");
     }
   },
-  mounted(){
-    window.openLogin = this.openLogin
+  mounted() {
+    window.openLogin = this.openLogin;
   },
   unmounted() {
     window.localStorage.removeItem("lang");
@@ -74,9 +81,9 @@ export default {
     changeLogIn() {
       this.isShowLogIn = !this.isShowLogIn;
     },
-    openLogin(){
-      this.isShowLogIn = true
-    }
+    openLogin() {
+      this.isShowLogIn = true;
+    },
   },
 };
 </script>
@@ -121,9 +128,11 @@ body >>> .is-message-box {
 body >>> .is-message-box .el-button--primary {
   background: var(--color);
 }
+.el-dropdown-menu__item{
+  padding: 0 30px;
+}
 .el-dropdown-menu__item:hover a,
-.el-dropdown-menu__item:hover span
- {
+.el-dropdown-menu__item:hover span {
   font-weight: 700;
   color: var(--color);
 }

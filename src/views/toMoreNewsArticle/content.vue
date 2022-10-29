@@ -92,9 +92,9 @@ export default {
 .siteNav {
   display: flex;
   width: 80%;
-  height: 24px;
-  font-size: 20px;
-  line-height: 24px;
+  height: 1.25vw;
+  font-size: 1.04vw;
+  line-height: 1.25vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   /* margin: 14px auto 0; */
@@ -110,9 +110,9 @@ export default {
 .mainPage,
 .type {
   cursor: pointer;
-  height: 24px;
-  font-size: 20px;
-  line-height: 24px;
+  height: 1.25vw;
+  font-size: 1.04vw;
+  line-height: 1.25vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #004ea2;
@@ -129,23 +129,23 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 1410px;
-  margin: 50px auto 0;
+  width: 73.44vw;
+  margin: 2.6vw auto 0;
   overflow: hidden;
 }
 .title {
   width: 100%;
   text-align: center;
-  font-size: 36px;
+  font-size: 1.88vw;
   font-weight: 600;
-  margin: 0 0 20px 0;
+  margin: 0 0 1.04vw 0;
 }
 .update {
   width: 80%;
-  font-size: 18px;
-  margin: 0 0 20px 0;
+  font-size: 0.94vw;
+  margin: 0 0 1.04vw 0;
   color: #999;
-  border-bottom: 2px solid #999999;
+  border-bottom: 0.1vw solid #999999;
 }
 .content {
   display: flex;
@@ -153,7 +153,7 @@ export default {
   align-items: center;
   flex-direction: column;
   width: 80%;
-  font-size: 18px;
+  font-size: 0.94vw;
 }
 .content > p,
 .content > span {

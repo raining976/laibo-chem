@@ -49,15 +49,16 @@ export default {
           name_zh: "染料",
           name_en: "DYES",
         },
-        {
-          pic: require("../../assets/shiyanyongpin.webp"),
-          name_zh: "实验用品",
-          name_en: "EXPERIMENTAL SUPPLIES",
-        },
+
         {
           pic: require("../../assets/dingzhichanpin.webp"),
           name_zh: "定制产品",
           name_en: "CUSTOMIZED PRODUCTS",
+        },
+        {
+          pic: require("../../assets/shiyanyongpin.webp"),
+          name_zh: "实验用品",
+          name_en: "EXPERIMENTAL SUPPLIES",
         },
       ],
     };
@@ -150,10 +151,9 @@ export default {
   transition: 0.3s;
   border-radius: 0.26vw;
 }
-.productSortList > li:hover{
+.productSortList > li:hover {
   transform: scale(1.02);
   box-shadow: 0.31vw 0.31vw 1.25vw 0.2vw rgb(0 12 52 / 23%);
-
 }
 .productSortList > li:hover .contentBox {
   background-color: rgba(40, 103, 180, 0.8);

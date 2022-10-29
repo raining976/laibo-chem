@@ -12,7 +12,7 @@ export default {
         submit: "Submit",
         phone: "Tel No",
         sex: "gender",
-        man: "MAn",
+        man: "Man",
         woman: "Woman",
         team: "Team",
         address: "Address",
@@ -26,6 +26,11 @@ export default {
         get: "Get",
         country: "Country",
         teamAddress: "Team Address",
+        tip: 'Reminder',
+        sure: 'OK',
+        cancel: 'CANCEL',
+        canceled: 'Canceled',
+
     },
     // 表单
     form: {
@@ -69,6 +74,8 @@ export default {
         info: "Profile",
         changePass: "Change Password",
         orderReview: "Order Review",
+        exit:'Exit',
+
     },
     // 登录
     logIn: {
@@ -120,6 +127,7 @@ export default {
         name: "Addressee",
         add: "Add Address",
         dele: "Delete Address",
+        edit:'Edit Address',
         current: "The current distribution to",
         full: "Full address",
         chooseTip: "Please select a harvest address",
@@ -144,7 +152,8 @@ export default {
         agree: "Agree",
         edit: "The editorial team information",
         teamId: "Team ID",
-        checkAll: "checkAll"
+        checkAll: "checkAll",
+        deleTeam:'Delete your team',
     },
     // 订单
     order: {
@@ -226,14 +235,33 @@ export default {
     // callback
     callback: {
         success: "successfully!",
-        error: 'Unknown Error!'
+        error: 'Unknown Error!',
+        blank: 'Empty',
+        joinTeam: 'Application successful! Please wait for admin consent',
+        refuseWarn: "The processing is irrevocable if the member's application is rejected",
+        deleSuccess: 'Deleted successfully',
+        editSuccess: 'Modified successfully',
+        saveSuccess:'Save successfully',
+        submitSuccess:'Submitted successfully',
+        exitSuccess:'Exited successfully',
+        selectTip: 'No product selected',
+        deleWarn: 'The deletion cannot be withdrawn, do you want to continue?',
+        paySuccess: 'Pay for success',
+        uploadSuccess: 'Uploaded successfully',
+        uploadError:'Upload failed',
+        saveTip:'Unsaved content was detected, whether the page to save the changes before you leave?',
+        save:'Save',
+        cancelEdit:'Discard changes',
+        editTip:'Your changes have been made yet',
+        exitTip:'Whether determine the log out, sure?',
+
+
     },
     // 忘记密码
     forgetPass: {
         confirm: "Please enter the confirmation password",
         noEqual: 'The two passwords are not equal',
         newPass: 'Please enter a new password',
-
     },
     // 私人定制
     privateOrder: {
@@ -253,6 +281,30 @@ export default {
         phoneFormat: 'The phone format is incorrect',
         emptyTeam: 'Team name cannot be empty',
         emptyDemand: 'The requirements overview cannot be empty',
+    },
+    // 公司简介
+    companyInfo: {
+        name: 'LAIBO CHEM',
+        p1: 'LAIBO CHEM was founded in 2008. The company is located at Qingdao, a beautiful coastal city in Shandong Province, China. Since its establishment, the company has specialized in the production and sales of laboratory reagents, dyes (disperse, acid, reactive, solvent, sulfur and other series) and many other chemical products.',
+        p2: 'To ensure our product quality, the company has invested a lot of money in technology research and development, and has established cooperative relations with many professional scientific research institutions and key national universities and established joint experimental bases.',
+        p3: 'We insist on the principal of Innovation, Specialty, Quality and Mutual benefits in the business. By the efforts of more than 14 years, we have gained high reputation and established good business relationship with customers from home and aboard.',
+        p4: 'We look forward to establishing a reliable partnership with you!',
+    },
+    // 权限字段
+    privilege: {
+        admin: 'admin',
+        member: 'member',
+        owner: 'owner',
+    },
+    // 支付
+    payment: {
+        selectType: 'Payment type has not been selected',
+        uploadMsg: 'Please upload the attachment with the suffix jpg or png!',
+        uploadSize: 'Upload file size cannot exceed 200k!',
+        selectBills: 'Please select documents',
+        selectLimit:'The current limit is to select 1 file',
+        sure:'Are you sure to remove',
+
     }
 
 }

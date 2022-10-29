@@ -134,7 +134,7 @@ export default {
         .then((res) => {
           if (res.data.code == 20000) {
             this.$message({
-              message: "删除成功!",
+              message: this.$t('callback.deleSuccess'),
               type: "success",
             });
             this.in_team = 0;
@@ -149,16 +149,16 @@ export default {
         .catch((err) => {
           console.log("err", err);
           this.$message({
-            message: "未知错误!",
+            message: this.$t('callback.error'),
             type: "error",
           });
         });
     },
     // 删除团队提示
     delTeamOpen() {
-      this.$confirm("此操作将永久删除团队, 是否继续?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+      this.$confirm(this.$t('callback.deleWarn'), this.$t('base.tip'), {
+        confirmButtonText: this.$t('base.sure'),
+        cancelButtonText: this.$t('base.cancel'),
         type: "warning",
       })
         .then(() => {
@@ -167,7 +167,7 @@ export default {
         .catch(() => {
           this.$message({
             type: "info",
-            message: "已取消删除",
+            message: this.$t('base.canceled'),
           });
         });
     },
@@ -183,7 +183,7 @@ export default {
           })
           .catch((err) => {
             this.$message({
-              message: "未知错误",
+              message: this.$t('callback.error'),
               type: "error",
             });
             console.log("err", err);

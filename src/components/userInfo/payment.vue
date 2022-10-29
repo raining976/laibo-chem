@@ -323,9 +323,9 @@ export default {
     },
     // 删除地址
     bounceMsg() {
-      this.$confirm("此操作将永久删除该地址, 是否继续?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+      this.$confirm(this.$t('callback.deleWarn'), this.$t('base.tip'), {
+        confirmButtonText: this.$t('base.sure'),
+        cancelButtonText: this.$t('base.cancel'),
         type: "warning",
         center: true,
       })
@@ -335,7 +335,7 @@ export default {
         .catch(() => {
           this.$message({
             type: "info",
-            message: "已取消删除",
+            message: this.$t('base.canceled'),
           });
         });
     },
@@ -347,7 +347,7 @@ export default {
         .then((res) => {
           if (res.data.code == 20000) {
             this.$message({
-              message: "删除成功",
+              message: this.$t('callback.deleSuccess'),
               type: "success",
             });
             this.isReloadAddress = true;
@@ -360,7 +360,7 @@ export default {
         })
         .catch((err) => {
           this.$message({
-            message: "未知错误!",
+            message: this.$t('callback.error'),
             type: "error",
           });
           console.log("err", err);
@@ -378,14 +378,14 @@ export default {
         this.isImg = "0";
         this.$message({
           type: "warning",
-          message: "请上传后缀名为jpg、png的附件！",
+          message: this.$t('payment.uploadMsg'),
         });
         file.status = "error";
       }
       this.isLt2k = file.size / 1024 / 1024 < 5 ? "1" : "0";
       if (this.isLt2k === "0") {
         this.$message({
-          message: "上传文件大小不能超过200k!",
+          message: this.$t('payment.uploadSize'),
           type: "error",
         });
         file.status = "error";
@@ -420,7 +420,7 @@ export default {
           .then((res) => {
             if (res.data.code == 20000) {
               this.$message({
-                message: "支付成功",
+                message: this.$t('callback.paySuccess'),
                 type: "success",
               });
               // this.$router.push({
@@ -435,7 +435,7 @@ export default {
           })
           .catch((err) => {
             this.$message({
-              message: "未知错误!",
+              message: this.$t('callback.error'),
               type: "error",
             });
             console.log("err", err);
@@ -443,7 +443,7 @@ export default {
       }
       } else {
         this.$message({
-          message: "请选取单据",
+          message: this.$t('payment.selectBills'),
           type: "error",
         });
       }
@@ -453,7 +453,7 @@ export default {
     upSuccess(res) {
       this.$message({
         type: "success",
-        message: "上传成功",
+        message: this.$t('callback.uploadSuccess'),
         showClose: true,
         offset: 80,
       });
@@ -462,7 +462,7 @@ export default {
     upError() {
       this.$message({
         type: "error",
-        message: "上传失败",
+        message: this.$t('callback.uploadError'),
         showClose: true,
         offset: 80,
       });
@@ -478,13 +478,13 @@ export default {
       console.log(file);
     },
     handleExceed(files, fileList) {
-      this.$message.warning(`当前限制选择 1 个文件`);
+      this.$message.warning(this.$t('payment.selectLimit'));
       // ，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件
     },
     beforeRemove(file, fileList) {
-      return this.$confirm(`确定移除${file.name}?`, "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+      return this.$confirm(this.$t('payment.sure')+`${file.name}` + '?', this.$t('base.tip'), {
+        confirmButtonText: this.$t('base.sure'),
+        cancelButtonText: this.$t('base.cancel'),
         type: "warning",
       });
     },
@@ -540,7 +540,7 @@ export default {
       // 判断是否选择支付方式
       if (!this.$data.payWay) {
         this.$message({
-          message: "尚未选择支付类型",
+          message: this.$t('payment.selectType'),
           type: "error",
         });
       } else if (this.$data.payWay) {
@@ -553,7 +553,7 @@ export default {
           .then((res) => {
             if (res.data.code == 20000) {
               this.$message({
-                message: "支付成功",
+                message: this.$t('callback.paySuccess'),
                 type: "success",
               });
               window.location.href = res.data.data.url;
@@ -569,7 +569,7 @@ export default {
           })
           .catch((err) => {
             this.$message({
-              message: "未知错误!",
+              message: this.$t('callback.error'),
               type: "error",
             });
             console.log("err", err);

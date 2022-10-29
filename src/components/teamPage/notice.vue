@@ -61,7 +61,7 @@ export default {
         .then((res) => {
           if (res.data.code == 20000) {
             this.$message({
-              message: "处理成功",
+              message: this.$t('callback.success'),
               type: "success",
             });
             // if(flag == 1){
@@ -78,16 +78,16 @@ export default {
         .catch((err) => {
           console.log("err", err);
           this.$message({
-            message: "未知错误!",
+            message: this.$t('callback.error'),
             type: "error",
           });
         });
     },
     // 确认提示
     warningTip(index) {
-      this.$confirm("是否拒绝该成员的申请,该处理不可撤销", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+      this.$confirm(this.$t('callback.refuseWarn'), this.$t('base.tip'), {
+        confirmButtonText: this.$t('base.sure'),
+        cancelButtonText: this.$t('base.cancel'),
         type: "warning",
       })
         .then(() => {
@@ -96,7 +96,7 @@ export default {
         .catch(() => {
           this.$message({
             type: "info",
-            message: "已取消操作",
+            message: this.$t('base.canceled'),
           });
         });
     },

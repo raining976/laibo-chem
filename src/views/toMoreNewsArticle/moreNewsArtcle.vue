@@ -153,16 +153,16 @@ export default {
 <style scoped>
 .solidLine {
   width: 80%;
-  height: 0.96px;
-  border-bottom: 0.96px solid #999999;
+  height: 0.05vw;
+  border-bottom: 0.05vw solid #999999;
   margin: 0 auto;
 }
 .siteNav {
   display: flex;
-  width: 1410px;
-  height: 24px;
-  font-size: 22px;
-  line-height: 24px;
+  width: 73.44vw;
+  height: 1.25vw;
+  font-size: 1.15vw;
+  line-height: 1.25vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   /* margin: 14px auto 0; */
@@ -176,9 +176,9 @@ export default {
 .news,
 .article {
   cursor: pointer;
-  height: 24px;
-  font-size: 22px;
-  line-height: 24px;
+  height: 1.25vw;
+  font-size: 1.15vw;
+  line-height: 1.25vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #004ea2;
@@ -191,51 +191,51 @@ export default {
 .bg {
   position: relative;
   width: 100%;
-  height: 640px;
-  margin: 50px 0 0 0;
+  min-height: 35.33vw;
+  margin: 2.6vw 0 0 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   overflow: hidden;
 }
 .allTitles {
-  width: 1410px;
+  width: 73.44vw;
   overflow: hidden;
 }
 .titleBox {
   display: flex;
-  margin: 10px 0 10px 82px;
+  margin: 0.52vw 0 0.52vw 4.27vw;
 }
 .title {
   cursor: pointer;
-  margin: 0 30px 0 0;
-  height: 22px;
-  font-size: 20px;
+  margin: 0 1.56vw 0 0;
+  height: 1.15vw;
+  font-size: 1.04vw;
   font-family: Microsoft YaHei UI;
   font-weight: 600;
   color: #474949;
-  line-height: 22px;
+  line-height: 1.15vw;
 }
 .title:hover {
   color: #004ea2;
 }
 .time {
-  height: 20px;
-  font-size: 17px;
+  height: 1.04vw;
+  font-size: 0.89vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #323333;
-  line-height: 20px;
+  line-height: 1.04vw;
 }
 /* 分页器 */
 .pagination {
   position: absolute;
-  bottom: 43px;
+  bottom: 2.24vw;
   margin: 0 auto;
 }
 .pagination /deep/ .el-pagination {
-  --el-pagination-button-height: 40px;
-  --el-pagination-font-size: 16px;
+  --el-pagination-button-height: 2.08vw;
+  --el-pagination-font-size: 0.83vw;
 }
 .pagination
   /deep/
@@ -247,8 +247,8 @@ export default {
 .pagination /deep/.el-pagination.is-background .btn-next,
 .pagination /deep/.el-pagination.is-background .btn-prev,
 .pagination /deep/.el-pagination.is-background .el-pager li {
-  --el-pagination-button-height: 40px;
-  --el-pagination-font-size: 16px;
+  --el-pagination-button-height: 2.08vw;
+  --el-pagination-font-size: 0.83vw;
 }
 .pagination
   /deep/
@@ -260,8 +260,8 @@ export default {
 .pagination /deep/.el-pagination.is-background .btn-next,
 .pagination /deep/.el-pagination.is-background .btn-prev,
 .pagination /deep/.el-pagination.is-background .el-pager li {
-  min-width: 40px;
-  border-radius: 5px;
+  min-width: 2.08vw;
+  border-radius: 0.26vw;
 }
 .pagination /deep/ .el-icon {
   margin: 0 auto;

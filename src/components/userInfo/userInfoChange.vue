@@ -56,7 +56,7 @@ export default {
       }
       var pattern = /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/
       if (!pattern.test(value)) {
-        return callback(new Error("手机号格式错误"));
+        return callback(new Error(this.$t('privateOrder.phoneFormat')));
       }
       return callback();
     };
@@ -69,7 +69,7 @@ export default {
         name: "",
         phone: "",
         gender: Number,
-        team: "这里是团队名称",
+        team: "",
       },
       rules: {
         name: [
@@ -99,12 +99,12 @@ export default {
       this.initGender != this.ruleForm.gender
     ) {
       this.$confirm(
-        "检测到未保存的内容，是否在离开页面前保存修改？",
-        "确认信息",
+        this.$t('callback.saveTip'),
+        this.$t('base.tip'),
         {
           distinguishCancelAndClose: true,
-          confirmButtonText: "保存",
-          cancelButtonText: "放弃修改",
+          confirmButtonText: this.$t('callback.save'),
+          cancelButtonText: this.$t('callback.cancelEdit'),
         }
       )
         .then(() => {
@@ -150,7 +150,7 @@ export default {
         this.initPhone == this.ruleForm.phone &&
         this.initGender == this.ruleForm.gender
       ) {
-        this.$message("您还未作出修改哦~");
+        this.$message(this.$t('callback.editTip'));
         return;
       }
       let form = {
@@ -164,7 +164,7 @@ export default {
         .then((res) => {
           if (res.data.code == 20000) {
             this.$message({
-              message: "修改成功",
+              message: this.$t('callback.editSuccess'),
               type: "success",
             });
             this.getUserInfo();
@@ -178,7 +178,7 @@ export default {
         })
         .catch(() => {
           this.$message({
-            message: "意外错误!",
+            message: this.$t('callback.error'),
             type: "error ",
           });
         });

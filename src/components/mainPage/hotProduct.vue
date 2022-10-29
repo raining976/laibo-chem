@@ -204,6 +204,8 @@ export default {
     rgba(0, 212, 255, 0) 100%
   );
   transform: scale(1.02);
+}
+.carouselBox .move li:hover span {
   color: #ffffff;
 }
 </style>

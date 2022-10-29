@@ -49,25 +49,25 @@
           <template #dropdown>
             <el-dropdown-menu class="navDropdown">
               <el-dropdown-item
-                ><span @click="toTeam()">团队管理</span></el-dropdown-item
+                ><span @click="toTeam()">{{ $t('userMenu.team') }}</span></el-dropdown-item
               >
               <el-dropdown-item
                 ><router-link to="/address"
-                  >收货地址</router-link
+                  >{{ $t('userMenu.address') }}</router-link
                 ></el-dropdown-item
               >
               <el-dropdown-item
                 ><router-link to="/info"
-                  >个人信息</router-link
+                  >{{ $t('userMenu.info') }}</router-link
                 ></el-dropdown-item
               >
               <el-dropdown-item
                 ><router-link to="/changePsd"
-                  >修改密码</router-link
+                  >{{ $t('userMenu.changePass') }}</router-link
                 ></el-dropdown-item
               >
               <el-dropdown-item divided @click="exitOpen()"
-                >退出登录</el-dropdown-item
+                >{{ $t('userMenu.exit') }}</el-dropdown-item
               >
             </el-dropdown-menu>
           </template>
@@ -247,9 +247,9 @@ export default {
     },
     // 退出登录提示
     exitOpen() {
-      this.$confirm("是否确定退出登录,确定?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+      this.$confirm(this.$t('callback.exitTip'), this.$t('base.tip'), {
+        confirmButtonText: this.$t('base.sure'),
+        cancelButtonText: this.$t('base.cancel'),
         type: "warning",
       })
         .then(() => {
@@ -258,7 +258,7 @@ export default {
         .catch(() => {
           this.$message({
             type: "info",
-            message: "已取消退出登录",
+            message: this.$t('base.canceled'),
           });
         });
     },
@@ -274,7 +274,7 @@ export default {
       // localStorage.removeItem("token");
       // localStorage.removeItem("refresh");
       localStorage.clear();
-      this.$message("退出登录成功");
+      this.$message(this.$t('callback.exitSuccess'));
       this.$parent.key++;
     },
     // 搜索
@@ -352,13 +352,13 @@ export default {
 
 .inputBox {
   position: relative;
-  width: 19.27vw;
+  width: 19.5vw;
   height: 100%;
   display: flex;
   align-items: center;
 }
 .inputBox input {
-  width: 19.27vw;
+  width: 19.5vw;
   height: 2.03vw;
   border-radius: 0.99vw;
   border: 0.05vw solid var(--text--color);

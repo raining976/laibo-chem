@@ -184,7 +184,7 @@ export default {
    async delProduct() {
       if (this.$data.checkedOrder.length === 0) {
         this.$message({
-          message: "未选择商品",
+          message: this.$t('callback.selectTip'),
           // type: "success",
         });
       } else if (this.$data.checkedOrder.length !== 0) {
@@ -214,7 +214,7 @@ export default {
             .then((res) => {
               if (res.data.code == 20000) {
                 this.$message({
-                  message: "删除成功",
+                  message: this.$t('callback.deleSuccess'),
                   type: "success",
                 });
                 // this.getOrders()
@@ -227,7 +227,7 @@ export default {
             })
             .catch((err) => {
               this.$message({
-                message: "未知错误!",
+                message: this.$t('callback.error'),
                 type: "error",
               });
               console.log("err", err);

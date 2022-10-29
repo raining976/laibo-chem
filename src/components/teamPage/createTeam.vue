@@ -232,7 +232,7 @@ export default {
           .then((res) => {
             if (res.data.code == 20000) {
               this.$message({
-                message: "修改团队信息成功",
+                message: this.$t('callback.success'),
                 type: "success",
               });
               this.$parent.refreshKey++;
@@ -252,7 +252,7 @@ export default {
           .then((res) => {
             if (res.data.code == 20000) {
               this.$message({
-                message: "创建团队成功",
+                message: this.$t('callback.success'),
                 type: "success",
               });
               
@@ -304,7 +304,7 @@ export default {
         })
         .catch((err) => {
           this.$message({
-            message: "未知错误",
+            message: this.$t('callback.error'),
             type: "error",
           });
           console.log("err", err);

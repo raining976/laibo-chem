@@ -202,9 +202,9 @@ export default {
       }
     });
     if (this.$data.isChange === true) {
-      this.$confirm("检测到未保存的内容，是否在离开页面前保存修改？", "提示", {
-        confirmButtonText: "保存",
-        cancelButtonText: "放弃修改",
+      this.$confirm(this.$t('callback.saveTip'), this.$t('base.tip'), {
+        confirmButtonText: this.$t('callback.save'),
+        cancelButtonText: this.$t('callback.cancelEdit'),
         // type: "warning",
         center: true,
       })
@@ -258,7 +258,7 @@ export default {
     toPay() {
       if (this.$data.checkedCommodities.length === 0) {
         this.$message({
-          message: "未选择商品",
+          message: this.$t('callback.selectTip'),
           // type: "success",
         });
       } else if (this.$data._money > 0) {
@@ -293,7 +293,7 @@ export default {
                   if (name !== "setOrder") {
                     this.$message({
                       type: "success",
-                      message: "保存更改成功",
+                      message: this.$t('callback.saveSuccess'),
                     });
                   }
                 } else {
@@ -306,7 +306,7 @@ export default {
               })
               .catch((err) => {
                 this.$message({
-                  message: "未知错误!",
+                  message:this.$t('callback.error'),
                   type: "error",
                 });
                 console.log("err", err);
@@ -319,7 +319,7 @@ export default {
     async delProduct() {
       if (this.$data.checkedCommodities.length === 0) {
         this.$message({
-          message: "未选择商品",
+          message: this.$t('callback.selectTip'),
           // type: "success",
         });
       } else if (this.$data.checkedCommodities.length !== 0) {
@@ -336,7 +336,7 @@ export default {
               .then((res) => {
                 if (res.data.code == 20000) {
                   this.$message({
-                    message: "删除成功",
+                    message: this.$t('callback.deleSuccess'),
                     type: "success",
                   });
                 } else {
@@ -348,7 +348,7 @@ export default {
               })
               .catch((err) => {
                 this.$message({
-                  message: "未知错误!",
+                  message: this.$t('callback.error'),
                   type: "error",
                 });
                 console.log("err", err);

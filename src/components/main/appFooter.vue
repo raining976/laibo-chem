@@ -16,7 +16,12 @@
         <ul class="eachMenu cooperationSchool">
           <h2 class="menuTitle">{{ cooperationSchool }}</h2>
           <span class="line"></span>
-          <li class="menuLi" v-for="(school, index) in schools" :key="index">
+          <li
+            class="menuLi"
+            v-for="(school, index) in schools"
+            :key="index"
+            @click="checkAll(school.name)"
+          >
             {{ school.name }}
           </li>
         </ul>
@@ -139,6 +144,13 @@ export default {
       ],
     };
   },
+  methods: {
+    checkAll(str) {
+      if (str != "更多>") return;
+      this.$root.isShowSchools = true;
+      console.log("school")
+    },
+  },
 };
 </script>
 
@@ -236,13 +248,16 @@ export default {
 }
 .menuLi img {
   margin-right: 0.83vw;
-
 }
 .cooperationSchool .menuLi:last-child {
   cursor: pointer;
   color: #383838;
+
 }
-.eachIcon img{
+.cooperationSchool .menuLi:last-child:hover{
+    font-weight: 700;
+}
+.eachIcon img {
   width: 2.08vw;
   height: 2.08vw;
 }

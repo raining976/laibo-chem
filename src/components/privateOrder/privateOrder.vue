@@ -170,7 +170,7 @@ export default {
         .then((res) => {
           if (res.data.code == 20000) {
             this.$message({
-              message: "提交成功!",
+              message: this.$t('callback.submitSuccess'),
               type: "success",
             });
             this.$root.isShowOrder = false;
@@ -183,7 +183,7 @@ export default {
         })
         .catch((err) => {
           this.$message({
-            message: "意外错误!",
+            message: this.$t('callback.error'),
             type: "error",
           });
           console.error(err);

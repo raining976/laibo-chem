@@ -61,11 +61,11 @@ export default {
             if (res.data.code == 20000) {
               if (res.data.data) {
                 this.$message({
-                  message: "查询成功",
+                  message: this.$t("callback.success"),
                   type: "success",
                 });
               } else {
-                this.$message("空空如也~");
+                this.$message(this.$t("callback.blank"));
               }
               this.searchList = res.data.data;
             } else {
@@ -77,7 +77,7 @@ export default {
           })
           .catch((err) => {
             this.$message({
-              message: "未知错误",
+              message: this.$t("callback.error"),
               type: "error",
             });
             console.log("err", err);
@@ -93,7 +93,7 @@ export default {
         .then((res) => {
           if (res.data.code == 20000) {
             this.$message({
-              message: "申请成功!请等待管理员同意",
+              message: this.$t('callback.joinTeam'),
               type: "success",
             });
           } else {
@@ -105,7 +105,7 @@ export default {
         })
         .catch(() => {
           this.$message({
-            message: "未知错误",
+            message:this.$t('callback.error'),
             type: "error",
           });
         });
