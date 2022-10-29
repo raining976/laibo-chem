@@ -26,13 +26,20 @@
             {{ item0.id }}
           </div>
           <div class="product">
-            <div class="productName" title="">{{ name }}1111&nbsp;</div>
+            <div
+              class="productName"
+              v-for="(product, index) in item0.product"
+              :key="index"
+              :title="product.name"
+            >
+              {{ product.name }}&nbsp;
+            </div>
           </div>
           <div class="type">{{ item0.type }}</div>
           <div class="unit">{{ item0.team }}</div>
           <div class="orderStatus">{{ item0.status }}</div>
           <!-- 关于金额的计算方式 ？-->
-          <div class="payment">{{ cuurency(item0.payment).format() }}</div>
+          <div class="payment">{{ currency(item0.payment).format() }}</div>
           <div class="review" :class="{ showBtn: item0.status == '待审核' }">
             <div class="agree" @click="reviewOrder('1', item0.id)">
               <img src="../../assets/勾勾.png" alt="" title="同意" />
