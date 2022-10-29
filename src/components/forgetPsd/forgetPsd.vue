@@ -53,7 +53,7 @@
         />
       </div>
       <div class="submit" @click="submit()">{{ $t("logIn.submit") }}</div>
-      <div class="returnLogIn" @click="returnLogIn()">
+      <div class="returnLogIn" @click="$root.isForget = false">
         {{ $t("logIn.back") }}
       </div>
     </div>
@@ -80,12 +80,6 @@ export default {
     };
   },
   methods: {
-    // 返回登录
-    returnLogIn() {
-      console.log("this.$parent.isLogIn", this.$parent.isLogIn);
-      this.$parent.isLogIn = true;
-    },
-
     // 邮箱验证
     checkVerification(e) {
       let a = e.path[1]; // 获取带有after伪元素的父盒子

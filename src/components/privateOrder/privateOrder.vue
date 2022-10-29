@@ -3,6 +3,9 @@
     <transition appear appear-active-class="fade">
       <div class="privateOrderBox" ref="privateOrder">
         <div class="content">
+          <span class="close" @click="$root.isShowOrder = false">
+            <img src="../../assets/close.png" alt="">
+          </span>
           <div class="formBox">
             <h3 class="title">{{ $t("nav.customization") }}</h3>
             <el-form
@@ -313,6 +316,7 @@ export default {
   margin: 0 auto;
 }
 .content {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -321,6 +325,16 @@ export default {
   background: #ffffff;
   box-shadow: 0px 0.21vw 1.72vw 0.36vw rgba(7, 2, 3, 0.17);
   border-radius: 0.52vw;
+}
+.close{
+  position: absolute;
+  right: 1.3vw;
+  top: 1.3vw;
+  cursor: pointer;
+}
+.close img{
+  width: 1.51vw;
+  height: 1.51vw;
 }
 .formBox {
   display: flex;

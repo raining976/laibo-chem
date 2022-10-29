@@ -48,6 +48,7 @@ export default {
       key: 1, // 用于强制刷新nav组件
       isShowOrder: false, // 私人订单
       isShowSchools:  false, // 合作高校是否展示
+      isForget:false, 
     };
   },
   created() {

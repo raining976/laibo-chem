@@ -2,7 +2,10 @@
   <div class="logIn">
     <transition appear appear-active-class="fadeIn">
       <div class="content" ref="logInContent">
-        <div class="logInBox" v-show="isLogIn">
+        <span class="close" @click="$root.isShowLogIn = false">
+          <img src="../../assets/close.png" alt="" />
+        </span>
+        <div class="logInBox" v-show="!$root.isForget">
           <h2 class="title" ref="title">{{ $t("nav.logIn") }}</h2>
           <!-- 邮箱表单部分 -->
           <div class="inputBox" data-after="">
@@ -44,12 +47,12 @@
           </div>
           <!-- /切换登录方式和注册 -->
           <div class="logInBtn" @click="login()">{{ $t("logIn.logIn") }}</div>
-          <div class="forgotPsd" @click="toForgetPsd()">
+          <div class="forgotPsd" @click="$root.isForget = true">
             {{ $t("logIn.forget") }}
           </div>
         </div>
         <transition enter-active-class="fade">
-          <forget-psd v-if="!isLogIn" />
+          <forget-psd v-if="$root.isForget" />
         </transition>
       </div>
     </transition>
@@ -137,10 +140,6 @@ export default {
         default:
           break;
       }
-    },
-    // 忘记密码
-    toForgetPsd() {
-      this.isLogIn = false;
     },
     // 验证邮箱合法性
     checkEmail(e) {
@@ -346,6 +345,7 @@ export default {
   z-index: 999;
 }
 .content {
+  position: relative;
   width: 546px;
   height: 631px;
   margin: 0 auto;
@@ -355,6 +355,16 @@ export default {
   --webkit-box-shadow: 0px 1px 24px -1px #919191;
   --moz-box-shadow: 0px 1px 24px -1px #919191;
   margin-top: 10vh;
+}
+.close {
+  position: absolute;
+  right: 1.3vw;
+  top: 1.3vw;
+  cursor: pointer;
+}
+.close img {
+  width: 1.51vw;
+  height: 1.51vw;
 }
 .logInBox {
   display: flex;
@@ -484,7 +494,6 @@ input::-webkit-input-placeholder {
 .fadeIn {
   animation: fadeUp 0.5s;
 }
-
 
 .fade {
   animation: fadeUp 0.5s;
