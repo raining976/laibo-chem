@@ -311,5 +311,21 @@ export default {
         selectLimit:'当前限制选择 1 个文件',
         sure:'确定移除',
     },
+    // 底栏
+    footer:{
+        joinUs:'人才招聘',
+        schools:"合作高校",
+        aboutUs:'关于我们',
+        recommendation:'人才自荐',
+        ouc:'中国海洋大学',
+        tjdx:'天津大学',
+        sddx:'山东大学',
+        hebgydx:'哈尔滨工业大学',
+        more:'更多',
+        address:'山东省青岛市高新区同顺路8号青岛网谷合心园2号楼902A',
+        contactUs:'联系我们',
+
+
+    }
 
 }

@@ -73,7 +73,7 @@ export default {
     return {
       corpAddress:
         "公司统一社会信用代码为91370212671783368R，企业地址位于山东省青岛市高新区同顺路8号青岛网谷合心园2号楼902A，所属行业为批发业。",
-      contractUs: "联系我们",
+      contractUs: this.$t('footer.contactUs'),
       icons: [
         {
           url: require("../../assets/youxiang.png"),
@@ -96,25 +96,25 @@ export default {
           msg: "Twitter",
         },
       ],
-      cooperationSchool: "合作高校",
-      aboutUs: "关于我们",
-      joinUS: "人才招聘",
+      cooperationSchool: this.$t("footer.schools"),
+      aboutUs: this.$t("footer.aboutUs"),
+      joinUS: this.$t("footer.joinUs"),
       // 合作高校
       schools: [
         {
-          name: "中国海洋大学",
+          name: this.$t("footer.ouc"),
         },
         {
-          name: "天津大学",
+          name: this.$t("footer.tjdx"),
         },
         {
-          name: "山东大学",
+          name: this.$t("footer.sddx"),
         },
         {
-          name: "哈尔滨工业大学",
+          name: this.$t("footer.hebgydx"),
         },
         {
-          name: "更多>",
+          name: this.$t("footer.more") + ">",
         },
       ],
       // 关于我们
@@ -133,22 +133,22 @@ export default {
         },
         {
           icon: require("../../assets/dizhi.png"),
-          text: "山东省青岛市高新区同顺路8号青岛网谷合心园2号楼902A",
+          text: this.$t("footer.address"),
         },
       ],
       // 人才招聘
       joins: [
         {
-          name: "人才自荐",
+          name: this.$t("footer.recommendation"),
         },
       ],
     };
   },
   methods: {
     checkAll(str) {
-      if (str != "更多>") return;
+      if (str != this.$t("footer.more") + ">") return;
       this.$root.isShowSchools = true;
-      console.log("school")
+      console.log("school");
     },
   },
 };
@@ -252,10 +252,9 @@ export default {
 .cooperationSchool .menuLi:last-child {
   cursor: pointer;
   color: #383838;
-
 }
-.cooperationSchool .menuLi:last-child:hover{
-    font-weight: 700;
+.cooperationSchool .menuLi:last-child:hover {
+  font-weight: 700;
 }
 .eachIcon img {
   width: 2.08vw;
