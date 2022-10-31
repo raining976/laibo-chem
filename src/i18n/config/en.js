@@ -308,7 +308,7 @@ export default {
     // 底栏
     footer: {
         joinUs: 'Join us',
-        schools: "Cooperative university",
+        schools: "Cooperative institution",
         aboutUs: 'About us',
         recommendation: 'Talent recommendation',
         ouc: 'Ocean University of China',
