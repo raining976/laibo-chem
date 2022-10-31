@@ -8,7 +8,9 @@
           <h2 class="menuTitle">{{ joinUS }}</h2>
           <span class="line"></span>
           <li class="menuLi" v-for="(join, index) in joins" :key="index">
+            <a href="mailto:hr@laibochem.com">
             {{ join.name }}
+           </a>
           </li>
         </ul>
         <!-- /人才招聘 -->
@@ -26,42 +28,37 @@
           </li>
         </ul>
         <!-- /合作高校 -->
-        <!-- 关于我们 -->
-        <ul class="eachMenu aboutUs">
-          <h2 class="menuTitle">{{ aboutUs }}</h2>
-          <span class="line"></span>
-          <li class="menuLi" v-for="(info, index) in infos" :key="index">
-            <div class="imgBox"><img :src="info.icon" alt="" /></div>
-            <span class="infoText">{{ info.text }}</span>
-          </li>
-        </ul>
-        <!-- /关于我们 -->
-      </div>
-      <!-- /左侧列表部分 -->
-      <div class="contactUsBox">
-        <!-- 地址部分 -->
-        <!-- <div class="corpAddress">
-          <div class="logoBox">
-            <img src="../../assets/logo2.png" alt="" />
-          </div>
-          <div class="textBox">
-            <p class="address">{{ corpAddress }}</p>
-          </div>
-        </div> -->
-        <!-- /地址部分 -->
-        <!-- 联系我们部分 -->
-        <div class="contractUs">
-          <h3 class="title">{{ contractUs }}</h3>
-          <div class="iconBox">
-            <ul class="iconUl">
-              <li class="eachIcon" v-for="(icon, index) in icons" :key="index">
-                <img :src="icon.url" :title="icon.msg" :alt="icon.msg" />
+        <div class="contactUsBox">
+          <!-- 联系我们部分 -->
+          <div class="contractUs">
+            <h3 class="title">{{ contractUs }}</h3>
+            <div class="iconBox">
+              <ul class="iconUl">
+                <li
+                  class="eachIcon"
+                  v-for="(icon, index) in icons"
+                  :key="index"
+                >
+                  <img :src="icon.url" :title="icon.msg" :alt="icon.msg" />
+                </li>
+              </ul>
+            </div>
+            <!-- 关于我们 -->
+            <ul class="eachMenu aboutUs">
+              <!-- <h2 class="menuTitle">{{ aboutUs }}</h2> -->
+              <span class="line"></span>
+              <li class="menuLi" v-for="(info, index) in infos" :key="index">
+                <div class="imgBox"><img :src="info.icon" alt="" /></div>
+                <span class="infoText">{{ info.text }}</span>
               </li>
             </ul>
+            <!-- /关于我们 -->
           </div>
+          <!-- /联系我们部分 -->
         </div>
-        <!-- /联系我们部分 -->
       </div>
+
+      <!-- /左侧列表部分 -->
     </div>
   </div>
 </template>
@@ -73,7 +70,7 @@ export default {
     return {
       corpAddress:
         "公司统一社会信用代码为91370212671783368R，企业地址位于山东省青岛市高新区同顺路8号青岛网谷合心园2号楼902A，所属行业为批发业。",
-      contractUs: this.$t('footer.contactUs'),
+      contractUs: this.$t("footer.contactUs"),
       icons: [
         {
           url: require("../../assets/youxiang.png"),
@@ -121,11 +118,11 @@ export default {
       infos: [
         {
           icon: require("../../assets/phone.png"),
-          text: "13969851271",
+          text: this.$t('footer.phone'),
         },
         {
           icon: require("../../assets/youxiang2.png"),
-          text: "labservice@188.com",
+          text: this.$t('footer.email'),
         },
         {
           icon: require("../../assets/youxiang2.png"),
@@ -157,7 +154,7 @@ export default {
 <style scoped>
 .appFooter {
   width: 100%;
-  height: 21.35vw;
+  height: 25.35vw;
   background: #f7f7f7;
 }
 .h {
@@ -198,7 +195,7 @@ export default {
   line-height: 4.74vw;
   color: #fff;
   margin-bottom: 2.34vw;
-  cursor: pointer;
+  /* cursor: pointer; */
 }
 .iconUl {
   display: flex;
@@ -219,9 +216,9 @@ export default {
   --moz-box-shadow: 0vw 0.05vw 1.25vw -0.47vw #919191;
 }
 .listBlock {
-  width: 48.44vw;
+  width: 80.44vw;
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
 }
 .eachMenu {
   display: flex;
@@ -229,14 +226,24 @@ export default {
   justify-content: flex-start;
   width: 16.15vw;
 }
-.menuTitle {
-  font-size: 1.35vw;
+.eachMenu .menuTitle {
+    font-size: 1.25vw;
+  font-family: Microsoft YaHei UI;
+  font-weight: bold;
+
+  height: 4.74vw;
+  background: #004ea2;
+  border-radius: 2.34vw;
+  text-align: center;
+  line-height: 4.74vw;
+  color: #fff;
+
   font-family: Microsoft YaHei UI;
   font-weight: bold;
   font-family: Microsoft YaHei UI;
   font-weight: bold;
-  color: #4a4a4a;
   margin-bottom: 1.41vw;
+  background: var(--color);
 }
 .menuLi {
   display: flex;
@@ -245,6 +252,7 @@ export default {
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #666666;
+  margin-left: 1.04vw;
 }
 .menuLi img {
   margin-right: 0.83vw;
@@ -259,5 +267,8 @@ export default {
 .eachIcon img {
   width: 2.08vw;
   height: 2.08vw;
+}
+.aboutUs{
+  margin-left: 2.6vw;
 }
 </style>

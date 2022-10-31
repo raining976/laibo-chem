@@ -4,7 +4,9 @@
     <transition appear appear-active-class="fade">
       <div class="h">
         <ul class="schoolList">
-          <span class="close" @click="$root.isShowSchools = false">关闭</span>
+          <span class="close" @click="$root.isShowSchools = false">
+            <img src="../../assets/close.png" alt="">
+          </span>
           <li
             v-for="(school, index) in schools"
             :key="index"
@@ -107,6 +109,10 @@ export default {
 }
 .close:hover{
     font-weight: 700;
+}
+.close img{
+  width: 2.08vw;
+  height: 2.08vw;
 }
 .schoolList li {
   margin: 0.78vw 1.3vw;

@@ -308,7 +308,7 @@ export default {
     // 底栏
     footer: {
         joinUs: 'Join us',
-        schools: "cooperative university",
+        schools: "Cooperative university",
         aboutUs: 'About us',
         recommendation: 'Talent recommendation',
         ouc: 'Ocean University of China',
@@ -318,8 +318,8 @@ export default {
         more: 'More',
         address: 'No.8 Tongshun Road, High-tech Zone, Qingdao, China',
         contactUs: 'Contact us',
-
-
+        email:"elva@laibochem.com",
+        phone:'+86 136 8766 2561',
     }
 
 }
