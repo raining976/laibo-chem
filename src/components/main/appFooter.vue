@@ -5,18 +5,16 @@
       <div class="listBlock">
         <!-- 人才招聘 -->
         <ul class="eachMenu joinUS">
-          <h2 class="menuTitle">{{ joinUS }}</h2>
+          <h2 class="menuTitle">{{ $t("footer.joinUs") }}</h2>
           <span class="line"></span>
           <li class="menuLi" v-for="(join, index) in joins" :key="index">
-            <a href="mailto:hr@laibochem.com">
             {{ join.name }}
-           </a>
           </li>
         </ul>
         <!-- /人才招聘 -->
         <!-- 合作高校 -->
         <ul class="eachMenu cooperationSchool">
-          <h2 class="menuTitle">{{ cooperationSchool }}</h2>
+          <h2 class="menuTitle">{{ $t("footer.schools") }}</h2>
           <span class="line"></span>
           <li
             class="menuLi"
@@ -31,7 +29,7 @@
         <div class="contactUsBox">
           <!-- 联系我们部分 -->
           <div class="contractUs">
-            <h3 class="title">{{ contractUs }}</h3>
+            <h3 class="title">{{ $t("footer.contactUs") }}</h3>
             <div class="iconBox">
               <ul class="iconUl">
                 <li
@@ -70,7 +68,6 @@ export default {
     return {
       corpAddress:
         "公司统一社会信用代码为91370212671783368R，企业地址位于山东省青岛市高新区同顺路8号青岛网谷合心园2号楼902A，所属行业为批发业。",
-      contractUs: this.$t("footer.contactUs"),
       icons: [
         {
           url: require("../../assets/youxiang.png"),
@@ -93,9 +90,6 @@ export default {
           msg: "Twitter",
         },
       ],
-      cooperationSchool: this.$t("footer.schools"),
-      aboutUs: this.$t("footer.aboutUs"),
-      joinUS: this.$t("footer.joinUs"),
       // 合作高校
       schools: [
         {
@@ -118,11 +112,11 @@ export default {
       infos: [
         {
           icon: require("../../assets/phone.png"),
-          text: this.$t('footer.phone'),
+          text: this.$t("footer.phone"),
         },
         {
           icon: require("../../assets/youxiang2.png"),
-          text: this.$t('footer.email'),
+          text: this.$t("footer.email"),
         },
         {
           icon: require("../../assets/youxiang2.png"),
@@ -137,6 +131,9 @@ export default {
       joins: [
         {
           name: this.$t("footer.recommendation"),
+        },
+        {
+          name: "hr@laibochem.com",
         },
       ],
     };
@@ -187,7 +184,7 @@ export default {
   font-size: 1.25vw;
   font-family: Microsoft YaHei UI;
   font-weight: bold;
-  width: 13.65vw;
+  width: 16.15vw;
   height: 4.74vw;
   background: #004ea2;
   border-radius: 2.34vw;
@@ -227,7 +224,7 @@ export default {
   width: 16.15vw;
 }
 .eachMenu .menuTitle {
-    font-size: 1.25vw;
+  font-size: 1.25vw;
   font-family: Microsoft YaHei UI;
   font-weight: bold;
 
@@ -268,7 +265,7 @@ export default {
   width: 2.08vw;
   height: 2.08vw;
 }
-.aboutUs{
+.aboutUs {
   margin-left: 2.6vw;
 }
 </style>

@@ -227,7 +227,11 @@ export default {
         price: "售价",
         stock: "库存",
         add: "加入购物车",
-
+        storePrice:'库存与价格',
+        backHome:'返回首页',
+        intermediates:'中间体',
+        dyes:'染料',
+        experiment:'实验用品',
     },
     // 邮箱验证
     email: {
@@ -246,6 +250,7 @@ export default {
         deleSuccess: '删除成功',
         editSuccess: '修改成功',
         saveSuccess:'保存成功',
+        addSuccess:'添加成功',
         submitSuccess:'提交成功',
         exitSuccess:'退出登录成功',
         selectTip: '未选择商品',
@@ -258,7 +263,7 @@ export default {
         cancelEdit:'放弃修改',
         editTip:'您还未做出修改',
         exitTip:'是否确定退出登录,确定?',
-
+        selectNum:'未选择数量',
 
 
     },
@@ -324,9 +329,9 @@ export default {
         more:'更多',
         address:'山东省青岛市高新区同顺路8号青岛网谷合心园2号楼902A',
         contactUs:'联系我们',
-        email:"labservice@188.com",
+        email:"labservice{'@'}188.com",
         phone:'13969851271',
+    },
 
-    }
 
 }

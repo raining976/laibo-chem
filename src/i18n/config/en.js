@@ -224,6 +224,13 @@ export default {
         price: "Price",
         stock: "Stock",
         add: "Add to cart",
+        storePrice:'Inventory and price',
+        backHome:'Back Homepage',
+        intermediates:'INTERMEDIATES',
+        dyes:'DYES',
+        experiment:'EXPERIMENTAL SUPPLIES',
+
+
     },
     // 邮箱验证
     email: {
@@ -244,6 +251,7 @@ export default {
         saveSuccess: 'Save successfully',
         submitSuccess: 'Submitted successfully',
         exitSuccess: 'Exited successfully',
+        addSuccess:'Added successfully',
         selectTip: 'No product selected',
         deleWarn: 'The deletion cannot be withdrawn, do you want to continue?',
         paySuccess: 'Pay for success',
@@ -254,6 +262,7 @@ export default {
         cancelEdit: 'Discard changes',
         editTip: 'Your changes have been made yet',
         exitTip: 'Whether determine the log out, sure?',
+        selectNum:'You did not choose the number',
 
 
     },
@@ -318,7 +327,7 @@ export default {
         more: 'More',
         address: 'No.8 Tongshun Road, High-tech Zone, Qingdao, China',
         contactUs: 'Contact us',
-        email:"elva@laibochem.com",
+        email:"elva{'@'}laibochem.com",
         phone:'+86 136 8766 2561',
     }
 

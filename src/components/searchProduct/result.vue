@@ -1,6 +1,6 @@
 <template>
   <div class="resultPage">
-    <div class="tip">查到以下几种结果：</div>
+    <div class="tip"></div>
     <div class="resultBigBox">
       <!-- v-for模块 -->
       <div
@@ -15,26 +15,37 @@
           <div class="resultPic"><img :src="item.pic_url" alt="" /></div>
           <div class="resultInfo">
             <div class="resultName_zh" @click="toProductInfo(item.id)">
-              <span>{{ item.name + item.guige }}</span>
+              <span>{{ item.name }}</span>
             </div>
             <div class="resultName_en">英文名：{{ item.enName }}</div>
             <div class="resultDetail">
               <!-- v-for模块 -->
 
               <div class="fenziliang _data">
-                {{ $t("order.fenziliang") + "：" }}<span v-html="item.formula_weight != null ?item.formula_weight
-                :'——'"></span>
+                {{ $t("order.fenziliang") + "："
+                }}<span
+                  v-html="
+                    item.formula_weight != null ? item.formula_weight : '——'
+                  "
+                ></span>
               </div>
               <div class="jiegoushi _data">
-                {{ $t("order.jiegoushi") + "：" }}<span
+                {{ $t("order.jiegoushi") + "："
+                }}<span
                   v-html="
-                    item.linear_formula != null ?item.linear_formula.replace(/(\d+)/g, '<sub>$1</sub>'):'——'"
+                    item.linear_formula != null
+                      ? item.linear_formula.replace(/(\d+)/g, '<sub>$1</sub>')
+                      : '——'
+                  "
                 ></span>
               </div>
               <div class="CAScode _data">
-                {{ $t("order.casNum") + "：" }}<span v-html="item.cas != null ?item.cas:'——'"></span>
+                {{ $t("order.casNum") + "："
+                }}<span v-html="item.cas != null ? item.cas : '——'"></span>
               </div>
-              <div class="MDLcode _data">MDL号：<span v-html="item.mdl != null ?item.mdl:'——'"></span></div>
+              <div class="MDLcode _data">
+                MDL：<span v-html="item.mdl != null ? item.mdl : '——'"></span>
+              </div>
             </div>
           </div>
         </div>
@@ -44,10 +55,10 @@
           <el-collapse v-model="activeNames" @change="collapseChange">
             <el-collapse-item :name="item.id">
               <template #title>
-                <span class="textBox">价格与库存&nbsp;</span
+                <span class="textBox">{{ $t('search.storePrice') }}}&nbsp;</span
                 ><img
                   src="../../assets/价格预测.png"
-                  style="width: 20px; height: 20px"
+                  style="width: 1.04vw; height: 1.04vw"
                   alt=""
                 />
               </template>
@@ -55,16 +66,16 @@
                 <table border="0" cellspacing="0">
                   <thead>
                     <tr class="tableHead">
-                      <th style="width: 200px">{{ $t("order.itemNo") }}</th>
-                      <th style="width: 170px">{{ $t("order.size") }}</th>
+                      <th style="width: 10.42vw">{{ $t("order.itemNo") }}</th>
+                      <th style="width: 8.85vw">{{ $t("order.size") }}</th>
                       <!-- <th style="width: 215px">{{ $t("search.stock") }}</th> -->
-                      <th style="width: 240px">
+                      <th style="width: 12.5vw">
                         {{ $t("search.price") }}（RMB）
                       </th>
-                      <th style="width: 260px">{{ $t("order.count") }}</th>
+                      <th style="width: 13.54vw">{{ $t("order.count") }}</th>
                     </tr>
                   </thead>
-                  <el-scrollbar max-height="132px">
+                  <el-scrollbar max-height="6.88vw">
                     <tbody>
                       <tr
                         class="tableContent"
@@ -77,7 +88,6 @@
                         <td class="size">
                           <div>{{ item.guige }}</div>
                         </td>
-
                         <!-- <td class="store">
                           <div>0{{ store }}</div>
                         </td> -->
@@ -142,48 +152,20 @@ export default {
       pagesize: 4, // 每页显示多少条
       currentPage: 1, // 当前页数
       pastId: 0, // 记录产品id
-      _resultBox: [
-        // {
-        //   pic: require("../../assets/p22.png"),
-        //   name_zh: "2-(三丁基锡)-5-三氟甲基吡啶",
-        //   name_en: "2-(tributylstannyl)-5-(trifluoromethyl)pyridine",
-        //   fenziliang: "",
-        //   jiegoushi: "",
-        //   casCode: "",
-        //   mdlCode: "",
-        // },
-      ], // 承载 props的数据
-      productData: [
-        // {
-        //   fenziliang: "2016-05-03",
-        //   size: "Tom",
-        //   rmb: "California",
-        //   store: "Los Angeles",
-        //   num: 0,
-        // },
-        // {
-        //   fenziliang: "2016-05-02",
-        //   size: "Tom",
-        //   rmb: "California",
-        //   store: "Los Angeles",
-        //   num: 0,
-        // },
-      ],
-      productDatas:{} , //字典 key为id 键为一个数组对象 productData
+      _resultBox: [], // 承载 props的数据
+      productData: [],
+      productDatas: {}, //字典 key为id 键为一个数组对象 productData
     };
   },
-  created() {
-  },
+  created() {},
   mounted() {
-  //  console.log(this.resultBox,"ffff")
     window.scrollTo(0, 0);
   },
   watch: {
-   resultBox: {
+    resultBox: {
       handler() {
-      this._resultBox = JSON.parse(JSON.stringify(this.resultBox));
-      console.log(this._resultBox,";llll")
-        this.addCount()
+        this._resultBox = JSON.parse(JSON.stringify(this.resultBox));
+        this.addCount();
       },
       immediate: true,
       deep: true,
@@ -191,17 +173,11 @@ export default {
   },
   methods: {
     addCount() {
-      for(let item of this._resultBox)
-        for(let item1 of item.params) {
-           Object.assign(item1, { count: 0 });
-        }   
-        
-        
+      for (let item of this._resultBox)
+        for (let item1 of item.params) {
+          Object.assign(item1, { count: 0 });
+        }
     },
-    collapseChange(val){
-      // console.log('val',val)
-    },
-
     //
     toProductInfo(code) {
       this.$router.push({
@@ -212,60 +188,55 @@ export default {
       });
     },
     // 加入购物车
-   async addCart(index) {
+    async addCart(index) {
       if (!localStorage.getItem("token")) {
-        this.$message({
-          message: "请先登录",
-          // type: "error",
-        });
-        this.$root.openLogin()
+        this.$root.openLogin();
       } else {
         let isPost = false;
-        let length = this.$data.productData.length;
-        for(let item of this.$data._resultBox[index].params) {
+        // let length = this.productData.length;
+        for (let item of this._resultBox[index].params) {
           if (item.count !== 0) {
-           await this.addCartReq(item);
+            await this.addCartReq(item);
             isPost = true;
           }
-        };
+        }
         if (isPost === false) {
-            console.log(index + 1, length, isPost, "fffff");
-            this.$message({
-              message: "未选择数量!",
-              // type: "error",
-            });
-          }
+          // console.log(index + 1, length, isPost, "fffff");
+          this.$message({
+            message: this.$t('callback.selectNum'),
+          });
+        }
       }
     },
     async addCartReq(item) {
-     await this.$http
-              .post("/cart", {
-                product_params_id: item.id,
-                count: item.count,
-              })
-              //回调函数
-              .then((res) => {
-                if (res.data.code == 20000) {
-                  this.$message({
-                    message: "添加成功",
-                    type: "success",
-                  });
-                } else {
-                  this.$message({
-                    message: res.data.msg,
-                    type: "error",
-                  });
-                }
-              })
-              .catch((err) => {
-                this.$message({
-                  message: "未知错误!",
-                  type: "error",
-                });
-                console.log("err", err);
-              });
+      await this.$http
+        .post("/cart", {
+          product_params_id: item.id,
+          count: item.count,
+        })
+        //回调函数
+        .then((res) => {
+          if (res.data.code == 20000) {
+            this.$message({
+              message: this.$t('callback.addSuccess'),
+              type: "success",
+            });
+          } else {
+            this.$message({
+              message: res.data.msg,
+              type: "error",
+            });
+          }
+        })
+        .catch((err) => {
+          this.$message({
+            message: this.$t('callback.error'),
+            type: "error",
+          });
+          console.log("err", err);
+        });
     },
-        //商品数量调节
+    //商品数量调节
     handleChange(value) {
       // console.log(value);
     },
@@ -301,7 +272,7 @@ export default {
 </script>
 <style>
 .resultPage .el-collapse-item__arrow {
-  margin: 0 10px;
+  margin: 0 0.52vw;
 }
 .resultPage .el-collapse-item__header {
   justify-content: flex-end;
@@ -310,7 +281,7 @@ export default {
 <style scoped>
 /* 下面是搜索结果的样式 */
 .resultPage {
-  margin: 0 160px 0 0;
+  margin: 0 8.33vw 0 0;
   /* padding-top: 100px; */
 }
 .tip {
@@ -368,7 +339,7 @@ export default {
 }
 .resultName_zh {
   /* width: 100%; */
-  height: 1.09vw;
+  /* height: 1.09vw; */
   margin: 0 0 0.68vw 0;
   font-size: 1.04vw;
   font-family: Microsoft YaHei UI;
