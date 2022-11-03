@@ -1,7 +1,7 @@
-import { ElMessage } from 'element-plus'
+// import { ElMessage } from 'element-plus'
 import { createRouter, createWebHashHistory } from "vue-router";
 // 路由懒加载
-const searchHead = () => import("../components/main/search.vue");
+// const searchHead = () => import("../components/main/search.vue");
 const register = () => import("../components/register/register.vue");
 const searchResult = () => import("../views/searchResult.vue");
 const mainPage = () => import("../views/mainPage.vue")
@@ -31,20 +31,14 @@ const searchMember = () => import("../components/teamPage/searchMember.vue");
 const moreNewsArticle = () => import("../views/toMoreNewsArticle/moreNewsArtcle.vue")
 const content = () => import("../views/toMoreNewsArticle/content.vue");
 
-
+// 404
+const notFound = () => import('../views/notFound/notFound.vue')
 const routes = [
 
   {
     path: "/register",
-    components: {
-      table: register,
-    }
-  },
-  {
-    path: "/searchHead",
-    components: {
-      search: searchHead,
-    }
+    component: register,
+    
   },
   // 重定向
   {
@@ -54,34 +48,26 @@ const routes = [
   {
     name: 'mainPage',
     path: "/mainPage",
-    components: {
-      table: mainPage,
-      search: searchHead,
-    }
+    meta: {
+      title: 'Home'
+    },
+    component: mainPage,
+
   },
   {
     path: "/searchResult",
     name: "searchResult",
-    components: {
-      table: searchResult,
-      search: searchHead,
-    }
+    component: searchResult,
   },
   {
     path: "/productInfo",
     name: "productInfo",
-    components: {
-      table: productInfo,
-      search: searchHead,
-    }
+    component: productInfo,
   },
   {
     path: "/moreNewsArticle",
     name: "moreNewsArticle",
-    components: {
-      table: moreNewsArticle,
-      search: searchHead,
-    },
+    component: moreNewsArticle,
     meta: {
       keepAlive: true,
     }
@@ -89,16 +75,13 @@ const routes = [
   {
     path: "/content/:id",
     name: "content",
-    components: {
-      table: content,
-      search: searchHead,
-    }
+    component: content,
+
   },
   {
     path: "/userInfo",
-    components: {
-      table: userInfo,
-    },
+    component: userInfo,
+
     meta: { requiresAuth: true },
     redirect: "/cart",
     children: [
@@ -107,7 +90,6 @@ const routes = [
         name: 'cart',
         component: cart,
         meta: { requiresAuth: true },
-
       },
       {
         path: '/setOrder',
@@ -204,8 +186,20 @@ const routes = [
       },
     ],
   },
-
-
+  {
+    path: '/404',
+    name: 'notFound',
+    meta: {
+      title: 'Page not found',
+      isNotFound: true,
+    },
+    component: notFound
+  },
+  // 所有未定义路由，全部重定向到404页，必须放在最后
+  {
+    path: '/:pathMatch(.*)*',
+    redirect: '/404'
+  }
 
 ];
 
