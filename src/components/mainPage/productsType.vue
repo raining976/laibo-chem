@@ -65,14 +65,14 @@ export default {
   },
   methods: {
     toSearchType(idx) {
-      if (idx < 3) {
+      if (idx != 2) {
         this.$router.push({
           path: "/searchResult",
           query: {
-            whichType: idx,
+            whichType: idx, // 0:中间体 , 1:染料 , 3:实验用品
           },
         });
-      } else if (idx == 3) {
+      } else if (idx == 2) {
         // 定制产品
         this.$root.isShowOrder = !this.$root.isShowOrder;
       }

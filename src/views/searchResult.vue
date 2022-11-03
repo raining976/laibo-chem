@@ -3,24 +3,26 @@
   <div class="bg">
     <div class="searchNav">
       <div class="sitePosi">
-        <div class="returnBtn" @click="toMainPage()">&lt;返回首页</div>
+        <div class="returnBtn" @click="toMainPage()">
+          &lt;{{ $t("search.backHome") }}
+        </div>
         /&nbsp;
-        <div class="nowPosi">{{ type }}</div>
+        <div class="nowPosi">{{ typeList[typeIndex].name }}</div>
       </div>
       <div class="typeList">
-        <div style="margin-bottom: 10px">更多产品分类：</div>
+        <div style="margin-bottom: 0.52vw">{{ $t("search.sort") }}</div>
         <div
           class="type"
-          :class="{is_type: item1 == type}"
+          :class="{ is_type: index == typeIndex }"
           v-for="(item1, index) in typeList"
           :key="index"
-          @click="searchType(item1)"
+          @click="searchType(item1.cate)"
         >
-          {{ item1 }}
+          {{ item1.name }}
         </div>
       </div>
     </div>
-    <div>
+    <div class="resultBlock">
       <component :is="res" :resultBox="resultBox" />
     </div>
   </div>
@@ -37,45 +39,30 @@ export default {
   data() {
     return {
       res: "result",
-      cate: "", // 0 1 2
+      cate: "", // 0 1 2   0:实验用品, 1:中间品, 2:染料,
       type: "", //需要判断
-      isType: -1, // 判断字体加粗
       inputValue: "",
-      typeList: ["中间体", "实验用品", "染料"],
+      typeList: [
+        { name: this.$t("search.intermediates"), cate: 1 },
+        { name: this.$t("search.experiment"), cate: 0 },
+        { name: this.$t("search.dyes"), cate: 2 },
+      ],
+      typeIndex: -1, // 用于标记当前 type 在t ypeList 的索引
       resultBox: [],
     };
   },
-  async created() {
-    if (this.$route.query.inputValue !== undefined) {
-      this.$data.inputValue = this.$route.query.inputValue;
-      await this.getSearchResult();
-    } else if (this.$route.query.whichType === "4") {
-      // 路由传的参都是string型？
-      this.$data.type = "热门产品";
-      await this.$http
-        .get("/hotProducts", {
-          // params: {
-          // },
-        })
-        //回调函数
-        .then((res) => {
-          this.$data.resultBox = res.data.data.products
-          this.toResultShow();
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    } else if (
-      this.$route.query.whichType !== "4" &&
-      this.$route.query.whichType !== undefined
-    ) {
-      this.$data.cate = this.$route.query.whichType;
-      if(this.$data.cate === "0") {
-          this.searchType("中间体");
-      }else  if(this.$data.cate === "2") {
-          this.searchType("实验用品");
-      }else  if(this.$data.cate === "1") {
-          this.searchType("染料");
+  created() {
+    if (this.$route.query.inputValue) {
+      this.inputValue = this.$route.query.inputValue;
+      this.getSearchResult();
+    } else if (this.$route.query.whichType) {
+      let idx = this.$route.query.whichType; // 传参0:中间体,
+      if (idx == 0) {
+        this.searchType(1);
+      } else if (idx == 1) {
+        this.searchType(2);
+      } else if (idx == 3) {
+        this.searchType(0);
       }
     }
   },
@@ -87,10 +74,10 @@ export default {
     "$route.query.isSearch": {
       handler() {
         // 此判断用于解决路由不跳转
-        // console.log(this.$route.query.isSearch,"ccccc")
-        if (this.$route.query.isSearch !== undefined) {
+        if (this.$route.query.isSearch) {
           // 对路由变化作出响应....
-          this.$data.inputValue = this.$route.query.inputValue;
+          this.inputValue = this.$route.query.inputValue;
+          this.cate = "";
           this.getSearchResult();
         }
       },
@@ -103,23 +90,21 @@ export default {
       this.$router.replace({
         path: "/mainPage",
       });
-      // this.$router.back()
     },
     //获取搜索结果
-    async getSearchResult() {
+    getSearchResult() {
       if (this.$data.inputValue !== undefined) {
-        await this.$http
+        this.$http
           .get("/search", {
             params: {
-              s: this.$data.inputValue,
-              cate: this.$data.cate, // 0 1 2
+              s: this.inputValue,
+              cate: this.cate, //  0:实验用品, 1:中间品, 2:染料,
             },
           })
           //回调函数
           .then((res) => {
-            this.$data.resultBox = res.data.data.products;
+            this.resultBox = res.data.data.products;
             this.toResultShow();
-            // this.$data.code = res.data.code;
           })
           .catch((err) => {
             console.log(err);
@@ -127,35 +112,26 @@ export default {
       }
     },
     // 分类
-    searchType(str) {
-      this.$data.inputValue = "";
-      switch (str) {
-        case "中间体":
-          // this.$data.inputValue = str;
-          this.$data.type = str;
-          this.$data.cate = 0;
+    searchType(type) {
+      // 0:实验用品, 1:中间品, 2:染料,
+      this.inputValue = "";
+      this.cate = type;
+      switch (type) {
+        case 1:
+          this.typeIndex = 0;
           break;
-        case "实验用品":
-          // this.$data.inputValue = str;
-          this.$data.type = str;
-          this.$data.cate = 2;
+        case 2:
+          this.typeIndex = 2;
           break;
-        case "染料":
-          // this.$data.inputValue = str;
-          this.$data.type = str;
-          this.$data.cate = 1;
+        case 0:
+          this.typeIndex = 1;
           break;
       }
       this.getSearchResult();
     },
-    // 加粗字体
-    strongType(no) {
-      this.$data.isType = no;
-    },
     // js判断页面
     toResultShow() {
       //用&&原因是因为数据未能完全覆盖导致条件判断错误
-      // console.log("CEss",this.$data.resultBox.length)
       if (
         this.$data.resultBox.length !== 0 &&
         this.$data.resultBox !== undefined
@@ -178,7 +154,7 @@ export default {
   min-height: 41.67vw;
 }
 .solidLine {
-   min-width: 75.52vw;
+  min-width: 75.52vw;
   width: 100%;
   height: 0.05vw;
   border-bottom: 0.05vw solid #999999;
@@ -187,7 +163,7 @@ export default {
 /* 下面是列表样式 */
 .searchNav {
   overflow: hidden;
-  width: 9.38vw;
+  min-width: 9.38vw;
   margin: 0 0.52vw 0px 0;
 }
 .returnBtn {
@@ -224,8 +200,8 @@ export default {
 }
 .type {
   cursor: pointer;
-  width: 4.27vw;
-  height: 0.94vw;
+  width: 11.2vw;
+  /* height: 0.94vw; */
   font-size: 0.83vw;
   line-height: 0.94vw;
   margin: 0.52vw 0;
@@ -238,6 +214,9 @@ export default {
 }
 .type:hover {
   font-weight: 600;
+}
+.resultBlock{
+  width: 58.33vw;  
 }
 </style>
  

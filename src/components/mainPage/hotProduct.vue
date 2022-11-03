@@ -35,23 +35,29 @@ export default {
       products: [],
     };
   },
-  created() {
-    this.$http
-      .get("/hotProducts")
-      .then((res) => {
-        this.products = res.data.data.products;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  },
   mounted() {
+    this.getHot();
     this.startTimer();
   },
   unmounted() {
     this.clearTimer();
   },
   methods: {
+    // 获取产品
+    getHot() {
+      this.$http
+        .get("/hotProducts",{
+          params:{
+            limit:20
+          }
+        })
+        .then((res) => {
+          this.products = res.data.data.products;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
     toProductInfo(id) {
       this.$router.push({
         path: "/productInfo",
@@ -189,11 +195,13 @@ export default {
   height: 9.9vw;
 }
 .proName {
+  flex: 1;
+  display: flex;
+  align-items: center;
   font-size: 1.56vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #333;
-  margin-top: 4.17vw;
   height: 3.13vw;
 }
 .carouselBox .move li:hover {
