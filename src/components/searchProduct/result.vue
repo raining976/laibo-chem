@@ -367,21 +367,29 @@ export default {
   justify-content: center;
 }
 .resultName_zh {
-  /* width: 100%; */
-  height: 1.09vw;
+  width: 100%;
+  height: 1.15vw;
   margin: 0 0 0.68vw 0;
   font-size: 1.04vw;
   font-family: Microsoft YaHei UI;
   font-weight: 600;
   color: #004ea2;
-  line-height: 1.09vw;
+  line-height: 1.15vw;
+  /* overflow: hidden; */
   cursor: pointer;
 }
 .resultName_zh > span:hover {
   border-bottom: 0.1vw solid #004ea2;
 }
+.resultName_zh > span {
+  display: inline-block;
+  width: 90%;
+	white-space:nowrap; 
+  overflow:hidden; 
+	text-overflow:ellipsis;
+}
 .resultName_en {
-  /* width: 100%; */
+  width: 90%;
   height: 1.04vw;
   margin: 0 0 0.89vw 0;
   font-size: 0.94vw;
@@ -389,6 +397,9 @@ export default {
   font-weight: 400;
   color: #333333;
   line-height: 1.04vw;
+  white-space:nowrap;
+  overflow:hidden;
+	text-overflow:ellipsis;
 }
 .resultDetail {
   width: 70%;
