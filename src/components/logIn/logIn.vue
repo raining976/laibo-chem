@@ -346,14 +346,14 @@ export default {
 }
 .content {
   position: relative;
-  width: 546px;
-  height: 631px;
+  width: 28.44vw;
+  height: 32.86vw;
   margin: 0 auto;
   background: #ffffff;
-  border-radius: 5px;
-  box-shadow: 0px 1px 24px -1px #919191;
-  --webkit-box-shadow: 0px 1px 24px -1px #919191;
-  --moz-box-shadow: 0px 1px 24px -1px #919191;
+  border-radius: 0.26vw;
+  box-shadow: 0px 0.05vw 1.25vw -0.05vw #919191;
+  --webkit-box-shadow: 0px 0.05vw 1.25vw -0.05vw #919191;
+  --moz-box-shadow: 0px 0.05vw 1.25vw -0.05vw #919191;
   margin-top: 10vh;
 }
 .close {
@@ -371,32 +371,32 @@ export default {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  width: 546px;
-  height: 425px;
-  padding-top: 58px;
-  padding-bottom: 148px;
+  width: 28.44vw;
+  height: 22.14vw;
+  padding-top: 3.02vw;
+  padding-bottom: 7.71vw;
   margin: 0 auto;
-  border-radius: 5px;
+  border-radius: 0.26vw;
 }
 .title {
-  font-size: 48px;
+  font-size: 2.5vw;
   font-family: Microsoft YaHei UI;
   font-weight: bold;
   color: var(--color);
 }
 .inputBox {
   position: relative;
-  width: 395px;
-  height: 64px;
+  width: 20.57vw;
+  height: 3.33vw;
   background: #f4f4f4;
-  border-radius: 5px;
+  border-radius: 0.26vw;
 }
 .inputBox:after {
   content: attr(data-after);
   position: absolute;
-  bottom: -18px;
-  left: 20px;
-  font-size: 12px;
+  bottom: -0.94vw;
+  left: 1.04vw;
+  font-size: 0.63vw;
   color: rgb(191, 23, 23);
   z-index: 999;
 }
@@ -408,22 +408,22 @@ export default {
   transform: scale(0.3);
 } */
 input {
-  font-size: 18px;
+  font-size: 0.94vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
-  padding-left: 20px;
-  width: 375px;
-  height: 64px;
+  padding-left: 1.04vw;
+  width: 19.53vw;
+  height: 3.33vw;
   background: #f4f4f4;
-  border: 1px #f4f4f4 solid;
-  border-radius: 5px;
+  border: 0.05vw #f4f4f4 solid;
+  border-radius: 0.26vw;
   transition: 0.3s;
 }
 input:focus {
   border-color: var(--color);
 }
 input::-webkit-input-placeholder {
-  font-size: 18px;
+  font-size: 0.94vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #999999;
@@ -434,25 +434,25 @@ input::-webkit-input-placeholder {
 }
 .getCodeBtn {
   position: absolute;
-  top: 16px;
-  right: 22px;
-  min-width: 103px;
-  height: 33px;
+  top: 0.83vw;
+  right: 1.15vw;
+  min-width: 5.36vw;
+  height: 1.72vw;
   text-align: center;
-  line-height: 33px;
-  font-size: 18px;
+  line-height: 1.72vw;
+  font-size: 0.94vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: var(--color);
   border-left: 1px solid #999999;
-  padding-left: 12px;
+  padding-left: 0.63vw;
   cursor: pointer;
 }
 .psd_register {
   display: flex;
   justify-content: space-between;
-  width: 395px;
-  font-size: 16px;
+  width: 20.57vw;
+  font-size: 0.83vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
 }
@@ -466,26 +466,26 @@ input::-webkit-input-placeholder {
   cursor: pointer;
 }
 .logInBtn {
-  width: 394px;
-  height: 61px;
+  width: 20.52vw;
+  height: 3.18vw;
   background: var(--color);
-  border-radius: 5px;
-  font-size: 24px;
+  border-radius: 0.26vw;
+  font-size: 1.25vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #ffffff;
-  line-height: 61px;
+  line-height: 3.18vw;
   text-align: center;
   cursor: pointer;
   transition: all 0.3s;
 }
 .logInBtn:hover {
-  box-shadow: 0px 4px 16px -6px var(--color);
-  --webkit-box-shadow: 0px 4px 16px -6px var(--color);
-  --moz-box-shadow: 0px 4px 16px -6px var(--color);
+  box-shadow: 0px 0.21vw 0.83vw -0.31vw var(--color);
+  --webkit-box-shadow: 0px 0.21vw 0.83vw -0.31vw var(--color);
+  --moz-box-shadow: 0px 0.21vw 0.83vw -0.31vw var(--color);
 }
 .forgotPsd {
-  font-size: 18px;
+  font-size: 0.94vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: var(--color);

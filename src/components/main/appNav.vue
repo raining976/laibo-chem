@@ -162,10 +162,8 @@ export default {
     // console.log('this.currentIndex',this.currentIndex)
     // console.log("this.$refs.nav_li", this.$refs.nav_li[this.currentIndex].clientWidth);
     setTimeout(() => {
-      this.$refs.chosen.style.left =
-        this.$refs.nav_li[this.currentIndex].offsetLeft + "px";
-      this.chosenWidth =
-        this.$refs.nav_li[this.currentIndex].offsetWidth + "px";
+      this.$refs.chosen.style.left = this.$refs.nav_li[this.currentIndex].offsetLeft + "px";
+      this.chosenWidth = this.$refs.nav_li[this.currentIndex].offsetWidth + "px";
     }, 50);
   },
 

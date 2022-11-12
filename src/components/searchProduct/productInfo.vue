@@ -203,7 +203,7 @@
       </div>
 
       <div class="toCustomize" @click="openOrder()">
-        {{ $t("product.personalTailor") }}>
+        {{ $t("nav.customization") }}>
       </div>
     </div>
     <private-order v-if="isShow" />
@@ -283,10 +283,6 @@ export default {
     //
     async addCart() {
       if (!localStorage.getItem("token")) {
-        this.$message({
-          message: "请先登录",
-          // type: "error",
-        });
         this.$root.openLogin();
       } else {
         let isPost = false;
@@ -303,7 +299,7 @@ export default {
               .then((res) => {
                 if (res.data.code == 20000) {
                   this.$message({
-                    message: "添加成功",
+                    message: this.$t('callback.addSuccess'),
                     type: "success",
                   });
                   isPost = true;
@@ -316,7 +312,7 @@ export default {
               })
               .catch((err) => {
                 this.$message({
-                  message: "未知错误!",
+                  message: this.$t('callback.error'),
                   type: "error",
                 });
                 console.log("err", err);
@@ -325,7 +321,7 @@ export default {
         }
         if (!isPost) {
           this.$message({
-            message: "未选择数量!",
+            message: this.$t('callback.selectNum'),
             // type: "error",
           });
         }
@@ -334,10 +330,6 @@ export default {
     // 购买按钮
     setOrder() {
       if (!localStorage.getItem("token")) {
-        this.$message({
-          message: "请先登录",
-          // type: "error",
-        });
         this.$root.openLogin();
       } else {
         let isPost = false;
@@ -358,7 +350,7 @@ export default {
             isPost = true;
           } else if (index + 1 === length && isPost === false) {
             this.$message({
-              message: "未选择数量!",
+              message:  this.$t('callback.selectNum'),
               // type: "error",
             });
           }

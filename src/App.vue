@@ -1,15 +1,16 @@
 <template>
-  <div class="navBox">
+  <div class="navBox" v-if="!$route.meta.isNotFound">
     <appNav :key="key" />
   </div>
-  <!-- <router-view name="search"></router-view> -->
-  <keep-alive>
-    <router-view name="table" v-if="$route.meta.keepAlive"></router-view>
-  </keep-alive>
-  <router-view name="table" v-if="!$route.meta.keepAlive"></router-view>
-  <router-view name="textPage"></router-view>
+  <!-- <keep-alive>
+    <router-view  v-if="$route.meta.keepAlive"></router-view>
+  </keep-alive> -->
+  <router-view></router-view>
+  <!-- <router-view name="textPage"></router-view> -->
   <!-- <appFooter /> -->
-  <copyRight />
+  <copyRight  v-if="!$route.meta.isNotFound"/>
+
+
   <!-- 登录模态框 -->
   <transition leave-active-class="fadeOut">
     <log-in v-if="isShowLogIn" />

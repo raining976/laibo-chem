@@ -227,102 +227,102 @@ export default {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  width: 546px;
-  height: 525px;
-  padding-top: 58px;
-  padding-bottom: 48px;
+  width: 28.44vw;
+  height: 27.34vw;
+  padding-top: 3.02vw;
+  padding-bottom: 2.5vw;
   margin: 0 auto;
-  border-radius: 5px;
+  border-radius: 0.26vw;
 }
 .title {
-  font-size: 48px;
+  font-size: 2.5vw;
   font-family: Microsoft YaHei UI;
   font-weight: bold;
   color: var(--color);
 }
 .inputBox {
   position: relative;
-  width: 395px;
-  height: 64px;
+  width: 20.57vw;
+  height: 3.33vw;
   background: #f4f4f4;
-  border-radius: 5px;
+  border-radius: 0.26vw;
 }
 .inputBox:after {
   content: attr(data-after);
   position: absolute;
-  bottom: -18px;
-  left: 20px;
-  font-size: 12px;
+  bottom: -0.94vw;
+  left: 1.04vw;
+  font-size: 0.63vw;
   color: rgb(191, 23, 23);
   z-index: 999;
 }
 input {
-  font-size: 18px;
+  font-size: 0.94vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
-  padding-left: 20px;
-  border: 1px #f4f4f4 solid;
+  padding-left: 1.04vw;
+  border: 0.05vw #f4f4f4 solid;
   transition: 0.3s;
 }
 input:focus {
   border-color: var(--color);
 }
 input::-webkit-input-placeholder {
-  font-size: 18px;
+  font-size: 0.94vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #999999;
 }
 .eachInput {
-  width: 375px;
-  height: 64px;
+  width: 19.53vw;
+  height: 3.33vw;
   background: #f4f4f4;
-  border-radius: 5px;
+  border-radius: 0.26vw;
 }
 .verification {
-  width: calc(375px - 124px);
-  padding-right: 124px;
+  width: calc(19.53vw - 6.46vw);
+  padding-right: 6.46vw;
 }
 .verificationBox {
   position: relative;
 }
 .getCodeBtn {
   position: absolute;
-  top: 16px;
-  min-width: 103px;
+  top: 0.83vw;
+  min-width: 5.36vw;
   text-align: center;
-  right: 22px;
+  right: 1.15vw;
   display: inline-block;
-  height: 33px;
-  line-height: 33px;
+  height: 1.72vw;
+  line-height: 1.72vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: var(--color);
-  border-left: 1px solid #999999;
-  padding-left: 12px;
+  border-left: 0.05vw solid #999999;
+  padding-left: 0.63vw;
   cursor: pointer;
 }
 .submit {
-  width: 394px;
-  height: 61px;
+  width: 20.52vw;
+  height: 3.18vw;
   background: var(--color);
-  border-radius: 5px;
-  font-size: 24px;
+  border-radius: 0.26vw;
+  font-size: 1.25vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #ffffff;
-  line-height: 61px;
+  line-height: 3.18vw;
   text-align: center;
   cursor: pointer;
   transition: all 0.3s;
 }
 .submit:hover {
-  box-shadow: 0px 4px 16px -6px var(--color);
-  --webkit-box-shadow: 0px 4px 16px -6px var(--color);
-  --moz-box-shadow: 0px 4px 16px -6px var(--color);
+  box-shadow: 0px 0.21vw 0.83vw -0.31vw var(--color);
+  --webkit-box-shadow: 0px 0.21vw 0.83vw -0.31vw var(--color);
+  --moz-box-shadow: 0px 0.21vw 0.83vw -0.31vw var(--color);
 }
 .returnLogIn {
-  font-size: 18px;
+  font-size: 0.94vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: var(--color);

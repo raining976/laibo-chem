@@ -74,7 +74,7 @@ export default {
         info: "Profile",
         changePass: "Change Password",
         orderReview: "Order Review",
-        exit:'Exit',
+        exit: 'Exit',
 
     },
     // 登录
@@ -127,7 +127,7 @@ export default {
         name: "Addressee",
         add: "Add Address",
         dele: "Delete Address",
-        edit:'Edit Address',
+        edit: 'Edit Address',
         current: "The current distribution to",
         full: "Full address",
         chooseTip: "Please select a harvest address",
@@ -153,7 +153,7 @@ export default {
         edit: "The editorial team information",
         teamId: "Team ID",
         checkAll: "checkAll",
-        deleTeam:'Delete your team',
+        deleTeam: 'Delete your team',
     },
     // 订单
     order: {
@@ -224,6 +224,13 @@ export default {
         price: "Price",
         stock: "Stock",
         add: "Add to cart",
+        storePrice:'Inventory and price',
+        backHome:'Back Homepage',
+        intermediates:'INTERMEDIATES',
+        dyes:'DYES',
+        experiment:'EXPERIMENTAL SUPPLIES',
+
+
     },
     // 邮箱验证
     email: {
@@ -241,19 +248,21 @@ export default {
         refuseWarn: "The processing is irrevocable if the member's application is rejected",
         deleSuccess: 'Deleted successfully',
         editSuccess: 'Modified successfully',
-        saveSuccess:'Save successfully',
-        submitSuccess:'Submitted successfully',
-        exitSuccess:'Exited successfully',
+        saveSuccess: 'Save successfully',
+        submitSuccess: 'Submitted successfully',
+        exitSuccess: 'Exited successfully',
+        addSuccess:'Added successfully',
         selectTip: 'No product selected',
         deleWarn: 'The deletion cannot be withdrawn, do you want to continue?',
         paySuccess: 'Pay for success',
         uploadSuccess: 'Uploaded successfully',
-        uploadError:'Upload failed',
-        saveTip:'Unsaved content was detected, whether the page to save the changes before you leave?',
-        save:'Save',
-        cancelEdit:'Discard changes',
-        editTip:'Your changes have been made yet',
-        exitTip:'Whether determine the log out, sure?',
+        uploadError: 'Upload failed',
+        saveTip: 'Unsaved content was detected, whether the page to save the changes before you leave?',
+        save: 'Save',
+        cancelEdit: 'Discard changes',
+        editTip: 'Your changes have been made yet',
+        exitTip: 'Whether determine the log out, sure?',
+        selectNum:'You did not choose the number',
 
 
     },
@@ -302,9 +311,24 @@ export default {
         uploadMsg: 'Please upload the attachment with the suffix jpg or png!',
         uploadSize: 'Upload file size cannot exceed 200k!',
         selectBills: 'Please select documents',
-        selectLimit:'The current limit is to select 1 file',
-        sure:'Are you sure to remove',
-
+        selectLimit: 'The current limit is to select 1 file',
+        sure: 'Are you sure to remove',
+    },
+    // 底栏
+    footer: {
+        joinUs: 'Join us',
+        schools: "Cooperative institution",
+        aboutUs: 'About us',
+        recommendation: 'Talent recommendation',
+        ouc: 'Ocean University of China',
+        tjdx: 'Tianjin University',
+        sddx: 'Shandong University',
+        hebgydx: 'Harbin Institute of Technology',
+        more: 'More',
+        address: 'No.8 Tongshun Road, High-tech Zone, Qingdao, China',
+        contactUs: 'Contact us',
+        email:"elva{'@'}laibochem.com",
+        phone:'+86 136 8766 2561',
     }
 
 }

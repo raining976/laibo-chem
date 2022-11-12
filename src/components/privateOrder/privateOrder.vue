@@ -57,7 +57,7 @@
                 ></el-input>
               </el-form-item>
               <p class="contactUs">
-                {{ $t("privateOrder.contact") }}&nbsp;:&nbsp;labservice@188.com
+                {{ $t("privateOrder.contact") }}&nbsp;:&nbsp;{{$t('footer.email')}}
               </p>
             </el-form>
             <el-form-item class="btnBox">
