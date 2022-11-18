@@ -14,7 +14,9 @@
           ref="eachLi"
           @click="toProductInfo(p.id)"
         >
-          <img :src="p.pic_url" alt="" />
+          <div class="picBox">
+            <img :src="p.pic_url" alt="" />
+          </div>
           <span class="proName">{{ p.name }}</span>
         </li>
       </ul>
@@ -46,10 +48,10 @@ export default {
     // 获取产品
     getHot() {
       this.$http
-        .get("/hotProducts",{
-          params:{
-            limit:20
-          }
+        .get("/hotProducts", {
+          params: {
+            limit: 20,
+          },
         })
         .then((res) => {
           this.products = res.data.data.products;
@@ -190,15 +192,25 @@ export default {
   transition: 0.3s;
   cursor: pointer;
 }
-.carouselBox .move li img {
+.carouselBox .move li .picBox {
   width: 18.23vw;
   height: 9.9vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.carouselBox .move .picBox img {
+  width: auto;
+  height: auto;
+  max-width: 110%;
+  max-height: 110%;
+  vertical-align: middle;
 }
 .proName {
   flex: 1;
   display: flex;
   align-items: center;
-  font-size: 1.56vw;
+  font-size: 1.4vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #333;
