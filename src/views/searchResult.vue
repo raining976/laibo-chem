@@ -1,5 +1,4 @@
   <template>
-  <div class="solidLine"></div>
   <div class="bg">
     <div class="searchNav">
       <div class="sitePosi">
@@ -7,7 +6,7 @@
           &lt;{{ $t("search.backHome") }}
         </div>
         /&nbsp;
-        <div class="nowPosi">{{ typeList[typeIndex].name }}</div>
+        <div class="nowPosi" v-if="typeIndex !== -1">{{ curName }}</div>
       </div>
       <div class="typeList">
         <div style="margin-bottom: 0.52vw">{{ $t("search.sort") }}</div>
@@ -24,6 +23,8 @@
     </div>
     <div class="resultBlock">
       <component :is="res" :resultBox="resultBox" />
+      <!-- <result :resultBox="resultBox" v-show="isResult"></result>
+      <no-result v-show="!isResult"></no-result> -->
     </div>
   </div>
 </template>
@@ -39,6 +40,7 @@ export default {
   data() {
     return {
       res: "result",
+      isResult: true, // 是否搜到
       cate: "", // 0 1 2   0:实验用品, 1:中间品, 2:染料,
       type: "", //需要判断
       inputValue: "",
@@ -46,24 +48,22 @@ export default {
         { name: this.$t("search.intermediates"), cate: 1 },
         { name: this.$t("search.experiment"), cate: 0 },
         { name: this.$t("search.dyes"), cate: 2 },
+        { name: this.$t("search.chemical"), cate: 3 },
       ],
-      typeIndex: -1, // 用于标记当前 type 在t ypeList 的索引
+      typeIndex: -1, // 用于标记当前 type 在typeList 的索引
+      curName: "",
       resultBox: [],
     };
   },
   created() {
     if (this.$route.query.inputValue) {
       this.inputValue = this.$route.query.inputValue;
+      this.cate = "";
       this.getSearchResult();
     } else if (this.$route.query.whichType) {
-      let idx = this.$route.query.whichType; // 传参0:中间体,
-      if (idx == 0) {
-        this.searchType(1);
-      } else if (idx == 1) {
-        this.searchType(2);
-      } else if (idx == 3) {
-        this.searchType(0);
-      }
+      let state = this.$route.query.whichType;
+      this.searchType(state);
+      
     }
   },
   mounted() {
@@ -81,19 +81,21 @@ export default {
           this.getSearchResult();
         }
       },
-      immediate: true,
+      immediate: false,
       deep: true,
+    },
+    typeIndex(val) {
+      this.curName = this.typeList[val].name;
+      
     },
   },
   methods: {
     toMainPage() {
-      this.$router.replace({
-        path: "/mainPage",
-      });
+      this.$router.push("/mainPage");
     },
     //获取搜索结果
     getSearchResult() {
-      if (this.$data.inputValue !== undefined) {
+      if (this.inputValue != undefined) {
         this.$http
           .get("/search", {
             params: {
@@ -103,8 +105,12 @@ export default {
           })
           //回调函数
           .then((res) => {
-            this.resultBox = res.data.data.products;
-            this.toResultShow();
+            if (res.data.code == 20000) {
+              this.resultBox = res.data.data.products;
+              this.toResultShow();
+            }else{
+              this.resultBox =[];
+            }
           })
           .catch((err) => {
             console.log(err);
@@ -114,6 +120,7 @@ export default {
     // 分类
     searchType(type) {
       // 0:实验用品, 1:中间品, 2:染料,
+      if (type == this.cate) return;
       this.inputValue = "";
       this.cate = type;
       switch (type) {
@@ -126,19 +133,19 @@ export default {
         case 0:
           this.typeIndex = 1;
           break;
+        case 3:
+          this.typeIndex = 3;
+          break;
       }
       this.getSearchResult();
     },
     // js判断页面
     toResultShow() {
       //用&&原因是因为数据未能完全覆盖导致条件判断错误
-      if (
-        this.$data.resultBox.length !== 0 &&
-        this.$data.resultBox !== undefined
-      ) {
-        this.$data.res = "result";
+      if (this.resultBox.length !== 0 && this.resultBox !== undefined) {
+        this.res = "result";
       } else if (this.$data.resultBox.length === 0) {
-        this.$data.res = "noResult";
+        this.res = "noResult";
       }
     },
   },
@@ -215,8 +222,8 @@ export default {
 .type:hover {
   font-weight: 600;
 }
-.resultBlock{
-  width: 58.33vw;  
+.resultBlock {
+  width: 58.33vw;
 }
 </style>
  

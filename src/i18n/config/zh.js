@@ -46,7 +46,7 @@ export default {
         logIn: "登录",
         register: "注册",
         hello: "你好!",
-        customization: "私人定制"
+        customization: "定制产品"
     },
     // 主页
     home: {
@@ -232,6 +232,8 @@ export default {
         intermediates:'中间体',
         dyes:'染料',
         experiment:'实验用品',
+        chemical:'化工产品',
+
     },
     // 邮箱验证
     email: {

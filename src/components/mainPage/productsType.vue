@@ -13,7 +13,7 @@
         :style="{ backgroundImage: 'url(' + item.pic + ')' }"
         data-aos="flip-right"
       >
-        <div class="contentBox" @click="toSearchType(index)">
+        <div class="contentBox" @click="toSearchType(item.cate)">
           <div class="imgBox"><img :src="item.pic" alt="item.alt" /></div>
           <div class="textBox">
             <div class="text">
@@ -37,45 +37,43 @@ export default {
   components: "",
   data() {
     return {
-      type: 0, // 中间体:0 实验用品:1 染料:2  定制产品:3
+      type: 0, // 中间体:0 实验用品:1 染料:2  化工产品:3
       typeList: [
         {
           pic: require("../../assets/zhongjianti.webp"),
           name_zh: "中间体",
           name_en: "INTERMEDIATES",
+          cate: 1,
         },
         {
           pic: require("../../assets/111.webp"),
           name_zh: "染料",
           name_en: "DYES",
+          cate:2,
         },
-
         {
-          pic: require("../../assets/dingzhichanpin.webp"),
-          name_zh: "定制产品",
-          name_en: "CUSTOMIZED PRODUCTS",
+          pic: require("../../assets/huagongchanpin.png"),
+          name_zh: "化工产品",
+          name_en: "CHEMICAL PRODUCTS",
+          cate:3,
         },
         {
           pic: require("../../assets/shiyanyongpin.webp"),
           name_zh: "实验用品",
           name_en: "EXPERIMENTAL SUPPLIES",
+          cate:1,
         },
       ],
     };
   },
   methods: {
-    toSearchType(idx) {
-      if (idx != 2) {
-        this.$router.push({
-          path: "/searchResult",
-          query: {
-            whichType: idx, // 0:中间体 , 1:染料 , 3:实验用品
-          },
-        });
-      } else if (idx == 2) {
-        // 定制产品
-        this.$root.isShowOrder = !this.$root.isShowOrder;
-      }
+    toSearchType(cate) {
+      this.$router.push({
+        path: "/searchResult",
+        query: {
+          whichType: cate, // 0:中间体 , 1:染料 , 3:实验用品
+        },
+      });
     },
   },
 };

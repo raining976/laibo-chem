@@ -283,7 +283,7 @@ export default {
           this.$router.push({
             path: "/searchResult",
             query: {
-              inputValue: this.$data.inputValue,
+              inputValue: this.inputValue,
             },
           });
         } else if (this.$route.path === "/searchResult") {

@@ -229,6 +229,7 @@ export default {
         intermediates:'INTERMEDIATES',
         dyes:'DYES',
         experiment:'EXPERIMENTAL SUPPLIES',
+        chemical:'CHEMICAL PRODUCTS',
 
 
     },
