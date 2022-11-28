@@ -106,10 +106,16 @@ export default {
         phone: "Tel No",
         team: "Team Name",
         deal: "Have read and agree to the following agreement",
+        dealTip:"Please agree to check the privacy agreement",
         submit: "SUBMIT",
         reset: "RESET",
         passAgain: "Please enter the password again",
-        checkError: "Entered passwords differ!"
+        checkError: "Entered passwords differ!",
+        emailTip:"Please fill in the email",
+        toHome:"Are entering the home page...",
+        registerSuccess:"Registered successfully",
+
+
     },
     // 修改密码
     editPass: {
@@ -251,6 +257,7 @@ export default {
         editSuccess: 'Modified successfully',
         saveSuccess: 'Save successfully',
         submitSuccess: 'Submitted successfully',
+        sendSuccess:'Sended successfully',
         exitSuccess: 'Exited successfully',
         addSuccess:'Added successfully',
         selectTip: 'No product selected',

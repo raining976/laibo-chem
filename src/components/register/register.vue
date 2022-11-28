@@ -37,7 +37,7 @@
             {{ $t("base.get") + $t("register.verfiCode") }}
           </div>
           <div class="getVerfiBtn" v-show="waitTimerShow">
-            {{ waitTimer + "s"}}
+            {{ waitTimer + "s" }}
           </div>
         </el-form-item>
         <!-- /验证码 -->
@@ -201,14 +201,14 @@ export default {
               })
               .catch((err) => {
                 this.$message({
-                  message: "未知错误!",
+                  message: this.$t('callback.error'),
                   type: "error",
                 });
                 console.log("err", err);
               });
           } else {
             this.$message({
-              message: "请先同意并勾选隐私协议",
+              message: this.$t('register.dealTip'),
               type: "warning",
             });
           }
@@ -222,18 +222,19 @@ export default {
       this.$refs[formName].resetFields();
     },
     bouncedMsg() {
-      this.$alert("即将进入主页...", "注册成功!", {
-        confirmButtonText: "确定",
+      this.$alert(this.$t('register.toHome'), this.$t('register.registerSuccess'), {
+        confirmButtonText: this.$t('base.sure'),
         // 进入主页路由
         callback: () => {
           this.$router.push("mainPage");
+          this.$root.isShowLogIn = true;
         },
       });
     },
     // 获取验证码
     getVerfiCode() {
       if (this.ruleForm.email == "") {
-        this.$message("请先填写邮箱!");
+        this.$message(this.$t('register.emailTip'));
         return;
       }
       let rule = {
@@ -245,7 +246,7 @@ export default {
         .then((res) => {
           if (res.data.code == 20000) {
             this.$message({
-              message: "发送成功",
+              message: this.$t('callback.sendSuccess'),
               type: "success",
             });
             this.verfi_timer();
@@ -258,7 +259,7 @@ export default {
         })
         .catch((err) => {
           this.$message({
-            message: "未知错误!",
+            message: this.$t('callback.error'),
             type: "error",
           });
           console.log("err", err);
@@ -301,10 +302,10 @@ export default {
   background: var(--color);
 }
 .registerBox .el-button {
-  width: 130px;
-  height: 49px;
-  border-radius: 5px;
-  font-size: 22px;
+  width: 6.77vw;
+  height: 2.55vw;
+  border-radius: 0.26vw;
+  font-size: 1.15vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #ffffff;
@@ -325,29 +326,29 @@ export default {
   background: #cbdff2;
 }
 .registerBox .el-form-item:last-child {
-  margin-top: 30px;
+  margin-top: 1.56vw;
 }
 /* 每个item的名字 */
 .registerBox .el-form-item__label {
-  font-size: 22px;
+  font-size: 1.15vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #333333;
-  line-height: 60px;
-  margin-right: 20px;
+  line-height: 3.13vw;
+  margin-right: 1.04vw;
 }
 
 /* input样式 */
 .registerBox .el-input {
-  width: 530px;
-  height: 55px;
+  width: 27.6vw;
+  height: 2.86vw;
 }
 .registerBox .el-input__inner {
-  width: 530px;
-  height: 55px;
-  border: 2px solid #999999;
-  border-radius: 5px;
-  font-size: 18px;
+  width: 27.6vw;
+  height: 2.86vw;
+  border: 0.1vw solid #999999;
+  border-radius: 0.26vw;
+  font-size: 0.94vw;
 }
 .registerBox .el-input__inner:hover {
   border-color: #78b3f3;
@@ -357,8 +358,8 @@ export default {
 }
 /* 后置判断标识 */
 .registerBox .el-input__suffix {
-  top: 8px;
-  right: 10px;
+  top: 0.42vw;
+  right: 0.52vw;
 }
 .registerBox .el-input__icon {
   transform: scale(2);
@@ -374,7 +375,7 @@ export default {
 
 /* 勾选协议部分 */
 .registerBox .tcp .el-form-item__content {
-  padding-left: 20px;
+  padding-left: 1.04vw;
   display: flex;
   justify-content: flex-start;
 }
@@ -393,25 +394,25 @@ export default {
   color: var(--color);
 }
 .registerBox .el-form-item__error {
-  margin-left: 20px;
+  margin-left: 1.04vw;
 }
 .registerBox .verfiBox {
   position: relative;
 }
 .verfiBox .getVerfiBtn {
   position: absolute;
-  right: 12px;
-  top: 9px;
-  width: 111px;
-  height: 37px;
+  right: 0.52vw;
+  top: 0.47vw;
+  width: 5.78vw;
+  height: 1.93vw;
   background: #004ea2;
-  border-radius: 5px;
-  font-size: 16px;
+  border-radius: 0.26vw;
+  font-size: 0.83vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #ffffff;
   text-align: center;
-  line-height: 37px;
+  line-height: 1.93vw;
   cursor: pointer;
 }
 </style>
@@ -421,29 +422,29 @@ export default {
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 900px;
-  padding-top: 100px;
+  height: 46.88vw;
+  padding-top: 5.21vw;
 }
 .content {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 700px;
-  width: 700px;
-  margin-top: -80px;
+  height: 36.46vw;
+  width: 36.46vw;
+  margin-top: -4.17vw;
 }
 .titleBox {
   display: flex;
   justify-content: flex-end;
-  width: 670px;
+  width: 34.9vw;
 }
 h3 {
-  width: 530px;
+  width: 27.6vw;
   text-align: center;
-  font-size: 48px;
+  font-size: 2.5vw;
   font-family: Microsoft YaHei UI;
   font-weight: bold;
   color: var(--color);
-  margin-bottom: 50px;
+  margin-bottom: 2.6vw;
 }
 </style>

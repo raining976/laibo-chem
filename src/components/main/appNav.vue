@@ -363,6 +363,7 @@ export default {
   background: transparent;
   color: var(--text--color);
   padding: 0 1.04vw;
+  padding-right: 2vw;
 
 }
 .inputBox input::placeholder {

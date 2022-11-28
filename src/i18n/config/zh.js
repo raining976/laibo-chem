@@ -99,17 +99,22 @@ export default {
     register: {
         userRegister: "用户注册",
         name: "真实姓名",
-        email: "Email地址",
+        email: "Email",
         verfiCode: "验证码",
         pass: "登录密码",
         checkPass: "确认密码",
         phone: "电话号码",
         team: "机构名称",
         deal: "已阅读并同意以下协议",
+        dealTip:"请先同意并勾选隐私协议",
         submit: "提交",
         reset: "重置",
         passAgain: "请再次输入密码",
-        checkError: "两次输入的密码不一致!"
+        checkError: "两次输入的密码不一致!",
+        emailTip:"请先填写邮箱",
+        toHome:"即将进入主页...",
+        registerSuccess:"注册成功",
+
     },
     // 修改密码
     editPass: {
@@ -254,6 +259,7 @@ export default {
         saveSuccess:'保存成功',
         addSuccess:'添加成功',
         submitSuccess:'提交成功',
+        sendSuccess:'发送成功',
         exitSuccess:'退出登录成功',
         selectTip: '未选择商品',
         deleWarn: '此删除操作将无法撤回,是否继续',
