@@ -59,9 +59,9 @@ export default {
         },
         {
           pic: require("../../assets/shiyanyongpin.webp"),
-          name_zh: "实验用品",
+          name_zh: "实验室用品",
           name_en: "EXPERIMENTAL SUPPLIES",
-          cate:1,
+          cate:0,
         },
       ],
     };
@@ -71,7 +71,7 @@ export default {
       this.$router.push({
         path: "/searchResult",
         query: {
-          whichType: cate, // 0:中间体 , 1:染料 , 3:实验用品
+          whichType: cate, // 0:实验用品 , 1:中间体 , 2:染料 3, 化工产品
         },
       });
     },
