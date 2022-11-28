@@ -16,7 +16,7 @@
           </div>
           <div class="solidLine2"></div>
           <!-- 详细信息 -->
-          <div class="details">
+          <div class="details"  v-show="productData.category != 0">
             <!-- 以下为 -->
             <div class="oneDetail">
               <div class="detailName">{{ $t("product.casNum") }}:&nbsp;</div>

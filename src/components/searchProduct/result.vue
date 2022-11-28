@@ -18,9 +18,8 @@
               <span>{{ item.name }}</span>
             </div>
             <div class="resultName_en">英文名：{{ item.enName }}</div>
-            <div class="resultDetail">
+            <div class="resultDetail" v-show="item.category != 0">
               <!-- v-for模块 -->
-
               <div class="fenziliang _data">
                 {{ $t("order.fenziliang") + "："
                 }}<span
@@ -55,7 +54,7 @@
           <el-collapse v-model="activeNames" @change="collapseChange">
             <el-collapse-item :name="item.id">
               <template #title>
-                <span class="textBox">{{ $t('search.storePrice') }}}&nbsp;</span
+                <span class="textBox">{{ $t("search.storePrice") }}}&nbsp;</span
                 ><img
                   src="../../assets/价格预测.png"
                   style="width: 1.04vw; height: 1.04vw"
@@ -203,7 +202,7 @@ export default {
         if (isPost === false) {
           // console.log(index + 1, length, isPost, "fffff");
           this.$message({
-            message: this.$t('callback.selectNum'),
+            message: this.$t("callback.selectNum"),
           });
         }
       }
@@ -218,7 +217,7 @@ export default {
         .then((res) => {
           if (res.data.code == 20000) {
             this.$message({
-              message: this.$t('callback.addSuccess'),
+              message: this.$t("callback.addSuccess"),
               type: "success",
             });
           } else {
@@ -230,7 +229,7 @@ export default {
         })
         .catch((err) => {
           this.$message({
-            message: this.$t('callback.error'),
+            message: this.$t("callback.error"),
             type: "error",
           });
           console.log("err", err);
@@ -355,9 +354,9 @@ export default {
 .resultName_zh > span {
   display: inline-block;
   width: 90%;
-	white-space:nowrap; 
-  overflow:hidden; 
-	text-overflow:ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .resultName_en {
   width: 90%;
@@ -368,9 +367,9 @@ export default {
   font-weight: 400;
   color: #333333;
   line-height: 1.04vw;
-  white-space:nowrap;
-  overflow:hidden;
-	text-overflow:ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .resultDetail {
   width: 70%;

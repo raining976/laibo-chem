@@ -15,9 +15,9 @@
           :class="{ is_type: index == typeIndex }"
           v-for="(item1, index) in typeList"
           :key="index"
-          @click="searchType(item1.cate)"
+         
         >
-          {{ item1.name }}
+          <span  @click="searchType(item1.cate)" class="typeBtn">{{ item1.name }}</span>
         </div>
       </div>
     </div>
@@ -206,7 +206,6 @@ export default {
   width: 100%;
 }
 .type {
-  cursor: pointer;
   width: 11.2vw;
   /* height: 0.94vw; */
   font-size: 0.83vw;
@@ -219,11 +218,15 @@ export default {
 .is_type {
   font-weight: 600;
 }
-.type:hover {
-  font-weight: 600;
-}
+
 .resultBlock {
   width: 58.33vw;
+}
+.typeBtn{
+  cursor: pointer;
+}
+.typeBtn:hover {
+  font-weight: 600;
 }
 </style>
  

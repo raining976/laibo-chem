@@ -132,6 +132,7 @@ export default {
   width: 73.44vw;
   margin: 2.6vw auto 0;
   overflow: hidden;
+  min-height: 90vh;
 }
 .title {
   width: 100%;
@@ -147,7 +148,10 @@ export default {
   color: #999;
   border-bottom: 0.1vw solid #999999;
 }
-.content {
+.content{
+  width: 80%;
+}
+/* .content {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -158,5 +162,5 @@ export default {
 .content > p,
 .content > span {
   text-align: center;
-}
+} */
 </style>
