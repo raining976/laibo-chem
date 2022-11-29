@@ -2,6 +2,8 @@
 node_modules
 /dist
 dist.zip
+*.cpp
+*.exe
 
 
 # local env files
