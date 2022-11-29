@@ -394,6 +394,7 @@ export default {
             products: this.$data.orderBox,
             type: this.$data.submitMy,
             address: this.$data.addressId,
+            from:"shopcart"
           })
           .then((res) => {
             if (res.data.code == 20000) {
