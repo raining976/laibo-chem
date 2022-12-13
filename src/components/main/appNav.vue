@@ -49,26 +49,28 @@
           <template #dropdown>
             <el-dropdown-menu class="navDropdown">
               <el-dropdown-item
-                ><span @click="toTeam()">{{ $t('userMenu.team') }}</span></el-dropdown-item
+                ><span @click="toTeam()">{{
+                  $t("userMenu.team")
+                }}</span></el-dropdown-item
               >
               <el-dropdown-item
-                ><router-link to="/address"
-                  >{{ $t('userMenu.address') }}</router-link
-                ></el-dropdown-item
+                ><router-link to="/address">{{
+                  $t("userMenu.address")
+                }}</router-link></el-dropdown-item
               >
               <el-dropdown-item
-                ><router-link to="/info"
-                  >{{ $t('userMenu.info') }}</router-link
-                ></el-dropdown-item
+                ><router-link to="/info">{{
+                  $t("userMenu.info")
+                }}</router-link></el-dropdown-item
               >
               <el-dropdown-item
-                ><router-link to="/changePsd"
-                  >{{ $t('userMenu.changePass') }}</router-link
-                ></el-dropdown-item
+                ><router-link to="/changePsd">{{
+                  $t("userMenu.changePass")
+                }}</router-link></el-dropdown-item
               >
-              <el-dropdown-item divided @click="exitOpen()"
-                >{{ $t('userMenu.exit') }}</el-dropdown-item
-              >
+              <el-dropdown-item divided @click="exitOpen()">{{
+                $t("userMenu.exit")
+              }}</el-dropdown-item>
             </el-dropdown-menu>
           </template>
         </el-dropdown>
@@ -99,7 +101,7 @@
 <script>
 export default {
   name: "appNav",
-
+  inject: ["reload"],
   data() {
     return {
       menuLists: [
@@ -162,8 +164,10 @@ export default {
     // console.log('this.currentIndex',this.currentIndex)
     // console.log("this.$refs.nav_li", this.$refs.nav_li[this.currentIndex].clientWidth);
     setTimeout(() => {
-      this.$refs.chosen.style.left = this.$refs.nav_li[this.currentIndex].offsetLeft + "px";
-      this.chosenWidth = this.$refs.nav_li[this.currentIndex].offsetWidth + "px";
+      this.$refs.chosen.style.left =
+        this.$refs.nav_li[this.currentIndex].offsetLeft + "px";
+      this.chosenWidth =
+        this.$refs.nav_li[this.currentIndex].offsetWidth + "px";
     }, 50);
   },
 
@@ -237,7 +241,18 @@ export default {
     changeLang(lang) {
       if (lang != localStorage.getItem("lang")) {
         localStorage.setItem("lang", lang);
-        window.location.reload();
+        switch (lang) {
+          case "zh":
+            this.isActive = true;
+            break;
+          case "en":
+            this.isActive = false;
+            break;
+          default:
+            break;
+        }
+        this.$i18n.locale = lang;
+        // this.reload();
       }
     },
     toUserInfo() {
@@ -245,9 +260,9 @@ export default {
     },
     // 退出登录提示
     exitOpen() {
-      this.$confirm(this.$t('callback.exitTip'), this.$t('base.tip'), {
-        confirmButtonText: this.$t('base.sure'),
-        cancelButtonText: this.$t('base.cancel'),
+      this.$confirm(this.$t("callback.exitTip"), this.$t("base.tip"), {
+        confirmButtonText: this.$t("base.sure"),
+        cancelButtonText: this.$t("base.cancel"),
         type: "warning",
       })
         .then(() => {
@@ -256,7 +271,7 @@ export default {
         .catch(() => {
           this.$message({
             type: "info",
-            message: this.$t('base.canceled'),
+            message: this.$t("base.canceled"),
           });
         });
     },
@@ -272,7 +287,7 @@ export default {
       // localStorage.removeItem("token");
       // localStorage.removeItem("refresh");
       localStorage.clear();
-      this.$message(this.$t('callback.exitSuccess'));
+      this.$message(this.$t("callback.exitSuccess"));
       this.$parent.key++;
     },
     // 搜索
@@ -364,7 +379,6 @@ export default {
   color: var(--text--color);
   padding: 0 1.04vw;
   padding-right: 2vw;
-
 }
 .inputBox input::placeholder {
   color: var(--text--color);

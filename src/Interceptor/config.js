@@ -37,10 +37,13 @@ function addSubscriber(callback) {
 // 请求 拦截器
 axios.interceptors.request.use(config => {
     let url = config.url
-    if(url == '/search'||url.includes('/product/detail')||url.includes('/banner')||url.includes('/hotProducts')||url.includes('/news')||url.includes('/article')||url.includes('/banner')||url.includes('/article/detail')||url.includes('/news/detail') ||url.includes("personalTailor")){
+    if (url == '/search' || url.includes('/product/detail') || url.includes('/banner') || url.includes('/hotProducts') || url.includes('/news') || url.includes('/article') || url.includes('/banner') || url.includes('/article/detail') || url.includes('/news/detail') || url.includes("personalTailor")) {
         return config
     }
-    ElLoading.service({ fullscreen: true })
+    ElLoading.service({
+        fullscreen: true,
+        background: "rgba(255,255,255,0.5)"
+    })
     // if (config.url.includes('/login')) {
     //     // localStorage.removeItem("token_exp")
     //     // localStorage.removeItem("refresh_exp")
@@ -71,7 +74,7 @@ axios.interceptors.request.use(config => {
                         localStorage.setItem("token_exp", token_exp)
                         // 更新new_token的过期信息
                         onAccessTokenFetched(res.data.data.access)
-                        localStorage.setItem("refresh",res.data.data.refresh)
+                        localStorage.setItem("refresh", res.data.data.refresh)
                     }
                 }).catch(() => {
                     // 唤起登录页面
@@ -101,7 +104,10 @@ axios.interceptors.request.use(config => {
 
 // 响应拦截器
 axios.interceptors.response.use(response => {
-    ElLoading.service({ fullscreen: true }).close()
+    ElLoading.service({
+        fullscreen: true,
+        background: "rgba(255,255,255,0.5)"
+    }).close()
     if ('40002' === response.data.code) {
         router.replace({
             path: '/mainPage',
