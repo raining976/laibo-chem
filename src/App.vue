@@ -5,12 +5,11 @@
   <!-- <keep-alive>
     <router-view  v-if="$route.meta.keepAlive"></router-view>
   </keep-alive> -->
-  
-  <router-view></router-view>
+
+  <router-view v-if="isRouterAlive"></router-view>
   <!-- <router-view name="textPage"></router-view> -->
   <!-- <appFooter /> -->
-  <copyRight  v-if="!$route.meta.isNotFound"/>
-
+  <copyRight v-if="!$route.meta.isNotFound" />
 
   <!-- 登录模态框 -->
   <transition leave-active-class="fadeOut">
@@ -49,8 +48,9 @@ export default {
       isShowLogIn: false, // 是否显示登录
       key: 1, // 用于强制刷新nav组件
       isShowOrder: false, // 私人订单
-      isShowSchools:  false, // 合作高校是否展示
-      isForget:false, 
+      isShowSchools: false, // 合作高校是否展示
+      isForget: false,
+      isRouterAlive: true, // 强制刷新闪白问题
     };
   },
   created() {
@@ -87,6 +87,17 @@ export default {
     openLogin() {
       this.isShowLogIn = true;
     },
+    reload() {
+      this.isRouterAlive = false;
+      this.$nextTick(function () {
+        this.isRouterAlive = true;
+      });
+    },
+  },
+  provide() {
+    return {
+      reload: this.reload,
+    };
   },
 };
 </script>
@@ -131,7 +142,7 @@ body >>> .is-message-box {
 body >>> .is-message-box .el-button--primary {
   background: var(--color);
 }
-.el-dropdown-menu__item{
+.el-dropdown-menu__item {
   padding: 0 30px;
 }
 .el-dropdown-menu__item:hover a,
