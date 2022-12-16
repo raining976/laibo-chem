@@ -141,7 +141,6 @@ export default {
         }
       });
     }
-
     let lang = localStorage.getItem("lang");
     switch (lang) {
       case "zh":
@@ -252,6 +251,7 @@ export default {
             break;
         }
         this.$i18n.locale = lang;
+        this.$root.key++
         // this.reload();
       }
     },

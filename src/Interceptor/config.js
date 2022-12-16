@@ -1,4 +1,4 @@
-import { ElLoading } from 'element-plus'
+// import { ElLoading } from 'element-plus'
 import axios from 'axios';
 let Base64 = require('js-base64').Base64;
 
@@ -40,10 +40,10 @@ axios.interceptors.request.use(config => {
     if (url == '/search' || url.includes('/product/detail') || url.includes('/banner') || url.includes('/hotProducts') || url.includes('/news') || url.includes('/article') || url.includes('/banner') || url.includes('/article/detail') || url.includes('/news/detail') || url.includes("personalTailor")) {
         return config
     }
-    ElLoading.service({
-        fullscreen: true,
-        background: "rgba(255,255,255,0.5)"
-    })
+    // ElLoading.service({
+    //     fullscreen: true,
+    //     background: "rgba(255,255,255,0.5)"
+    // })
     // if (config.url.includes('/login')) {
     //     // localStorage.removeItem("token_exp")
     //     // localStorage.removeItem("refresh_exp")
@@ -104,10 +104,10 @@ axios.interceptors.request.use(config => {
 
 // 响应拦截器
 axios.interceptors.response.use(response => {
-    ElLoading.service({
-        fullscreen: true,
-        background: "rgba(255,255,255,0.5)"
-    }).close()
+    // ElLoading.service({
+    //     fullscreen: true,
+    //     background: "rgba(255,255,255,0.5)"
+    // }).close()
     if ('40002' === response.data.code) {
         router.replace({
             path: '/mainPage',
