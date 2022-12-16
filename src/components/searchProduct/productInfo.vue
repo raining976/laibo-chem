@@ -438,12 +438,10 @@ export default {
 }
 .productName_zh {
   width: 100%;
-
-  font-size: 2.5vw;
+  font-size: 1.8vw;
   font-family: Microsoft YaHei UI;
   font-weight: 400;
   color: #004ea2;
-  line-height: 2.6vw;
   margin: 0 0 0.63vw 0;
 }
 .productName_en {

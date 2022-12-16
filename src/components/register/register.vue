@@ -415,6 +415,9 @@ export default {
   line-height: 1.93vw;
   cursor: pointer;
 }
+.registerBox .el-checkbox__label{
+  font-size: 0.73vw;
+}
 </style>
 <style scoped>
 .registerBox {
@@ -422,8 +425,8 @@ export default {
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 46.88vw;
-  padding-top: 5.21vw;
+  height: 50.88vw;
+  padding: 3vw 0; 
 }
 .content {
   display: flex;
