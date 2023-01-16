@@ -61,7 +61,7 @@
       </div>
 
       <div class="freight">
-        {{ $t("cart.fright") + "：" }}<strong>{{ freight }}</strong>
+        <!-- {{ $t("cart.fright") + "：" }}<strong>{{ freight }}</strong> -->
       </div>
     </div>
     <!-- 商品统计 -->

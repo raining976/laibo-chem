@@ -64,11 +64,11 @@
           <div class="product">
             <div
               class="productName"
-              v-for="(product, index) in item0.product"
+              v-for="(item1, index) in item0.product"
               :key="index"
-              :title="product.name"
+              :title="item1.product.name"
             >
-              {{ product.name }}&nbsp;
+              {{ item1.product.name }}&nbsp;
             </div>
           </div>
           <div class="type">{{ item0.type }}</div>
@@ -518,13 +518,13 @@ export default {
 
   color: #004ea2;
 }
-.toOrderInfo {
-  /* cursor: pointer; */
-  /* position: absolute;
+/* .toOrderInfo {
+  cursor: pointer;
+  position: absolute;
   right: 24px;
   bottom: 30px;
-  color: #004ea2; */
-}
+  color: #004ea2;
+} */
 .toOrderInfo:hover {
   font-weight: 600;
 }

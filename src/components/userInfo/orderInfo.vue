@@ -59,14 +59,14 @@
         >
           <div class="productInfo">
             <div class="productPic">
-              <img src="" alt="" />
+              <img :src="item0.product.pic_url" alt="" />
             </div>
             <div class="infoBox">
               <div class="name_zh" @click="toProductInfo(item0.product.id)">
                 {{ item0.product.name }}
               </div>
               <div class="infoWord">{{$t('order.itemNo')+'：'}}{{ item0.huohao }}</div>
-              <div class="infoWord">{{$t('order.casNum')+'：'}}{{ item0.shopCart_id }}</div>
+              <div class="infoWord">{{$t('order.casNum')+'：'}}{{ item0.product.cas }}</div>
             </div>
           </div>
           <div class="size">{{ item0.product.guige }}</div>

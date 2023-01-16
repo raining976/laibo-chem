@@ -10,9 +10,9 @@
 
       <div class="orderInfo">
       <div class="detail"><strong>{{$t('order.num')+'：'}}</strong>{{orderNo}}</div>
-      <div class="detail"><strong>{{ $t("address.name")+'：' }}</strong>{{}}</div>
-      <div class="detail"><strong>{{$t("base.phone")+'：'}}</strong>{{}}</div>
-      <div class="detail"><strong>{{$t("base.address")+'：'}}</strong>{{}}</div>
+      <div class="detail"><strong>{{ $t("address.name")+'：' }}</strong>{{info[0].name}}</div>
+      <div class="detail"><strong>{{$t("base.phone")+'：'}}</strong>{{info[0].phone}}</div>
+      <div class="detail"><strong>{{$t("base.address")+'：'}}</strong>{{info[0].address}}</div>
     </div>
 
       <div class="freight">
@@ -40,21 +40,21 @@
         >
           <div class="productInfo">
             <div class="productPic">
-              <img :src="item0.pic_url" alt="" />
+              <img :src="item0.product.pic_url" alt="" />
             </div>
             <div class="infoBox">
-              <div class="name_zh" @click="toProductInfo(item0.id)">
-                {{ item0.name }}
+              <div class="name_zh" @click="toProductInfo(item0.product.id)">
+                {{ item0.product.name }}
               </div>
               <div class="infoWord">
                 {{ $t("order.itemNo") + "：" }}{{ item0.huohao }}
               </div>
               <div class="infoWord">
-                {{ $t("order.casNum") + "：" }}{{ item0.cas }}
+                {{ $t("order.casNum") + "：" }}{{ item0.product.cas }}
               </div>
             </div>
           </div>
-          <div class="size">{{ item0.guige }}</div>
+          <div class="size">{{ item0.product.guige }}</div>
           <div class="price">{{ item0.price }}</div>
           <div class="count">
             <div class="num">{{ item0.count }}</div>
@@ -77,7 +77,7 @@
         </el-pagination>
       </div>
     </div>
-    <address-form v-if="formIsShow" />
+    <!-- <address-form v-if="formIsShow" /> -->
     <!-- 以下为支付方式-------------->
     <div class="payType">
       <div class="typeTitle">{{ $t("cart.payType") }}</div>
@@ -181,11 +181,8 @@ export default {
       currentPage: 1, // 当前页数
       pagerCount: 5, //五个以上加省略号
 
-      formIsShow: false, // 地址表单是否展示
-      curIdx: -1, // 当前选中要删除的索引
-      flag: 0, // 1为增加地址,2为修改地址
-      isReloadAddress: false, // 是否刷新地址
-      isBorder: -1, //用于地址框加边框
+      // formIsShow: false, // 地址表单是否展示
+      
       wechar: false,
       zhifubao: false,
       geren: false,
@@ -206,7 +203,8 @@ export default {
       submitBtn: this.$t("cart.settlement"),
       showBills: false,
       orderBox: [], //订单汇总传参--按照后端格式
-      addresses: [], // 地址列表
+      addresses: {}, // 获取的地址键值对
+      addressArray: [], // 将键值对对象放入地址数组传参进行翻译
       info:[],
       orderList: [],
       orderInfo: [
@@ -278,31 +276,22 @@ export default {
         })
         //回调函数
         .then((res) => {
+          console.log("ceess", res.data.data);
            if(!res.data.data){
              this.$data.info = [];
           }
           else {
-          // this.$data.orderId = this.$route.params.id;
-          this.$data.info = handleAddress(res.data.data.sx);
-          // console.log("ceshi", res.data.data);
-          // console.log("ceshi,shuzu ", this.$data.commodityList);
+          Object.assign(this.$data.addresses, { dz:res.data.data.dz, gj: res.data.data.gj, id: res.data.data.id, name: res.data.data.name, phone: res.data.data.phone, sx: res.data.data.sx });
+          this.$data.addressArray.push(this.$data.addresses);
+          this.$data.info = handleAddress(this.$data.addressArray);
+          // console.log("ceshi,shuzu ", this.$data.info);
           }     
         })
         .catch((err) => {
           console.log(err);
         });
      },
-    getAddress() {
-      this.$http.get("/address").then((res) => {
-        if (res.data.code == 20000) {
-          if (!res.data.data) {
-            this.addresses = [];
-          } else {
-            this.addresses = handleAddress(res.data.data);
-          }
-        }
-      });
-    },
+    
     back() {
       this.$router.go(-1)
     },
@@ -314,62 +303,7 @@ export default {
         },
       });
     },
-    // 修改地址------------------
-    editAddress(idx) {
-      this.flag = 2;
-      this.curAddress = this.addresses[idx];
-      console.log("this.curAddress", this.curAddress);
-      this.formIsShow = true;
-    },
-    // 删除地址
-    bounceMsg() {
-      this.$confirm(this.$t('callback.deleWarn'), this.$t('base.tip'), {
-        confirmButtonText: this.$t('base.sure'),
-        cancelButtonText: this.$t('base.cancel'),
-        type: "warning",
-        center: true,
-      })
-        .then(() => {
-          this.delAddress();
-        })
-        .catch(() => {
-          this.$message({
-            type: "info",
-            message: this.$t('base.canceled'),
-          });
-        });
-    },
-    delAddress() {
-      this.$http
-        .post("/delAddress", {
-          id: this.addresses[this.curIdx].id,
-        })
-        .then((res) => {
-          if (res.data.code == 20000) {
-            this.$message({
-              message: this.$t('callback.deleSuccess'),
-              type: "success",
-            });
-            this.isReloadAddress = true;
-          } else {
-            this.$message({
-              message: res.data.msg,
-              type: "error",
-            });
-          }
-        })
-        .catch((err) => {
-          this.$message({
-            message: this.$t('callback.error'),
-            type: "error",
-          });
-          console.log("err", err);
-        });
-    },
-    chooseAddress(id, code) {
-      this.$data.isBorder = id;
-      this.$data.addressId = code;
-    },
+    
     // 文件上传相关--------------
     //上传之前
     onUploadChange(file) {
@@ -426,6 +360,7 @@ export default {
               // this.$router.push({
               //   path: "/payCompleted/" + this.$data.orderId,
               // });
+              这里要加个支付成功的跳转
             } else {
               this.$message({
                 message: res.data.msg,
