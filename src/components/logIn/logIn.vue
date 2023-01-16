@@ -117,10 +117,10 @@ export default {
   },
   mounted() {
     // 监听鼠标点击  点击位置为登录之外,则关闭登录页
-    window.addEventListener("mousedown", this.closeLogIn);
+    // window.addEventListener("mousedown", this.closeLogIn);
   },
   unmounted() {
-    window.removeEventListener("mousedown", this.closeLogIn);
+    // window.removeEventListener("mousedown", this.closeLogIn);
     this.clearTimer();
   },
   methods: {
@@ -143,7 +143,8 @@ export default {
     },
     // 验证邮箱合法性
     checkEmail(e) {
-      let a = e.path[1]; // 获取带有after伪元素的父盒子
+      let path = e.path || (e.composedPath && e.composedPath()); // 浏览器兼容问题
+      let a = path[1]; // 获取带有after伪元素的父盒子
       if (this.logInForm.email == "") {
         a.setAttribute("data-after", this.$t("email.noEmpty"));
         return;
@@ -159,7 +160,8 @@ export default {
 
     // 验证验证码
     checkVerification(e) {
-      let a = e.path[1]; // 获取带有after伪元素的父盒子
+      let path = e.path || (e.composedPath && e.composedPath()); // 浏览器兼容问题
+      let a = path[1]; // 获取带有after伪元素的父盒子
       if (this.logInForm.email == "") {
         if (this.pageCode == 1)
           a.setAttribute("data-after", this.$t("email.emptyVerify"));
