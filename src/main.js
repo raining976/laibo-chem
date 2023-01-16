@@ -23,6 +23,6 @@ app.config.globalProperties.getToken = function () {
     localStorage.getItem('token')
 };
 app.config.globalProperties.currency = v => currency(v, { symbol: '¥' });
-axios.defaults.baseURL = 'https://laibo.imbai.tk/';
+axios.defaults.baseURL = 'https://www.laibochem.com/api/';
 
 app.use(router).use(installElementPlus).use(VueI18n).use(interceptor).mount("#app");
