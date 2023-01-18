@@ -331,7 +331,7 @@ export default {
         ? true
         : false;
     },
-    // 上传
+    // 支付----上传单据
     submitForm() {
       console.log("ff22", this.$refs.upload.uploadFiles.length);
       if(this.$refs.upload.uploadFiles.length !== 0) {
@@ -361,7 +361,8 @@ export default {
               // this.$router.push({
               //   path: "/payCompleted/" + this.$data.orderId,
               // });
-              //这里要加个支付成功的跳转
+              //上传单据成功的跳转回上一页
+              this.$router.go(-1)
             } else {
               this.$message({
                 message: res.data.msg,
@@ -385,7 +386,7 @@ export default {
       }
 
     },
-    // 上传成功
+    // 上传成功---不用
     upSuccess(res) {
       this.$message({
         type: "success",
@@ -394,7 +395,7 @@ export default {
         offset: 80,
       });
     },
-    // 上传失败
+    // 上传失败---不用
     upError() {
       this.$message({
         type: "error",
@@ -471,7 +472,7 @@ export default {
           break;
       }
     },
-    // 支付
+    // 支付----
     pay() {
       // 判断是否选择支付方式
       if (!this.$data.payWay) {
@@ -488,14 +489,14 @@ export default {
           })
           .then((res) => {
             if (res.data.code == 20000) {
-              this.$message({
-                message: this.$t('callback.paySuccess'),
-                type: "success",
-              });
+              // this.$message({
+              //   message: this.$t('callback.paySuccess'),
+              //   type: "success",
+              // });
               window.location.href = res.data.data.url;
-              this.$router.push({
-                path: "/payCompleted/" + this.$data.orderId,
-              });
+              // this.$router.push({
+              //   path: "/payCompleted/" + this.$data.orderId,
+              // });
             } else {
               this.$message({
                 message: res.data.msg,
