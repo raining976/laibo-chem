@@ -1,7 +1,7 @@
 // 订单详情部分
 //createDate:2022-07-17
 <template>
-  <div class="orderInfoPage">
+  <div class="orderInfoPage" v-if="info">
     <div class="top">
       <div class="title">{{$t('order.detail')}}</div>
       <div class="Btn">
@@ -12,9 +12,9 @@
     </div>
     <div class="orderInfo">
       <div class="detail"><strong>{{$t('order.num')+'：'}}</strong>{{orderId}}</div>
-      <div class="detail"><strong>{{$t('order.logistic')+'：'}}</strong>{{}}</div>
-      <div class="detail"><strong>{{$t('order.shipping')+'：'}}</strong>{{}}</div>
-      <div class="detail"><strong>{{$t('order.receive')+'：'}}</strong>{{}}</div>
+      <div class="detail"><strong>{{$t('order.logistic')+'：'}}</strong>{{company}}</div>
+      <!-- <div class="detail"><strong>{{$t('order.shipping')+'：'}}</strong>{{}}</div> -->
+      <div class="detail"><strong>{{$t('order.receive')+'：'}}</strong>{{info[0].address}}</div>
     </div>
     <!-- 可折叠列表 物流信息--><!-- 时间线 -->
     <!-- <div class="collapse">
@@ -95,8 +95,8 @@
   </div>
 </template>
 <script>
-import { ref } from "vue";
-
+// import { ref } from "vue";
+import handleAddress from "../../js/handlerAddress";
 export default {
   name: "orderInfo",
   data() {
@@ -106,6 +106,7 @@ export default {
       pagerCount: 5, //五个以上加省略号
       // 时间线
       orderId: "",
+      company: "",
       color: "#004ea2",
       size: "large",
       activities: [
@@ -146,6 +147,10 @@ export default {
         //   payment: 666,
         // },
       ],
+      address: "",
+      addresses: {}, // 获取的地址键值对
+      addressArray: [], // 将键值对对象放入地址数组传参进行翻译
+      info: "", //存储转换后的地址数组  ---以字符串形式定义，防止DOM节点挂载完成时判断初始化的数据还未存在的冲突（异步）
     };
   },
   created() {
@@ -167,7 +172,17 @@ export default {
           }
           else {
           this.$data.orderId = this.$route.params.id;
+          if(res.data.data.kuaidi_name == null || res.data.data.kuaidi_name == ""){
+            this.$data.company = "————";
+          }
+          else this.$data.company = res.data.data.kuaidi_name;
+          
           this.$data.commodityList = res.data.data.product_params_count;
+          Object.assign(this.$data.addresses, { dz:res.data.data.dz, gj: res.data.data.gj, id: res.data.data.id, name: res.data.data.name, phone: res.data.data.phone, sx: res.data.data.sx });
+          this.$data.addressArray.push(this.$data.addresses);
+          this.$data.info = handleAddress(this.$data.addressArray);   
+
+          
           }     
         })
         .catch((err) => {

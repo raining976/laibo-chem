@@ -1,6 +1,6 @@
 //订单（支付部分）
 <template>
-  <div class="paymentPage">
+  <div class="paymentPage" v-if = "info">
     <!-- 收获地址 -->
     <div class="amount">
       <div class="top">
@@ -205,7 +205,7 @@ export default {
       orderBox: [], //订单汇总传参--按照后端格式
       addresses: {}, // 获取的地址键值对
       addressArray: [], // 将键值对对象放入地址数组传参进行翻译
-      info:[],
+      info: "", //存储转换后的地址数组  ---以字符串形式定义，防止DOM节点挂载完成时判断初始化的数据还未存在的冲突（异步）
       orderList: [],
       orderInfo: [
         // {
@@ -276,7 +276,7 @@ export default {
         })
         //回调函数
         .then((res) => {
-          console.log("ceess", res.data.data);
+          // console.log("ceess", res.data.data);
            if(!res.data.data){
              this.$data.info = [];
           }
@@ -284,6 +284,7 @@ export default {
           Object.assign(this.$data.addresses, { dz:res.data.data.dz, gj: res.data.data.gj, id: res.data.data.id, name: res.data.data.name, phone: res.data.data.phone, sx: res.data.data.sx });
           this.$data.addressArray.push(this.$data.addresses);
           this.$data.info = handleAddress(this.$data.addressArray);
+
           // console.log("ceshi,shuzu ", this.$data.info);
           }     
         })
@@ -360,7 +361,7 @@ export default {
               // this.$router.push({
               //   path: "/payCompleted/" + this.$data.orderId,
               // });
-              这里要加个支付成功的跳转
+              //这里要加个支付成功的跳转
             } else {
               this.$message({
                 message: res.data.msg,
