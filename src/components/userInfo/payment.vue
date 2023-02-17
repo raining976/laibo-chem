@@ -55,12 +55,12 @@
             </div>
           </div>
           <div class="size">{{ item0.product.guige }}</div>
-          <div class="price">{{ item0.price }}</div>
+          <div class="price">{{ currency(item0.price / item0.count).format() }}</div>
           <div class="count">
             <div class="num">{{ item0.count }}</div>
           </div>
           <!-- 关于金额的计算方式 -->
-          <div class="payment">{{ currency(orderList.payment).format() }}</div>
+          <div class="payment">{{ currency(item0.price).format() }}</div>
         </div>
       </div>
       <div class="pagination">
@@ -161,7 +161,7 @@
     <div class="footer">
       <div class="allMoney">
         {{ $t("cart.total") }}&nbsp;&nbsp;&nbsp;
-        <div>{{ currency(allmoney).format() }}</div>
+        <div>{{ currency(orderList.payment).format() }}</div>
       </div>
       <el-button :disabled="showBills == true? true:false" class="pay" @click="pay()">{{ submitBtn }}</el-button>
     </div>
@@ -206,7 +206,7 @@ export default {
       addresses: {}, // 获取的地址键值对
       addressArray: [], // 将键值对对象放入地址数组传参进行翻译
       info: "", //存储转换后的地址数组  ---以字符串形式定义，防止DOM节点挂载完成时判断初始化的数据还未存在的冲突（异步）
-      orderList: [],
+      orderList: [],  //存放后端获取订单信息
       orderInfo: [
         // {
         //   name: "S915939 碳化硅, 99.9% metals basis,100目",
@@ -217,14 +217,14 @@ export default {
         //   price: 39,
         //   payment: 666,
         // },
-      ],
+      ], //存放商品列表
     };
   },
   created() {
-    this.$data.orderList = JSON.parse(localStorage.getItem("oneOrder"));
+    // this.$data.orderList = JSON.parse(localStorage.getItem("oneOrder"));
     this.orderNo = localStorage.getItem("orderNo")
     this.getOrderInfo()
-    this.$data.orderInfo = this.$data.orderList.product;
+    
   },
   watch: {
     isReloadAddress(val) {
@@ -251,19 +251,19 @@ export default {
       },
     },
   },
-  computed: {
-    allmoney() {
-      let _allmoney = this.$data.allmoney;
-      // _allmoney += this.$data.orderList.post_fee;
-      // this.$data.orderList.forEach((item) => {
-      //   _allmoney += item.payment;
+  // computed: {
+  //   allmoney() {
+  //     let _allmoney = this.$data.allmoney;
+  //     // _allmoney += this.$data.orderList.post_fee;
+  //     // this.$data.orderList.forEach((item) => {
+  //     //   _allmoney += item.payment;
             
-      // });
-       _allmoney += this.$data.orderList.payment;
-      this.$data.allmoney = _allmoney;
-      return _allmoney;
-    },
-  },
+  //     // });
+  //      _allmoney += this.$data.orderList.payment;
+  //     this.$data.allmoney = _allmoney;
+  //     return _allmoney;
+  //   },
+  // },
   methods: {
     // 获取信息
      getOrderInfo() {
@@ -276,15 +276,15 @@ export default {
         })
         //回调函数
         .then((res) => {
-          // console.log("ceess", res.data.data);
            if(!res.data.data){
              this.$data.info = [];
           }
           else {
+          this.$data.orderList = res.data.data;
+          this.$data.orderInfo = this.$data.orderList.product_params_count;
           Object.assign(this.$data.addresses, { dz:res.data.data.dz, gj: res.data.data.gj, id: res.data.data.id, name: res.data.data.name, phone: res.data.data.phone, sx: res.data.data.sx });
           this.$data.addressArray.push(this.$data.addresses);
           this.$data.info = handleAddress(this.$data.addressArray);
-
           // console.log("ceshi,shuzu ", this.$data.info);
           }     
         })

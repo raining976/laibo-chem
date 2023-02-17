@@ -15,6 +15,7 @@
       <div class="detail"><strong>{{$t('order.logistic')+'：'}}</strong>{{company}}</div>
       <!-- <div class="detail"><strong>{{$t('order.shipping')+'：'}}</strong>{{}}</div> -->
       <div class="detail"><strong>{{$t('order.receive')+'：'}}</strong>{{info[0].address}}</div>
+      <div class="detail"><strong>{{$t('order.fright')+'：'}}</strong>{{currency(postFee).format()}}</div>
     </div>
     <!-- 可折叠列表 物流信息--><!-- 时间线 -->
     <!-- <div class="collapse">
@@ -70,12 +71,12 @@
             </div>
           </div>
           <div class="size">{{ item0.product.guige }}</div>
-          <div class="price">{{ currency(item0.price).format() }}</div>
+          <div class="price">{{ currency(item0.price / item0.count).format() }}</div>
           <div class="count">
             <div class="num">{{ item0.count }}</div>
           </div>
           <!-- 关于金额的计算方式  num * price -->
-          <div class="payment">{{ currency(item0.price * item0.count).format() }}</div>
+          <div class="payment">{{ currency(item0.price).format() }}</div>
         </div>
       </div>
       <div class="pagination">
@@ -90,6 +91,13 @@
           @size-change="handleSizeChange"
         >
         </el-pagination>
+      </div>
+    </div>
+        <!-- 以下为底部 -->
+    <div class="footer">
+      <div class="allMoney">
+        {{ $t("cart.total") }}&nbsp;&nbsp;&nbsp;
+        <div>{{ currency(allMoney).format() }}</div>
       </div>
     </div>
   </div>
@@ -107,6 +115,8 @@ export default {
       // 时间线
       orderId: "",
       company: "",
+      postFee: "",
+      allMoney: "",
       color: "#004ea2",
       size: "large",
       activities: [
@@ -171,18 +181,18 @@ export default {
              this.$data.commodityList = [];
           }
           else {
-          this.$data.orderId = this.$route.params.id;
-          if(res.data.data.kuaidi_name == null || res.data.data.kuaidi_name == ""){
+            this.$data.orderId = this.$route.params.id;
+            this.$data.allMoney = res.data.data.payment;
+            if(res.data.data.kuaidi_name == null || res.data.data.kuaidi_name == ""){
             this.$data.company = "————";
-          }
-          else this.$data.company = res.data.data.kuaidi_name;
-          
-          this.$data.commodityList = res.data.data.product_params_count;
-          Object.assign(this.$data.addresses, { dz:res.data.data.dz, gj: res.data.data.gj, id: res.data.data.id, name: res.data.data.name, phone: res.data.data.phone, sx: res.data.data.sx });
-          this.$data.addressArray.push(this.$data.addresses);
-          this.$data.info = handleAddress(this.$data.addressArray);   
-
-          
+            }
+            else this.$data.company = res.data.data.kuaidi_name;
+            this.$data.postFee = res.data.data.post_fee;
+            this.$data.commodityList = res.data.data.product_params_count;
+            Object.assign(this.$data.addresses, { dz:res.data.data.dz, gj: res.data.data.gj, id: res.data.data.id, name: res.data.data.name, phone: res.data.data.phone, sx: res.data.data.sx });
+            this.$data.addressArray.push(this.$data.addresses);
+            this.$data.info = handleAddress(this.$data.addressArray);   
+    
           }     
         })
         .catch((err) => {
@@ -472,4 +482,34 @@ export default {
 .orderInfoPage /deep/ .el-icon {
   margin: 0 auto;
 }
+/* 以下为底部 */
+.footer {
+  width: 95%;
+  height: 5.21vw;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  background: #ffffff;
+  border: 0.05vw solid #eaeaec;
+  border-radius: 0.52vw;
+  margin: 4.69vw 0 0 0;
+  overflow: hidden;
+}
+.allMoney {
+  display: flex;
+  align-items: center;
+  min-width: 11.46vw;
+  height: 0.94vw;
+  font-size: 0.94vw;
+  font-family: Microsoft YaHei UI;
+  font-weight: 400;
+  color: #333333;
+  line-height: 0.94vw;
+  margin: 0 0 0 2.19vw;
+}
+.allMoney div {
+  font-size: 1.35vw;
+  color: #ff4747;
+}
+
 </style>

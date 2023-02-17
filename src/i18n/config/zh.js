@@ -186,6 +186,8 @@ export default {
         casNum: "CAS编号",
         fenziliang: "分子量",
         jiegoushi: "结构式",
+        fright: "运费",
+        includingFreight: "含运费",
     },
     // 购物车
     cart: {

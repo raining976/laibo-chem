@@ -185,6 +185,8 @@ export default {
         casNum: "The CAS number",
         fenziliang: "molecular weight",
         jiegoushi: "Linear ormula",
+        fright: "Fright",
+        includingFreight: "including freight", 
     },
     // 购物车
     cart: {

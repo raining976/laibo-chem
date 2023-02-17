@@ -8,7 +8,11 @@
       </div>
       <div class="deleteBtn">
         <el-tooltip effect="light" content="删除选中商品" placement="top">
-          <i class="el-icon-delete" style="font-size:25px" @click="delProduct()"></i>
+          <i
+            class="el-icon-delete"
+            style="font-size: 25px"
+            @click="delProduct()"
+          ></i>
         </el-tooltip>
       </div>
     </div>
@@ -29,7 +33,7 @@
           <label class="word" for="checkAll">{{ $t("cart.allCheck") }} </label>
         </div>
         <!--  -->
-        <div class="_shopId word">{{ $t("order.num") }}</div>
+        <!-- <div class="_shopId word">{{ $t("order.num") }}</div> -->
         <div class="_product word">{{ $t("order.product") }}</div>
         <div class="_type word">{{ $t("order.type") }}</div>
         <div class="_unit word">{{ $t("order.unit") }}</div>
@@ -56,26 +60,53 @@
                 v-model="item0.checked"
               />
             </label>
+            &nbsp;
+            <div class="shopId">
+              <!-- _shopId -->
+              <div class="word">{{ $t("order.num") }}：{{ item0.id }}</div>
+            </div>
           </div>
           <!--  -->
-          <div class="shopId">
-            {{ item0.id }}
-          </div>
           <div class="product">
             <div
-              class="productName"
+              class="productBox"
               v-for="(item1, index) in item0.product"
               :key="index"
-              :title="item1.product.name"
             >
-              {{ item1.product.name }}&nbsp;
+              <div class="productInfo" :title="item1.product.name">
+                <div class="productPic">
+                  <img :src="item1.product.pic_url" alt="" />
+                </div>
+                <div class="infoBox">
+                  <div class="name_zh" @click="toProductInfo(item1.product.id)">
+                    {{ item1.product.name }}
+                  </div>
+                  <div class="infoWord">
+                    {{ $t("order.itemNo") + "：" }}{{ item1.huohao }}
+                  </div>
+                  <div class="infoWord">
+                    {{ $t("order.casNum") + "：" }}{{ item1.product.cas }}
+                  </div>
+                </div>
+              </div>
+
+              <div class="productCount">X&nbsp;{{ item1.count }}</div>
             </div>
           </div>
           <div class="type">{{ item0.type }}</div>
           <div class="unit">{{ item0.team == null ? "——" : item0.team }}</div>
           <div class="orderStatus">{{ item0.status }}</div>
-          <!-- 关于金额的计算方式 ？-->
-          <div class="payment">{{ currency(item0.payment).format() }}</div>
+          <!-- 关于金额的计算方式 -->
+          <div class="payment">
+            <div>
+              {{ currency(item0.payment).format() }}
+            </div>
+            <div style="color: #928f8f; font-weight: 400">
+              （{{ $t("order.includingFreight") }}：{{
+                currency(item0.post_fee).format()
+              }}）
+            </div>
+          </div>
           <!--  折叠框 -->
           <el-dropdown>
             <span class="el-dropdown-link">
@@ -85,14 +116,14 @@
               </el-icon>
             </span>
             <template #dropdown>
-              <el-dropdown-menu >
+              <el-dropdown-menu>
                 <el-dropdown-item
                   class="dropdown"
                   :disabled="item0.status == '待付款' ? false : true"
                   @click="toPay(item0.id, item0)"
-                  placement='bottom'
+                  placement="bottom"
                 >
-                  <div class="toOrderInfo"> {{ $t("order.toPay") }}</div>
+                  <div class="toOrderInfo">{{ $t("order.toPay") }}</div>
                 </el-dropdown-item>
                 <el-dropdown-item @click="toOrderInfo(item0.id)">
                   <div class="toOrderInfo">
@@ -154,14 +185,14 @@ export default {
     this.addChecked();
     this.$data.count = this.$data.orderList.length;
   },
-    mounted() {
+  mounted() {
     //
     window.scrollTo(0, 0);
   },
   methods: {
     // 获取订单
     async getOrders() {
-       await this.$http
+      await this.$http
         .get("/order", {
           params: {
             page: 1,
@@ -181,10 +212,10 @@ export default {
         });
     },
     // 远端修改，后重新获取
-   async delProduct() {
+    async delProduct() {
       if (this.$data.checkedOrder.length === 0) {
         this.$message({
-          message: this.$t('callback.selectTip'),
+          message: this.$t("callback.selectTip"),
           // type: "success",
         });
       } else if (this.$data.checkedOrder.length !== 0) {
@@ -193,16 +224,16 @@ export default {
         // this.delPost(this.orderList).then(() => {
         //   this.getOrders();
         // });
-       await this.delPostReq(this.orderList)
-        await this.getOrders()
-        this.$data.reload ++;
+        await this.delPostReq(this.orderList);
+        await this.getOrders();
+        this.$data.reload++;
         // await this.getOrders();
         this.addChecked();
         this.$data.count = this.$data.orderList.length;
       }
     },
     async delPostReq(orderList) {
-      for(let item of orderList) {
+      for (let item of orderList) {
         if (item.checked === true) {
           await this.$http
             .get("/delOrder", {
@@ -214,7 +245,7 @@ export default {
             .then((res) => {
               if (res.data.code == 20000) {
                 this.$message({
-                  message: this.$t('callback.deleSuccess'),
+                  message: this.$t("callback.deleSuccess"),
                   type: "success",
                 });
                 // this.getOrders()
@@ -227,18 +258,17 @@ export default {
             })
             .catch((err) => {
               this.$message({
-                message: this.$t('callback.error'),
+                message: this.$t("callback.error"),
                 type: "error",
               });
               console.log("err", err);
             });
         }
-      };
-
+      }
     },
     //复选框相关
     // 添加 checked属性
-     addChecked() {
+    addChecked() {
       this.$data.orderList.forEach((item) => {
         Object.assign(item, { checked: false });
       });
@@ -304,6 +334,14 @@ export default {
         path: "/orderInfo/" + id,
       });
     },
+    toProductInfo(code) {
+      this.$router.push({
+        path: "/productInfo",
+        query: {
+          id: code,
+        },
+      });
+    },
   },
 };
 </script>
@@ -361,7 +399,7 @@ export default {
   height: 100%;
   align-items: center;
   margin: 0 0px 0 1.04vw;
-  flex: 0.6;
+  flex: 0.8;
 }
 /* ！复选框 */
 .checkAll {
@@ -385,19 +423,19 @@ export default {
   text-align: center;
 }
 
-._shopId {
-  /* width: 85px; */
+/* ._shopId {
+  width: 85px;
   flex: 1.2;
-}
+} */
 ._product {
   /* margin: 0 0 0 264px; */
   /* width: 84px; */
-  flex: 1.9;
+  flex: 2;
 }
 ._type {
-  /* margin: 0 0 0 198px; */
+  margin: 0 0 0 8vw;
   /* width: 145px; */
-  flex: 1.9;
+  flex: 1;
 }
 ._unit {
   /* margin: 0 0 0 109px; */
@@ -410,18 +448,17 @@ export default {
   flex: 1;
 }
 ._payment {
-  /* margin: 0 0 0 102px; */
+  /* margin: 0 40px 0 0; */
   /* width: 85px; */
-  flex: 1;
+  flex: 1.3;
 }
 /* 内容 */
 .allOrder {
   position: relative;
   width: 100%;
-  height: 37.03vw;
+  min-height: 40.03vw;
   display: flex;
   flex-direction: column;
-
 }
 
 .order {
@@ -431,16 +468,16 @@ export default {
   /* justify-content: center; */
   width: 100%;
   min-width: 38.91vw;
-  height: 11.3vw;
+  min-height: 11.3vw;
+  padding: 1.82vw 0;
   margin: 0 0 1.04vw 0;
   background: #f7f7f7;
   border-radius: 0.52vw;
   overflow: hidden;
   font-size: 0.94vw;
 }
-.order >div {
+.order > div {
   font-size: 0.94vw;
-
 }
 .checkOne {
   cursor: pointer;
@@ -450,38 +487,90 @@ export default {
   border-radius: 0.1vw;
 }
 .radio {
-  /* position: absolute;
-  top: 20px;
-  left: 28px; */
+  position: absolute;
+  display: flex;
+  align-items: center;
+  top: 0.52vw;
+  /* left: 28px; */
   /* width: 18px; */
-  height: 0.94vw;
+  height: 1.04vw;
   margin-left: 1.04vw;
-  flex: 0.6;
-  /* border: 1px solid #999; */
-  /* background-color: #fff; */
-  /* border-radius: 2px; */
+  /* flex: 0.6; */
 }
 .shopId {
   /* width: 700px; */
-  flex: 1.2;
+  /* flex: 1.2; */
   /* margin: 0 27px 0 52px; */
   text-align: center;
   word-break: break-all;
   /* overflow: hidden; */
 }
 .product {
-  flex: 2;
+  flex: 3.5;
   /* width: 700px; */
-  height: 8.59vw;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  word-break: break-all;
+  min-height: 8.59vw;
+  margin-left: 2.34vw;
 }
-
+.productBox {
+  display: flex;
+  align-items: center;
+}
+.productInfo {
+  display: flex;
+  width: 88%;
+  height: 8.59vw;
+  align-items: center;
+  margin: 0 0 0 0.54vw;
+  font-size: 0.9375vw;
+}
+.productPic {
+  width: 7.59vw;
+  height: 7.59vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 1.7vw 0 0;
+  background: #ffffff;
+  border-radius: 0.26vw;
+  overflow: hidden;
+}
+.productPic img {
+  object-fit: contain;
+}
+.infoBox {
+  width: calc(100% - 9.31vw);
+  height: 8.59vw;
+  overflow: hidden;
+}
+.name_zh {
+  cursor: pointer;
+  min-height: 1.04vw;
+  font-size: 0.94vw;
+  font-family: Microsoft YaHei UI;
+  font-weight: 400;
+  color: #004ea2;
+  line-height: 1.04vw;
+  padding: 0 0 0.1vw 0;
+  margin: 1.04vw 0 0.78vw;
+}
+.name_zh:hover {
+  /* border-bottom: 2px solid #004EA2; */
+  text-decoration: underline;
+}
+.infoWord {
+  height: 0.94vw;
+  font-size: 0.94vw;
+  font-family: Microsoft YaHei UI;
+  font-weight: 400;
+  color: #333333;
+  line-height: 0.94vw;
+  margin: 0.42vw 0;
+}
+.productCount {
+  color: #5b5959;
+}
 .type {
-  flex: 2;
+  flex: 1;
   /* width: 110px; */
   /* margin: 0 50px 0 0; */
   text-align: center;
@@ -503,10 +592,11 @@ export default {
 }
 
 .payment {
-  flex: 1;
+  flex: 1.1;
   /* width: 150px; */
   text-align: center;
   font-weight: 600;
+  margin-right: 1vw;
 }
 .myOrder >>> .el-dropdown {
   position: absolute;
@@ -515,7 +605,7 @@ export default {
 }
 .myOrder >>> .el-dropdown-link {
   cursor: pointer;
-
+  font-size: 0.94vw;
   color: #004ea2;
 }
 /* .toOrderInfo {
@@ -537,26 +627,20 @@ export default {
   --el-pagination-button-height: 2.08vw;
   --el-pagination-font-type: 0.83vw;
 }
-.myOrder
-  >>>
-  .el-pagination.is-background
-  .el-pager
-  li:not(.disabled).active {
+.myOrder >>> .el-pagination.is-background .el-pager li:not(.disabled).active {
   background-color: #004ea2;
 }
-.myOrder >>>.el-pagination.is-background .btn-next,
-.myOrder >>>.el-pagination.is-background .btn-prev,
-.myOrder >>>.el-pagination.is-background .el-pager li {
+.myOrder >>> .el-pagination.is-background .btn-next,
+.myOrder >>> .el-pagination.is-background .btn-prev,
+.myOrder >>> .el-pagination.is-background .el-pager li {
   min-width: 2.08vw;
   border-radius: 0.26vw;
 }
 .myOrder >>> .el-icon {
   margin: 0 auto;
 }
-.productName{
-  font-size: .9375vw;
-}
-.myOrder >>> .dropdown  span{
+
+.myOrder >>> .dropdown span {
   font-size: 0.94vw;
 }
 </style>
