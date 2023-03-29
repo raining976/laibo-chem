@@ -142,6 +142,9 @@ export default {
     resultBox: {
       type: Array,
     },
+    count: {
+      type: Number,
+    }
   },
   components: "",
   data() {
@@ -149,7 +152,7 @@ export default {
       activeNames: [], //可折叠列表参数，控制展开--循环增加元素也可行
       // 分页器
       pagesize: 4, // 每页显示多少条
-      currentPage: 1, // 当前页数
+      currentPage: 1, // 当前页码
       pastId: 0, // 记录产品id
       _resultBox: [], // 承载 props的数据
       productData: [],

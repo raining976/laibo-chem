@@ -22,7 +22,7 @@
       </div>
     </div>
     <div class="resultBlock">
-      <component :is="res" :resultBox="resultBox" />
+      <component :is="res" :resultBox="resultBox" :count="count"/>
       <!-- <result :resultBox="resultBox" v-show="isResult"></result>
       <no-result v-show="!isResult"></no-result> -->
     </div>
@@ -43,7 +43,7 @@ export default {
       isResult: true, // 是否搜到
       cate: "", // 0 1 2   0:实验用品, 1:中间品, 2:染料,
       type: "", //需要判断
-      inputValue: "",
+      inputValue: "", //搜索值
       typeList: [
         { name: this.$t("search.intermediates"), cate: 1 },
         { name: this.$t("search.experiment"), cate: 0 },
@@ -51,17 +51,21 @@ export default {
         { name: this.$t("search.chemical"), cate: 3 },
       ],
       typeIndex: -1, // 用于标记当前 type 在typeList 的索引
+      count: 0, //获取的产品总量
+      curPage: 1, //当前页码
+      page:1, //当前页码
+      curCount: 1, //剩余待请求产品数
       curName: "",
-      resultBox: [],
+      resultBox: [], //获取的产品对象
     };
   },
-  created() {
+  async created() {
     if (this.$route.query.inputValue) {
-      this.inputValue = this.$route.query.inputValue;
+      this.inputValue = this.$route.query.inputValue; //搜索值
       this.cate = "";
-      this.getSearchResult();
+      await this.getSearchResult(4);
     } else if (this.$route.query.whichType) {
-      let state = this.$route.query.whichType;
+      let state = this.$route.query.whichType; //其他板块点击更多产品跳转对应的四种产品类型代码
       this.searchType(state);
       
     }
@@ -73,16 +77,23 @@ export default {
   watch: {
     "$route.query.isSearch": {
       handler() {
-        // 此判断用于解决路由不跳转
+        // 此判断用于解决输入新的搜索值路由不跳转
         if (this.$route.query.isSearch) {
           // 对路由变化作出响应....
           this.inputValue = this.$route.query.inputValue;
           this.cate = "";
-          this.getSearchResult();
+          this.resultBox =[];
+          this.page = 1;
+          this.newSearch(4);
         }
       },
       immediate: false,
       deep: true,
+    },
+    async page() {
+      if(this.curCount > 0)
+      await this.newSearch(4);
+      this.toResultShow();
     },
     typeIndex(val) {
       this.curName = this.typeList[val].name;
@@ -94,20 +105,28 @@ export default {
       this.$router.push("/mainPage");
     },
     //获取搜索结果
-    getSearchResult() {
-      if (this.inputValue != undefined) {
-        this.$http
+    //更改搜索时使用
+    async newSearch(limit){
+      await this.$http
           .get("/search", {
             params: {
               s: this.inputValue,
               cate: this.cate, //  0:实验用品, 1:中间品, 2:染料,
+              limit: limit, //每页多少个产品
+              page: this.page, //请求的页码--改成后端分页
             },
           })
           //回调函数
           .then((res) => {
             if (res.data.code == 20000) {
-              this.resultBox = res.data.data.products;
-              this.toResultShow();
+              this.count = res.data.data.count;
+              if(this.page === 1)this.curCount = this.count;
+              res.data.data.products.forEach((item) => {
+                  this.resultBox.push(item);
+              })
+              this.curCount = this.curCount - limit;
+              this.page = this.page + 1;
+              // if(this.curCount > 0)this.getSearchResult(curPage+1, limit);
             }else{
               this.resultBox =[];
             }
@@ -115,7 +134,41 @@ export default {
           .catch((err) => {
             console.log(err);
           });
+    },
+    //初始化时使用
+    async getSearchResult(limit) {
+      if (this.inputValue != undefined) {
+        for(;this.curCount > 0;){
+          await this.$http
+          .get("/search", {
+            params: {
+              s: this.inputValue,
+              cate: this.cate, //  0:实验用品, 1:中间品, 2:染料,
+              limit: limit, //每页多少个产品
+              page: this.curPage, //请求的页码--改成后端分页
+            },
+          })
+          //回调函数
+          .then((res) => {
+            if (res.data.code == 20000) {
+              this.count = res.data.data.count;
+              if(this.curPage === 1)this.curCount = this.count;
+              res.data.data.products.forEach((item) => {
+                  this.resultBox.push(item);
+              })
+              this.curCount = this.curCount - limit;
+              this.curPage = this.curPage + 1;
+              // if(this.curCount > 0)this.getSearchResult(curPage+1, limit);
+            }else{
+              this.resultBox =[];
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        }  
       }
+      this.toResultShow();
     },
     // 分类
     searchType(type) {
