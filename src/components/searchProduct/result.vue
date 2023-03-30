@@ -1,16 +1,14 @@
-<template>
-  <div class="resultPage">
+<template >
+  <!-- 搜索结果为空 -->
+  <div class="noResult" v-if="noRes">
+    <div><img src="../../assets/noRes.webp" alt="" /></div>
+  </div>
+  <!-- 有搜索结果 -->
+  <div class="resultPage" v-if="res">
     <div class="tip"></div>
     <div class="resultBigBox">
       <!-- v-for模块 -->
-      <div
-        class="resultBox"
-        v-for="(item, index) in _resultBox.slice(
-          (currentPage - 1) * pagesize,
-          currentPage * pagesize
-        )"
-        :key="index"
-      >
+      <div class="resultBox" v-for="(item, index) in resultBox" :key="index">
         <div class="result">
           <div class="resultPic"><img :src="item.pic_url" alt="" /></div>
           <div class="resultInfo">
@@ -124,11 +122,11 @@
         v-model="currentPage"
         background="#004ea2"
         layout="prev,pager,next"
-        :total="_resultBox.length"
+        :total="count"
         :page-size="pagesize"
         :current-page="currentPage"
-        @change="handleCurrentChange"
-        @current-change="handleCurrentChange"
+        @change="getPage"
+        @current-change="getPage"
         @size-change="handleSizeChange"
       >
       </el-pagination>
@@ -139,35 +137,60 @@
 export default {
   name: "result",
   props: {
-    resultBox: {
-      type: Array,
+    inputValue: {
+      type: String,
     },
-    count: {
-      type: Number,
-    }
+    cate: {
+      type: String,
+    },
   },
   components: "",
   data() {
     return {
-      activeNames: [], //可折叠列表参数，控制展开--循环增加元素也可行
+      noRes: true,
+      res: false,
+      isNew: 0,
       // 分页器
       pagesize: 4, // 每页显示多少条
       currentPage: 1, // 当前页码
       pastId: 0, // 记录产品id
-      _resultBox: [], // 承载 props的数据
-      productData: [],
-      productDatas: {}, //字典 key为id 键为一个数组对象 productData
+      count: 0, //获取的产品总量
+      curCount: 1, //剩余待请求产品数
+      resultBox: [], // 承载 props的数据
+      productData: [], //x
+      productDatas: {}, //字典 key为id 键为一个数组对象 productData x
+      activeNames: [], //可折叠列表参数，控制展开--循环增加元素也可行
     };
   },
-  created() {},
+  created() {
+    this.getSearchRes();
+  },
   mounted() {
+    
     window.scrollTo(0, 0);
   },
   watch: {
     resultBox: {
       handler() {
-        this._resultBox = JSON.parse(JSON.stringify(this.resultBox));
+        // this.resultBox = JSON.parse(JSON.stringify(this.resultBox));
         this.addCount();
+      },
+      immediate: true,
+      deep: true,
+    },
+    cate: {
+      handler() {
+        this.currentPage = 1;
+        this.getSearchRes();
+
+      },
+      immediate: true,
+      deep: true,
+    },
+    inputValue: {
+       handler() {
+        this.currentPage = 1;
+        this.getSearchRes();       
       },
       immediate: true,
       deep: true,
@@ -175,7 +198,7 @@ export default {
   },
   methods: {
     addCount() {
-      for (let item of this._resultBox)
+      for (let item of this.resultBox)
         for (let item1 of item.params) {
           Object.assign(item1, { count: 0 });
         }
@@ -189,6 +212,48 @@ export default {
         },
       });
     },
+    async getSearchRes() {
+      await this.$http
+        .get("/search", {
+          params: {
+            s: this.inputValue,
+            cate: this.cate, //  0:实验用品, 1:中间品, 2:染料,
+            limit: this.pagesize, //每页多少个产品
+            page: this.currentPage, //请求的页码--改成后端分页
+          },
+        })
+        //回调函数
+        .then((res) => {
+          if (res.data.code == 20000) {
+            this.count = res.data.data.count;
+            this.resultBox = res.data.data.products;            
+            if( res.data.data.count == 0||res.data.data.products.length == 0){
+              this.noRes = true;
+              this.res = false;
+            }else{
+              this.noRes = false;
+              this.res = true;
+            }
+            // this.resultBox = res.data.data.products;
+            // this.resultBox.splice(0, this.$data.pagesize);
+            // for (let item of res.data.data.products) {
+            //   this.resultBox.push(item);
+            // }
+            
+          } else {
+            this.$message({
+              message: this.$t("callback.selectNum"), //要改为获取搜索结果失败
+            });
+            this.noRes = true;
+            this.res = false;
+            this.resultBox = [];
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+        // this.$forceUpdate(); //强制刷新，解决页面不会重新渲染的问题
+    },
     // 加入购物车
     async addCart(index) {
       if (!localStorage.getItem("token")) {
@@ -196,7 +261,7 @@ export default {
       } else {
         let isPost = false;
         // let length = this.productData.length;
-        for (let item of this._resultBox[index].params) {
+        for (let item of this.resultBox[index].params) {
           if (item.count !== 0) {
             await this.addCartReq(item);
             isPost = true;
@@ -265,14 +330,26 @@ export default {
       this.$data.pagesize = val;
       // console.log(`每页 ${val} 条`);
     },
-    handleCurrentChange(val) {
-      this.$data.currentPage = val;
-      // console.log(`当前页: ${val}`);
+    getPage(val) {
+      this.$data.currentPage = val;    
+      this.getSearchRes();
     },
   },
 };
 </script>
 <style>
+.noResult {
+  margin: 0 8.33vw 0 0;
+  width: 58.33vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.noResult img {
+  width: 20.26vw;
+  height: 18.49vw;
+}
 .resultPage .el-collapse-item__arrow {
   margin: 0 0.52vw;
 }

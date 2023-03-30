@@ -22,25 +22,20 @@
       </div>
     </div>
     <div class="resultBlock">
-      <component :is="res" :resultBox="resultBox" :count="count"/>
-      <!-- <result :resultBox="resultBox" v-show="isResult"></result>
-      <no-result v-show="!isResult"></no-result> -->
+      <result :inputValue="inputValue" :cate="cate" ></result>
     </div>
   </div>
 </template>
 <script>
 import result from "../components/searchProduct/result.vue";
-import noResult from "../components/searchProduct/noResult.vue";
 export default {
   name: "",
   components: {
     result,
-    noResult,
   },
   data() {
     return {
       res: "result",
-      isResult: true, // 是否搜到
       cate: "", // 0 1 2   0:实验用品, 1:中间品, 2:染料,
       type: "", //需要判断
       inputValue: "", //搜索值
@@ -55,19 +50,18 @@ export default {
       curPage: 1, //当前页码
       page:1, //当前页码
       curCount: 1, //剩余待请求产品数
+      // isNew: 0,
       curName: "",
       resultBox: [], //获取的产品对象
     };
   },
-  async created() {
+  created() {
     if (this.$route.query.inputValue) {
       this.inputValue = this.$route.query.inputValue; //搜索值
       this.cate = "";
-      await this.getSearchResult(4);
     } else if (this.$route.query.whichType) {
       let state = this.$route.query.whichType; //其他板块点击更多产品跳转对应的四种产品类型代码
       this.searchType(state);
-      
     }
   },
   mounted() {
@@ -82,19 +76,13 @@ export default {
           // 对路由变化作出响应....
           this.inputValue = this.$route.query.inputValue;
           this.cate = "";
-          this.resultBox =[];
-          this.page = 1;
-          this.newSearch(4);
+          // this.isNew++;
         }
       },
       immediate: false,
       deep: true,
     },
-    async page() {
-      if(this.curCount > 0)
-      await this.newSearch(4);
-      this.toResultShow();
-    },
+    // 监听cate变化
     typeIndex(val) {
       this.curName = this.typeList[val].name;
       
@@ -104,76 +92,10 @@ export default {
     toMainPage() {
       this.$router.push("/mainPage");
     },
-    //获取搜索结果
-    //更改搜索时使用
-    async newSearch(limit){
-      await this.$http
-          .get("/search", {
-            params: {
-              s: this.inputValue,
-              cate: this.cate, //  0:实验用品, 1:中间品, 2:染料,
-              limit: limit, //每页多少个产品
-              page: this.page, //请求的页码--改成后端分页
-            },
-          })
-          //回调函数
-          .then((res) => {
-            if (res.data.code == 20000) {
-              this.count = res.data.data.count;
-              if(this.page === 1)this.curCount = this.count;
-              res.data.data.products.forEach((item) => {
-                  this.resultBox.push(item);
-              })
-              this.curCount = this.curCount - limit;
-              this.page = this.page + 1;
-              // if(this.curCount > 0)this.getSearchResult(curPage+1, limit);
-            }else{
-              this.resultBox =[];
-            }
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-    },
-    //初始化时使用
-    async getSearchResult(limit) {
-      if (this.inputValue != undefined) {
-        for(;this.curCount > 0;){
-          await this.$http
-          .get("/search", {
-            params: {
-              s: this.inputValue,
-              cate: this.cate, //  0:实验用品, 1:中间品, 2:染料,
-              limit: limit, //每页多少个产品
-              page: this.curPage, //请求的页码--改成后端分页
-            },
-          })
-          //回调函数
-          .then((res) => {
-            if (res.data.code == 20000) {
-              this.count = res.data.data.count;
-              if(this.curPage === 1)this.curCount = this.count;
-              res.data.data.products.forEach((item) => {
-                  this.resultBox.push(item);
-              })
-              this.curCount = this.curCount - limit;
-              this.curPage = this.curPage + 1;
-              // if(this.curCount > 0)this.getSearchResult(curPage+1, limit);
-            }else{
-              this.resultBox =[];
-            }
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-        }  
-      }
-      this.toResultShow();
-    },
     // 分类
     searchType(type) {
-      // 0:实验用品, 1:中间品, 2:染料,
-      if (type == this.cate) return;
+      // 0:实验用品, 1:中间品, 2:染料,3化工产品
+      if (type === this.cate) return; //此处若用两个逗号做判断会导致将空格判定为0，三个等号判断类型
       this.inputValue = "";
       this.cate = type;
       switch (type) {
@@ -190,17 +112,9 @@ export default {
           this.typeIndex = 3;
           break;
       }
-      this.getSearchResult();
+      // this.getSearchResult();
     },
-    // js判断页面
-    toResultShow() {
-      //用&&原因是因为数据未能完全覆盖导致条件判断错误
-      if (this.resultBox.length !== 0 && this.resultBox !== undefined) {
-        this.res = "result";
-      } else if (this.$data.resultBox.length === 0) {
-        this.res = "noResult";
-      }
-    },
+    
   },
 };
 </script>
