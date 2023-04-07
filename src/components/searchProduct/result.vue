@@ -165,19 +165,20 @@ export default {
   created() {
     this.getSearchRes();
   },
-  mounted() {
-    
-    window.scrollTo(0, 0);
+  mounted() { 
+    // window.scrollTo(0, 0);
+    console.log("dddd")
   },
   watch: {
-    resultBox: {
-      handler() {
-        // this.resultBox = JSON.parse(JSON.stringify(this.resultBox));
-        this.addCount();
-      },
-      immediate: true,
-      deep: true,
-    },
+    // resultBox: {
+    //   handler() {
+    //     // this.resultBox = JSON.parse(JSON.stringify(this.resultBox));
+    //     console.log("dddd")
+    //     // this.addCount();  //监听出现问题？
+    //   },
+    //   immediate: true,
+    //   deep: true,
+    // },
     cate: {
       handler() {
         this.currentPage = 1;
@@ -200,7 +201,7 @@ export default {
     addCount() {
       for (let item of this.resultBox)
         for (let item1 of item.params) {
-          Object.assign(item1, { count: 0 });
+          Object.assign(item1, { count: 0 }); //添加属性，同时也能触发页面数据更新
         }
     },
     //
@@ -233,13 +234,7 @@ export default {
             }else{
               this.noRes = false;
               this.res = true;
-            }
-            // this.resultBox = res.data.data.products;
-            // this.resultBox.splice(0, this.$data.pagesize);
-            // for (let item of res.data.data.products) {
-            //   this.resultBox.push(item);
-            // }
-            
+            } 
           } else {
             this.$message({
               message: this.$t("callback.selectNum"), //要改为获取搜索结果失败
@@ -252,6 +247,8 @@ export default {
         .catch((err) => {
           console.log(err);
         });
+        this.addCount(); 
+        window.scrollTo(0, 0);
         // this.$forceUpdate(); //强制刷新，解决页面不会重新渲染的问题
     },
     // 加入购物车
@@ -602,7 +599,7 @@ table tbody tr {
   position: absolute;
   top: 0.1vw;
   left: 1.61vw;
-  width: calc(100% - 62px);
+  width: calc(100% - 3.23vw);
   height: 1.51vw;
   line-height: 1.51vw;
   border: 0.1vw solid #eaebed;

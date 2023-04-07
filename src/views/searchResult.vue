@@ -76,7 +76,6 @@ export default {
           // 对路由变化作出响应....
           this.inputValue = this.$route.query.inputValue;
           this.cate = "";
-          // this.isNew++;
         }
       },
       immediate: false,
