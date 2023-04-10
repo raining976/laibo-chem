@@ -9,7 +9,7 @@
         status-icon
         :rules="rules"
         ref="ruleForm"
-        label-width="200px"
+        label-width="250px"
         class="demo-ruleForm"
       >
         <!-- 姓名部分 -->
@@ -128,11 +128,59 @@ export default {
       }
     };
     var checkPhoneNum = (_, value, callback) => {
-      let phoneNum =
-        /((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d)|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d))$)/;
+      // var phones = {
+      //   "ar-DZ": /^(\+?213|0)(5|6|7)\d{8}$/,
+      //   "ar-SY": /^(!?(\+?963)|0)?9\d{8}$/,
+      //   "ar-SA": /^(!?(\+?966)|0)?5\d{8}$/,
+      //   "en-US": /^(\+?1)?[2-9]\d{2}[2-9](?!11)\d{6}$/,
+      //   "cs-CZ": /^(\+?420)? ?[1-9][0-9]{2} ?[0-9]{3} ?[0-9]{3}$/,
+      //   "de-DE":
+      //     /^(\+?49[ \.\-])?([\(]{1}[0-9]{1,6}[\)])?([0-9 \.\-\/]{3,20})((x|ext|extension)[ ]?[0-9]{1,4})?$/,
+      //   "da-DK": /^(\+?45)?(\d{8})$/,
+      //   "el-GR": /^(\+?30)?(69\d{8})$/,
+      //   "en-AU": /^(\+?61|0)4\d{8}$/,
+      //   "en-GB": /^(\+?44|0)7\d{9}$/,
+      //   "en-HK": /^(\+?852\-?)?[569]\d{3}\-?\d{4}$/,
+      //   "en-IN": /^(\+?91|0)?[789]\d{9}$/,
+      //   "en-NZ": /^(\+?64|0)2\d{7,9}$/,
+      //   "en-ZA": /^(\+?27|0)\d{9}$/,
+      //   "en-ZM": /^(\+?26)?09[567]\d{7}$/,
+      //   "es-ES": /^(\+?34)?(6\d{1}|7[1234])\d{7}$/,
+      //   "fi-FI": /^(\+?358|0)\s?(4(0|1|2|4|5)?|50)\s?(\d\s?){4,8}\d$/,
+      //   "fr-FR": /^(\+?33|0)[67]\d{8}$/,
+      //   "he-IL": /^(\+972|0)([23489]|5[0248]|77)[1-9]\d{6}/,
+      //   "hu-HU": /^(\+?36)(20|30|70)\d{7}$/,
+      //   "it-IT": /^(\+?39)?\s?3\d{2} ?\d{6,7}$/,
+      //   "ja-JP": /^(\+?81|0)\d{1,4}[ \-]?\d{1,4}[ \-]?\d{4}$/,
+      //   "ms-MY":
+      //     /^(\+?6?01){1}(([145]{1}(\-|\s)?\d{7,8})|([236789]{1}(\s|\-)?\d{7}))$/,
+      //   "nb-NO": /^(\+?47)?[49]\d{7}$/,
+      //   "nl-BE": /^(\+?32|0)4?\d{8}$/,
+      //   "nn-NO": /^(\+?47)?[49]\d{7}$/,
+      //   "pl-PL": /^(\+?48)? ?[5-8]\d ?\d{3} ?\d{2} ?\d{2}$/,
+      //   "pt-BR": /^(\+?55|0)\-?[1-9]{2}\-?[2-9]{1}\d{3,4}\-?\d{4}$/,
+      //   "pt-PT": /^(\+?351)?9[1236]\d{7}$/,
+      //   "ru-RU": /^(\+?7|8)?9\d{9}$/,
+      //   "sr-RS": /^(\+3816|06)[- \d]{5,9}$/,
+      //   "tr-TR": /^(\+?90|0)?5\d{9}$/,
+      //   "vi-VN":
+      //     /^(\+?84|0)?((1(2([0-9])|6([2-9])|88|99))|(9((?!5)[0-9])))([0-9]{7})$/,
+      //   "zh-CN": /^(\+?0?86\-?)?1[345789]\d{9}$/,
+      //   "zh-TW": /^(\+?886\-?|0)?9\d{8}$/,
+      // };
+
+      let phoneNum = /^(\+?0?86\-?)?1[345789]\d{9}$/;
       if (value === "")
         callback(new Error(this.$t("base.phone") + this.$t("base.noEmpty")));
-      if (!phoneNum.test(value)) {
+      var flag = false;
+      // else {
+      //   for(var i in phones){
+      //     if(phones[i].test(value)) flag = true
+      //     // console.log('flag',flag)
+      //   }
+      // }
+      flag = phoneNum.test(value);
+      if (!flag) {
         callback(new Error(this.$t("base.valid") + this.$t("base.phone")));
       }
       callback();
@@ -180,7 +228,6 @@ export default {
       },
     };
   },
-
   mounted() {},
   methods: {
     submitForm(formName) {
@@ -201,14 +248,14 @@ export default {
               })
               .catch((err) => {
                 this.$message({
-                  message: this.$t('callback.error'),
+                  message: this.$t("callback.error"),
                   type: "error",
                 });
                 console.log("err", err);
               });
           } else {
             this.$message({
-              message: this.$t('register.dealTip'),
+              message: this.$t("register.dealTip"),
               type: "warning",
             });
           }
@@ -222,19 +269,23 @@ export default {
       this.$refs[formName].resetFields();
     },
     bouncedMsg() {
-      this.$alert(this.$t('register.toHome'), this.$t('register.registerSuccess'), {
-        confirmButtonText: this.$t('base.sure'),
-        // 进入主页路由
-        callback: () => {
-          this.$router.push("mainPage");
-          this.$root.isShowLogIn = true;
-        },
-      });
+      this.$alert(
+        this.$t("register.toHome"),
+        this.$t("register.registerSuccess"),
+        {
+          confirmButtonText: this.$t("base.sure"),
+          // 进入主页路由
+          callback: () => {
+            this.$router.push("mainPage");
+            this.$root.isShowLogIn = true;
+          },
+        }
+      );
     },
     // 获取验证码
     getVerfiCode() {
       if (this.ruleForm.email == "") {
-        this.$message(this.$t('register.emailTip'));
+        this.$message(this.$t("register.emailTip"));
         return;
       }
       let rule = {
@@ -246,7 +297,7 @@ export default {
         .then((res) => {
           if (res.data.code == 20000) {
             this.$message({
-              message: this.$t('callback.sendSuccess'),
+              message: this.$t("callback.sendSuccess"),
               type: "success",
             });
             this.verfi_timer();
@@ -259,7 +310,7 @@ export default {
         })
         .catch((err) => {
           this.$message({
-            message: this.$t('callback.error'),
+            message: this.$t("callback.error"),
             type: "error",
           });
           console.log("err", err);
@@ -415,7 +466,7 @@ export default {
   line-height: 1.93vw;
   cursor: pointer;
 }
-.registerBox .el-checkbox__label{
+.registerBox .el-checkbox__label {
   font-size: 0.73vw;
 }
 </style>
@@ -426,7 +477,7 @@ export default {
   align-items: center;
   width: 100%;
   height: 50.88vw;
-  padding: 3vw 0; 
+  padding: 3vw 0;
 }
 .content {
   display: flex;
@@ -449,5 +500,9 @@ h3 {
   font-weight: bold;
   color: var(--color);
   margin-bottom: 2.6vw;
+}
+.registerBox >>> .el-form-item.chooseCountry .el-form-item__content {
+  justify-content: flex-start;
+  line-height: normal;
 }
 </style>
