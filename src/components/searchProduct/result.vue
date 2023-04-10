@@ -636,7 +636,7 @@ table tbody tr {
 .pagination {
   /* position: absolute;
   bottom: 43px; */
-  margin: 0 0 1.04vw 40%;
+  margin: 0 0 1.04vw 28%;
 }
 .pagination >>> .el-pagination {
   --el-pagination-button-height: 2.08vw;
