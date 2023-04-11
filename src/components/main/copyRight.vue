@@ -10,7 +10,7 @@
       </div>
       <div class="blue bottom">
         <span><a href="https://beian.miit.gov.cn/" target="blank">鲁ICP备2022020172号-1</a></span>
-        <span>危险品化学经营许可证（带存储）</span>
+        <!-- <span>危险品化学经营许可证（带存储）</span> -->
       </div>
     </div>
   </div>
@@ -58,7 +58,7 @@ export default {
 }
 .bottom {
   display: flex;
-  justify-content: space-between;
+  justify-content: center ;
   width: 26.04vw;
 }
 </style>
