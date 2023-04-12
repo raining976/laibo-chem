@@ -33,21 +33,21 @@ export default {
     return {
       menuList: [
         { selectName: this.$t("userMenu.cart") },
-        { selectName: this.$t("userMenu.order") },
+        { selectName: this.$t("userMenu.myOrder") },
         { selectName: this.$t("userMenu.team") },
         { selectName: this.$t("userMenu.address") },
         { selectName: this.$t("userMenu.info") },
         { selectName: this.$t("userMenu.changePass") },
       ],
-      addFun: { selectName: this.$t("userMenu.orderReview") },
+      addFun: { selectName: this.$t("userMenu.groupOrder") },
       currentIdx: 0, // 当前选中的菜单选项
     };
   },
   created() {
     let quanxian = localStorage.getItem("privilege");
-    // 0成员 1普通管理员 2群主？
-    if( quanxian === "1" || quanxian === "2") {
-        this.menuList.push(this.addFun);
+    // 0个人/小组人  1普通管理员 2群主？
+    if( quanxian == 1 || quanxian == 2) {
+        this.menuList.push(this.addFun); //this.menuList.splice(2, 0, this.addFun);
     }
   },
   watch: {
@@ -82,7 +82,7 @@ export default {
           case "changePsd":
             this.currentIdx = 5;
             break;
-          case "orderReview":
+          case "groupOrder":
             this.currentIdx = 6;
             break;
           default:
@@ -118,7 +118,7 @@ export default {
           this.$router.push("/changePsd");
           break;
         case 6:
-          this.$router.push("/orderReview");
+          this.$router.push("/groupOrder");
           break;
         default:
           break;
