@@ -1,8 +1,10 @@
-// 我的订单部分
+// 团队订单部分
 //createDate:2022-07-17
 <template>
   <div class="orderReview">
-    <div class="title">{{ $t("base.order") }}</div>
+    <div class="title">
+      {{ $t("base.order") + "( " + $t("cart.total") + " : " + count + ")" }}
+    </div>
     <div class="orderList">
       <div class="listHead">
         <div class="_shopId word">{{ $t("order.num") }}</div>
@@ -22,24 +24,53 @@
           )"
           :key="index"
         >
-          <div class="shopId">
-            {{ item0.id }}
+          <div class="orderHead">
+            <div class="shopId">
+              <!-- _shopId -->
+              <div class="word">{{ $t("order.num") }}：{{ item0.id }}</div>
+            </div>
           </div>
+          <!--  -->
           <div class="product">
             <div
-              class="productName"
-              v-for="(product, index) in item0.product"
+              class="productBox"
+              v-for="(item1, index) in item0.product"
               :key="index"
-              :title="product.name"
             >
-              {{ product.name }}&nbsp;
+              <div class="productInfo" :title="item1.product.name">
+                <div class="productPic">
+                  <img :src="item1.product.pic_url" alt="" />
+                </div>
+                <div class="infoBox">
+                  <div class="name_zh" @click="toProductInfo(item1.product.id)">
+                    {{ item1.product.name }}
+                  </div>
+                  <div class="infoWord">
+                    {{ $t("order.itemNo") + "：" }}{{ item1.huohao }}
+                  </div>
+                  <div class="infoWord">
+                    {{ $t("order.casNum") + "：" }}{{ item1.product.cas }}
+                  </div>
+                </div>
+              </div>
+
+              <div class="productCount">X&nbsp;{{ item1.count }}</div>
             </div>
           </div>
           <div class="type">{{ item0.type }}</div>
-          <div class="unit">{{ item0.team }}</div>
+          <div class="unit">{{ item0.team == null ? "——" : item0.team }}</div>
           <div class="orderStatus">{{ item0.status }}</div>
-          <!-- 关于金额的计算方式 ？-->
-          <div class="payment">{{ currency(item0.payment).format() }}</div>
+          <!-- 关于金额的计算方式 -->
+          <div class="payment">
+            <div>
+              {{ currency(item0.payment).format() }}
+            </div>
+            <div style="color: #928f8f; font-weight: 400">
+              （{{ $t("order.includingFreight") }}：{{
+                currency(item0.post_fee).format()
+              }}）
+            </div>
+          </div>
           <div class="review" :class="{ showBtn: item0.status == '待审核' }">
             <div class="agree" @click="reviewOrder('1', item0.id)">
               <img src="../../assets/勾勾.png" alt="" title="同意" />
@@ -76,15 +107,16 @@ export default {
       currentPage: 1, // 当前页数
       pagerCount: 5, //五个以上加省略号
       noReview: -1,
+      count: 0, //商品数
       orderList: [
-        //   {
-        //     name: ["hh","ww","ee"],
-        //     status: "已签收",
-        //     shopId: "22222222222222",
-        //     type: "个人",
-        //     unit: "个人",
-        //     payment: 666,
-        //   },
+        // {
+        //   name: ["hh","ww","ee"],
+        //   status: "已签收",
+        //   shopId: "22222222222222",
+        //   type: "个人",
+        //   unit: "个人",
+        //   payment: 666,
+        // },
         //  {
         //     name: ["hh","ww","ee"],
         //     status: "已签收",
@@ -111,7 +143,8 @@ export default {
           }
           // this.$data.count = res.data.data.count;
           else {
-            this.$data.orderList = res.data.data;
+            this.$data.count = res.data.data.count;
+            this.$data.orderList = res.data.data.orders;
           }
         })
         .catch((err) => {
@@ -217,7 +250,7 @@ export default {
   display: flex;
   flex-direction: column;
 }
-
+/* 一件商品 */
 .order {
   position: relative;
   display: flex;
@@ -226,32 +259,94 @@ export default {
   width: 100%;
   min-width: 38.91vw;
   height: 11.3vw;
+  padding: 1.82vw 0;
   margin: 0 0 1.04vw 0;
   background: #f7f7f7;
   border-radius: 0.52vw;
   overflow: hidden;
 }
+.orderHead {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  top: 0.52vw;
+  /* left: 28px; */
+  /* width: 18px; */
+  height: 1.04vw;
+  margin-left: 1.04vw;
+  /* flex: 0.6; */
+}
 .shopId {
-  /* width: 700px; */
-  flex: 1.2;
-  /* margin: 0 27px 0 52px; */
   text-align: center;
   word-break: break-all;
   /* overflow: hidden; */
 }
 .product {
-  flex: 2;
+  flex: 3.5;
   /* width: 700px; */
-  height: 8.59vw;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  word-break: break-all;
+  min-height: 8.59vw;
+  margin-left: 2.34vw;
 }
-
+.productBox {
+  display: flex;
+  align-items: center;
+}
+.productInfo {
+  display: flex;
+  width: 88%;
+  height: 8.59vw;
+  align-items: center;
+  margin: 0 0 0 0.54vw;
+  font-size: 0.9375vw;
+}
+.productPic {
+  width: 7.59vw;
+  height: 7.59vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 1.7vw 0 0;
+  background: #ffffff;
+  border-radius: 0.26vw;
+  overflow: hidden;
+}
+.productPic img {
+  object-fit: contain;
+}
+.infoBox {
+  width: calc(100% - 9.31vw);
+  height: 8.59vw;
+  overflow: hidden;
+}
+.name_zh {
+  cursor: pointer;
+  min-height: 1.04vw;
+  font-size: 0.94vw;
+  font-family: Microsoft YaHei UI;
+  font-weight: 400;
+  color: #004ea2;
+  line-height: 1.04vw;
+  padding: 0 0 0.1vw 0;
+  margin: 1.04vw 0 0.78vw;
+}
+.name_zh:hover {
+  /* border-bottom: 2px solid #004EA2; */
+  text-decoration: underline;
+}
+.infoWord {
+  height: 0.94vw;
+  font-size: 0.94vw;
+  font-family: Microsoft YaHei UI;
+  font-weight: 400;
+  color: #333333;
+  line-height: 0.94vw;
+  margin: 0.42vw 0;
+}
+.productCount {
+  color: #5b5959;
+}
 .type {
-  flex: 2;
+  flex: 1;
   /* width: 110px; */
   /* margin: 0 50px 0 0; */
   text-align: center;
@@ -273,10 +368,11 @@ export default {
 }
 
 .payment {
-  flex: 1;
+  flex: 1.1;
   /* width: 150px; */
   text-align: center;
   font-weight: 600;
+  margin-right: 1vw;
 }
 .review {
   display: flex;

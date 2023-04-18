@@ -4,13 +4,13 @@
   <div class="myOrder" :key="reload">
     <div class="top">
       <div class="title">
-        {{ $t("base.order") + "( " + $t("cart.total") + " : " + count + ")" }}
+        {{ $t("userMenu.myOrder") + "( " + $t("cart.total") + " : " + count + ")" }}
       </div>
       <div class="deleteBtn">
-        <el-tooltip effect="light" content="删除选中商品" placement="top">
+        <el-tooltip effect="light" content="删除选中订单" placement="top">
           <i
             class="el-icon-delete"
-            style="font-size: 25px"
+            style="font-size: 1.3vw"
             @click="delProduct()"
           ></i>
         </el-tooltip>
@@ -119,7 +119,7 @@
               <el-dropdown-menu>
                 <el-dropdown-item
                   class="dropdown"
-                  :disabled="item0.status == '待付款' ? false : true"
+                  :disabled="(item0.status == '待付款' && item0.type == '个人') ? false : true"
                   @click="toPay(item0.id, item0)"
                   placement="bottom"
                 >
@@ -460,7 +460,7 @@ export default {
   display: flex;
   flex-direction: column;
 }
-
+/* 一件商品 */
 .order {
   position: relative;
   display: flex;
@@ -535,6 +535,8 @@ export default {
   overflow: hidden;
 }
 .productPic img {
+  width: 100%;
+  height: 100%;
   object-fit: contain;
 }
 .infoBox {

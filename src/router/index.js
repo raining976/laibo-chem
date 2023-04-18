@@ -18,8 +18,8 @@ const team = () => import("../components/userInfo/team.vue");
 const address = () => import("../components/userInfo/receiveAddress.vue");
 const changePsd = () => import("../components/userInfo/changePsd.vue");
 const info = () => import("../components/userInfo/userInfoChange.vue");
-// 订单审核
-const orderReview = () => import("../components/userInfo/orderReview.vue");
+// 团队订单审核
+const groupOrder = () => import("../components/userInfo/groupOrder.vue");
 // 团队管理
 const teamBlank = () => import("../components/teamPage/blank.vue");
 const joinTeam = () => import("../components/teamPage/joinTeam.vue");
@@ -179,9 +179,9 @@ const routes = [
         meta: { requiresAuth: true },
       },
       {
-        path: '/orderReview',
-        name: 'orderReview',
-        component: orderReview,
+        path: '/groupOrder',
+        name: 'groupOrder',
+        component: groupOrder,
         meta: { requiresAuth: true },
       },
     ],

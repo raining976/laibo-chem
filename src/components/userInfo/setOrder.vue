@@ -11,6 +11,14 @@
       </div>
 
       <div class="content">
+        <div
+          style = "font-weight: 600"
+          class="tip"
+          v-if="addresses.length != 0 ? false : true"
+          
+        >
+          尚未填写收货地址，点击<span style="color: #004ea2;cursor:pointer " @click="toAddress()">此处</span>添加
+        </div>
         <div class="addressBox">
           <ul class="addressList">
             <!-- v-for -->
@@ -60,9 +68,9 @@
         </div>
       </div>
 
-      <div class="freight">
-        <!-- {{ $t("cart.fright") + "：" }}<strong>{{ freight }}</strong> -->
-      </div>
+      <!-- <div class="freight">
+        {{ $t("cart.fright") + "：" }}<strong>{{ freight }}</strong>
+      </div> -->
     </div>
     <!-- 商品统计 -->
     <div class="shopCart">
@@ -105,7 +113,9 @@
             <div class="num">{{ item0.count }}</div>
           </div>
           <!-- 关于金额的计算方式 -->
-          <div class="payment">{{ currency(item0.count * item0.price).format() }}</div>
+          <div class="payment">
+            {{ currency(item0.count * item0.price).format() }}
+          </div>
         </div>
       </div>
       <div class="pagination">
@@ -166,7 +176,7 @@ export default {
       payWay: "",
       addressId: 0, // 地址id
       freight: 0, //运费
-            submitMy: 0, //判断是否提交个人订单 0集体  1个人
+      submitMy: 0, //判断是否提交个人订单 0集体  1个人
       allmoney: 0, //总计
       orderId: 0,
       curAddress: {}, // 当前地址对象
@@ -191,7 +201,7 @@ export default {
     };
   },
   created() {
-        if (localStorage.getItem("in_team") === "1") {
+    if (localStorage.getItem("in_team") === "1") {
       // 在团队
       this.$data.submitMy = 0;
     } else if (localStorage.getItem("in_team") === "0") {
@@ -201,7 +211,7 @@ export default {
     this.getAddress();
     this.$data.commodityList = JSON.parse(localStorage.getItem("checkBox"));
   },
-    mounted() {
+  mounted() {
     //
     window.scrollTo(0, 0);
   },
@@ -237,10 +247,10 @@ export default {
       this.$data.commodityList.forEach((item) => {
         _allmoney += item.count * item.price;
       });
-      
-      if(_allmoney < 200)this.$data.freight = 20;
+
+      if (_allmoney < 200) this.$data.freight = 20;
       _allmoney += this.$data.freight;
-       this.$data.allmoney = _allmoney;
+      this.$data.allmoney = _allmoney;
       return _allmoney;
     },
   },
@@ -256,15 +266,20 @@ export default {
         }
       });
     },
+    toAddress() {
+      this.$router.push({
+        path: '/address',
+      })
+    },
     toShopCart() {
-      this.$router.go(-1)
+      this.$router.go(-1);
     },
     toProductInfo(code) {
       this.$router.push({
         path: "/productInfo",
-         query: {
-            id: code,
-           }
+        query: {
+          id: code,
+        },
       });
     },
     // 修改地址------------------
@@ -332,7 +347,7 @@ export default {
       this.$data.currentPage = val;
       // console.log(`当前页: ${val}`);
     },
- //提交到个人订单
+    //提交到个人订单
     isSubmitMy() {
       if (localStorage.getItem("in_team") === "0") {
         this.$message({
@@ -348,7 +363,7 @@ export default {
         }
       }
     },
-    
+
     payType(str) {
       this.$data.payWay = str;
       switch (str) {
@@ -394,7 +409,7 @@ export default {
             products: this.$data.orderBox,
             type: this.$data.submitMy,
             address: this.$data.addressId,
-            from:"shopcart"
+            from: "shopcart",
           })
           .then((res) => {
             if (res.data.code == 20000) {
@@ -406,7 +421,7 @@ export default {
               this.$router.push({
                 path: "/orderSuccess/" + this.$data.orderId,
                 // path: "/order",
-              })
+              });
             } else {
               this.$message({
                 message: res.data.msg,
@@ -423,8 +438,6 @@ export default {
           });
       }
     },
-    
-    
   },
 };
 </script>
@@ -507,15 +520,14 @@ export default {
   word-wrap: break-word;
   word-break: normal;
 }
-.address::-webkit-scrollbar
-{
-    width:0.31vw;
+.address::-webkit-scrollbar {
+  width: 0.31vw;
 }
-.address::-webkit-scrollbar-thumb{
-    width: 0.31vw;
-    height: 1.56vw;
-    border-radius:0.21vw;
-    background-color: #c7c7c9;
+.address::-webkit-scrollbar-thumb {
+  width: 0.31vw;
+  height: 1.56vw;
+  border-radius: 0.21vw;
+  background-color: #c7c7c9;
 }
 .btnBox {
   align-self: flex-end;
@@ -664,6 +676,8 @@ export default {
   overflow: hidden;
 }
 .productPic img {
+  width: 100%;
+  height: 100%;
   object-fit: contain;
 }
 .infoBox {

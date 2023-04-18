@@ -69,12 +69,12 @@ export default {
     // 用户菜单栏
     userMenu: {
         cart: '购物车',
-        order: "我的订单",
+        myOrder: "我的订单",
         team: "团队管理",
         address: "收货地址",
         info: "个人信息",
         changePass: "修改密码",
-        orderReview: "团队订单",
+        groupOrder: "团队订单",
         exit:'退出登录',
     },
     // 登录
@@ -258,6 +258,8 @@ export default {
         refuseWarn: '是否拒绝该成员的申请,该处理不可撤销',
         deleSuccess: '删除成功',
         editSuccess: '修改成功',
+        auditSuccess: '审核成功',
+        auditError: '审核失败',
         saveSuccess:'保存成功',
         addSuccess:'添加成功',
         submitSuccess:'提交成功',
