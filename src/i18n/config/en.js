@@ -68,12 +68,12 @@ export default {
     // 用户菜单栏
     userMenu: {
         cart: 'Cart',
-        order: "Order",
+        myOrder: "Order",
         team: "Team",
         address: "Address",
         info: "Profile",
         changePass: "Change Password",
-        orderReview: "Order Review",
+        groupOrder: "Order Review",
         exit: 'Exit',
 
     },
@@ -256,6 +256,8 @@ export default {
         deleSuccess: 'Deleted successfully',
         editSuccess: 'Modified successfully',
         saveSuccess: 'Save successfully',
+        auditSuccess: 'Audit successfully',
+        auditError: 'Audit successfully',
         submitSuccess: 'Submitted successfully',
         sendSuccess:'Sended successfully',
         exitSuccess: 'Exited successfully',

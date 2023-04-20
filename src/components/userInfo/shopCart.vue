@@ -614,6 +614,8 @@ export default {
   overflow: hidden;
 }
 .productPic img {
+  width: 100%;
+  height: 100%;
   object-fit: contain;
 }
 .infoBox {
