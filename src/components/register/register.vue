@@ -170,12 +170,15 @@ export default {
       // };
 
       let phoneNum = /^(\+?0?86\-?)?1[345789]\d{9}$/;
+      var flag = false;
       if (value === "")
         callback(new Error(this.$t("base.phone") + this.$t("base.noEmpty")));
-      var flag = false;
       // else {
-      //   for(var i in phones){
-      //     if(phones[i].test(value)) flag = true
+      //   for (var i in phones) {
+      //     if (phones[i].test(value)) {
+      //       flag = true;
+      //       break;
+      //     }
       //     // console.log('flag',flag)
       //   }
       // }

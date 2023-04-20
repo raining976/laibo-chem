@@ -114,8 +114,6 @@ export default {
         emailTip:"Please fill in the email",
         toHome:"Are entering the home page...",
         registerSuccess:"Registered successfully",
-
-
     },
     // 修改密码
     editPass: {
