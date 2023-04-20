@@ -136,7 +136,6 @@ export default {
         full: "详细地址",
         chooseTip: "请选择收货地址",
         fillTip: "请填写",
-
     },
     // 团队
     team: {
@@ -176,6 +175,9 @@ export default {
         logistic: "物流公司",
         shipping: "发货地址",
         receive: "收货地址",
+        noaddress: "尚未填写收货地址，请点击",
+        link: "此处",
+        add: "添加地址",
         productInfo: "产品信息",
         size: "规格",
         price: "单价",
@@ -187,6 +189,9 @@ export default {
         jiegoushi: "结构式",
         fright: "运费",
         includingFreight: "含运费",
+        back: "返回",
+        successTip: "您的订单已经创建成功，订单交易号：",
+        checkOrder: "查看订单详情",
     },
     // 购物车
     cart: {
@@ -199,7 +204,15 @@ export default {
         fright: "运费",
         weChat: "微信",
         paypal: "支付宝",
+        balance: "余额",
+        offline: "线下",
         payment: "支付",
+        info: "信息",
+        payee: "收款人",
+        account: "账号",
+        accountBank: "开户行",
+        bankName: "中国民生银行股份有限公司青岛高新区支行",
+        remark: "注：只有完成付款订单才发货，未免耽误发货，请及时付款。汇款时敬请在电汇凭证/支票的汇款用途栏或附言栏中填入您的订单号，以便我们核对并确保您的订单能够及时发货。线下付完款之后，请将付款凭证发给在线客服，以便及时发货。",
         bills: "上传单据",
         person: "(个人)",
         firm: "(公司)",

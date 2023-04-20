@@ -1,6 +1,6 @@
 //订单（支付部分）
 <template>
-  <div class="paymentPage" v-if = "info">
+  <div class="paymentPage" v-if="info">
     <!-- 收获地址 -->
     <div class="amount">
       <div class="top">
@@ -9,14 +9,27 @@
       </div>
 
       <div class="orderInfo">
-      <div class="detail"><strong>{{$t('order.num')+'：'}}</strong>{{orderNo}}</div>
-      <div class="detail"><strong>{{ $t("address.name")+'：' }}</strong>{{info[0].name}}</div>
-      <div class="detail"><strong>{{$t("base.phone")+'：'}}</strong>{{info[0].phone}}</div>
-      <div class="detail"><strong>{{$t("base.address")+'：'}}</strong>{{info[0].address}}</div>
-    </div>
+        <div class="detail">
+          <strong>{{ $t("order.num") + "：" }}</strong
+          >{{ orderNo }}
+        </div>
+        <div class="detail">
+          <strong>{{ $t("address.name") + "：" }}</strong
+          >{{ info[0].name }}
+        </div>
+        <div class="detail">
+          <strong>{{ $t("base.phone") + "：" }}</strong
+          >{{ info[0].phone }}
+        </div>
+        <div class="detail">
+          <strong>{{ $t("base.address") + "：" }}</strong
+          >{{ info[0].address }}
+        </div>
+      </div>
 
       <div class="freight">
-        {{ $t("cart.fright") + "：" }}<strong>{{ currency(orderList.post_fee).format() }}</strong>
+        {{ $t("cart.fright") + "："
+        }}<strong>{{ currency(orderList.post_fee).format() }}</strong>
       </div>
     </div>
     <!-- 商品统计 -->
@@ -55,7 +68,9 @@
             </div>
           </div>
           <div class="size">{{ item0.product.guige }}</div>
-          <div class="price">{{ currency(item0.price / item0.count).format() }}</div>
+          <div class="price">
+            {{ currency(item0.price / item0.count).format() }}
+          </div>
           <div class="count">
             <div class="num">{{ item0.count }}</div>
           </div>
@@ -82,9 +97,9 @@
     <div class="payType">
       <div class="typeTitle">{{ $t("cart.payType") }}</div>
       <div class="typeBox">
-        <!-- <div
+        <div
           class="type"
-          :class="{ type_checked: wechar == true }"
+          :class="{ type_checked: wechat == true }"
           @click="payType('wx')"
         >
           <div class="typeSign">
@@ -93,7 +108,7 @@
           <div class="typeName">
             {{ $t("cart.weChat") + " " + $t("cart.payment") }}
           </div>
-        </div> -->
+        </div>
 
         <div
           class="type"
@@ -107,17 +122,32 @@
             {{ $t("cart.paypal") + " " + $t("cart.payment") }}
           </div>
         </div>
+
         <div
           class="type"
-          :class="{ type_checked: geren == true }"
+          :class="{ type_checked: yuzhifu == true }"
+          @click="payType('gongsi')"
+        >
+          <div class="typeSign">
+            <!-- <img src="../../assets/weixinzhifu.png" alt="" /> -->
+          </div>
+          <div class="typeName">
+            {{ $t("cart.balance") + " " + $t("cart.payment") }}
+          </div>
+        </div>
+
+        <div
+          class="type"
+          :class="{ type_checked: offlinePay == true }"
           @click="payType('pic')"
         >
           <div class="typeSign">
             <img src="../../assets/gerenzhifu.png" alt="" />
           </div>
-          <div class="typeName">{{ $t("cart.bills") + $t("cart.person") }}</div>
+          <div class="typeName">{{ $t("cart.offline") + " " + $t("cart.payment") }}</div>
         </div>
-        <div
+
+        <!-- <div
           class="type"
           :class="{ type_checked: gongsi == true }"
           @click="payType('gongsi')"
@@ -126,9 +156,16 @@
             <img src="../../assets/gongsi.png" alt="" />
           </div>
           <div class="typeName">{{ $t("cart.bills") + $t("cart.firm") }}</div>
-        </div>
+        </div> -->
       </div>
       <div class="upload" v-if="showBills">
+        <div class="payInfo">
+          <div class="payInfoWord"><strong>{{ $t("cart.payment") + " " + $t("cart.info")}}：</strong></div>
+          <div class="payInfoWord">{{$t("cart.payee") + "：" + $t("companyInfo.name")}}</div>
+          <div class="payInfoWord">{{$t("cart.account") + "："}}162590080</div>
+          <div class="payInfoWord">{{$t("cart.accountBank") + "：" + $t("cart.bankName")}}</div>
+          <div class="tip">{{ $t("cart.remark") }}</div>
+        </div>
         <el-upload
           class="upload-demo"
           ref="upload"
@@ -154,16 +191,21 @@
           </template>
         </el-upload>
         <!--  -->
-        <el-button @click="submitForm()" >提交到服务器</el-button>
+        <el-button @click="submitForm()">{{ $t("cart.bills") }}</el-button>
       </div>
     </div>
-    <!-- 以下为底部 -->
+    <!-- 以下为底部  支付栏-->
     <div class="footer">
       <div class="allMoney">
         {{ $t("cart.total") }}&nbsp;&nbsp;&nbsp;
         <div>{{ currency(orderList.payment).format() }}</div>
       </div>
-      <el-button :disabled="showBills == true? true:false" class="pay" @click="pay()">{{ submitBtn }}</el-button>
+      <el-button
+        :disabled="showBills == true ? true : false"
+        class="pay"
+        @click="pay()"
+        >{{ submitBtn }}</el-button
+      >
     </div>
   </div>
 </template>
@@ -182,10 +224,10 @@ export default {
       pagerCount: 5, //五个以上加省略号
 
       // formIsShow: false, // 地址表单是否展示
-      
-      wechar: false,
+
+      wechat: false,
       zhifubao: false,
-      geren: false,
+      offlinePay: false,
       gongsi: false,
       payWay: "",
       addressId: 0, // 地址id
@@ -200,13 +242,13 @@ export default {
       fileList: [], // 上传的图片数组
       isLt2k: "", // 上传文件大小判断
       isImg: "",
-      submitBtn: this.$t("cart.settlement"),
+      submitBtn: this.$t("cart.payment"),
       showBills: false,
       orderBox: [], //订单汇总传参--按照后端格式
       addresses: {}, // 获取的地址键值对
       addressArray: [], // 将键值对对象放入地址数组传参进行翻译
       info: "", //存储转换后的地址数组  ---以字符串形式定义，防止DOM节点挂载完成时判断初始化的数据还未存在的冲突（异步）
-      orderList: [],  //存放后端获取订单信息
+      orderList: [], //存放后端获取订单信息
       orderInfo: [
         // {
         //   name: "S915939 碳化硅, 99.9% metals basis,100目",
@@ -222,9 +264,8 @@ export default {
   },
   created() {
     // this.$data.orderList = JSON.parse(localStorage.getItem("oneOrder"));
-    this.orderNo = localStorage.getItem("orderNo")
-    this.getOrderInfo()
-    
+    this.orderNo = localStorage.getItem("orderNo");
+    this.getOrderInfo();
   },
   watch: {
     isReloadAddress(val) {
@@ -251,50 +292,42 @@ export default {
       },
     },
   },
-  // computed: {
-  //   allmoney() {
-  //     let _allmoney = this.$data.allmoney;
-  //     // _allmoney += this.$data.orderList.post_fee;
-  //     // this.$data.orderList.forEach((item) => {
-  //     //   _allmoney += item.payment;
-            
-  //     // });
-  //      _allmoney += this.$data.orderList.payment;
-  //     this.$data.allmoney = _allmoney;
-  //     return _allmoney;
-  //   },
-  // },
   methods: {
     // 获取信息
-     getOrderInfo() {
-        this.$http
+    getOrderInfo() {
+      this.$http
         .get("/order/detail", {
           params: {
-             order_id: localStorage.getItem("orderNo"), // 暂定
-          }
-         
+            order_id: localStorage.getItem("orderNo"), // 暂定
+          },
         })
         //回调函数
         .then((res) => {
-           if(!res.data.data){
-             this.$data.info = [];
+          if (!res.data.data) {
+            this.$data.info = [];
+          } else {
+            this.$data.orderList = res.data.data;
+            this.$data.orderInfo = this.$data.orderList.product_params_count;
+            Object.assign(this.$data.addresses, {
+              dz: res.data.data.dz,
+              gj: res.data.data.gj,
+              id: res.data.data.id,
+              name: res.data.data.name,
+              phone: res.data.data.phone,
+              sx: res.data.data.sx,
+            });
+            this.$data.addressArray.push(this.$data.addresses);
+            this.$data.info = handleAddress(this.$data.addressArray);
+            // console.log("ceshi,shuzu ", this.$data.info);
           }
-          else {
-          this.$data.orderList = res.data.data;
-          this.$data.orderInfo = this.$data.orderList.product_params_count;
-          Object.assign(this.$data.addresses, { dz:res.data.data.dz, gj: res.data.data.gj, id: res.data.data.id, name: res.data.data.name, phone: res.data.data.phone, sx: res.data.data.sx });
-          this.$data.addressArray.push(this.$data.addresses);
-          this.$data.info = handleAddress(this.$data.addressArray);
-          // console.log("ceshi,shuzu ", this.$data.info);
-          }     
         })
         .catch((err) => {
           console.log(err);
         });
-     },
-    
+    },
+
     back() {
-      this.$router.go(-1)
+      this.$router.go(-1);
     },
     toProductInfo(code) {
       this.$router.push({
@@ -304,7 +337,7 @@ export default {
         },
       });
     },
-    
+
     // 文件上传相关--------------
     //上传之前
     onUploadChange(file) {
@@ -313,14 +346,14 @@ export default {
         this.isImg = "0";
         this.$message({
           type: "warning",
-          message: this.$t('payment.uploadMsg'),
+          message: this.$t("payment.uploadMsg"),
         });
         file.status = "error";
       }
       this.isLt2k = file.size / 1024 / 1024 < 5 ? "1" : "0";
       if (this.isLt2k === "0") {
         this.$message({
-          message: this.$t('payment.uploadSize'),
+          message: this.$t("payment.uploadSize"),
           type: "error",
         });
         file.status = "error";
@@ -334,63 +367,62 @@ export default {
     // 支付----上传单据
     submitForm() {
       console.log("ff22", this.$refs.upload.uploadFiles.length);
-      if(this.$refs.upload.uploadFiles.length !== 0) {
-      let file = this.$refs.upload.uploadFiles.pop().raw; //这里获取上传的文件对象
-      console.log("ff", file);
-      let formData = new FormData();
-      formData.append("order_no", localStorage.getItem("orderNo"));
-      formData.append("type", this.$data.payWay);
-      formData.append("image", file);
-      console.log(formData.get("type"));
-      // this.$axios.post("/upload", formData).then((res) => {
-      //   console.log(res.data);
-      // }); {
-      if (this.$data.payWay) {
-        this.$http({
+      if (this.$refs.upload.uploadFiles.length !== 0) {
+        let file = this.$refs.upload.uploadFiles.pop().raw; //这里获取上传的文件对象
+        console.log("ff", file);
+        let formData = new FormData();
+        formData.append("order_no", localStorage.getItem("orderNo"));
+        formData.append("type", this.$data.payWay);
+        formData.append("image", file);
+        console.log(formData.get("type"));
+        // this.$axios.post("/upload", formData).then((res) => {
+        //   console.log(res.data);
+        // }); {
+        if (this.$data.payWay) {
+          this.$http({
             headers: { "Content-Type": "multipart/form-data" },
-            method: 'post',
+            method: "post",
             url: "/pay",
             data: formData,
+          })
+            .then((res) => {
+              if (res.data.code == 20000) {
+                this.$message({
+                  message: this.$t("callback.paySuccess"),
+                  type: "success",
+                });
+                // this.$router.push({
+                //   path: "/payCompleted/" + this.$data.orderId,
+                // });
+                //上传单据成功的跳转回上一页
+                this.$router.go(-1);
+              } else {
+                this.$message({
+                  message: res.data.msg,
+                  type: "error",
+                });
+              }
             })
-          .then((res) => {
-            if (res.data.code == 20000) {
+            .catch((err) => {
               this.$message({
-                message: this.$t('callback.paySuccess'),
-                type: "success",
-              });
-              // this.$router.push({
-              //   path: "/payCompleted/" + this.$data.orderId,
-              // });
-              //上传单据成功的跳转回上一页
-              this.$router.go(-1)
-            } else {
-              this.$message({
-                message: res.data.msg,
+                message: this.$t("callback.error"),
                 type: "error",
               });
-            }
-          })
-          .catch((err) => {
-            this.$message({
-              message: this.$t('callback.error'),
-              type: "error",
+              console.log("err", err);
             });
-            console.log("err", err);
-          });
-      }
+        }
       } else {
         this.$message({
-          message: this.$t('payment.selectBills'),
+          message: this.$t("payment.selectBills"),
           type: "error",
         });
       }
-
     },
     // 上传成功---不用
     upSuccess(res) {
       this.$message({
         type: "success",
-        message: this.$t('callback.uploadSuccess'),
+        message: this.$t("callback.uploadSuccess"),
         showClose: true,
         offset: 80,
       });
@@ -399,7 +431,7 @@ export default {
     upError() {
       this.$message({
         type: "error",
-        message: this.$t('callback.uploadError'),
+        message: this.$t("callback.uploadError"),
         showClose: true,
         offset: 80,
       });
@@ -415,15 +447,19 @@ export default {
       console.log(file);
     },
     handleExceed(files, fileList) {
-      this.$message.warning(this.$t('payment.selectLimit'));
+      this.$message.warning(this.$t("payment.selectLimit"));
       // ，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件
     },
     beforeRemove(file, fileList) {
-      return this.$confirm(this.$t('payment.sure')+`${file.name}` + '?', this.$t('base.tip'), {
-        confirmButtonText: this.$t('base.sure'),
-        cancelButtonText: this.$t('base.cancel'),
-        type: "warning",
-      });
+      return this.$confirm(
+        this.$t("payment.sure") + `${file.name}` + "?",
+        this.$t("base.tip"),
+        {
+          confirmButtonText: this.$t("base.sure"),
+          cancelButtonText: this.$t("base.cancel"),
+          type: "warning",
+        }
+      );
     },
     // 分页---
     handleSizeChange(val) {
@@ -439,35 +475,35 @@ export default {
       this.$data.payWay = str;
       switch (str) {
         case "wx":
-          this.$data.wechar = true;
+          this.$data.wechat = true;
           this.$data.zhifubao = false;
-          this.$data.geren = false;
+          this.$data.offlinePay = false;
           this.$data.gongsi = false;
           this.$data.showBills = false;
-          this.$data.submitBtn = this.$t("cart.settlement");
+          this.$data.submitBtn = this.$t("cart.payment");
           break;
         case "alipay":
-          this.$data.wechar = false;
+          this.$data.wechat = false;
           this.$data.zhifubao = true;
-          this.$data.geren = false;
+          this.$data.offlinePay = false;
           this.$data.gongsi = false;
           this.$data.showBills = false;
-          this.$data.submitBtn = this.$t("cart.settlement");
+          this.$data.submitBtn = this.$t("cart.payment");
           break;
         case "pic":
-          this.$data.wechar = false;
+          this.$data.wechat = false;
           this.$data.zhifubao = false;
-          this.$data.geren = true;
+          this.$data.offlinePay = true;
           this.$data.gongsi = false;
           this.$data.showBills = true;
           this.$data.submitBtn = "---";
           break;
-        case "gongsi":
-          this.$data.wechar = false;
+        case "gongsi": //余额支付暂时使用
+          this.$data.wechat = false;
           this.$data.zhifubao = false;
-          this.$data.geren = false;
+          this.$data.offlinePay = false;
           this.$data.gongsi = true;
-          this.$data.showBills = true;
+          this.$data.showBills = false;
           this.$data.submitBtn = "---";
           break;
       }
@@ -477,7 +513,7 @@ export default {
       // 判断是否选择支付方式
       if (!this.$data.payWay) {
         this.$message({
-          message: this.$t('payment.selectType'),
+          message: this.$t("payment.selectType"),
           type: "error",
         });
       } else if (this.$data.payWay) {
@@ -506,7 +542,7 @@ export default {
           })
           .catch((err) => {
             this.$message({
-              message: this.$t('callback.error'),
+              message: this.$t("callback.error"),
               type: "error",
             });
             console.log("err", err);
@@ -821,9 +857,26 @@ export default {
   line-height: 0.83vw;
 }
 /* 上传文件相关 */
+.upload {
+  margin: 0.52vw 0 0 0;
+  overflow: hidden;
+}
+.payInfo {
+  overflow: hidden;
+}
+.payInfoWord {
+  margin: 0.78vw 0;
+  font-size: 0.83vw;
+  color: #4a4a4a;
+}
+.tip {
+  margin: 1.56vw 0 1.04vw;
+  font-size: 0.83vw;
+  color: #ff4747;
+}
 .upload >>> .el-upload-dragger {
   width: 36.46vw;
-  height: 4.17vw;
+  height: 5.17vw;
 }
 .upload >>> .el-upload-dragger .el-upload__text em {
   color: var(--color);
@@ -840,7 +893,8 @@ export default {
 .upload >>> .el-button {
   margin-top: 1.04vw;
 }
-.upload >>> .el-button:focus, .el-button:hover {
+.upload >>> .el-button:focus,
+.el-button:hover {
   background-color: var(--color);
   color: #fff;
 }
