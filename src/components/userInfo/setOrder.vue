@@ -17,7 +17,7 @@
           v-if="addresses.length != 0 ? false : true"
           
         >
-          尚未填写收货地址，点击<span style="color: #004ea2;cursor:pointer " @click="toAddress()">此处</span>添加
+          {{ $t("order.noaddress") }}<span style="color: #004ea2;cursor:pointer " @click="toAddress()">{{ $t("order.link") }}</span>{{ $t("order.add") }}
         </div>
         <div class="addressBox">
           <ul class="addressList">
@@ -67,7 +67,6 @@
           </ul>
         </div>
       </div>
-
       <!-- <div class="freight">
         {{ $t("cart.fright") + "：" }}<strong>{{ freight }}</strong>
       </div> -->
@@ -455,13 +454,11 @@ export default {
 }
 
 .returnBtn {
-  margin: 0 2.5vw 0 0;
+  padding: 0.05vw 2.5vw 1.56vw 0;
   height: 1.04vw;
   line-height: 1.04vw;
   font-size: 1.04vw;
-  margin-bottom: 1.56vw;
   cursor: pointer;
-  overflow: hidden;
   font-weight: bold;
   font-family: Microsoft YaHei UI;
 }
@@ -470,7 +467,7 @@ export default {
 }
 
 .title {
-  height: 1.04vw;
+  /* height: 1.04vw; */
   line-height: 1.04vw;
   font-size: 1.04vw;
   font-family: Microsoft YaHei UI;
@@ -478,6 +475,13 @@ export default {
   color: #333333;
   /* margin-right: 50px; */
   margin-bottom: 1.56vw;
+}
+.content {
+  overflow: hidden;
+}
+.tip {
+  font-size: 1.04vw;
+  margin-bottom: 1.04vw; 
 }
 /* ----- */
 .addressList {
