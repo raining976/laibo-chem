@@ -3,19 +3,24 @@
 <template>
   <div class="orderInfoPage" v-if="info">
     <div class="top">
-      <div class="title">{{$t('order.detail')}}</div>
+      <div class="title">{{ $t('order.detail') }}</div>
       <div class="Btn">
-      <div class="returnBtn" @click="toMyOrder()">{{$t('base.back')}}</div>
-      <!-- <div class="deleteBtn" @click="func()">{{$t('base.dele') + $t('base.order')}}</div> -->
+        <div class="returnBtn" @click="toMyOrder()">{{ $t('base.back') }}</div>
+        <!-- <div class="deleteBtn" @click="func()">{{$t('base.dele') + $t('base.order')}}</div> -->
       </div>
-      
+
     </div>
     <div class="orderInfo">
-      <div class="detail"><strong>{{$t('order.num')+'：'}}</strong>{{orderId}}</div>
-      <div class="detail"><strong>{{$t('order.logistic')+'：'}}</strong>{{company}}</div>
+      <div class="detail"><strong>{{ $t('order.num') + '：' }}</strong>{{ orderId }}</div>
+      <div class="detail"><strong>{{ $t('order.status') + '：' }}</strong>{{ orderStatus }}</div>
+      
+      <div class="detail" v-if="payType!=null"><strong>{{ $t('order.logistic') + '：' }}</strong>{{ company }}</div>
+      <div class="detail" v-if="payType!=null"><strong>{{ $t('order.kuaidi_num') + '：' }}</strong>{{ kuaidi_num }}</div>
+      <div class="detail"><strong>{{ $t('order.createTime') + '：' }}</strong>{{ createTime }}</div>
       <!-- <div class="detail"><strong>{{$t('order.shipping')+'：'}}</strong>{{}}</div> -->
-      <div class="detail"><strong>{{$t('order.receive')+'：'}}</strong>{{info[0].address}}</div>
-      <div class="detail"><strong>{{$t('order.fright')+'：'}}</strong>{{currency(postFee).format()}}</div>
+      <div class="detail"><strong>{{ $t('order.receive') + '：' }}</strong>{{ info[0].address }}</div>
+      <div class="detail"><strong>{{ $t('order.fright') + '：' }}</strong>{{ currency(postFee).format() }}</div>
+      <div class="detail" v-if="payType!=null"><strong>{{ $t('order.payType') + '：' }}</strong>{{ payType }}</div>
     </div>
     <!-- 可折叠列表 物流信息--><!-- 时间线 -->
     <!-- <div class="collapse">
@@ -42,22 +47,18 @@
     <!-- 商品统计 -->
     <div class="shopCart">
       <div class="listHead">
-        <div class="_productInfo word">{{$t('order.productInfo')}}</div>
-        <div class="_size word">{{$t('order.size')}}</div>
-        <div class="_price word">{{$t('order.price')}}</div>
-        <div class="_count word">{{$t('order.count')}}</div>
-        <div class="_payment word">{{$t('order.money')}}</div>
+        <div class="_productInfo word">{{ $t('order.productInfo') }}</div>
+        <div class="_size word">{{ $t('order.size') }}</div>
+        <div class="_price word">{{ $t('order.price') }}</div>
+        <div class="_count word">{{ $t('order.count') }}</div>
+        <div class="_payment word">{{ $t('order.money') }}</div>
       </div>
       <div class="allCommodity">
         <!-- 以下v-for一个商品 -->
-        <div
-          class="commodity"
-          v-for="(item0, index) in commodityList.slice(
-            (currentPage - 1) * pagesize,
-            currentPage * pagesize
-          )"
-          :key="index"
-        >
+        <div class="commodity" v-for="(item0, index) in commodityList.slice(
+          (currentPage - 1) * pagesize,
+          currentPage * pagesize
+        )" :key="index">
           <div class="productInfo">
             <div class="productPic">
               <img :src="item0.product.pic_url" alt="" />
@@ -66,8 +67,8 @@
               <div class="name_zh" @click="toProductInfo(item0.product.id)">
                 {{ item0.product.name }}
               </div>
-              <div class="infoWord">{{$t('order.itemNo')+'：'}}{{ item0.huohao }}</div>
-              <div class="infoWord">{{$t('order.casNum')+'：'}}{{ item0.product.cas }}</div>
+              <div class="infoWord">{{ $t('order.itemNo') + '：' }}{{ item0.huohao }}</div>
+              <div class="infoWord">{{ $t('order.casNum') + '：' }}{{ item0.product.cas }}</div>
             </div>
           </div>
           <div class="size">{{ item0.product.guige }}</div>
@@ -80,20 +81,13 @@
         </div>
       </div>
       <div class="pagination">
-        <el-pagination
-          background="#004ea2"
-          layout="prev,pager,next"
-          :total="commodityList.length"
-          :page-size="pagesize"
-          :pager-count="pagerCount"
-          :current-page="currentPage"
-          @current-change="handleCurrentChange"
-          @size-change="handleSizeChange"
-        >
+        <el-pagination background="#004ea2" layout="prev,pager,next" :total="commodityList.length" :page-size="pagesize"
+          :pager-count="pagerCount" :current-page="currentPage" @current-change="handleCurrentChange"
+          @size-change="handleSizeChange">
         </el-pagination>
       </div>
     </div>
-        <!-- 以下为底部 -->
+    <!-- 以下为底部 -->
     <div class="footer">
       <div class="allMoney">
         {{ $t("cart.total") }}&nbsp;&nbsp;&nbsp;
@@ -119,6 +113,10 @@ export default {
       allMoney: "",
       color: "#004ea2",
       size: "large",
+      kuaidi_num: "————",// 快递单号
+      createTime: "", // 订单创建时间
+      payType:"", // 支付方式
+      orderStatus:"",// 订单状态
       activities: [
         {
           content: "jjjjjjjjjjjjjjj",
@@ -164,50 +162,56 @@ export default {
     };
   },
   created() {
-      this.getOrderInfo();
- },
- methods: {
-     getOrderInfo() {
-        this.$http
+    this.getOrderInfo();
+  },
+  methods: {
+    getOrderInfo() {
+      this.$http
         .get("/order/detail", {
           params: {
-             order_id: this.$route.params.id, // 暂定
+            order_id: this.$route.params.id, // 暂定
           }
-         
+
         })
         //回调函数
         .then((res) => {
-           if(!res.data.data){
-             this.$data.commodityList = [];
+          // console.log('res.data.data', res.data.data)
+          if (!res.data.data) {
+            this.$data.commodityList = [];
           }
           else {
+            const result = res.data.data;
+            this.orderStatus = result.status
+            this.payType = result.pay_type
+            this.createTime = result.created_time
+            this.kuaidi_num = result.kuaidi_num == null ? "————" : result.kuaidi_num
             this.$data.orderId = this.$route.params.id;
             this.$data.allMoney = res.data.data.payment;
-            if(res.data.data.kuaidi_name == null || res.data.data.kuaidi_name == ""){
-            this.$data.company = "————";
+            if (res.data.data.kuaidi_name == null || res.data.data.kuaidi_name == "") {
+              this.$data.company = "————";
             }
             else this.$data.company = res.data.data.kuaidi_name;
             this.$data.postFee = res.data.data.post_fee;
             this.$data.commodityList = res.data.data.product_params_count;
-            Object.assign(this.$data.addresses, { dz:res.data.data.dz, gj: res.data.data.gj, id: res.data.data.id, name: res.data.data.name, phone: res.data.data.phone, sx: res.data.data.sx });
+            Object.assign(this.$data.addresses, { dz: res.data.data.dz, gj: res.data.data.gj, id: res.data.data.id, name: res.data.data.name, phone: res.data.data.phone, sx: res.data.data.sx });
             this.$data.addressArray.push(this.$data.addresses);
-            this.$data.info = handleAddress(this.$data.addressArray);   
-    
-          }     
+            this.$data.info = handleAddress(this.$data.addressArray);
+
+          }
         })
         .catch((err) => {
           console.log(err);
         });
-     },
-     toMyOrder() {
+    },
+    toMyOrder() {
       this.$router.go(-1);
-     },
-     toProductInfo(code) {
+    },
+    toProductInfo(code) {
       this.$router.push({
-           path: "/productInfo",
-           query: {
-            id: code,
-           }
+        path: "/productInfo",
+        query: {
+          id: code,
+        }
       })
     },
     // 分页
@@ -219,7 +223,7 @@ export default {
       this.$data.currentPage = val;
       // console.log(`当前页: ${val}`);
     },
-    
+
   },
 };
 </script>
@@ -232,24 +236,29 @@ export default {
   justify-content: space-between;
   overflow: hidden;
 }
+
 .Btn {
   font-size: 0.83vw;
   display: flex;
   justify-content: space-between;
   overflow: hidden;
 }
+
 .returnBtn {
   margin: 0 1.56vw 0 0;
   cursor: pointer;
   font-weight: 600;
 }
+
 .returnBtn:hover {
-  color:#004ea2;
+  color: #004ea2;
 }
+
 .deleteBtn {
   margin: 0 2.5vw 0 0;
   cursor: pointer;
 }
+
 .deleteBtn:hover {
   color: #ff4747;
 }
@@ -262,6 +271,7 @@ export default {
   margin-right: 2.6vw;
   margin-bottom: 1.56vw;
 }
+
 .detail {
   margin: 0 0 1.15vw 0;
   height: 0.94vw;
@@ -271,6 +281,7 @@ export default {
   color: #4a4a4a;
   line-height: 0.94vw;
 }
+
 /* 可折叠列表 */
 .collapse {
   width: 60%;
@@ -279,10 +290,12 @@ export default {
   border-radius: 0.52vw;
   overflow: hidden;
 }
+
 .process {
   margin-top: 0.94vw;
   overflow: hidden;
 }
+
 .orderInfoPage /deep/ .el-collapse-item__header {
   text-indent: 2.34vw;
   font-size: 1.04vw;
@@ -290,6 +303,7 @@ export default {
   background-color: transparent;
   border-bottom: 0.05vw solid #eaeaec;
 }
+
 .orderInfoPage /deep/ .el-collapse-item__arrow,
 .el-icon-arrow-right,
 .is-active {
@@ -297,21 +311,25 @@ export default {
   /* height: 1px;
 */
 }
+
 .orderInfoPage /deep/ .el-collapse-item__wrap {
   background-color: transparent;
 }
+
 /* 时间线 */
 .process /deep/ .el-timeline {
   margin-left: 3.28vw;
 }
+
 /* 下为购物车样式 */
 .shopCart {
   width: 100%;
   min-height: 19.27vw;
   overflow: hidden;
   margin-top: 2.19vw;
-    border-top: 0.1vw solid #eaeaec; 
+  border-top: 0.1vw solid #eaeaec;
 }
+
 /* 表头 --*/
 .listHead {
   width: 100%;
@@ -326,26 +344,31 @@ export default {
   flex: 4.5;
   /* margin: 0 0 0 262px; */
 }
+
 ._size {
   /* width: 195px; */
   text-align: center;
   flex: 1;
 }
+
 ._price {
   /* width: 165px; */
   text-align: center;
   flex: 1;
 }
+
 ._count {
   /* width: 165px; */
   text-align: center;
   flex: 1;
 }
+
 ._payment {
   /* width: 130px; */
   text-align: center;
   flex: 1;
 }
+
 /* 内容 */
 .allcommodity {
   width: 100%;
@@ -366,6 +389,7 @@ export default {
   border-radius: 0.52vw;
   overflow: hidden;
 }
+
 .word {
   /* width: 65px; */
   height: 0.94vw;
@@ -375,6 +399,7 @@ export default {
   color: #4a4a4a;
   line-height: 0.94vw;
 }
+
 .productInfo {
   flex: 4.1;
   /* width: 700px; */
@@ -383,6 +408,7 @@ export default {
   align-items: center;
   margin: 0 1.41vw 0 3.54vw;
 }
+
 .productPic {
   width: 8.59vw;
   height: 8.59vw;
@@ -394,14 +420,17 @@ export default {
   border-radius: 0.26vw;
   overflow: hidden;
 }
+
 .productPic img {
   width: 100%;
   height: 100%;
   object-fit: contain;
 }
+
 .infoBox {
   height: 8.59vw;
 }
+
 .name_zh {
   cursor: pointer;
   height: 1.04vw;
@@ -413,10 +442,12 @@ export default {
   padding: 0 0 0.1vw 0;
   margin: 1.04vw 0 0.78vw;
 }
+
 .name_zh:hover {
   /* border-bottom: 2px solid #004EA2; */
   text-decoration: underline;
 }
+
 .infoWord {
   height: 0.94vw;
   font-size: 0.94vw;
@@ -426,17 +457,20 @@ export default {
   line-height: 0.94vw;
   margin: 0.42vw 0;
 }
+
 .size {
   flex: 1;
   /* width: 110px; */
   text-align: center;
 }
+
 .price {
   flex: 1;
   /* width: 165px; */
   text-align: center;
   font-weight: 600;
 }
+
 .count {
   flex: 1;
   /* width: 165px; */
@@ -453,37 +487,40 @@ export default {
   text-align: center;
   margin: 0 0.1vw;
 }
+
 .payment {
   flex: 1;
   /* width: 150px; */
   text-align: center;
   font-weight: 600;
 }
+
 /* 分页器 */
 .pagination {
   margin: 1.04vw 0 0 36%;
   overflow: hidden;
 }
+
 .orderInfoPage /deep/ .el-pagination {
   --el-pagination-button-height: 2.08vw;
   --el-pagination-font-type: 0.83vw;
 }
-.orderInfoPage
-  /deep/
-  .el-pagination.is-background
-  .el-pager
-  li:not(.disabled).active {
+
+.orderInfoPage /deep/ .el-pagination.is-background .el-pager li:not(.disabled).active {
   background-color: #004ea2;
 }
+
 .orderInfoPage /deep/.el-pagination.is-background .btn-next,
 .orderInfoPage /deep/.el-pagination.is-background .btn-prev,
 .orderInfoPage /deep/.el-pagination.is-background .el-pager li {
   min-width: 2.08vw;
   border-radius: 0.26vw;
 }
+
 .orderInfoPage /deep/ .el-icon {
   margin: 0 auto;
 }
+
 /* 以下为底部 */
 .footer {
   width: 95%;
@@ -497,6 +534,7 @@ export default {
   margin: 4.69vw 0 0 0;
   overflow: hidden;
 }
+
 .allMoney {
   display: flex;
   align-items: center;
@@ -509,9 +547,9 @@ export default {
   line-height: 0.94vw;
   margin: 0 0 0 2.19vw;
 }
+
 .allMoney div {
   font-size: 1.35vw;
   color: #ff4747;
 }
-
 </style>
