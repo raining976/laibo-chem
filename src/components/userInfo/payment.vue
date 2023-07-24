@@ -1,4 +1,4 @@
-//订单（支付部分）
+<!-- 订单（支付部分） -->
 <template>
   <div class="paymentPage" v-if="info">
     <!-- 收获地址 -->
@@ -10,20 +10,16 @@
 
       <div class="orderInfo">
         <div class="detail">
-          <strong>{{ $t("order.num") + "：" }}</strong
-          >{{ orderNo }}
+          <strong>{{ $t("order.num") + "：" }}</strong>{{ orderNo }}
         </div>
         <div class="detail">
-          <strong>{{ $t("address.name") + "：" }}</strong
-          >{{ info[0].name }}
+          <strong>{{ $t("address.name") + "：" }}</strong>{{ info[0].name }}
         </div>
         <div class="detail">
-          <strong>{{ $t("base.phone") + "：" }}</strong
-          >{{ info[0].phone }}
+          <strong>{{ $t("base.phone") + "：" }}</strong>{{ info[0].phone }}
         </div>
         <div class="detail">
-          <strong>{{ $t("base.address") + "：" }}</strong
-          >{{ info[0].address }}
+          <strong>{{ $t("base.address") + "：" }}</strong>{{ info[0].address }}
         </div>
       </div>
 
@@ -43,14 +39,10 @@
       </div>
       <div class="allCommodity">
         <!-- 以下v-for一个商品 -->
-        <div
-          class="commodity"
-          v-for="(item0, index) in orderInfo.slice(
-            (currentPage - 1) * pagesize,
-            currentPage * pagesize
-          )"
-          :key="index"
-        >
+        <div class="commodity" v-for="(item0, index) in orderInfo.slice(
+          (currentPage - 1) * pagesize,
+          currentPage * pagesize
+        )" :key="index">
           <div class="productInfo">
             <div class="productPic">
               <img :src="item0.product.pic_url" alt="" />
@@ -79,16 +71,9 @@
         </div>
       </div>
       <div class="pagination">
-        <el-pagination
-          background="#004ea2"
-          layout="prev,pager,next"
-          :total="orderInfo.length"
-          :page-size="pagesize"
-          :pager-count="pagerCount"
-          :current-page="currentPage"
-          @current-change="handleCurrentChange"
-          @size-change="handleSizeChange"
-        >
+        <el-pagination background="#004ea2" layout="prev,pager,next" :total="orderInfo.length" :page-size="pagesize"
+          :pager-count="pagerCount" :current-page="currentPage" @current-change="handleCurrentChange"
+          @size-change="handleSizeChange">
         </el-pagination>
       </div>
     </div>
@@ -97,11 +82,7 @@
     <div class="payType">
       <div class="typeTitle">{{ $t("cart.payType") }}</div>
       <div class="typeBox">
-        <div
-          class="type"
-          :class="{ type_checked: wechat == true }"
-          @click="payType('wx')"
-        >
+        <div class="type" :class="{ type_checked: wechat == true }" @click="payType('wx')">
           <div class="typeSign">
             <img src="../../assets/weixinzhifu.png" alt="" />
           </div>
@@ -109,12 +90,7 @@
             {{ $t("cart.weChat") + " " + $t("cart.payment") }}
           </div>
         </div>
-
-        <div
-          class="type"
-          :class="{ type_checked: zhifubao == true }"
-          @click="payType('alipay')"
-        >
+        <div class="type" :class="{ type_checked: zhifubao == true }" @click="payType('alipay')">
           <div class="typeSign">
             <img src="../../assets/zhifubao.png" alt="" />
           </div>
@@ -123,11 +99,7 @@
           </div>
         </div>
 
-        <div
-          class="type"
-          :class="{ type_checked: yuzhifu == true }"
-          @click="payType('gongsi')"
-        >
+        <div class="type" :class="{ type_checked: yuzhifu == true }" @click="payType('gongsi')">
           <div class="typeSign">
             <!-- <img src="../../assets/weixinzhifu.png" alt="" /> -->
           </div>
@@ -135,52 +107,25 @@
             {{ $t("cart.balance") + " " + $t("cart.payment") }}
           </div>
         </div>
-
-        <div
-          class="type"
-          :class="{ type_checked: offlinePay == true }"
-          @click="payType('pic')"
-        >
+        <div class="type" :class="{ type_checked: offlinePay == true }" @click="payType('pic')">
           <div class="typeSign">
             <img src="../../assets/gerenzhifu.png" alt="" />
           </div>
           <div class="typeName">{{ $t("cart.offline") + " " + $t("cart.payment") }}</div>
         </div>
 
-        <!-- <div
-          class="type"
-          :class="{ type_checked: gongsi == true }"
-          @click="payType('gongsi')"
-        >
-          <div class="typeSign">
-            <img src="../../assets/gongsi.png" alt="" />
-          </div>
-          <div class="typeName">{{ $t("cart.bills") + $t("cart.firm") }}</div>
-        </div> -->
       </div>
       <div class="upload" v-if="showBills">
         <div class="payInfo">
-          <div class="payInfoWord"><strong>{{ $t("cart.payment") + " " + $t("cart.info")}}：</strong></div>
-          <div class="payInfoWord">{{$t("cart.payee") + "：" + $t("companyInfo.name")}}</div>
-          <div class="payInfoWord">{{$t("cart.account") + "："}}162590080</div>
-          <div class="payInfoWord">{{$t("cart.accountBank") + "：" + $t("cart.bankName")}}</div>
+          <div class="payInfoWord"><strong>{{ $t("cart.payment") + " " + $t("cart.info") }}：</strong></div>
+          <div class="payInfoWord">{{ $t("cart.payee") + "：" + $t("companyInfo.name") }}</div>
+          <div class="payInfoWord">{{ $t("cart.account") + "：" }}162590080</div>
+          <div class="payInfoWord">{{ $t("cart.accountBank") + "：" + $t("cart.bankName") }}</div>
           <div class="tip">{{ $t("cart.remark") }}</div>
         </div>
-        <el-upload
-          class="upload-demo"
-          ref="upload"
-          drag
-          action=""
-          :multiple="false"
-          accept=".jpeg, .jpg, .png"
-          :on-change="onUploadChange"
-          :before-remove="beforeRemove"
-          :on-exceed="handleExceed"
-          :file-list="fileList"
-          :show-file-list="true"
-          :auto-upload="false"
-          :limit="1"
-        >
+        <el-upload class="upload-demo" ref="upload" drag action="" :multiple="false" accept=".jpeg, .jpg, .png"
+          :on-change="onUploadChange" :before-remove="beforeRemove" :on-exceed="handleExceed" :file-list="fileList"
+          :show-file-list="true" :auto-upload="false" :limit="1">
           <!-- 要改下面 -->
           <el-icon class="el-icon--upload"><upload-filled /></el-icon>
           <div class="el-upload__text">
@@ -200,17 +145,20 @@
         {{ $t("cart.total") }}&nbsp;&nbsp;&nbsp;
         <div>{{ currency(orderList.payment).format() }}</div>
       </div>
-      <el-button
-        :disabled="showBills == true ? true : false"
-        class="pay"
-        @click="pay()"
-        >{{ submitBtn }}</el-button
-      >
+      <el-button :disabled="showBills == true ? true : false" class="pay" @click="pay()">{{ $t("cart.payment") }}</el-button>
     </div>
   </div>
+  <el-dialog :title="$t('payment.weChatPayTip')" v-model="dialogVisible" width="50%" center :before-close="dialogClosed">
+    <div class="qr" style="text-align: center;" id="qrCodeBox"></div>
+    <span slot="footer" class="dialog-footer">
+      <el-button @click="dialogClosed">{{$t("payment.cancel") }}</el-button>
+      <el-button type="primary" @click="paySuccess">{{ $t("payment.payed") }}</el-button>
+    </span>
+  </el-dialog>
 </template>
 <script>
 import handleAddress from "../../js/handlerAddress";
+import QRCode from 'qrcodejs2-fix';//在需要使用的vue文件中导入即可
 // import addressForm from "../address/addressForm.vue";
 export default {
   name: "payment",
@@ -219,6 +167,10 @@ export default {
   },
   data() {
     return {
+      isPayed:false, // 是否支付成功
+      dialogVisible: false, // 是否显示对话框
+      orderStatusTimer: null, // 轮询微信支付状态
+      weChatUrl: "", // 微信支付链接
       pagesize: 2, // 每页显示多少条
       currentPage: 1, // 当前页数
       pagerCount: 5, //五个以上加省略号
@@ -268,6 +220,19 @@ export default {
     this.getOrderInfo();
   },
   watch: {
+    isPayed(val){
+      if(val){
+        // 支付成功
+        this.$message({
+          type:"success",
+          message:this.$t("payment.paySuccess")
+        })
+        setTimeout(()=>{
+          this.$router.push("/orderInfo/"+this.orderNo)
+        },1000)
+        this.clearTimer()
+      }
+    },
     isReloadAddress(val) {
       if (val) {
         this.getAddress();
@@ -361,20 +326,18 @@ export default {
       return this.isImg === "1"
         ? true
         : false && this.isLt2k === "1"
-        ? true
-        : false;
+          ? true
+          : false;
     },
     // 支付----上传单据
     submitForm() {
-      console.log("ff22", this.$refs.upload.uploadFiles.length);
       if (this.$refs.upload.uploadFiles.length !== 0) {
         let file = this.$refs.upload.uploadFiles.pop().raw; //这里获取上传的文件对象
-        console.log("ff", file);
         let formData = new FormData();
         formData.append("order_no", localStorage.getItem("orderNo"));
         formData.append("type", this.$data.payWay);
         formData.append("image", file);
-        console.log(formData.get("type"));
+        // console.log(formData.get("type"));
         // this.$axios.post("/upload", formData).then((res) => {
         //   console.log(res.data);
         // }); {
@@ -525,14 +488,17 @@ export default {
           })
           .then((res) => {
             if (res.data.code == 20000) {
-              // this.$message({
-              //   message: this.$t('callback.paySuccess'),
-              //   type: "success",
-              // });
-              window.location.href = res.data.data.url;
-              // this.$router.push({
-              //   path: "/payCompleted/" + this.$data.orderId,
-              // });
+              const result = res.data.data
+              let url = result.url
+              if (url.includes("weixin")) {
+                this.dialogVisible = true
+                this.$nextTick(() => {
+                  this.createQrCode(url)
+                })
+
+
+              }
+              else window.location.href = url;
             } else {
               this.$message({
                 message: res.data.msg,
@@ -549,13 +515,80 @@ export default {
           });
       }
     },
+    // 生成微信支付二维码
+    createQrCode(url) {
+      //清空该元素内内容
+      document.getElementById("qrCodeBox").innerHTML = "";
+      new QRCode(document.getElementById("qrCodeBox"), {
+        //需要编码的文字内容或者URL
+        text: url,
+        width: 100, //二维码宽
+        height: 100,//二维码高
+      })
+      this.orderStatusTimer = setInterval(this.getOrderStatus, 1000)
+    },
+    getOrderStatus() {
+      this.$http.get("/order/status", {
+        params: {
+          order_id: localStorage.getItem("orderNo")
+        }
+      }).then(res => {
+        if(res.data.code == 20000){
+          this.isPayed = true
+        }else{
+          this.isPayed = false
+        }
+        console.log('res', res.data)
+      })
+    },
+    clearTimer() {
+      if (this.orderStatusTimer != null) {
+        clearInterval(this.orderStatusTimer)
+        this.orderStatusTimer == null
+      }
+    },
+    // 模态框关闭时
+    dialogClosed(){
+      this.clearTimer()
+      this.dialogVisible = false
+    },
+    // 用户点击我已经支付完成
+    paySuccess(){
+     
+      if(this.isPayed){
+        // 支付成功
+        this.$message({
+          type:"success",
+          message:this.$t("payment.paySuccess")
+        })
+        setTimeout(()=>{
+          this.$router.push("/orderInfo/"+this.orderNo)
+        },1000)
+      }else{
+        // 支付成功
+        this.$message({
+          type:"error",
+          message:this.$t("payment.payFailed"),
+          showClose:true
+        })
+      }
+      this.dialogVisible = false
+      this.clearTimer()
+      
+    }
+
+
   },
+  unmounted() {
+    this.clearTimer()
+  }
 };
 </script>
 <style scoped>
 .paymentPage {
   position: relative;
 }
+
 .top {
   width: 100%;
   margin-bottom: 1.04vw;
@@ -576,6 +609,7 @@ export default {
   font-weight: bold;
   font-family: Microsoft YaHei UI;
 }
+
 .returnBtn:hover {
   color: #004ea2;
 }
@@ -590,6 +624,7 @@ export default {
   /* margin-right: 50px; */
   margin-bottom: 1.56vw;
 }
+
 .detail {
   margin: 0 0 1.15vw 0;
   height: 0.94vw;
@@ -620,6 +655,7 @@ export default {
   min-height: 19.27vw;
   overflow: hidden;
 }
+
 /* 表头 --*/
 .listHead {
   width: 100%;
@@ -634,26 +670,31 @@ export default {
   flex: 4.5;
   /* margin: 0 0 0 262px; */
 }
+
 ._size {
   /* width: 195px; */
   text-align: center;
   flex: 1;
 }
+
 ._price {
   /* width: 165px; */
   text-align: center;
   flex: 1;
 }
+
 ._count {
   /* width: 165px; */
   text-align: center;
   flex: 1;
 }
+
 ._payment {
   /* width: 130px; */
   text-align: center;
   flex: 1;
 }
+
 /* 内容 */
 .allcommodity {
   width: 100%;
@@ -674,6 +715,7 @@ export default {
   border-radius: 0.52vw;
   overflow: hidden;
 }
+
 .word {
   /* width: 65px; */
   height: 0.94vw;
@@ -683,6 +725,7 @@ export default {
   color: #4a4a4a;
   line-height: 0.94vw;
 }
+
 .productInfo {
   flex: 4.1;
   /* width: 700px; */
@@ -691,6 +734,7 @@ export default {
   align-items: center;
   margin: 0 1.41vw 0 3.54vw;
 }
+
 .productPic {
   width: 8.59vw;
   height: 8.59vw;
@@ -702,14 +746,17 @@ export default {
   border-radius: 0.26vw;
   overflow: hidden;
 }
+
 .productPic img {
   object-fit: contain;
 }
+
 .infoBox {
   width: calc(100% - 10.31vw);
   height: 8.59vw;
   overflow: hidden;
 }
+
 .name_zh {
   cursor: pointer;
   min-height: 1.04vw;
@@ -721,10 +768,12 @@ export default {
   padding: 0 0 0.1vw 0;
   margin: 1.04vw 0 0.78vw;
 }
+
 .name_zh:hover {
   /* border-bottom: 2px solid #004EA2; */
   text-decoration: underline;
 }
+
 .infoWord {
   height: 0.94vw;
   font-size: 0.94vw;
@@ -734,17 +783,20 @@ export default {
   line-height: 0.94vw;
   margin: 0.42vw 0;
 }
+
 .size {
   flex: 1;
   /* width: 110px; */
   text-align: center;
 }
+
 .price {
   flex: 1;
   /* width: 165px; */
   text-align: center;
   font-weight: 600;
 }
+
 .count {
   flex: 1;
   /* width: 165px; */
@@ -761,41 +813,45 @@ export default {
   text-align: center;
   margin: 0 0.1vw;
 }
+
 .payment {
   flex: 1;
   /* width: 150px; */
   text-align: center;
   font-weight: 600;
 }
+
 /* 分页器 */
 .pagination {
   margin: 1.04vw 0 0 36%;
   overflow: hidden;
 }
+
 .paymentPage /deep/ .el-pagination {
   --el-pagination-button-height: 2.08vw;
   --el-pagination-font-size: 0.83vw;
 }
-.paymentPage
-  /deep/
-  .el-pagination.is-background
-  .el-pager
-  li:not(.disabled).active {
+
+.paymentPage /deep/ .el-pagination.is-background .el-pager li:not(.disabled).active {
   background-color: #004ea2;
 }
+
 .paymentPage /deep/.el-pagination.is-background .btn-next,
 .paymentPage /deep/.el-pagination.is-background .btn-prev,
 .paymentPage /deep/.el-pagination.is-background .el-pager li {
   min-width: 2.08vw;
   border-radius: 0.26vw;
 }
+
 .paymentPage /deep/ .el-icon {
   margin: 0 auto;
 }
+
 /* 以下为支付类型 */
 .payType {
   overflow: hidden;
 }
+
 .typeTitle {
   margin: 2.08vw 0 1.56vw;
   height: 1.04vw;
@@ -805,10 +861,12 @@ export default {
   color: #333333;
   line-height: 1.04vw;
 }
+
 .typeBox {
   display: flex;
   flex-wrap: wrap;
 }
+
 .type {
   /* width: 200px; */
 
@@ -824,12 +882,14 @@ export default {
   cursor: pointer;
   padding: 0 0.78vw;
 }
+
 .type:hover,
 .type_checked {
   border: 0.16vw solid #004ea2;
   height: 2.71vw;
   padding: 0 0.68vw;
 }
+
 /* .type_checked {
   border: 3px solid #004ea2;
   padding: 0;
@@ -843,11 +903,13 @@ export default {
   margin: 0 0.73vw 0 0;
   overflow: hidden;
 }
+
 .typeSign img {
   object-fit: contain;
   width: 1.98vw;
   height: 1.98vw;
 }
+
 .typeName {
   height: 0.83vw;
   font-size: 0.83vw;
@@ -856,48 +918,60 @@ export default {
   color: #4a4a4a;
   line-height: 0.83vw;
 }
+
 /* 上传文件相关 */
 .upload {
   margin: 0.52vw 0 0 0;
   overflow: hidden;
 }
+
 .payInfo {
   overflow: hidden;
 }
+
 .payInfoWord {
   margin: 0.78vw 0;
   font-size: 0.83vw;
   color: #4a4a4a;
 }
+
 .tip {
   margin: 1.56vw 0 1.04vw;
   font-size: 0.83vw;
   color: #ff4747;
 }
-.upload >>> .el-upload-dragger {
+
+.upload>>>.el-upload-dragger {
   width: 36.46vw;
   height: 5.17vw;
 }
-.upload >>> .el-upload-dragger .el-upload__text em {
+
+.upload>>>.el-upload-dragger .el-upload__text em {
   color: var(--color);
 }
-.upload >>> .el-upload-dragger:hover {
+
+.upload>>>.el-upload-dragger:hover {
   color: var(--color);
 }
-.upload >>> .el-upload-list__item {
+
+.upload>>>.el-upload-list__item {
   width: 70%;
 }
-.upload >>> .is-error .el-upload-list__item-name {
+
+.upload>>>.is-error .el-upload-list__item-name {
   color: red !important;
 }
-.upload >>> .el-button {
+
+.upload>>>.el-button {
   margin-top: 1.04vw;
 }
-.upload >>> .el-button:focus,
+
+.upload>>>.el-button:focus,
 .el-button:hover {
   background-color: var(--color);
   color: #fff;
 }
+
 /* 以下为底部 */
 .footer {
   width: 95%;
@@ -911,6 +985,7 @@ export default {
   margin: 4.69vw 0 0 0;
   overflow: hidden;
 }
+
 .allMoney {
   display: flex;
   align-items: center;
@@ -923,10 +998,12 @@ export default {
   line-height: 0.94vw;
   margin: 0 0 0 2.19vw;
 }
+
 .allMoney div {
   font-size: 1.35vw;
   color: #ff4747;
 }
+
 .pay {
   cursor: pointer;
   padding: 0 1.2vw;
@@ -940,8 +1017,19 @@ export default {
   background-color: #e0f3fe;
   border-radius: 1.35vw;
 }
+
 .pay:hover {
   color: #fff;
   background-color: #004ea2;
+}
+
+.qr{
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2vw;
+}
+.dialog-footer {
+  display: flex;
+  justify-content: space-around;
 }
 </style>

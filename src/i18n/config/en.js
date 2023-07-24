@@ -341,6 +341,11 @@ export default {
         selectBills: 'Please select documents',
         selectLimit: 'The current limit is to select 1 file',
         sure: 'Are you sure to remove',
+        weChatPayTip:"Please use WeChat to scan the QR code for payment",
+        cancel:"Cancel",
+        payed:"Payments completed",
+        paySuccess:"Payment successful, now jumping to the web page...",
+        payFailed:"Payment failed, please try again!"
     },
     // 底栏
     footer: {

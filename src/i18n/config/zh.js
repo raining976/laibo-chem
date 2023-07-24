@@ -343,6 +343,12 @@ export default {
         selectBills: '请选择单据',
         selectLimit: '当前限制选择 1 个文件',
         sure: '确定移除',
+        weChatPayTip:"请使用微信扫描二维码进行支付",
+        cancel:"取消支付",
+        payed:"已经支付完成",
+        paySuccess:"支付成功,正在跳转……",
+        payFailed:"支付失败，请重新尝试！"
+
     },
     // 底栏
     footer: {
