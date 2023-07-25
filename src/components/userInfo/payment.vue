@@ -10,16 +10,20 @@
 
       <div class="orderInfo">
         <div class="detail">
-          <strong>{{ $t("order.num") + "：" }}</strong>{{ orderNo }}
+          <strong>{{ $t("order.num") + "：" }}</strong
+          >{{ orderNo }}
         </div>
         <div class="detail">
-          <strong>{{ $t("address.name") + "：" }}</strong>{{ info[0].name }}
+          <strong>{{ $t("address.name") + "：" }}</strong
+          >{{ info[0].name }}
         </div>
         <div class="detail">
-          <strong>{{ $t("base.phone") + "：" }}</strong>{{ info[0].phone }}
+          <strong>{{ $t("base.phone") + "：" }}</strong
+          >{{ info[0].phone }}
         </div>
         <div class="detail">
-          <strong>{{ $t("base.address") + "：" }}</strong>{{ info[0].address }}
+          <strong>{{ $t("base.address") + "：" }}</strong
+          >{{ info[0].address }}
         </div>
       </div>
 
@@ -39,10 +43,14 @@
       </div>
       <div class="allCommodity">
         <!-- 以下v-for一个商品 -->
-        <div class="commodity" v-for="(item0, index) in orderInfo.slice(
-          (currentPage - 1) * pagesize,
-          currentPage * pagesize
-        )" :key="index">
+        <div
+          class="commodity"
+          v-for="(item0, index) in orderInfo.slice(
+            (currentPage - 1) * pagesize,
+            currentPage * pagesize
+          )"
+          :key="index"
+        >
           <div class="productInfo">
             <div class="productPic">
               <img :src="item0.product.pic_url" alt="" />
@@ -71,9 +79,16 @@
         </div>
       </div>
       <div class="pagination">
-        <el-pagination background="#004ea2" layout="prev,pager,next" :total="orderInfo.length" :page-size="pagesize"
-          :pager-count="pagerCount" :current-page="currentPage" @current-change="handleCurrentChange"
-          @size-change="handleSizeChange">
+        <el-pagination
+          background="#004ea2"
+          layout="prev,pager,next"
+          :total="orderInfo.length"
+          :page-size="pagesize"
+          :pager-count="pagerCount"
+          :current-page="currentPage"
+          @current-change="handleCurrentChange"
+          @size-change="handleSizeChange"
+        >
         </el-pagination>
       </div>
     </div>
@@ -82,7 +97,11 @@
     <div class="payType">
       <div class="typeTitle">{{ $t("cart.payType") }}</div>
       <div class="typeBox">
-        <div class="type" :class="{ type_checked: wechat == true }" @click="payType('wx')">
+        <div
+          class="type"
+          :class="{ type_checked: wechat == true }"
+          @click="payType('wx')"
+        >
           <div class="typeSign">
             <img src="../../assets/weixinzhifu.png" alt="" />
           </div>
@@ -90,7 +109,11 @@
             {{ $t("cart.weChat") + " " + $t("cart.payment") }}
           </div>
         </div>
-        <div class="type" :class="{ type_checked: zhifubao == true }" @click="payType('alipay')">
+        <div
+          class="type"
+          :class="{ type_checked: zhifubao == true }"
+          @click="payType('alipay')"
+        >
           <div class="typeSign">
             <img src="../../assets/zhifubao.png" alt="" />
           </div>
@@ -99,33 +122,62 @@
           </div>
         </div>
 
-        <div class="type" :class="{ type_checked: yuzhifu == true }" @click="payType('gongsi')">
+        <div
+          class="type"
+          :class="{ type_checked: balance == true }"
+          @click="payType('balance')"
+        >
           <div class="typeSign">
-            <!-- <img src="../../assets/weixinzhifu.png" alt="" /> -->
+            <img src="../../assets/balancePay.png" alt="" />
           </div>
           <div class="typeName">
             {{ $t("cart.balance") + " " + $t("cart.payment") }}
           </div>
         </div>
-        <div class="type" :class="{ type_checked: offlinePay == true }" @click="payType('pic')">
+        <div
+          class="type"
+          :class="{ type_checked: offlinePay == true }"
+          @click="payType('pic')"
+        >
           <div class="typeSign">
             <img src="../../assets/gerenzhifu.png" alt="" />
           </div>
-          <div class="typeName">{{ $t("cart.offline") + " " + $t("cart.payment") }}</div>
+          <div class="typeName">
+            {{ $t("cart.offline") + " " + $t("cart.payment") }}
+          </div>
         </div>
-
       </div>
       <div class="upload" v-if="showBills">
         <div class="payInfo">
-          <div class="payInfoWord"><strong>{{ $t("cart.payment") + " " + $t("cart.info") }}：</strong></div>
-          <div class="payInfoWord">{{ $t("cart.payee") + "：" + $t("companyInfo.name") }}</div>
-          <div class="payInfoWord">{{ $t("cart.account") + "：" }}162590080</div>
-          <div class="payInfoWord">{{ $t("cart.accountBank") + "：" + $t("cart.bankName") }}</div>
+          <div class="payInfoWord">
+            <strong>{{ $t("cart.payment") + " " + $t("cart.info") }}：</strong>
+          </div>
+          <div class="payInfoWord">
+            {{ $t("cart.payee") + "：" + $t("companyInfo.name") }}
+          </div>
+          <div class="payInfoWord">
+            {{ $t("cart.account") + "：" }}162590080
+          </div>
+          <div class="payInfoWord">
+            {{ $t("cart.accountBank") + "：" + $t("cart.bankName") }}
+          </div>
           <div class="tip">{{ $t("cart.remark") }}</div>
         </div>
-        <el-upload class="upload-demo" ref="upload" drag action="" :multiple="false" accept=".jpeg, .jpg, .png"
-          :on-change="onUploadChange" :before-remove="beforeRemove" :on-exceed="handleExceed" :file-list="fileList"
-          :show-file-list="true" :auto-upload="false" :limit="1">
+        <el-upload
+          class="upload-demo"
+          ref="upload"
+          drag
+          action=""
+          :multiple="false"
+          accept=".jpeg, .jpg, .png"
+          :on-change="onUploadChange"
+          :before-remove="beforeRemove"
+          :on-exceed="handleExceed"
+          :file-list="fileList"
+          :show-file-list="true"
+          :auto-upload="false"
+          :limit="1"
+        >
           <!-- 要改下面 -->
           <el-icon class="el-icon--upload"><upload-filled /></el-icon>
           <div class="el-upload__text">
@@ -145,20 +197,33 @@
         {{ $t("cart.total") }}&nbsp;&nbsp;&nbsp;
         <div>{{ currency(orderList.payment).format() }}</div>
       </div>
-      <el-button :disabled="showBills == true ? true : false" class="pay" @click="pay()">{{ $t("cart.payment") }}</el-button>
+      <el-button
+        :disabled="showBills == true ? true : false"
+        class="pay"
+        @click="pay()"
+        >{{ $t("cart.payment") }}</el-button
+      >
     </div>
   </div>
-  <el-dialog :title="$t('payment.weChatPayTip')" v-model="dialogVisible" width="50%" center :before-close="dialogClosed">
-    <div class="qr" style="text-align: center;" id="qrCodeBox"></div>
+  <el-dialog
+    :title="$t('payment.weChatPayTip')"
+    v-model="dialogVisible"
+    width="50%"
+    center
+    :before-close="dialogClosed"
+  >
+    <div class="qr" style="text-align: center" id="qrCodeBox"></div>
     <span slot="footer" class="dialog-footer">
-      <el-button @click="dialogClosed">{{$t("payment.cancel") }}</el-button>
-      <el-button type="primary" @click="paySuccess">{{ $t("payment.payed") }}</el-button>
+      <el-button @click="dialogClosed">{{ $t("payment.cancel") }}</el-button>
+      <el-button type="primary" @click="paySuccess">{{
+        $t("payment.payed")
+      }}</el-button>
     </span>
   </el-dialog>
 </template>
 <script>
 import handleAddress from "../../js/handlerAddress";
-import QRCode from 'qrcodejs2-fix';//在需要使用的vue文件中导入即可
+import QRCode from "qrcodejs2-fix"; //在需要使用的vue文件中导入即可
 // import addressForm from "../address/addressForm.vue";
 export default {
   name: "payment",
@@ -167,7 +232,7 @@ export default {
   },
   data() {
     return {
-      isPayed:false, // 是否支付成功
+      isPayed: false, // 是否支付成功
       dialogVisible: false, // 是否显示对话框
       orderStatusTimer: null, // 轮询微信支付状态
       weChatUrl: "", // 微信支付链接
@@ -180,7 +245,7 @@ export default {
       wechat: false,
       zhifubao: false,
       offlinePay: false,
-      gongsi: false,
+      balance: false,
       payWay: "",
       addressId: 0, // 地址id
       freight: 0, //运费
@@ -220,17 +285,17 @@ export default {
     this.getOrderInfo();
   },
   watch: {
-    isPayed(val){
-      if(val){
+    isPayed(val) {
+      if (val) {
         // 支付成功
         this.$message({
-          type:"success",
-          message:this.$t("payment.paySuccess")
-        })
-        setTimeout(()=>{
-          this.$router.push("/orderInfo/"+this.orderNo)
-        },1000)
-        this.clearTimer()
+          type: "success",
+          message: this.$t("payment.paySuccess"),
+        });
+        setTimeout(() => {
+          this.$router.push("/orderInfo/" + this.orderNo);
+        }, 1000);
+        this.clearTimer();
       }
     },
     isReloadAddress(val) {
@@ -326,8 +391,8 @@ export default {
       return this.isImg === "1"
         ? true
         : false && this.isLt2k === "1"
-          ? true
-          : false;
+        ? true
+        : false;
     },
     // 支付----上传单据
     submitForm() {
@@ -358,7 +423,7 @@ export default {
                 //   path: "/payCompleted/" + this.$data.orderId,
                 // });
                 //上传单据成功的跳转回上一页
-                this.$router.go(-1);
+                this.back();
               } else {
                 this.$message({
                   message: res.data.msg,
@@ -441,7 +506,7 @@ export default {
           this.$data.wechat = true;
           this.$data.zhifubao = false;
           this.$data.offlinePay = false;
-          this.$data.gongsi = false;
+          this.$data.balance = false;
           this.$data.showBills = false;
           this.$data.submitBtn = this.$t("cart.payment");
           break;
@@ -449,7 +514,7 @@ export default {
           this.$data.wechat = false;
           this.$data.zhifubao = true;
           this.$data.offlinePay = false;
-          this.$data.gongsi = false;
+          this.$data.balance = false;
           this.$data.showBills = false;
           this.$data.submitBtn = this.$t("cart.payment");
           break;
@@ -457,15 +522,15 @@ export default {
           this.$data.wechat = false;
           this.$data.zhifubao = false;
           this.$data.offlinePay = true;
-          this.$data.gongsi = false;
+          this.$data.balance = false;
           this.$data.showBills = true;
           this.$data.submitBtn = "---";
           break;
-        case "gongsi": //余额支付暂时使用
+        case "balance": //余额支付暂时使用
           this.$data.wechat = false;
           this.$data.zhifubao = false;
           this.$data.offlinePay = false;
-          this.$data.gongsi = true;
+          this.$data.balance = true;
           this.$data.showBills = false;
           this.$data.submitBtn = "---";
           break;
@@ -488,17 +553,23 @@ export default {
           })
           .then((res) => {
             if (res.data.code == 20000) {
-              const result = res.data.data
-              let url = result.url
-              if (url.includes("weixin")) {
-                this.dialogVisible = true
-                this.$nextTick(() => {
-                  this.createQrCode(url)
-                })
-
-
+              if (Reflect.has(res.data, "data")) {
+                const result = res.data.data;
+                let url = result.url;
+                if (url.includes("weixin")) {
+                  this.dialogVisible = true;
+                  this.$nextTick(() => {
+                    this.createQrCode(url);
+                  });
+                } else if (url.includes("alipay")) {
+                  window.location.href = url;
+                }
               }
-              else window.location.href = url;
+              this.$message({
+                message: this.$t("callback.paySuccess"),
+                type: "success",
+              });
+              this.back();
             } else {
               this.$message({
                 message: res.data.msg,
@@ -523,65 +594,63 @@ export default {
         //需要编码的文字内容或者URL
         text: url,
         width: 100, //二维码宽
-        height: 100,//二维码高
-      })
-      this.orderStatusTimer = setInterval(this.getOrderStatus, 1000)
+        height: 100, //二维码高
+      });
+      this.orderStatusTimer = setInterval(this.getOrderStatus, 1000);
     },
     getOrderStatus() {
-      this.$http.get("/order/status", {
-        params: {
-          order_id: localStorage.getItem("orderNo")
-        }
-      }).then(res => {
-        if(res.data.code == 20000){
-          this.isPayed = true
-        }else{
-          this.isPayed = false
-        }
-        console.log('res', res.data)
-      })
+      this.$http
+        .get("/order/status", {
+          params: {
+            order_id: localStorage.getItem("orderNo"),
+          },
+        })
+        .then((res) => {
+          if (res.data.code == 20000) {
+            this.isPayed = true;
+          } else {
+            this.isPayed = false;
+          }
+          console.log("res", res.data);
+        });
     },
     clearTimer() {
       if (this.orderStatusTimer != null) {
-        clearInterval(this.orderStatusTimer)
-        this.orderStatusTimer == null
+        clearInterval(this.orderStatusTimer);
+        this.orderStatusTimer == null;
       }
     },
     // 模态框关闭时
-    dialogClosed(){
-      this.clearTimer()
-      this.dialogVisible = false
+    dialogClosed() {
+      this.clearTimer();
+      this.dialogVisible = false;
     },
     // 用户点击我已经支付完成
-    paySuccess(){
-     
-      if(this.isPayed){
+    paySuccess() {
+      if (this.isPayed) {
         // 支付成功
         this.$message({
-          type:"success",
-          message:this.$t("payment.paySuccess")
-        })
-        setTimeout(()=>{
-          this.$router.push("/orderInfo/"+this.orderNo)
-        },1000)
-      }else{
+          type: "success",
+          message: this.$t("payment.paySuccess"),
+        });
+        setTimeout(() => {
+          this.$router.push("/orderInfo/" + this.orderNo);
+        }, 1000);
+      } else {
         // 支付成功
         this.$message({
-          type:"error",
-          message:this.$t("payment.payFailed"),
-          showClose:true
-        })
+          type: "error",
+          message: this.$t("payment.payFailed"),
+          showClose: true,
+        });
       }
-      this.dialogVisible = false
-      this.clearTimer()
-      
-    }
-
-
+      this.dialogVisible = false;
+      this.clearTimer();
+    },
   },
   unmounted() {
-    this.clearTimer()
-  }
+    this.clearTimer();
+  },
 };
 </script>
 <style scoped>
@@ -832,7 +901,11 @@ export default {
   --el-pagination-font-size: 0.83vw;
 }
 
-.paymentPage /deep/ .el-pagination.is-background .el-pager li:not(.disabled).active {
+.paymentPage
+  /deep/
+  .el-pagination.is-background
+  .el-pager
+  li:not(.disabled).active {
   background-color: #004ea2;
 }
 
@@ -941,32 +1014,32 @@ export default {
   color: #ff4747;
 }
 
-.upload>>>.el-upload-dragger {
+.upload >>> .el-upload-dragger {
   width: 36.46vw;
   height: 5.17vw;
 }
 
-.upload>>>.el-upload-dragger .el-upload__text em {
+.upload >>> .el-upload-dragger .el-upload__text em {
   color: var(--color);
 }
 
-.upload>>>.el-upload-dragger:hover {
+.upload >>> .el-upload-dragger:hover {
   color: var(--color);
 }
 
-.upload>>>.el-upload-list__item {
+.upload >>> .el-upload-list__item {
   width: 70%;
 }
 
-.upload>>>.is-error .el-upload-list__item-name {
+.upload >>> .is-error .el-upload-list__item-name {
   color: red !important;
 }
 
-.upload>>>.el-button {
+.upload >>> .el-button {
   margin-top: 1.04vw;
 }
 
-.upload>>>.el-button:focus,
+.upload >>> .el-button:focus,
 .el-button:hover {
   background-color: var(--color);
   color: #fff;
@@ -1023,7 +1096,7 @@ export default {
   background-color: #004ea2;
 }
 
-.qr{
+.qr {
   display: flex;
   justify-content: center;
   margin-bottom: 2vw;

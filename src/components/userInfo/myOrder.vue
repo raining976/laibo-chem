@@ -122,6 +122,7 @@
                   :disabled="(item0.status == '待付款' && item0.type == '个人') ? false : true"
                   @click="toPay(item0.id, item0)"
                   placement="bottom"
+                  v-if="item0.type == '团队'? false : true"
                 >
                   <div class="toOrderInfo">{{ $t("order.toPay") }}</div>
                 </el-dropdown-item>
