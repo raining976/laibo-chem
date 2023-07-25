@@ -423,7 +423,9 @@ export default {
                 //   path: "/payCompleted/" + this.$data.orderId,
                 // });
                 //上传单据成功的跳转回上一页
-                this.back();
+                setTimeout(() => {
+                  this.$router.push("/orderInfo/" + this.orderNo);
+                }, 1000);
               } else {
                 this.$message({
                   message: res.data.msg,
@@ -564,12 +566,15 @@ export default {
                 } else if (url.includes("alipay")) {
                   window.location.href = url;
                 }
+              } else {
+                this.$message({
+                  message: this.$t("callback.paySuccess"),
+                  type: "success",
+                });
+                setTimeout(() => {
+                  this.$router.push("/orderInfo/" + this.orderNo);
+                }, 1000);
               }
-              this.$message({
-                message: this.$t("callback.paySuccess"),
-                type: "success",
-              });
-              this.back();
             } else {
               this.$message({
                 message: res.data.msg,
