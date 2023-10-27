@@ -213,17 +213,16 @@ const router = createRouter({
 
 // 路由拦截器
 router.beforeEach((to, from, next) => {
+    const isMobile = window.innerWidth < 768; // 假设小于768px的宽度为手机端
+    if (isMobile) {
+      window.location.href = "https://www.laibochem.com/h5"
+    }  
+  
+
   if (to.matched.some(record => record.meta.requiresAuth)) {
     let token = localStorage.getItem("token")
     if (!token) {  // 没登录
-      // this.$root.key++
-      // this.$root.isShowLogIn = true
-      // alert("请先登录!");
-      // ElMessage("请先登录!")
       window.openLogin()
-      // next({
-      //   path: '/',
-      // })
     } else {
       next()  // 确保一定要调用 next()
     }
